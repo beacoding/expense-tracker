@@ -1,0 +1,64 @@
+body {
+  padding-top:120px;
+  padding-left: 50px;
+  font-family: 'Roboto','Helvetica','sans-serif'!important; 
+  width: 100%;
+  background-image: url("https://www.coastcapitalsavings.com/SharedContent/images/Hero/2016/Calculator_1440x370.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media (max-width: 1000px) {
+
+    body {
+        background-size: 0px 0px; /* Force the image to its minimum width */
+    }
+
+}
+
+.container {
+  width: 100%;
+  padding: 0 50px 0 50px;
+}
+
+.header {
+  font-size: 3em;
+  font-weight: 300;
+}
+
+.subheader p {
+  font-weight: 50;
+}
+
+.subheader h2 {
+  font-weight: 200;
+}
+
+img {
+  vertical-align: bottom;
+  width: 100px;
+}
+
+.coast-btn {
+  background-color: #54b818;
+  border: 0px;
+  font-family: 'Roboto';
+  color: white;
+  border-radius: 2px;
+  font-size: 15px;
+  padding: 5px 10px 5px 10px;
+}
+
+.coast-btn:hover {
+  background-color: #75f627;
+  border: 0px;
+}
+
+.login-container {
+  margin: 0 50px 0 0;
+}
+
+.login-container input {
+  min-width: 300px;
+  max-width: 500px;
+}
