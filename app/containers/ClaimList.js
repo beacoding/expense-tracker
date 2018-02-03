@@ -1,12 +1,30 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
+import { claimsActions } from '../actions';
 
 class ClaimList extends React.Component {
+  constructor(props) {
+      super(props);
+  }
+
+  componentDidMount() {
+    this.props.dispatch(claimsActions.requestAll());
+  }
+
+  renderError(error) {
+    return <div> {error} </div>
+  }
+
   render() {
-    const { employee } = this.props;
+    const { employee, claimsList, error } = this.props;
+    if (error != undefined) {
+      return this.renderError(error);
+    }
+
     return (
-      <div>
+      <div> 
+        {claimsList}
       </div>
     )
   }
@@ -15,9 +33,11 @@ class ClaimList extends React.Component {
 function mapStateToProps(state) {
     const { authentication, claims } = state;
     const { employee } = authentication;
+    const { claimsList, error } = claims;
     return {
         employee,
-        claims
+        claimsList,
+        error
     };
 }
 

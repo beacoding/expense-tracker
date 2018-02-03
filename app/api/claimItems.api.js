@@ -1,4 +1,5 @@
 import axios from 'axios';
+import helpers from './helpers.api'
 
 export const claimItemsAPI = {
     addClaimItem,

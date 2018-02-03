@@ -3,10 +3,10 @@ import authentication from './authentication';
 import claimItems from './claimItems';
 import claims from './claims';
 
-const expenseApp = combineReducers({
+const rootReducer = combineReducers({
   authentication,
   claimItems,
   claims
 });
 
-export default expenseApp;
+export default rootReducer;

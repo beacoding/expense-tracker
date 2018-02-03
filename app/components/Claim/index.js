@@ -26,15 +26,16 @@ const Claim = ({ employee, claim }) => {
 Claim.propTypes = {
   claim: PropTypes.shape({
     claim_id: PropTypes.number.isRequired,
-    manager_first_name: PropTypes.string.isRequired,
-    manager_last_name: PropTypes.string.isRequired,
-    manager_email: PropTypes.string.isRequired,
+    approver_first_name: PropTypes.string.isRequired,
+    approver_last_name: PropTypes.string.isRequired,
+    approver_last_name: PropTypes.string.isRequired,
+    company_name: PropTypes.string.isRequired,
+    cost_centre_id: PropTypes.number.isRequired,
     description: PropTypes.string,
-    amount: PropTypes.number.isRequired,
-    comment: PropTypes.string,
-    expense_type: PropTypes.string,
-    image_url: PropTypes.string,
-    has_receipt: PropTypes.bool.isRequired
+    notes: PropTypes.string,
+    account_number: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    date_created: PropTypes.string.isRequired,
   }).isRequired,
   employee: PropTypes.shape({
     employee_id: PropTypes.number.isRequired,

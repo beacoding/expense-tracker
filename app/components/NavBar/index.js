@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './style.css';
 
 const NavBar = ({ employee, logout }) => {
-  const { employee_id, employee_first_name, employee_last_name, employee_email } = employee;
+  const { id, first_name, last_name, email } = employee;
   return (
     <div>
       <button onClick={ logout }>Logout</button>
@@ -13,10 +13,10 @@ const NavBar = ({ employee, logout }) => {
 
 NavBar.propTypes = {
   employee: PropTypes.shape({
-    employee_id: PropTypes.number.isRequired,
-    employee_first_name: PropTypes.string.isRequired,
-    employee_last_name: PropTypes.string,
-    employee_email: PropTypes.string
+    id: PropTypes.number.isRequired,
+    first_name: PropTypes.string.isRequired,
+    last_name: PropTypes.string,
+    email: PropTypes.string
   }).isRequired,
   logout: PropTypes.func.isRequired
 }
