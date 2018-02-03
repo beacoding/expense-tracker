@@ -13,10 +13,11 @@ class ClaimList extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { authentication } = state;
+    const { authentication, claims } = state;
     const { employee } = authentication;
     return {
-        employee
+        employee,
+        claims
     };
 }
 

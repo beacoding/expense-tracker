@@ -2,28 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
-const ClaimItem = ({ employee, claimItem }) => {
+const Claim = ({ employee, claim }) => {
+  const { employee_id, employee_first_name, employee_last_name, employee_email } = employee
   const {
-    claim_item_id,
-    manager_first_name, 
-    manager_last_name,
-    manager_email,
-    description, 
-    amount,
-    comment, 
-    expense_type,
-    image_url,
-    has_receipt
-  } = claimItem;
+    claim_id,
+    approver_first_name,
+    approver_last_name,
+    company_name,
+    cost_centre_id,
+    description,
+    account_number,
+    notes,
+    status,
+    date_created,
+    total_amount
+  } = claim;
   return (
     <div>
     </div>
   );
 }
 
-ClaimItem.propTypes = {
-  claimItem: PropTypes.shape({
-    claim_item_id: PropTypes.number.isRequired,
+Claim.propTypes = {
+  claim: PropTypes.shape({
+    claim_id: PropTypes.number.isRequired,
     manager_first_name: PropTypes.string.isRequired,
     manager_last_name: PropTypes.string.isRequired,
     manager_email: PropTypes.string.isRequired,
@@ -42,4 +44,4 @@ ClaimItem.propTypes = {
   }).isRequired
 }
 
-export default ClaimItem;
+export default Claim;
