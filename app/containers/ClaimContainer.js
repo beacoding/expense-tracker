@@ -20,9 +20,7 @@ class ClaimItemContainer extends React.Component {
       calculateTotal(claim, claimItems[claim.claim_id]);
     }
     return (
-      <div>
         <Claim claim={claim} employee={employee} key={claim.claim_id} />
-      </div>
     )
   }
 }
@@ -42,7 +40,7 @@ function calculateTotal(claim, claimItems) {
     currentTotal += amount;
   });
 
-  claim["total_amount"] = currentTotal;
+  claim["total_amount"] = currentTotal.toFixed(2);
 }
 
 

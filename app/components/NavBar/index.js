@@ -1,14 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.css';
+import { Link } from 'react-router-dom';
+import './navstyle.css';
 
 const NavBar = ({ employee, logout }) => {
   const { id, first_name, last_name, email } = employee;
-  return (
-    <div>
-      <button onClick={ logout }>Logout</button>
-    </div>
-  )
+  return (<div>
+            <div className="sidebar-header">
+                <h3>Coast Capital</h3>
+            </div>
+            <ul className="list-unstyled components" >
+                <li className="active"><Link to="/"><i className="ion-android-list"></i>My Claims</Link></li>
+                <li><a href="#"><i className="ion-android-time"></i>Approvals</a></li>
+                <li><a href="#"><i className="ion-android-checkmark-circle"></i>Reporting</a></li>
+                <li><a href="#"><i className="ion-android-contacts"></i>Users</a></li>
+                <li><a href="#"><i className="ion-android-options"></i>Approval Limits</a></li>
+                <li><a href="#"><i className="ion-gear-b"></i>Settings</a></li>
+                <li style={{cursor: "pointer"}} onClick={logout}><a>Logout</a></li>
+            </ul>
+            </div>
+  );
 }
 
 NavBar.propTypes = {

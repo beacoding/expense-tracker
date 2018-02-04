@@ -8,10 +8,16 @@ import ClaimContainer from './ClaimContainer';
 class ClaimList extends React.Component {
   constructor(props) {
       super(props);
+
+      this.submitNewClaim = this.submitNewClaim.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(claimsActions.requestAll());
+  }
+
+  submitNewClaim() {
+    //TODO dispatch new submit claim 
   }
 
   renderError(error) {
@@ -33,11 +39,22 @@ class ClaimList extends React.Component {
     }
 
     return (
-      <div>
-        {Object.entries(claimsMap).map((claim_tuple) => {
-          var claim = claim_tuple[1]
-            return <ClaimContainer claim={claim} employee={employee} key={claim.claim_id} func={requestAllClaimItems}/>
-        })}
+      <div className="claimlist-container">
+        <div className="page-header">
+          <div className="page-title">
+            My Claims
+          </div>
+          <button className="page-button" onClick={this.submitNewClaim}>Add New Claim</button>
+          <div className="page-route">
+            <span className="route-inactive">Home</span>  <span className="route-active"> > Claims</span>
+          </div>
+        </div>
+        <div className="claim-list">
+          {Object.entries(claimsMap).map((claim_tuple) => {
+            var claim = claim_tuple[1]
+              return <ClaimContainer claim={claim} employee={employee} key={claim.claim_id} func={requestAllClaimItems}/>
+          })}
+        </div>
       </div>
     )
   }

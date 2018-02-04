@@ -5,9 +5,14 @@ import NavBar from '../containers/NavBar';
 
 const App = () => (
   <div>
-    <NavBar />
-    <ClaimList />
-    <ClaimPage />
+        <div className="wrapper">
+          <nav id="sidebar">
+            <NavBar />
+          </nav>
+          <div id="content">
+            <ClaimList />
+          </div>
+        </div>
   </div>
 )
 

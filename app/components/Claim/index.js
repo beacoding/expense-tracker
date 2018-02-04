@@ -22,17 +22,17 @@ const Claim = ({ employee, claim }) => {
 
 
   return (
-    <div>
-      <div><Link to={`/claims/${claim_id}`}>{description}</Link></div>
-      <div><small>{date_created}</small></div>
-      <table className="table table-striped">
+    <div className="claim-container">
+      <div className="claim-description"><Link to={`/claims/${claim_id}`}>{description}</Link></div>
+      <div><small className="claim-date">{new Date(date_created).toDateString()}</small></div>
+      <table className="table">
         <thead>
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Status</th>
             <th scope="col">Approver</th>
             <th scope="col">Cost Centre</th>
-            <th scope="col">Total</th>
+            <th scope="col">Total (CAD)</th>
           </tr>
         </thead>
         <tbody>
@@ -41,7 +41,7 @@ const Claim = ({ employee, claim }) => {
             <td>{status}</td>
             <td>{approver_first_name + " " + approver_last_name}</td>
             <td>{cost_centre_id}</td>
-            <td>{total_amount}</td>
+            <td>{"$" + total_amount}</td>
           </tr>
         </tbody>
       </table>
