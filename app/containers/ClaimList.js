@@ -17,7 +17,7 @@ class ClaimList extends React.Component {
   }
 
   submitNewClaim() {
-    //TODO dispatch new submit claim 
+    //TODO handle submit new claim
   }
 
   renderError(error) {
