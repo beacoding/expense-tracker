@@ -8,11 +8,25 @@ export const claimItemsActions = {
 };
 
 function addClaimItem() {
-  //TODO add claim
+  //TODO add claimItem
+  //expects an obj like
+  // {
+  //   claim_id,
+  //   description,
+  //   amount,
+  //   comment,
+  //   expense_type,
+  //   has_receipt
+  //   image_url
+  // }
 }
 
 function removeClaimItem() {
-  //TODO remove claim
+  //TODO remove claimItem
+  //expects object like
+  // {
+  //   id
+  // }
 }
 
 function requestAll(claimID) {

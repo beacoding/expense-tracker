@@ -9,11 +9,25 @@ export const claimsActions = {
 
 function addClaim() {
   //TODO add claim
+  //expects an obj like
+  // {
+  //   claimee_id,
+  //   approver_id,
+  //   company_id,
+  //   cost_centre_id,
+  //   description,
+  //   account_number,
+  //   notes
+  // }
   dispatch({type: claimsConstants.ADD_CLAIM});
 }
 
 function removeClaim() {
   //TODO remove claim
+  //expects 
+  // {
+  //  id
+  // }
   dispatch({type: claimsConstants.REMOVE_CLAIM});
 }
 

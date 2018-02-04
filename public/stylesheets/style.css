@@ -192,6 +192,13 @@ i, span {
   color: #2B8AE4;
 }
 
+.logo {
+  color: white;
+  padding: 28px;
+  font-size: 1.3em;
+  text-align: center;
+}
+
 .route-active {
   color: #bac6ce;
 }
