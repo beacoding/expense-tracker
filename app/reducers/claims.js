@@ -1,6 +1,6 @@
 import { claimsConstants } from '../constants';
 
-const initialState = {isFetching: false}
+const initialState = {isFetching: true}
 
 const claims = (state = initialState, action) => {
   switch (action.type) {
@@ -13,9 +13,17 @@ const claims = (state = initialState, action) => {
         isFetching: true
       }
     case claimsConstants.RECEIVE_CLAIMS:
-      return {
-        claimsList: action.claims
-      }
+      const obj = Object.assign({}, state);
+      obj.isFetching = false;
+      obj.claimsMap = obj.claimsMap || {};
+      action.claims.forEach((claim) => {
+        obj.claimsMap[claim.claim_id] = claim;
+      });
+      return obj;
+      // return {
+      //   claimsList: action.claims,
+      //   isFetching: false
+      // }
     case claimsConstants.FAILURE_CLAIMS:
       return {
         error: action.error

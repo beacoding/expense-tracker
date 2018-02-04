@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ClaimPage from '../../containers/ClaimPage';
+import { Link } from 'react-router-dom';
 import './style.css';
 
 const Claim = ({ employee, claim }) => {
-  const { employee_id, employee_first_name, employee_last_name, employee_email } = employee
+  const { id, first_name, last_name, email } = employee
   const {
     claim_id,
     approver_first_name,
@@ -17,8 +19,32 @@ const Claim = ({ employee, claim }) => {
     date_created,
     total_amount
   } = claim;
+
+
   return (
     <div>
+      <div><Link to={`/claims/${claim_id}`}>{description}</Link></div>
+      <div><small>{date_created}</small></div>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Status</th>
+            <th scope="col">Approver</th>
+            <th scope="col">Cost Centre</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{claim_id}</th>
+            <td>{status}</td>
+            <td>{approver_first_name + " " + approver_last_name}</td>
+            <td>{cost_centre_id}</td>
+            <td>{total_amount}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -38,10 +64,10 @@ Claim.propTypes = {
     date_created: PropTypes.string.isRequired,
   }).isRequired,
   employee: PropTypes.shape({
-    employee_id: PropTypes.number.isRequired,
-    employee_first_name: PropTypes.string.isRequired,
-    employee_last_name: PropTypes.string,
-    employee_email: PropTypes.string
+    id: PropTypes.number.isRequired,
+    first_name: PropTypes.string.isRequired,
+    last_name: PropTypes.string,
+    email: PropTypes.string
   }).isRequired
 }
 

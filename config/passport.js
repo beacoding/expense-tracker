@@ -36,7 +36,6 @@ module.exports = function(passport) {
                 }
 
                 delete rows[0]["password"];
-                console.log(rows[0])
 
                 return done(null, rows[0]);
             });

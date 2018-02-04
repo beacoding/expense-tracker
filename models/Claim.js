@@ -13,6 +13,7 @@ module.exports = {
                             approver.email as approver_email,
                             company.name as company_name,
                             claim.cost_centre_id,
+                            claim.account_number,
                             claim.description, 
                             claim.notes,
                             claim.status, 
@@ -24,9 +25,10 @@ module.exports = {
                             company
                            WHERE 
                             claimee.id = claim.claimee_id AND 
-                            approver.id = claim.approver_id AND  
-                            claimee.id = ?`;
-      connection.query(queryString, [employee.id], (err, rows) => {
+                            approver.id = claim.approver_id AND
+                            claim.company_id = company.id AND
+                            claimee.email = ?`;
+      connection.query(queryString, [employee.email], (err, rows) => {
         if (err) {
           reject(err);
         } else {

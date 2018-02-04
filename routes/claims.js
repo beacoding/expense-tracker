@@ -13,6 +13,17 @@ router.get('/', [authMiddleware.isLoggedIn, claimsMiddleware.findAllWithEmployee
   }
 });
 
+router.get('/*', function(req, res) {
+  if (req.isAuthenticated()) {
+    res.render('authenticated.ejs', {
+      user : req.user,
+      claims: req.claims
+    });
+  } else {
+    res.render('index.ejs', {title: "Homagepage", message: req.flash('loginMessage') });
+  }
+});
+
 // router.get('/add', [authMiddleware.isLoggedIn, claimsMiddleware.addOne], function(req, res, next) {
 //   //TODO add one new claim
 //   res.status(201);

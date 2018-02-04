@@ -3,7 +3,8 @@ import helpers from './helpers.api'
 
 export const claimItemsAPI = {
     addClaimItem,
-    removeClaimItem
+    removeClaimItem,
+    requestAll
 };
 
 function addClaimItem() {
@@ -12,4 +13,9 @@ function addClaimItem() {
 
 function removeClaimItem() {
   //TODO: remove a claim item over to the server and dispatch
+}
+
+function requestAll(claimID) {
+ return fetch(`/claim_items?claim_id=${claimID}`, helpers.getOptions)
+  .then(res => helpers.handleResponse(res));
 }

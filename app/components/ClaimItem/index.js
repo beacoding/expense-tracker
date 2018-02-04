@@ -2,43 +2,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
-const ClaimItem = ({ employee, claimItem }) => {
+const ClaimItem = ({ employee, claim_item }) => {
   const {
     claim_item_id,
-    manager_first_name, 
-    manager_last_name,
-    manager_email,
     description, 
     amount,
     comment, 
-    expense_type,
+    expense_category,
     image_url,
     has_receipt
-  } = claimItem;
+  } = claim_item;
   return (
-    <div>
-    </div>
+        <tr>
+          <th scope="row">{claim_item_id}</th>
+          <td>{description}</td>
+          <td>{amount}</td>
+          <td>{expense_category}</td>
+        </tr>
   );
 }
 
 ClaimItem.propTypes = {
-  claimItem: PropTypes.shape({
+  claim_item: PropTypes.shape({
     claim_item_id: PropTypes.number.isRequired,
-    manager_first_name: PropTypes.string.isRequired,
-    manager_last_name: PropTypes.string.isRequired,
-    manager_email: PropTypes.string.isRequired,
     description: PropTypes.string,
     amount: PropTypes.number.isRequired,
     comment: PropTypes.string,
-    expense_type: PropTypes.string,
+    expense_category: PropTypes.string,
     image_url: PropTypes.string,
-    has_receipt: PropTypes.bool.isRequired
+    has_receipt: PropTypes.number.isRequired
   }).isRequired,
   employee: PropTypes.shape({
-    employee_id: PropTypes.number.isRequired,
-    employee_first_name: PropTypes.string.isRequired,
-    employee_last_name: PropTypes.string,
-    employee_email: PropTypes.string
+    id: PropTypes.number.isRequired,
+    first_name: PropTypes.string.isRequired,
+    last_name: PropTypes.string,
+    email: PropTypes.string
   }).isRequired
 }
 

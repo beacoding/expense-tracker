@@ -1,23 +1,94 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { claimItemsActions } from '../actions';
+import { claimsActions } from '../actions';
+import ClaimItemContainer from './ClaimItemContainer';
 
 class ClaimPage extends React.Component {
+  constructor(props) {
+      super(props);
+  }
+
+  componentDidMount() {
+    //let { claim_id } = this.props;
+    let claim_id = window.location.pathname.split("/")[2];
+    if (claim_id != undefined) {
+      this.props.dispatch(claimItemsActions.requestAll(claim_id));
+      this.props.dispatch(claimsActions.requestAll());
+    }
+  }
+
+  renderError(error) {
+    return <div> {error} </div>
+  }
+
+  renderFetching() {
+    return <div></div>
+  }
+
   render() {
-    const { employee } = this.props;
+    const { employee, claimItems, claimsMap, isFetching, error } = this.props;
+
+    if (error !== undefined) {
+      return this.renderError(error);
+    }
+
+    if (isFetching === true) {
+      return this.renderFetching();
+    }
+
+    let claim_id = window.location.pathname.split("/")[2];
+
+    const claimItemsList  = claimItems[claim_id];
+    if (claimItemsList === undefined) {
+      return this.renderFetching();
+    }
+
+
+    if (claimsMap === undefined) {
+      return this.renderFetching();
+    }
+
+    let claim = claimsMap[claim_id]
+    console.log(claim);
+
     return (
       <div>
+        {claim.description}
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Description</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Expense Category</th>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            claimItemsList.map((claimItem) => {
+              return <ClaimItemContainer key={claimItem.claim_item_id} employee={employee} claim_item = {claimItem} />
+            })
+          }
+          </tbody>
+        </table>
       </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-    const { authentication, claimItems } = state;
+    const { authentication, claimItems, claims } = state;
+    const { error, isFetching } = claimItems;
     const { employee } = authentication;
+    const { claimsMap } = claims
     return {
         employee,
-        claimItems
+        claimItems,
+        isFetching,
+        claimsMap,
+        error
     };
 }
 

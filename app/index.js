@@ -6,6 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { Provider } from 'react-redux';
 import App from './components/App';
+import ClaimPage from './containers/ClaimPage';
 import reducer from './reducers';
 
 const loggerMiddleware = createLogger();
@@ -21,7 +22,10 @@ export const store = createStore(
 render(
   <Provider store={store}>
     <Router>
-      <Route path="/" component={App} />
+      <div>
+      <Route exact path="/" component={App} />
+      <Route path="/claims/:claim_id/" component={ClaimPage} />
+      </div>
     </Router>
   </Provider>,
   document.getElementById('root')
