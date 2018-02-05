@@ -30,6 +30,7 @@ class ClaimList extends React.Component {
 
   render() {
     const { employee, claimsMap, error, isFetching, totals, requestAllClaimItems } = this.props;
+    
     if (error !== undefined) {
       return this.renderError(error);
     }

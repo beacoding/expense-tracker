@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ClaimPage from '../../containers/ClaimPage';
 import { Link } from 'react-router-dom';
+import { claimsHelpers } from  '../../helpers';
+
 import './style.css';
 
 const Claim = ({ employee, claim }) => {
@@ -20,11 +22,10 @@ const Claim = ({ employee, claim }) => {
     total_amount
   } = claim;
 
-
   return (
     <div className="claim-container">
       <div className="claim-description"><Link to={`/claims/${claim_id}`}>{description}</Link></div>
-      <div><small className="claim-date">{new Date(date_created).toDateString()}</small></div>
+      <div><small className="claim-date">{claimsHelpers.toDateString(date_created)}</small></div>
       <table className="table">
         <thead>
           <tr>

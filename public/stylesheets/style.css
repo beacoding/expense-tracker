@@ -138,7 +138,6 @@ i, span {
 
 #sidebar .sidebar-header {
     padding: 10px;
-    background: #2683DD;
     color: black;
 }
 
@@ -194,6 +193,7 @@ i, span {
 
 .logo {
   color: white;
+  background: #2683DD;
   padding: 28px;
   font-size: 1.3em;
   text-align: center;

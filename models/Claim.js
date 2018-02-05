@@ -45,8 +45,16 @@ module.exports = {
   },
 
   addOne: function(claim) {
+    //TODO queryString to add one claim
     return new Promise((resolve, reject) => {
-      //TODO queryString to add one claim
+      const queryString = 'INSERT INTO claim SET ?';
+      connection.query(queryString, claim, (err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
+      });
     }); 
   },
 

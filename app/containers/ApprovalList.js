@@ -2,11 +2,17 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 
-class Settings extends React.Component {
+class ApprovalList extends React.Component {
+  constructor(props) {
+      super(props);
+  }
+
   render() {
     const { employee } = this.props;
+
     return (
       <div>
+        You have no pending approvals
       </div>
     )
   }
@@ -15,9 +21,9 @@ class Settings extends React.Component {
 function mapStateToProps(state) {
     const { authentication } = state;
     const { employee } = authentication;
+
     return {
-        employee
+        employee,
     };
 }
-
-export default withRouter(connect(mapStateToProps)(Settings))
+export default withRouter(connect(mapStateToProps)(ApprovalList))

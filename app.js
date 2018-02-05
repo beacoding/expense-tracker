@@ -13,6 +13,7 @@ var employees = require('./routes/employees');
 var claims = require('./routes/claims');
 var claimItems = require('./routes/claimItems');
 var approvalLimits = require('./routes/approvalLimits');
+var approvals = require('./routes/approvals');
 
 var app = express();
 
@@ -47,6 +48,7 @@ app.use('/employees', employees);
 app.use('/claims', claims)
 app.use('/claim_items', claimItems);
 app.use('/approval_limits', approvalLimits);
+app.use('/approvals', approvals);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-import NavBarComponent from '../components/Navbar';
+import NavBarComponent from '../components/NavBar';
 import { authActions } from '../actions';
 
 class NavBar extends React.Component {

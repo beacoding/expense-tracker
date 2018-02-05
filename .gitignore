@@ -7,8 +7,6 @@ yarn-debug.log*
 yarn-error.log*
 public/dist/bundle.js
 
-config/database.js
-
 # Runtime data
 pids
 *.pid

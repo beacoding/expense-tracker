@@ -1,14 +1,14 @@
-import axios from 'axios';
-import helpers from './helpers.api'
-
+import { apiHelpers } from '../helpers'
 export const claimsAPI = {
     addClaim,
     removeClaim,
     requestAll,
 };
 
-function addClaim() {
+function addClaim(claim) {
   //TODO: send a claim over to the server and dispatch
+  return fetch('/add_claim', apiHelpers.postOptions(claim))
+   .then(res => apiHelpers.handleResponse(res));
 }
 
 function removeClaim() {
@@ -16,6 +16,6 @@ function removeClaim() {
 }
 
 function requestAll() {
- return fetch('/claims', helpers.getOptions)
-  .then(res => helpers.handleResponse(res));
+ return fetch('/claims', apiHelpers.getOptions())
+  .then(res => apiHelpers.handleResponse(res));
 }

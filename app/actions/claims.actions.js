@@ -7,7 +7,7 @@ export const claimsActions = {
     requestAll,
 };
 
-function addClaim() {
+function addClaim(claim) {
   //TODO add claim
   //expects an obj like
   // {
@@ -19,7 +19,17 @@ function addClaim() {
   //   account_number,
   //   notes
   // }
-  dispatch({type: claimsConstants.ADD_CLAIM});
+  return dispatch => {
+    dispatch(request());
+    claimsAPI.addClaim(claim)
+    .then(
+      res => dispatch(success()),
+      err => dispatch(failure(error))
+      )
+  };
+  function request() { return { type: claimsConstants.ADD_CLAIM_REQUEST } }
+  function success(claims) { return { type: claimsConstants.ADD_CLAIM_SUCCESS }}
+  function failure(error) { return { type: claimsConstants.FAILURE_CLAIM, error }}
 }
 
 function removeClaim() {

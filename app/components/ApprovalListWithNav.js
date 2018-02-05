@@ -1,19 +1,18 @@
 import React from 'react';
-import ClaimList from '../containers/ClaimList';
-import ClaimPage from '../containers/ClaimPage';
+import ApprovalList from '../containers/ApprovalList';
 import NavBar from '../containers/NavBar';
 
-const App = () => (
+const ApprovalListWithNav = () => (
   <div>
     <div className="wrapper">
       <nav id="sidebar">
         <NavBar />
       </nav>
       <div id="content">
-        <ClaimList />
+        <ApprovalList/>
       </div>
     </div>
   </div>
 )
 
-export default App;
+export default ApprovalListWithNav;

@@ -1,5 +1,4 @@
-import axios from 'axios';
-import helpers from './helpers.api'
+import { apiHelpers } from '../helpers'
 
 export const claimItemsAPI = {
     addClaimItem,
@@ -16,6 +15,6 @@ function removeClaimItem() {
 }
 
 function requestAll(claimID) {
- return fetch(`/claim_items?claim_id=${claimID}`, helpers.getOptions)
-  .then(res => helpers.handleResponse(res));
+ return fetch(`/claim_items?claim_id=${claimID}`, apiHelpers.getOptions())
+  .then(res => apiHelpers.handleResponse(res));
 }

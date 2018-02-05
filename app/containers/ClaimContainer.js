@@ -2,10 +2,11 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { claimItemsActions } from '../actions';
+import { claimsHelpers } from '../helpers';
 import { Link } from 'react-router-dom';
 import Claim from '../components/Claim'
 
-class ClaimItemContainer extends React.Component {
+class ClaimContainer extends React.Component {
   constructor(props) {
       super(props);
   }
@@ -17,7 +18,7 @@ class ClaimItemContainer extends React.Component {
   render() {
     const { employee, key, claim, claimItems } = this.props;
     if (claimItems[claim.claim_id] !== undefined) {
-      calculateTotal(claim, claimItems[claim.claim_id]);
+      claimsHelpers.calculateTotal(claim, claimItems[claim.claim_id]);
     }
     return (
         <Claim claim={claim} employee={employee} key={claim.claim_id} />
@@ -33,15 +34,4 @@ function mapStateToProps(state) {
 }
 
 
-function calculateTotal(claim, claimItems) {
-  let currentTotal = 0;
-  claimItems.forEach((claimItem) => {
-    let amount = claimItem.amount;
-    currentTotal += amount;
-  });
-
-  claim["total_amount"] = currentTotal.toFixed(2);
-}
-
-
-export default withRouter(connect(mapStateToProps)(ClaimItemContainer));
+export default withRouter(connect(mapStateToProps)(ClaimContainer));

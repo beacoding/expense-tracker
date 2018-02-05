@@ -7,6 +7,7 @@ import { createLogger } from 'redux-logger';
 import { Provider } from 'react-redux';
 import App from './components/App';
 import ClaimPageWithNav from './components/ClaimPageWithNav';
+import ApprovalListWithNav from './components/ApprovalListWithNav';
 import ClaimPage from './containers/ClaimPage';
 import reducer from './reducers';
 
@@ -26,6 +27,7 @@ render(
       <div>
       <Route exact path="/" component={App} />
       <Route path="/claims/:claim_id/" component={ClaimPageWithNav}/>
+      <Route path="/approvals" component={ApprovalListWithNav}/>
       </div>
     </Router>
   </Provider>,

@@ -4,8 +4,8 @@ const initialState = {isFetching: true}
 
 const claims = (state = initialState, action) => {
   switch (action.type) {
-    case claimsConstants.ADD_CLAIM:
-      //TODO: change state of claim items
+    case claimsConstants.ADD_CLAIM_REQUEST:
+    case claimsConstants.ADD_CLAIM_SUCCESS:
     case claimsConstants.REMOVE_CLAIM:
       //TODO: change state of claim items
     case claimsConstants.REQUEST_CLAIMS:
