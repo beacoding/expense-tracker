@@ -2,7 +2,8 @@
 
 ## Instructions
 
-1. Clone the repo: `git@gitlab.com:cpsc3192017w2/coast-capital/Caffeinated-Coasters/expense-tracker.git`
+1. Fork the repo
+2. Clone your fork `git@gitlab.com:{username}/expense-tracker.git`
 1. Install packages: `npm install`
 1. Edit the database configuration: `config/database.js`
 1. `npm run create-db`
