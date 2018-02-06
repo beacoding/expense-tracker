@@ -39,7 +39,7 @@ const Claim = ({ employee, claim }) => {
         <tbody>
           <tr>
             <th scope="row">{claim_id}</th>
-            <td>{status}</td>
+            <td>{claimsHelpers.getStatusText(status)}</td>
             <td>{approver_first_name + " " + approver_last_name}</td>
             <td>{cost_centre_id}</td>
             <td>{"$" + total_amount}</td>
