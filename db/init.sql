@@ -91,6 +91,7 @@ CREATE TABLE policy (
 -- CREATE APPLICATION USER WITH LIMITED PRIVILEGES
 CREATE USER 'app_user'@'%' IDENTIFIED BY 'cc_ecs_winter_t2';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.claim TO 'app_user'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.claim_item TO 'app_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.company TO 'app_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.cost_centre TO 'app_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.employee_cost_centre TO 'app_user'@'%';
