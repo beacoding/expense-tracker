@@ -159,7 +159,7 @@ i, span {
 }
 #sidebar ul li a:hover {
     color: #fff;
-    background: #35C7DD;
+    background: #2683DD;
 }
 #sidebar ul li a i {
     margin-right: 10px;
@@ -167,7 +167,7 @@ i, span {
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: white;
-    background: #35C7DD;
+    background: #2683DD;
 }
 
 .page-header {
@@ -353,3 +353,22 @@ a.article, a.article:hover {
         display: none;
     }
 }
+
+/* ---------------------------------------------------
+    LOADING ELEMENT
+----------------------------------------------------- */
+
+.loader {
+    border: 10px solid lightgrey; /* Light grey */
+    border-top: 10px solid #2683DD; /* Blue */
+    border-radius: 50%;
+    width: 50px !important;
+    height: 50px !important;
+    margin: 30% 50%;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

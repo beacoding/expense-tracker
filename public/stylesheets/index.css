@@ -62,3 +62,18 @@ img {
   min-width: 300px;
   max-width: 500px;
 }
+
+.loader {
+  border: 10px solid lightgrey; /* Light grey */
+  border-top: 10px solid #2683DD; /* Blue */
+  border-radius: 50%;
+  width: 50px !important;
+  height: 50px !important;
+  margin: 30% 50%;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
