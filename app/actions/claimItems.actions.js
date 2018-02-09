@@ -4,7 +4,8 @@ import { claimItemsAPI } from '../api'
 export const claimItemsActions = {
     addClaimItem,
     removeClaimItem,
-    requestAll
+    requestAll,
+    clearAll
 };
 
 function addClaimItem() {
@@ -48,4 +49,10 @@ function requestAll(claimID) {
   function request() { return { type: claimItemsConstants.REQUEST_CLAIM_ITEMS } }
   function success(claimItems, claimID) { return { type: claimItemsConstants.RECEIVE_CLAIM_ITEMS, claimID, claimItems }}
   function failure(error) { return { type: claimItemsConstants.FAILURE_CLAIM_ITEMS, error }}
+}
+
+function clearAll() {
+  return dispatch => {
+    dispatch({ type: claimItemsConstants.CLEAR_CLAIM_ITEMS });
+  }
 }

@@ -13,18 +13,38 @@ const claims = (state = initialState, action) => {
         isFetching: true
       }
     case claimsConstants.RECEIVE_CLAIMS:
-      const obj = Object.assign({}, state);
-      obj.isFetching = false;
-      obj.claimsMap = obj.claimsMap || {};
+      const objA = Object.assign({}, state);
+      objA.isFetching = false;
+      objA.claimsMap = objA.claimsMap || {};
       action.claims.forEach((claim) => {
-        obj.claimsMap[claim.claim_id] = claim;
+        objA.claimsMap[claim.claim_id] = claim;
       });
-      return obj;
+      return objA;
       // return {
       //   claimsList: action.claims,
       //   isFetching: false
       // }
     case claimsConstants.FAILURE_CLAIMS:
+      return {
+        error: action.error
+      }
+    case claimsConstants.REQUEST_PENDING_APPROVALS:
+      return {
+        isFetching: true
+      }
+    case claimsConstants.RECEIVE_PENDING_APPROVALS:
+      const objB = Object.assign({}, state);
+      objB.isFetching = false;
+      objB.claimsMap = objB.claimsMap || {};
+      action.claims.forEach((claim) => {
+        objB.claimsMap[claim.claim_id] = claim;
+      });
+      return objB;
+      // return {
+      //   claimsList: action.claims,
+      //   isFetching: false
+      // }
+    case claimsConstants.FAILURE_PENDING_APPROVALS:
       return {
         error: action.error
       }

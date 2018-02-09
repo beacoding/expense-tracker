@@ -3,6 +3,7 @@ export const claimsAPI = {
     addClaim,
     removeClaim,
     requestAll,
+    requestPendingApprovals,
 };
 
 function addClaim(claim) {
@@ -19,3 +20,8 @@ function requestAll() {
  return fetch('/claims', apiHelpers.getOptions())
   .then(res => apiHelpers.handleResponse(res));
 }
+
+function requestPendingApprovals() {
+  return fetch('/claims/pending_approvals', apiHelpers.getOptions())
+   .then(res => apiHelpers.handleResponse(res));
+ }
