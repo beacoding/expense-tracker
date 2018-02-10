@@ -9,7 +9,7 @@ module.exports = function(app, passport) {
         claims: req.claims
       });
     } else {
-      res.render('index.ejs', {title: "Homagepage", message: req.flash('loginMessage') });
+      res.render('index.ejs', {title: "Homepage", message: req.flash('loginMessage') });
     }
   });
 

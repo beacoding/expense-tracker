@@ -12,6 +12,18 @@ const findAllWithEmployee = async (req,res,next) => {
   }
 }
 
+const findPendingApprovalsByManager = async (req,res,next) => {
+  let claims;
+  try {
+    claims = await Claim.findPendingApprovalsByManager(req.user);
+    req.claims = claims;
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
 const addOne = async (req,res,next) => {
   let claims;
   try {
@@ -25,5 +37,6 @@ const addOne = async (req,res,next) => {
 }
 
 module.exports = {
-  findAllWithEmployee: findAllWithEmployee
+  findAllWithEmployee: findAllWithEmployee,
+  findPendingApprovalsByManager: findPendingApprovalsByManager
 }

@@ -6,7 +6,7 @@ import { claimsHelpers } from  '../../helpers';
 
 import './style.css';
 
-const Claim = ({ employee, claim }) => {
+const PendingClaim = ({ employee, claim }) => {
   const { id, first_name, last_name, email } = employee
   const {
     claim_id,
@@ -31,19 +31,13 @@ const Claim = ({ employee, claim }) => {
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Status</th>
-            <th scope="col">Approver</th>
-            <th scope="col">Cost Centre</th>
+            <th scope="col">Submitted By</th>
             <th scope="col">Total (CAD)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">{claim_id}</th>
-            <td>{claimsHelpers.getStatusText(status)}</td>
-            <td>{approver_first_name + " " + approver_last_name}</td>
-            <td>{cost_centre_id}</td>
+            <td>{claimee_first_name + " " + claimee_last_name}</td>
             <td>{"$" + total_amount}</td>
           </tr>
         </tbody>
@@ -52,7 +46,7 @@ const Claim = ({ employee, claim }) => {
   );
 }
 
-Claim.propTypes = {
+PendingClaim.propTypes = {
   claim: PropTypes.shape({
     claim_id: PropTypes.number.isRequired,
     claimee_first_name: PropTypes.string.isRequired,
@@ -77,4 +71,4 @@ Claim.propTypes = {
   }).isRequired
 }
 
-export default Claim;
+export default PendingClaim;

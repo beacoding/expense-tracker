@@ -24,7 +24,7 @@ class ClaimPage extends React.Component {
   }
 
   renderFetching() {
-    return <div></div>
+    return <div className="loader"></div>
   }
 
   render() {

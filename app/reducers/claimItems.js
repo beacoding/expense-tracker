@@ -21,6 +21,10 @@ const claimItems = (state = initialState, action) => {
       return {
         error: action.error
       }
+    case claimItemsConstants.CLEAR_CLAIM_ITEMS:
+      return {
+        isFetching: false
+      }
     default:
       return state;
   }
