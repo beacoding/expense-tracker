@@ -17,7 +17,7 @@ function removeClaim() {
 }
 
 function requestAll() {
- return fetch('/claims', apiHelpers.getOptions())
+ return fetch('/claims/all', apiHelpers.getOptions())
   .then(res => apiHelpers.handleResponse(res));
 }
 
