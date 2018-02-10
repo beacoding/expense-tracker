@@ -9,7 +9,7 @@ const NavBar = ({ employee, logout }) => {
   return (
     <div>
       <div className="logo">
-          <h3>Coast Capital</h3>
+          <img src="assets/img/logo.png"/>
       </div>
       <ul className="list-unstyled components" >
           <li><NavLink activeClassName="active" to="/claims"><i className="ion-android-list"></i>My Claims</NavLink></li>

@@ -159,7 +159,7 @@ i, span {
 }
 #sidebar ul li a:hover {
     color: #fff;
-    background: #2683DD;
+    background: #0067C6;
 }
 #sidebar ul li a i {
     margin-right: 10px;
@@ -167,7 +167,7 @@ i, span {
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: white;
-    background: #2683DD;
+    background: #0067C6;
 }
 
 .page-header {
@@ -183,20 +183,25 @@ i, span {
 
 .page-title {
   font-size: 1.3em;
-  color: #2B8AE4;
+  color: #0067C6;
 }
 
 .route-inactive {
   /*blue*/
-  color: #2B8AE4;
+  color: #0067C6;
 }
 
 .logo {
   color: white;
-  background: #2683DD;
-  padding: 28px;
+  background: #0067C6;
+  padding: 20px 5px;
   font-size: 1.3em;
   text-align: center;
+}
+
+.logo > img {
+  width: 245px;
+  height: 71px; 
 }
 
 .route-active {
@@ -225,15 +230,63 @@ i, span {
 
 .page-button {
   float: right;
-  background-color: #f94d6e;
+  background-color: #fc8c1e;
   color: white;
   border-radius: 5px;
   border: 0px;
   padding: 10px 15px 10px 15px;
-  box-shadow: 2px 2px #d5415e;
+  box-shadow: 2px 2px #fc9937;
   text-decoration: none;
 }
 
+.page-button:hover {
+  background-color: #e27e1b;
+}
+
+.page-button-green {
+  float: right;
+  background-color: #54B818;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+  padding: 10px 15px 10px 15px;
+  box-shadow: 2px 2px #91D967;
+  text-decoration: none;
+}
+
+.page-button-green:hover {
+  background-color: #4aa115;
+}
+
+.page-button-blue {
+  float: right;
+  background-color: #0067C6;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+  padding: 10px 15px 10px 15px;
+  box-shadow: 2px 2px #0067C6;
+  text-decoration: none;
+}
+
+.page-button-blue:hover {
+  background-color: #004c93;
+}
+
+.page-button-red {
+  float: right;
+  background-color: #da0218;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+  padding: 10px 15px 10px 15px;
+  box-shadow: 2px 2px #f3021b;
+  text-decoration: none;
+}
+
+.page-button-red:hover {
+  background-color: #c40115;
+}
 
 a[data-toggle="collapse"] {
     position: relative;
