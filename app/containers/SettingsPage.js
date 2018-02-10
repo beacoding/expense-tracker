@@ -16,7 +16,7 @@ function mapStateToProps(state) {
     const { authentication } = state;
     const { employee } = authentication;
     return {
-        employee
+      employee
     };
 }
 

@@ -12,9 +12,9 @@ const ClaimItem = ({ employee, claim_item }) => {
     image_url,
     has_receipt
   } = claim_item;
+  
   return (
         <tr>
-          <th scope="row">{claim_item_id}</th>
           <td>{description}</td>
           <td>{amount}</td>
           <td>{expense_category}</td>

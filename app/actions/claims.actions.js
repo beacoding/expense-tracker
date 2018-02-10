@@ -5,7 +5,8 @@ export const claimsActions = {
     addClaim,
     removeClaim,
     requestAll,
-    requestPendingApprovals
+    requestPendingApprovals,
+    clearAll
 };
 
 function addClaim(claim) {
@@ -70,4 +71,10 @@ function requestPendingApprovals() {
   function request() { return { type: claimsConstants.REQUEST_PENDING_APPROVALS } }
   function success(claims) { return { type: claimsConstants.RECEIVE_PENDING_APPROVALS, claims }}
   function failure(error) { return { type: claimsConstants.FAILURE_PENDING_APPROVALS, error }}
+}
+
+function clearAll() {
+  return dispatch => {
+    dispatch({ type: claimsConstants.CLEAR_CLAIMS });
+  }
 }

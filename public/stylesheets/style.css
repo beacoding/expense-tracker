@@ -4,9 +4,6 @@
   height:100%;
 }
 
-
-
-
 html, body, #root {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   height: 100%;
@@ -22,9 +19,6 @@ body > #root > div {
 
   height: 100vh;
 }
-
-
-
 
 /*
     DEMO STYLE
@@ -184,6 +178,7 @@ i, span {
 .page-title {
   font-size: 1.3em;
   color: #0067C6;
+  margin-bottom: 10px;
 }
 
 .route-inactive {
@@ -237,6 +232,7 @@ i, span {
   padding: 10px 15px 10px 15px;
   box-shadow: 2px 2px #fc9937;
   text-decoration: none;
+  margin: 0px 3px;
 }
 
 .page-button:hover {
@@ -252,6 +248,7 @@ i, span {
   padding: 10px 15px 10px 15px;
   box-shadow: 2px 2px #91D967;
   text-decoration: none;
+  margin: 0px 3px;  
 }
 
 .page-button-green:hover {
@@ -267,6 +264,7 @@ i, span {
   padding: 10px 15px 10px 15px;
   box-shadow: 2px 2px #0067C6;
   text-decoration: none;
+  margin: 0px 3px;  
 }
 
 .page-button-blue:hover {
@@ -275,17 +273,18 @@ i, span {
 
 .page-button-red {
   float: right;
-  background-color: #da0218;
+  background-color: #c40115;
   color: white;
   border-radius: 5px;
   border: 0px;
   padding: 10px 15px 10px 15px;
-  box-shadow: 2px 2px #f3021b;
+  box-shadow: 2px 2px #da0218;
   text-decoration: none;
+  margin: 0px 3px;  
 }
 
 .page-button-red:hover {
-  background-color: #c40115;
+  background-color: #ab0112;
 }
 
 a[data-toggle="collapse"] {

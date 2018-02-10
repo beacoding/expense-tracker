@@ -8,11 +8,26 @@ import PendingClaim from '../components/PendingClaim'
 
 class PendingClaimContainer extends React.Component {
   constructor(props) {
-      super(props);
+    super(props);
+    this.approveClaim = this.approveClaim.bind(this);
+    this.declineClaim = this.declineClaim.bind(this);
+    this.forwardClaim = this.forwardClaim.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(claimItemsActions.requestAll(this.props.claim.claim_id));
+  }
+
+  approveClaim() {
+    console.log("Handle Approve Claim for ID: " + this.props.claim.claim_id)
+  }
+
+  declineClaim() {
+    console.log("Handle Decline Claim for ID: " + this.props.claim.claim_id)
+  }
+
+  forwardClaim() {
+    console.log("Handle Forward Claim for ID: " + this.props.claim.claim_id)
   }
 
   render() {
@@ -21,7 +36,15 @@ class PendingClaimContainer extends React.Component {
       claimsHelpers.calculateTotal(claim, claimItems[claim.claim_id]);
     }
     return (
-        <PendingClaim claim={claim} employee={employee} key={claim.claim_id} />
+      <PendingClaim
+        claim={claim}
+        employee={employee}
+        approveClaim={this.approveClaim}
+        declineClaim={this.declineClaim}
+        forwardClaim={this.forwardClaim}
+        hasApprovalAuthority={true}
+        hasSufficientApprovalLimit={true}
+        key={claim.claim_id} />
     )
   }
 }

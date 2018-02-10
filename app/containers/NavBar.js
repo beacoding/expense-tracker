@@ -8,9 +8,8 @@ import { authActions } from '../actions';
 
 class NavBar extends React.Component {
   constructor(props) {
-      super(props);
-
-      this.logout = this.logout.bind(this);
+    super(props);
+    this.logout = this.logout.bind(this);
   }
 
   logout() {
@@ -29,7 +28,7 @@ function mapStateToProps(state) {
     const { authentication } = state;
     const { employee } = authentication;
     return {
-        employee
+      employee
     };
 }
 

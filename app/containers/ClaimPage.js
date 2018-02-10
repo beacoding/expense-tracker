@@ -7,7 +7,7 @@ import ClaimItemContainer from './ClaimItemContainer';
 
 class ClaimPage extends React.Component {
   constructor(props) {
-      super(props);
+    super(props);
   }
 
   componentDidMount() {
@@ -15,7 +15,6 @@ class ClaimPage extends React.Component {
     let claim_id = window.location.pathname.split("/")[2];
     if (claim_id != undefined) {
       this.props.dispatch(claimItemsActions.requestAll(claim_id));
-      this.props.dispatch(claimsActions.requestAll());
     }
   }
 
@@ -51,28 +50,35 @@ class ClaimPage extends React.Component {
     }
 
     let claim = claimsMap[claim_id]
-    console.log(claim);
 
     return (
-      <div>
-        {claim.description}
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Description</th>
-              <th scope="col">Amount</th>
-              <th scope="col">Expense Category</th>
-            </tr>
-          </thead>
-          <tbody>
-          {
-            claimItemsList.map((claimItem) => {
-              return <ClaimItemContainer key={claimItem.claim_item_id} employee={employee} claim_item = {claimItem} />
-            })
-          }
-          </tbody>
-        </table>
+      <div className="claimlist-container">
+        <div className="page-header">
+          <div className="page-title">
+            View Claim
+          </div>
+          <div className="page-route">
+            <span className="route-inactive">Home</span>  <span className="route-inactive"> > View Claim</span>  <span className="route-active"> > {claim.description}</span>
+          </div>
+        </div>
+        <div className="claim-list">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Description</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Expense Category</th>
+              </tr>
+            </thead>
+            <tbody>
+            {
+              claimItemsList.map((claimItem) => {
+                return <ClaimItemContainer key={claimItem.claim_item_id} employee={employee} claim_item = {claimItem} />
+              })
+            }
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }

@@ -48,6 +48,10 @@ const claims = (state = initialState, action) => {
       return {
         error: action.error
       }
+    case claimsConstants.CLEAR_CLAIMS:
+      return {
+        isFetching: false
+    }
     default:
       return state;
   }

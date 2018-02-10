@@ -28,7 +28,8 @@ render(
       <Route exact path="/" component={App} />
         <Route exact path="/claims" component={App}/>
         <Route path="/claims/:claim_id/" component={ClaimPageWithNav}/>
-        <Route path="/approvals" component={ApprovalListWithNav}/>
+        <Route exact path="/approvals" component={ApprovalListWithNav}/>
+        <Route path="/approvals/:claim_id/" component={ClaimPageWithNav}/>        
       </div>
     </Router>
   </Provider>,

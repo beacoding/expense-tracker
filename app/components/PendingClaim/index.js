@@ -6,7 +6,7 @@ import { claimsHelpers } from  '../../helpers';
 
 import './style.css';
 
-const PendingClaim = ({ employee, claim }) => {
+const PendingClaim = ({ employee, claim, approveClaim, declineClaim, forwardClaim, hasApprovalAuthority, hasSufficientApprovalLimit }) => {
   const { id, first_name, last_name, email } = employee
   const {
     claim_id,
@@ -26,7 +26,7 @@ const PendingClaim = ({ employee, claim }) => {
 
   return (
     <div className="claim-container">
-      <div className="claim-description"><Link to={`/claims/${claim_id}`}>{description}</Link></div>
+      <div className="claim-description"><Link to={`/approvals/${claim_id}`}>{description}</Link></div>
       <div><small className="claim-date">{claimsHelpers.toDateString(date_created)}</small></div>
       <table className="table">
         <thead>
@@ -42,6 +42,9 @@ const PendingClaim = ({ employee, claim }) => {
           </tr>
         </tbody>
       </table>
+      <button className="page-button-red" onClick={declineClaim}>Decline</button>
+      { (!hasApprovalAuthority || !hasSufficientApprovalLimit) && <button className="page-button-blue" onClick={forwardClaim}>Forward</button> }
+      { hasApprovalAuthority && hasSufficientApprovalLimit && <button className="page-button-green" onClick={approveClaim}>Approve</button> }
     </div>
   );
 }
