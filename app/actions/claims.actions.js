@@ -2,12 +2,12 @@ import { claimsConstants } from '../constants';
 import { claimsAPI } from '../api'
 
 export const claimsActions = {
-    addClaim,
-    removeClaim,
-    updateStatus,
-    requestAll,
-    requestPendingApprovals,
-    clearAll
+  addClaim,
+  removeClaim,
+  updateStatus,
+  requestAll,
+  requestPendingApprovals,
+  clearAll
 };
 
 function addClaim(claim) {
@@ -28,11 +28,11 @@ function addClaim(claim) {
     .then(
       res => dispatch(success()),
       error => dispatch(failure(error))
-      )
+    )
   };
   function request() { return { type: claimsConstants.ADD_CLAIM_REQUEST }}
   function success() { return { type: claimsConstants.ADD_CLAIM_SUCCESS }}
-  function failure(error) { return { type: claimsConstants.FAILURE_CLAIM, error }}
+  function failure(error) { return { type: claimsConstants.ADD_CLAIM_FAILURE, error }}
 }
 
 function removeClaim() {
@@ -62,12 +62,12 @@ function requestAll() {
   return dispatch => {
     dispatch(request());
     claimsAPI.requestAll()
-      .then(
-          res => dispatch(success(res.claims)),
-          error => dispatch(failure(error))
-      );
+    .then(
+      res => dispatch(success(res.claims)),
+      error => dispatch(failure(error))
+    );
   };
-
+  
   function request() { return { type: claimsConstants.REQUEST_CLAIMS }}
   function success(claims) { return { type: claimsConstants.RECEIVE_CLAIMS, claims }}
   function failure(error) { return { type: claimsConstants.FAILURE_CLAIMS, error }}

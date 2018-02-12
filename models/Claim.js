@@ -109,13 +109,41 @@ module.exports = {
 
   addOne: function(claim) {
     //TODO queryString to add one claim
+    //MISSING PAYROLL FIELD!!!!!
+    console.log(claim);
     return new Promise((resolve, reject) => {
-      const queryString = 'INSERT INTO claim SET ?';
-      connection.query(queryString, claim, (err, res) => {
+      const queryString = 
+                          `INSERT INTO claim
+                            (claimee_id,
+                             approver_id,
+                             company_id,
+                             cost_centre_id,
+                             description,
+                             account_number,
+                             notes,
+                             status,
+                             date_created,
+                             date_modified)
+                           VALUES
+                            ( ?,?,?,?,?,?,?,?,  NOW(), NOW())`;
+      connection.query(queryString, 
+      [
+        claim.claimeeid,
+        claim.approverid,
+        claim.companyid,
+        claim.costcenter,
+        claim.description,
+        claim.acc_number,
+        claim.notes,
+        claim.status
+      ]
+      , (err, rows) => {
         if (err) {
+          console.log(err);
           reject(err);
         } else {
-          resolve(res);
+          console.log(rows);          
+          resolve(rows);
         }
       });
     }); 

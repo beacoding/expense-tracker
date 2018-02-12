@@ -22,12 +22,32 @@ router.get('/pending_approvals', [authMiddleware.isLoggedIn, claimsMiddleware.fi
   }
 });
 
+router.post('/add_claim', [authMiddleware.isLoggedIn, claimsMiddleware.addOne], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({claim: req.claim});
+  }
+});
+
 router.post('/update_status', [authMiddleware.isLoggedIn, claimsMiddleware.updateStatus], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);
     res.send({error: req.error});
   } else {
     res.send({claim: req.claim});
+  }
+});
+
+router.get('/*', function(req, res) {
+  if (req.isAuthenticated()) {
+    res.render('authenticated.ejs', {
+      user : req.user,
+      claims: req.claims
+    });
+  } else {
+    res.render('index.ejs', {title: "Homepage", message: req.flash('loginMessage') });
   }
 });
 

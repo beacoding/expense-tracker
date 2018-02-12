@@ -11,6 +11,7 @@ import ClaimPageWithNav from './components/ClaimPageWithNav';
 import ApprovalListWithNav from './components/ApprovalListWithNav';
 import ClaimPage from './containers/ClaimPage';
 import reducer from './reducers';
+import ClaimList from './containers/ClaimList';
 
 const loggerMiddleware = createLogger();
 
@@ -27,11 +28,11 @@ render(
     <div>
       <Router>
         <div>
-        <Route exact path="/" component={ClaimListWithNav} />
-          <Route exact path="/claims" component={ClaimListWithNav}/>
-          <Route path="/claims/:claim_id/" component={ClaimPageWithNav}/>
-          <Route exact path="/approvals" component={ApprovalListWithNav}/>
-          <Route path="/approvals/:claim_id/" component={ClaimPageWithNav}/>  
+          <Route exact path="/" component={ClaimListWithNav} />
+            <Route exact path="/claims" component={ClaimListWithNav}/>
+            <Route path="/claims/:claim_id/" component={ClaimPageWithNav}/>
+            <Route exact path="/approvals" component={ApprovalListWithNav}/>
+            <Route path="/approvals/:claim_id/" component={ClaimPageWithNav}/>  
         </div>      
       </Router>
       <ReduxModal />

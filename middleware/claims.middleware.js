@@ -37,10 +37,11 @@ const updateStatus = async (req,res,next) => {
 }
 
 const addOne = async (req,res,next) => {
-  let claims;
+  console.log(req);
+  let claim;
   try {
-    claims = await Claim.addOne(req.claim);
-    req.claims = claims;
+    claim = await Claim.addOne(req.body);
+    req.claim = claim;
     next()
   } catch (err) {
     req.error = err;
