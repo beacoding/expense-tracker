@@ -24,6 +24,18 @@ const findPendingApprovalsByManager = async (req,res,next) => {
   }
 }
 
+const updateStatus = async (req,res,next) => {
+  let claim;
+  try {
+    claim = await Claim.updateStatus(req.body.claim_id, req.body.approver_id, req.body.status);
+    req.claim = claim;
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
 const addOne = async (req,res,next) => {
   let claims;
   try {
@@ -38,5 +50,7 @@ const addOne = async (req,res,next) => {
 
 module.exports = {
   findAllWithEmployee: findAllWithEmployee,
-  findPendingApprovalsByManager: findPendingApprovalsByManager
+  findPendingApprovalsByManager: findPendingApprovalsByManager,
+  addOne: addOne,
+  updateStatus: updateStatus
 }

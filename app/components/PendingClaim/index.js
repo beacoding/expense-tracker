@@ -4,9 +4,10 @@ import ClaimPage from '../../containers/ClaimPage';
 import { Link } from 'react-router-dom';
 import { claimsHelpers } from  '../../helpers';
 
+
 import './style.css';
 
-const PendingClaim = ({ employee, claim, approveClaim, declineClaim, forwardClaim, hasApprovalAuthority, hasSufficientApprovalLimit }) => {
+const PendingClaim = ({ employee, claim, handleAction, hasApprovalAuthority, hasSufficientApprovalLimit }) => {
   const { id, first_name, last_name, email } = employee
   const {
     claim_id,
@@ -42,9 +43,9 @@ const PendingClaim = ({ employee, claim, approveClaim, declineClaim, forwardClai
           </tr>
         </tbody>
       </table>
-      <button className="page-button-red" onClick={declineClaim}>Decline</button>
-      { (!hasApprovalAuthority || !hasSufficientApprovalLimit) && <button className="page-button-blue" onClick={forwardClaim}>Forward</button> }
-      { hasApprovalAuthority && hasSufficientApprovalLimit && <button className="page-button-green" onClick={approveClaim}>Approve</button> }
+      <button className="page-button-red" onClick={handleAction}>Decline</button>
+      { (!hasApprovalAuthority || !hasSufficientApprovalLimit) && <button className="page-button-blue" onClick={handleAction}>Forward</button> }
+      { hasApprovalAuthority && hasSufficientApprovalLimit && <button className="page-button-green" onClick={handleAction}>Approve</button> }
     </div>
   );
 }

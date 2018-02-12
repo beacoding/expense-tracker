@@ -31,6 +31,7 @@ const Claim = ({ employee, claim }) => {
       <table className="table">
         <thead>
           <tr>
+            <th scope="col">ID</th>
             <th scope="col">Status</th>
             <th scope="col">Approver</th>
             <th scope="col">Cost Centre</th>
@@ -39,6 +40,7 @@ const Claim = ({ employee, claim }) => {
         </thead>
         <tbody>
           <tr>
+            <th scope="row">{claim_id}</th>
             <td>{claimsHelpers.getStatusText(status)}</td>
             <td>{approver_first_name + " " + approver_last_name}</td>
             <td>{cost_centre_id}</td>

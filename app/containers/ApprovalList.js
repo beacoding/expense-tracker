@@ -55,7 +55,7 @@ class ApprovalList extends React.Component {
       return this.renderFetching();
     }
 
-    if (!isFetching && Object.keys(claimsMap)[0] == undefined) {
+    if (!isFetching && (claimsMap == undefined || Object.keys(claimsMap)[0] == undefined)) {
       return this.renderEmptyList();
     }
 

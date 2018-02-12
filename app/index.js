@@ -5,7 +5,8 @@ import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { Provider } from 'react-redux';
-import App from './components/App';
+import ReduxModal from 'react-redux-modal'
+import ClaimListWithNav from './components/ClaimListWithNav';
 import ClaimPageWithNav from './components/ClaimPageWithNav';
 import ApprovalListWithNav from './components/ApprovalListWithNav';
 import ClaimPage from './containers/ClaimPage';
@@ -23,15 +24,18 @@ export const store = createStore(
 
 render(
   <Provider store={store}>
-    <Router>
-      <div>
-      <Route exact path="/" component={App} />
-        <Route exact path="/claims" component={App}/>
-        <Route path="/claims/:claim_id/" component={ClaimPageWithNav}/>
-        <Route exact path="/approvals" component={ApprovalListWithNav}/>
-        <Route path="/approvals/:claim_id/" component={ClaimPageWithNav}/>        
-      </div>
-    </Router>
+    <div>
+      <Router>
+        <div>
+        <Route exact path="/" component={ClaimListWithNav} />
+          <Route exact path="/claims" component={ClaimListWithNav}/>
+          <Route path="/claims/:claim_id/" component={ClaimPageWithNav}/>
+          <Route exact path="/approvals" component={ApprovalListWithNav}/>
+          <Route path="/approvals/:claim_id/" component={ClaimPageWithNav}/>  
+        </div>      
+      </Router>
+      <ReduxModal />
+    </div>
   </Provider>,
   document.getElementById('root')
 )

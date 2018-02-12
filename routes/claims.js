@@ -22,6 +22,15 @@ router.get('/pending_approvals', [authMiddleware.isLoggedIn, claimsMiddleware.fi
   }
 });
 
+router.post('/update_status', [authMiddleware.isLoggedIn, claimsMiddleware.updateStatus], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({claim: req.claim});
+  }
+});
+
 /*
 router.post('/add_claim', [authMiddleware.isLoggedIn, claimsMiddleware.addOne], function(req, res, next) {
   if (req.error != undefined) {

@@ -82,6 +82,25 @@ module.exports = {
     });
   },
 
+  updateStatus: function(claim_id, approver_id, status) {
+    return new Promise((resolve, reject) => {
+      var queryString = `UPDATE claim
+                          SET 
+                            claim.approver_id = ?,
+                            claim.status = ?,
+                            claim.date_modified = NOW()
+                          WHERE 
+                            claim.id = ?`;
+      connection.query(queryString, [approver_id, status, claim_id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
   findOne: function(id) {
     return new Promise((resolve, reject) => {
       //TODO queryString to fetch all employee claims with id
