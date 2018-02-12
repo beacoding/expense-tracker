@@ -7,7 +7,10 @@
 3. `cd expense-tracker`
 4. `git remote add upstream git@gitlab.com:cpsc3192017w2/coast-capital/Caffeinated-Coasters/expense-tracker.git`
 5. Install packages: `npm install`
-6. Edit the database configuration: `config/database.js`
+6. Edit mysql config
+    * mysql -u root -p
+    * `CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'cc_expense_claims_system';`
+    * `GRANT ALL PRIVILEGES ON *.* TO 'app_user'@'localhost';`
 7. Initialize database: `npm run create-db`
 9. Launch: `npm run dev-react`
 9. Launch in separate window: `npm run start`
