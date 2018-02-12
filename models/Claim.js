@@ -70,7 +70,7 @@ module.exports = {
                           claimee.id = claim.claimee_id AND 
                           approver.id = claim.approver_id AND
                           claim.company_id = company.id AND
-                          claim.status = 'S' AND
+                          (claim.status = 'S' OR claim.status = 'F') AND
                           approver.id = ?`;
       connection.query(queryString, [employee.id], (err, rows) => {
         if (err) {

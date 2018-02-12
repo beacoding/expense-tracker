@@ -12,25 +12,14 @@ import ReduxModal from 'react-redux-modal';
 
 class ClaimList extends React.Component {
   constructor(props) {
-      super(props);
-   
-      // this.displayModal = false;
-      // this.showModal = this.showModal.bind(this);
-      // this.hideModal = this.hideModal.bind(this);
-      this.handlerFunction = this.handlerFunction.bind(this);
-      this.addModal = this.addModal.bind(this);
-      // this.state = {
-      //   name: ""
-      // }
- 
-      
-      // this.handleKeyPress = this.handleKeyPress.bind(this);
+    super(props);
+    this.handlerFunction = this.handlerFunction.bind(this);
+    this.addModal = this.addModal.bind(this);
   }
  
   handlerFunction() {
-    
     const {employee, form} = this.props;
-    const claim ={
+    const claim = {
       claimeeid: employee.id,
       approverid: employee.manager_id,
       companyid: parseInt(form.NewClaimForm.values.companyid),
@@ -55,7 +44,6 @@ class ClaimList extends React.Component {
       closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
       hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,
       hideCloseButton: false, // (optional) if you don't wanna show the top right close button
-      //.. all what you put in here you will get access in the modal props ;)
       onSubmitFunction: this.handlerFunction
     });
   }
@@ -77,6 +65,7 @@ class ClaimList extends React.Component {
           <div className="page-title">
             My Claims
           </div>
+          <button className="page-button" onClick={this.addModal}> New Claim</button>  
           <div className="page-route">
             <span className="route-inactive">Home</span>  <span className="route-active"> > My Claims</span>
           </div>

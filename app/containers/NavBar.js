@@ -1,9 +1,7 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
-
-import NavBarComponent from '../components/NavBar';
 import { authActions } from '../actions';
 
 class NavBar extends React.Component {
@@ -17,9 +15,21 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { employee } = this.props;
     return (
-      <NavBarComponent employee={employee} logout={this.logout}/>
+      <div>
+        <div className="logo">
+          <img src="/assets/img/logo.png"/>
+        </div>
+        <ul className="list-unstyled components" >
+            <li><NavLink activeClassName="active" to="/claims"><i className="ion-android-list"></i>My Claims</NavLink></li>
+            <li><NavLink activeClassName="active" to="/approvals"><i className="ion-android-checkmark-circle"></i>Approvals</NavLink></li>
+            <li><a href="/#"><i className="ion-clipboard"></i>Reporting</a></li>
+            <li><a href="/#"><i className="ion-person-stalker"></i>Users</a></li>
+            <li><a href="/#"><i className="ion-android-options"></i>Approval Limits</a></li>
+            <li><a href="/#"><i className="ion-gear-a"></i>Settings</a></li>
+            <li style={{cursor: "pointer"}} onClick={this.logout}><a><i className="ion-power"></i>Log out</a></li>
+        </ul>
+      </div>
     )
   }
 }
