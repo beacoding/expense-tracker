@@ -5,19 +5,23 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev-react": "webpack -d --watch",
-    "create-db": "mysql -u root -p < db/init.sql &&  mysql -u root -p cc_expense_claims_system < db/data.sql"
+    "create-db": "mysql -u root -p < db/init.sql &&  mysql -u root -p cc_expense_claims_system < db/data.sql",
+    "test": "mocha --exit"
   },
   "dependencies": {
     "axios": "^0.17.1",
     "babel-core": "^6.26.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "^4.15.5",
     "express-session": "^1.15.6",
+    "mocha": "^5.0.0",
     "morgan": "^1.9.0",
     "mysql": "^2.15.0",
     "passport": "^0.2.2",
