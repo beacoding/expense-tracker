@@ -1,10 +1,10 @@
 import { apiHelpers } from '../helpers'
 export const claimsAPI = {
-    addClaim,
-    removeClaim,
-    updateStatus,
-    requestAll,
-    requestPendingApprovals,
+  addClaim,
+  removeClaim,
+  updateStatus,
+  requestAll,
+  requestPendingApprovals,
 };
 
 function addClaim(claim) {
