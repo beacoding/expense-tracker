@@ -56,9 +56,6 @@ img {
 
 .login-container {
   margin: 0 50px 0 0;
-}
-
-.login-container input {
   min-width: 300px;
   max-width: 500px;
 }

@@ -7,12 +7,13 @@ import PendingClaimContainer from './PendingClaimContainer';
 
 class ApprovalList extends React.Component {
   constructor(props) {
-      super(props);
+    super(props);
   }
 
   componentDidMount() {
-    this.props.dispatch(claimsActions.requestPendingApprovals());
+    this.props.dispatch(claimsActions.clearAll());
     this.props.dispatch(claimItemsActions.clearAll());
+    this.props.dispatch(claimsActions.requestPendingApprovals());
   }
 
   renderError(error) {
@@ -54,7 +55,7 @@ class ApprovalList extends React.Component {
       return this.renderFetching();
     }
 
-    if (!isFetching && Object.keys(claimsMap)[0] == undefined) {
+    if (!isFetching && (claimsMap == undefined || Object.keys(claimsMap)[0] == undefined)) {
       return this.renderEmptyList();
     }
 
@@ -71,7 +72,10 @@ class ApprovalList extends React.Component {
         <div className="claim-list">
           {Object.entries(claimsMap).map((claim_tuple) => {
             var claim = claim_tuple[1]
-              return <PendingClaimContainer claim={claim} employee={employee} key={claim.claim_id} func={requestAllClaimItems}/>
+              return <PendingClaimContainer
+                        claim={claim}
+                        employee={employee}
+                        key={claim.claim_id}/>
           })}
         </div>
       </div>

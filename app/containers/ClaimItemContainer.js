@@ -6,13 +6,13 @@ import ClaimItem from '../components/ClaimItem'
 
 class ClaimItemContainer extends React.Component {
   constructor(props) {
-      super(props);
+    super(props);
   }
 
   render() {
     const { claim_item, employee } = this.props;
     return (
-        <ClaimItem employee = {employee} claim_item = {claim_item}/>
+      <ClaimItem employee={employee} claim_item={claim_item}/>
     )
   }
 }

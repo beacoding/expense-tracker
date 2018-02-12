@@ -3,7 +3,8 @@ import ClaimList from '../containers/ClaimList';
 import ClaimPage from '../containers/ClaimPage';
 import NavBar from '../containers/NavBar';
 
-const App = () => (
+
+const ClaimListWithNav = () => (
   <div>
     <div className="wrapper">
       <nav id="sidebar">
@@ -16,4 +17,4 @@ const App = () => (
   </div>
 )
 
-export default App;
+export default ClaimListWithNav;

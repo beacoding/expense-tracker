@@ -7,12 +7,13 @@ import ClaimContainer from './ClaimContainer';
 
 class ClaimList extends React.Component {
   constructor(props) {
-      super(props);
-
-      this.submitNewClaim = this.submitNewClaim.bind(this);
+    super(props);
+    this.submitNewClaim = this.submitNewClaim.bind(this);
   }
 
   componentDidMount() {
+    this.props.dispatch(claimsActions.clearAll());
+    this.props.dispatch(claimItemsActions.clearAll());
     this.props.dispatch(claimsActions.requestAll());
   }
 
@@ -47,13 +48,13 @@ class ClaimList extends React.Component {
           </div>
           <button className="page-button" onClick={this.submitNewClaim}>Add New Claim</button>
           <div className="page-route">
-            <span className="route-inactive">Home</span>  <span className="route-active"> > Claims</span>
+            <span className="route-inactive">Home</span>  <span className="route-active"> > My Claims</span>
           </div>
         </div>
         <div className="claim-list">
           {Object.entries(claimsMap).map((claim_tuple) => {
             var claim = claim_tuple[1]
-              return <ClaimContainer claim={claim} employee={employee} key={claim.claim_id} func={requestAllClaimItems}/>
+              return <ClaimContainer claim={claim} employee={employee} key={claim.claim_id}/>
           })}
         </div>
       </div>

@@ -5,9 +5,32 @@ const initialState = {isFetching: true}
 const claims = (state = initialState, action) => {
   switch (action.type) {
     case claimsConstants.ADD_CLAIM_REQUEST:
+      return {
+        isFetching: true
+      }
     case claimsConstants.ADD_CLAIM_SUCCESS:
-    case claimsConstants.REMOVE_CLAIM:
-      //TODO: change state of claim items
+      return {
+        isFetching: false
+      }
+    case claimsConstants.ADD_CLAIM_FAILURE:
+      return {
+        error: action.error
+      }
+    case claimsConstants.REMOVE_CLAIM_REQUEST:
+    case claimsConstants.REMOVE_CLAIM_SUCCESS:
+    case claimsConstants.UPDATE_CLAIM_STATUS_REQUEST:
+      return {
+        isFetching: true
+      }
+    case claimsConstants.UPDATE_CLAIM_STATUS_SUCCESS:
+      return {
+        isFetching: false
+      }
+    case claimsConstants.UPDATE_CLAIM_STATUS_FAILURE:
+      return {
+        error: action.error,
+        isFetching: false
+      }
     case claimsConstants.REQUEST_CLAIMS:
       return {
         isFetching: true
@@ -48,6 +71,10 @@ const claims = (state = initialState, action) => {
       return {
         error: action.error
       }
+    case claimsConstants.CLEAR_CLAIMS:
+      return {
+        isFetching: false
+    }
     default:
       return state;
   }

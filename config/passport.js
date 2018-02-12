@@ -29,10 +29,10 @@ module.exports = function(passport) {
                 if (err)
                     return done(err);
                 if (!rows.length) {
-                    return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+                    return done(null, false, req.flash('loginMessage', 'User does not exist.')); // req.flash is the way to set flashdata using connect-flash
                 }
                 if (password != rows[0].password) {
-                  return done(null, false, req.flash('loginMessage', 'Oops! wrong password'))
+                  return done(null, false, req.flash('loginMessage', 'Incorrect password. Please try again.'))
                 }
 
                 delete rows[0]["password"];

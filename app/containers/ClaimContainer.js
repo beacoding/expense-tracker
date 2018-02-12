@@ -8,7 +8,7 @@ import Claim from '../components/Claim'
 
 class ClaimContainer extends React.Component {
   constructor(props) {
-      super(props);
+    super(props);
   }
 
   componentDidMount() {
@@ -21,7 +21,7 @@ class ClaimContainer extends React.Component {
       claimsHelpers.calculateTotal(claim, claimItems[claim.claim_id]);
     }
     return (
-        <Claim claim={claim} employee={employee} key={claim.claim_id} />
+      <Claim claim={claim} employee={employee} key={claim.claim_id} />
     )
   }
 }
@@ -32,6 +32,5 @@ function mapStateToProps(state) {
     claimItems
   }
 }
-
 
 export default withRouter(connect(mapStateToProps)(ClaimContainer));

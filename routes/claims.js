@@ -4,7 +4,7 @@ var Claim = require('../models/Claim');
 var authMiddleware = require('../middleware/auth.middleware');
 var claimsMiddleware = require('../middleware/claims.middleware');
 
-router.get('/', [authMiddleware.isLoggedIn, claimsMiddleware.findAllWithEmployee], function(req, res, next) {
+router.get('/all', [authMiddleware.isLoggedIn, claimsMiddleware.findAllWithEmployee], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);
     res.send({error: req.error});
@@ -22,6 +22,15 @@ router.get('/pending_approvals', [authMiddleware.isLoggedIn, claimsMiddleware.fi
   }
 });
 
+router.post('/update_status', [authMiddleware.isLoggedIn, claimsMiddleware.updateStatus], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({claim: req.claim});
+  }
+});
+
 /*
 router.post('/add_claim', [authMiddleware.isLoggedIn, claimsMiddleware.addOne], function(req, res, next) {
   if (req.error != undefined) {
@@ -32,16 +41,6 @@ router.post('/add_claim', [authMiddleware.isLoggedIn, claimsMiddleware.addOne], 
   }
 });
 */
-router.get('/*', function(req, res) {
-  if (req.isAuthenticated()) {
-    res.render('authenticated.ejs', {
-      user : req.user,
-      claims: req.claims
-    });
-  } else {
-    res.render('index.ejs', {title: "Homepage", message: req.flash('loginMessage') });
-  }
-});
 
 // router.get('/add', [authMiddleware.isLoggedIn, claimsMiddleware.addOne], function(req, res, next) {
 //   //TODO add one new claim
@@ -55,5 +54,10 @@ router.get('/*', function(req, res) {
 // router.get('/delete', [authMiddleware.isLoggedIn, claimsMiddleware.deleteOne], function(req, res, next) {
 //   //TODO delete claim
 // });
+
+
+router.get('*', [authMiddleware.isLoggedIn], function(req, res, next) {
+  res.redirect('/');
+});
 
 module.exports = router;
