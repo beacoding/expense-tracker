@@ -16,7 +16,7 @@ const ClaimItem = ({ employee, claim_item }) => {
   return (
         <tr>
           <td>{description}</td>
-          <td>{amount}</td>
+          <td>${amount.toFixed(2)}</td>
           <td>{expense_category}</td>
         </tr>
   );
