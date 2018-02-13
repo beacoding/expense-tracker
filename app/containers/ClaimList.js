@@ -29,7 +29,7 @@ class ClaimList extends React.Component {
       // payroll: false,
       // payroll: form.NewClaimForm.values.payroll,
       notes: form.NewClaimForm.values.notes,
-      status: null,
+      status: 'P',
     }
  
     modal.clear();

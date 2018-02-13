@@ -25,16 +25,19 @@ class PendingClaimContainer extends React.Component {
   
   confirmApprove() {
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "A"));
+    this.props.dispatch(claimsActions.requestPendingApprovals());
     modal.clear();
   }
   
   confirmDecline() {
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "D"));
+    this.props.dispatch(claimsActions.requestPendingApprovals());
     modal.clear();
   }
 
   forwardClaim() {
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.forward_manager_id, "F"));
+    this.props.dispatch(claimsActions.requestPendingApprovals());
     modal.clear();
   }
 
