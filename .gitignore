@@ -1,6 +1,6 @@
 
 # Logs
-git diff testlogs
+logs
 *.log
 npm-debug.log*
 yarn-debug.log*
