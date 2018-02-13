@@ -6,13 +6,6 @@ import { Field, reduxForm } from 'redux-form';
 class NewClaimForm extends React.Component {
   constructor(props) {
       super(props);
-
-      // this.state = {
-      //   name: ""
-      // }
-
-      // this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
   renderField(field) {
@@ -201,56 +194,3 @@ class NewClaimForm extends React.Component {
     form: 'NewClaimForm' // a unique identifier for this form
   })(NewClaimForm);
   
-  //   render() {  
-  //     return (
-  //       <div className="claimlist-container">
-  //         <div className="page-header">
-  //           <div className="page-title">
-  //             {/* <form>
-  //               <input placeholder = "name" onKeyPress={this.handleKeyPress}/>
-                
-  //               </form> */}
-  //            New Claim
-  //           </div>
-  //           <div className="page-route">
-  //             <span className="route-inactive">Home</span>  <span className="route-active"> > New Claim</span>
-  //           </div>
-            
-  //         </div>
-  //         <form>
-  //           <label>
-  //             Account Number:
-  //             <input type="number" name="name" />
-  //           </label>
-  //           <label>
-  //             Company:
-  //             <input type="text" name="name" />
-  //           </label>
-  //           <label>
-  //             Description:
-  //             <input type="text" name="name" />
-  //           </label>
-  //           <label>
-  //             Cost Center:
-  //             <input type="text" name="name" />
-  //           </label>
-  //           <label>
-  //             Payroll:
-  //             <input type="checkbox" name="name" />
-  //           </label>
-          
-
-  //           <button className="page-button" onClick={this.submitNewClaim}> Next
-  //             {/* <Link to="/newclaimitem"><i className="ion-android-time"></i>Next</Link>  */}
-  //           </button>
-  //         </form>
-        
-  //       </div>
-
-        
-  //     )
-  //   }
-  // }
-  
-
-  // export default (NewClaim)

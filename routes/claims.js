@@ -28,6 +28,7 @@ router.post('/add_claim', [authMiddleware.isLoggedIn, claimsMiddleware.addOne], 
     res.send({error: req.error});
   } else {
     res.send({claim: req.claim});
+    console.log(res.body);
   }
 });
 

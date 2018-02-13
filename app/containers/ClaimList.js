@@ -16,27 +16,32 @@ class ClaimList extends React.Component {
     this.handlerFunction = this.handlerFunction.bind(this);
     this.addModal = this.addModal.bind(this);
   }
- 
+  
   handlerFunction() {
-    const {employee, form} = this.props;
+    const {employee,claimID,claims,claimsMap, form} = this.props;
     const claim = {
       claimee_id: employee.id,
       approver_id: employee.manager_id,
       company_id: parseInt(form.NewClaimForm.values.companyid),
       cost_center_id: parseInt(form.NewClaimForm.values.costcenter),
       description: form.NewClaimForm.values.description,
-      account_number: form.NewClaimForm.values.ccaccountnumber,
+      acc_number: form.NewClaimForm.values.ccaccountnumber,
       // payroll: false,
       // payroll: form.NewClaimForm.values.payroll,
       notes: form.NewClaimForm.values.notes,
-      status: null,
+      status: 'P'
     }
- 
-    modal.clear();
     this.props.dispatch(claimsActions.addClaim(claim));
     this.props.dispatch(claimsActions.requestAll());
+    modal.clear();
+    // debugger;
+    // setTimeout(() => {
+    //   debugger;
+    //   const claimID = this.props.claims.claimID;
+    //   window.location= '/claims/'+ claimID;
+    // }, 4000);
   }
-
+  
   addModal() {
     modal.add(NewClaimModal, {
       title: 'New Claim',
@@ -47,17 +52,17 @@ class ClaimList extends React.Component {
       onSubmitFunction: this.handlerFunction
     });
   }
-
+  
   componentDidMount() {
     this.props.dispatch(claimsActions.clearAll());
     this.props.dispatch(claimItemsActions.clearAll());
     this.props.dispatch(claimsActions.requestAll());
   }
-
+  
   renderError(error) {
     return <div> {error} </div>
   }
-
+  
   renderEmptyList() {
     return (
       <div className="claimlist-container">
@@ -65,7 +70,6 @@ class ClaimList extends React.Component {
           <div className="page-title">
             My Claims
           </div>
-          <button className="page-button" onClick={this.addModal}> New Claim</button>  
           <div className="page-route">
             <span className="route-inactive">Home</span>  <span className="route-active"> > My Claims</span>
           </div>
@@ -78,26 +82,26 @@ class ClaimList extends React.Component {
       </div>
     )
   }
-
+  
   renderFetching() {
     return <div className="loader"></div>
   }
-
+  
   render() {
-    const { employee, claimsMap, error, isFetching, totals, requestAllClaimItems,form} = this.props;
+    const { employee, claimsMap, error, isFetching, form, claimID} = this.props;
     
     if (error !== undefined) {
       return this.renderError(error);
     }
-
+    
     if (isFetching && claimsMap == undefined) {
       return this.renderFetching();
     }
-
+    
     if (!isFetching && (claimsMap == undefined || Object.keys(claimsMap)[0] == undefined)) {
       return this.renderEmptyList();
     }
-
+    
     return (
       <div className="claimlist-container">
         <div className="page-header">
@@ -112,7 +116,7 @@ class ClaimList extends React.Component {
         <div className="claim-list">
           {Object.entries(claimsMap).map((claim_tuple) => {
             var claim = claim_tuple[1]
-              return <ClaimContainer claim={claim} employee={employee} key={claim.claim_id}/>
+            return <ClaimContainer claim={claim} employee={employee} key={claim.claim_id}/>
           })}
         </div>
       </div>
@@ -121,16 +125,17 @@ class ClaimList extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { authentication, claims, form } = state;
-    const { employee } = authentication;
-    const { claimsMap, error, isFetching } = claims;
-
-    return {
-        employee,
-        claimsMap,
-        error,
-        isFetching,
-        form
-    };
+  const { authentication, claims, form } = state;
+  const { employee } = authentication;
+  const { claimsMap, error, isFetching, claimID } = claims;
+  
+  return {
+    employee,
+    claimsMap,
+    error,
+    isFetching,
+    claimID,
+    form
+  };
 }
 export default withRouter(connect(mapStateToProps)(ClaimList))

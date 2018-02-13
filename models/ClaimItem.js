@@ -37,9 +37,43 @@ module.exports = {
     });
   },
 
-  addOne: function(claimItem) {
+  addOne: function(item) {
+    //TODO queryString to add one claim
+  
     return new Promise((resolve, reject) => {
-      //TODO queryString to add one claimItem
+      const queryString = 
+                          `INSERT INTO claim_item
+                            (claim_id,
+                             description,
+                             amount,
+                             comment,
+                             expense_type,
+                             has_receipt,
+                             image_url)
+                           VALUES
+                            ( ?,?,?,?,?,?,?)`;
+      connection.query(queryString, 
+      [
+        item.claim_id,
+        item.description,
+        item.amount,
+        item.comment,
+        item.expense_type,
+        item.has_receipt,
+        item.image_url
+      ]
+      , (err, rows) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          console.log(rows); 
+
+          // console.log(insertId);  
+   
+          resolve(rows);
+        }
+      });
     }); 
   },
 

@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   claims,
   limits,
   form : reduxFormReducer,
-  modals: modalReducer
+  modals: modalReducer,
 });
 
 export default rootReducer;
