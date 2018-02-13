@@ -8,19 +8,20 @@ export const claimItemsActions = {
     clearAll
 };
 
-function addClaimItem() {
-  //TODO add claimItem
-  //expects an obj like
-  // {
-  //   claim_id,
-  //   description,
-  //   amount,
-  //   comment,
-  //   expense_type,
-  //   has_receipt
-  //   image_url
-  // }
+function addClaimItem(item) {
+  return dispatch => {
+    dispatch(request());
+    claimItemsAPI.addClaimItem(item)
+      .then(
+        res => dispatch(success()),
+        error => dispatch(failure(error))
+      )
+  };
+  function request() {return {type: claimItemsConstants.ADD_CLAIM_ITEM} }
+  function success() {return {type: claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS} }
+  function failure(error) {return {type: claimItemsConstants.ADD_CLAIM_ITEM_FAILURE, error} }
 }
+
 
 function removeClaimItem() {
   //TODO remove claimItem

@@ -18,7 +18,7 @@ class ClaimList extends React.Component {
   }
  
   handlerFunction() {
-    const {employee, form} = this.props;
+    const {employee, form, claimID, claims, claimsMap } = this.props;
     const claim = {
       claimee_id: employee.id,
       approver_id: employee.manager_id,
@@ -84,7 +84,7 @@ class ClaimList extends React.Component {
   }
 
   render() {
-    const { employee, claimsMap, error, isFetching, totals, requestAllClaimItems,form} = this.props;
+    const { employee, claimsMap, error, isFetching, totals, form, claimID } = this.props;
     
     if (error !== undefined) {
       return this.renderError(error);
@@ -123,13 +123,14 @@ class ClaimList extends React.Component {
 function mapStateToProps(state) {
     const { authentication, claims, form } = state;
     const { employee } = authentication;
-    const { claimsMap, error, isFetching } = claims;
+    const { claimsMap, error, isFetching, claimID } = claims;
 
     return {
         employee,
         claimsMap,
         error,
         isFetching,
+        claimID,
         form
     };
 }

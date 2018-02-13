@@ -6,13 +6,6 @@ import { Field, reduxForm } from 'redux-form';
 class NewClaimForm extends React.Component {
   constructor(props) {
     super(props);
-    
-    // this.state = {
-    //   name: ""
-    // }
-    
-    // this.handleSubmit = this.handleSubmit.bind(this);
-    
   }
   
   renderField(field) {
@@ -21,12 +14,12 @@ class NewClaimForm extends React.Component {
     
     return (
       <div className = {className}>
-      <label>{field.label}</label>
-      {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-      <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} />
-      <div className="text-help">
-      {touched ? error : ""}
-      </div>
+        <label>{field.label}</label>
+        {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
+        <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} />
+        <div className="text-help">
+          {touched ? error : ""}
+        </div>
       </div>
     );
   }
@@ -37,12 +30,12 @@ class NewClaimForm extends React.Component {
     
     return (
       <div className = {className}>
-      <label>{field.label}</label>
-      {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-      <textarea className="form-control" {...field.input} />
-      <div className="text-help">
-      {touched ? error : ""}
-      </div>
+        <label>{field.label}</label>
+        {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
+        <textarea className="form-control" {...field.input} />
+        <div className="text-help">
+          {touched ? error : ""}
+        </div>
       </div>
     );
   }
@@ -79,7 +72,7 @@ class NewClaimForm extends React.Component {
       <select className="form-control" {...field.input}>
       <option value="" disabled> Select a cost center </option>
       <option value={500}>500</option>
-      <option value={501}>501</option>
+      <option value={505}>505</option>
       <option value={538}>538</option>
       </select>
       <div className="text-help">

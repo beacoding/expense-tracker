@@ -12,6 +12,20 @@ const findAllWithClaim = async (req,res,next) => {
   }
 }
 
+const addNewItem = async (req,res,next) => {
+  console.log(req);
+  let items;
+  try {
+    items = await ClaimItem.addOne(req.body);
+    req.items = items;
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
 module.exports = {
-  findAllWithClaim: findAllWithClaim
+  findAllWithClaim: findAllWithClaim,
+  addNewItem: addNewItem
 }

@@ -9,11 +9,15 @@ const claims = (state = initialState, action) => {
         isFetching: true
       }
     case claimsConstants.ADD_CLAIM_SUCCESS:
+    const currentState = Object.assign({}, state);
       return {
-        isFetching: false
+        claimsMap: currentState.claimsMap,
+        isFetching: false,
+        claimID: action.claimID
       }
     case claimsConstants.ADD_CLAIM_FAILURE:
       return {
+        isFetching: false,
         error: action.error
       }
     case claimsConstants.REMOVE_CLAIM_REQUEST:
@@ -28,8 +32,8 @@ const claims = (state = initialState, action) => {
       }
     case claimsConstants.UPDATE_CLAIM_STATUS_FAILURE:
       return {
-        error: action.error,
-        isFetching: false
+        isFetching: false,
+        error: action.error
       }
     case claimsConstants.REQUEST_CLAIMS:
       return {
@@ -49,6 +53,7 @@ const claims = (state = initialState, action) => {
       // }
     case claimsConstants.FAILURE_CLAIMS:
       return {
+        isFetching: false,
         error: action.error
       }
     case claimsConstants.REQUEST_PENDING_APPROVALS:
@@ -69,6 +74,7 @@ const claims = (state = initialState, action) => {
       // }
     case claimsConstants.FAILURE_PENDING_APPROVALS:
       return {
+        isFetching: false,
         error: action.error
       }
     case claimsConstants.CLEAR_CLAIMS:

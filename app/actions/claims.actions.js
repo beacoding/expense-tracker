@@ -26,12 +26,12 @@ function addClaim(claim) {
     dispatch(request());
     claimsAPI.addClaim(claim)
     .then(
-      res => dispatch(success()),
+      res => dispatch(success(res.claim.insertId)),
       error => dispatch(failure(error))
     )
   };
   function request() { return { type: claimsConstants.ADD_CLAIM_REQUEST }}
-  function success() { return { type: claimsConstants.ADD_CLAIM_SUCCESS }}
+  function success(claimID) { return { type: claimsConstants.ADD_CLAIM_SUCCESS, claimID }}
   function failure(error) { return { type: claimsConstants.ADD_CLAIM_FAILURE, error }}
 }
 
