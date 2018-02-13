@@ -5,9 +5,10 @@ const initialState = {isFetching: true}
 const claims = (state = initialState, action) => {
   switch (action.type) {
     case claimsConstants.ADD_CLAIM_REQUEST:
-      return {
-        isFetching: true
-      }
+      const objA = Object.assign({}, state);
+      objA.isFetching = true;
+      objA.claimsMap = objA.claimsMap;
+      return objA;
     case claimsConstants.ADD_CLAIM_SUCCESS:
     const currentState = Object.assign({}, state);
       return {
@@ -40,13 +41,13 @@ const claims = (state = initialState, action) => {
         isFetching: true
       }
     case claimsConstants.RECEIVE_CLAIMS:
-      const objA = Object.assign({}, state);
-      objA.isFetching = false;
-      objA.claimsMap = objA.claimsMap || {};
+      const objD = Object.assign({}, state);
+      objD.isFetching = false;
+      objD.claimsMap = objD.claimsMap || {};
       action.claims.forEach((claim) => {
-        objA.claimsMap[claim.claim_id] = claim;
+        objD.claimsMap[claim.claim_id] = claim;
       });
-      return objA;
+      return objD;
       // return {
       //   claimsList: action.claims,
       //   isFetching: false

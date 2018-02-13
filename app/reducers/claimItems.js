@@ -17,7 +17,6 @@ const claimItems = (state = initialState, action) => {
         isFetching: false,
         error: action.error
       }
-
     case claimItemsConstants.REMOVE_CLAIM_ITEM:
     case claimItemsConstants.REQUEST_CLAIM_ITEMS:
       return {
@@ -30,6 +29,7 @@ const claimItems = (state = initialState, action) => {
       return obj;
     case claimItemsConstants.FAILURE_CLAIM_ITEMS:
       return {
+        isFetching: false,
         error: action.error
       }
     case claimItemsConstants.CLEAR_CLAIM_ITEMS:

@@ -29,6 +29,7 @@ function addClaim(claim) {
       res => dispatch(success(res.claim.insertId)),
       error => dispatch(failure(error))
     )
+   
   };
   function request() { return { type: claimsConstants.ADD_CLAIM_REQUEST }}
   function success(claimID) { return { type: claimsConstants.ADD_CLAIM_SUCCESS, claimID }}

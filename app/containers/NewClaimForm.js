@@ -92,7 +92,7 @@ class NewClaimForm extends React.Component {
         name="ccaccountnumber"
         component={this.renderField}
         type="number"
-        placeholder="14 digit Coast Capital account"
+        placeholder="14-digit Coast Capital Account Number"
       />
       {/*what is htmlFor for?*/}
       {/*<label htmlFor="nocoastacc">No Coast Capital Account</label>*/}

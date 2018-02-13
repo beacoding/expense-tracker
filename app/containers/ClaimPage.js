@@ -21,6 +21,25 @@ class ClaimPage extends React.Component {
     if (claim_id != undefined) {
       this.props.dispatch(claimItemsActions.requestAll(claim_id));
     }
+
+  }
+
+  submitItem() {
+    let claim_id = window.location.pathname.split("/")[2];
+    const {employee, form} = this.props;
+    const item = {
+      claim_id: parseInt(claim_id),
+      description: form.NewItemForm.values.description,
+      amount: parseInt(form.NewItemForm.values.amount),
+      comment: form.NewItemForm.values.comment,
+      expense_type: parseInt(form.NewItemForm.values.expensetype),
+      has_receipt: 0,
+      image_url: null
+    }
+   
+    this.props.dispatch(claimItemsActions.addClaimItem(item));
+    this.props.dispatch(claimItemsActions.requestAll(claim_id));
+    modal.clear();
   }
 
   submitItem() {
@@ -63,10 +82,25 @@ class ClaimPage extends React.Component {
   renderFetching() {
     return <div className="loader"></div>
   }
+  
+  addItemModal(){
+    modal.add( NewClaimItemModal, {
+      title: 'Add Item',
+      size: 'medium', // large, medium or small,
+      closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
+      hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,
+      hideCloseButton: false, // (optional) if you don't wanna show the top right close button
+      //.. all what you put in here you will get access in the modal props ;)
+      onSubmitItemFunction: this.submitItem
+    });
+  }
 
+  renderAddItem(){
+  }
+  
   render() {
-    const { employee, claimItems, claimsMap, isFetching, error } = this.props;
-
+    const { employee, claimItems, isFetching, claimsMap, error } = this.props;
+  
     if (error !== undefined) {
       return this.renderError(error);
     }
@@ -81,7 +115,6 @@ class ClaimPage extends React.Component {
     if (claimItemsList === undefined) {
       return this.renderFetching();
     }
-
 
     if (claimsMap === undefined) {
       return this.renderFetching();
