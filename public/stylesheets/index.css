@@ -9,7 +9,6 @@ body {
 }
 
 @media (max-width: 1000px) {
-
     body {
         background-size: 0px 0px; /* Force the image to its minimum width */
     }

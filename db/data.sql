@@ -765,12 +765,15 @@ VALUES
 -- INSERT SAMPLE CLAIMS
 INSERT INTO claim (claimee_id, approver_id, company_id, cost_centre_id, description, account_number, notes, status, date_created, date_modified)
 VALUES
-	(3, 2, 1, 500, 'Jan 31 Lunch Meeting', '35289548934435', NULL, 'A', '2018-02-01', '2018-02-01'),
-    (3, 2, 1, 500, 'Feb 2 Company Dinner', '35289548934435', NULL, 'S', '2018-02-02', '2018-02-02');
+	(3,2,1,500,'Jan 31 Lunch Meeting','35289548934435',NULL,'A','2018-02-01','2018-02-01'),
+  (3,2,1,538,'Feb 2 Company Dinner','35289548934435',NULL,'S','2018-02-02','2018-02-02'),
+  (3,2,1,500,'Feb 8 Team Building','35289548934435',NULL,'S','2018-02-08','2018-02-08');
 
 -- INSERT SAMPLE CLAIM ITEMS
 INSERT INTO claim_item (claim_id, description, amount, comment, expense_type, has_receipt, image_url)
 VALUES
-    (1, 'Minami - Yaletown', 244.20, "Lunch with Client RE: Project A", 10, 0, NULL),
-	(2, 'The Keg - Still Creek', 39025.00, "Company New Year's Dinner", 9, 0, NULL);
+  (1,'Minami - Yaletown',244.20,"Lunch with Client RE: Project A",10,0,NULL),
+	(2,'The Keg - Still Creek',39025.00,"Company New Year's Dinner",9,0,NULL),
+	(3,'The Edge Climbing Centre',1008.00,"Main Activity",6,0,NULL),
+	(3,'Cactus Club - North Burnaby',1687.50,"Team Dinner",9,0,NULL);  
 

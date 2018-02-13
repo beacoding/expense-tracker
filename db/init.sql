@@ -56,7 +56,7 @@ CREATE TABLE claim (
   description VARCHAR(80) NOT NULL DEFAULT 'Untitled',
   account_number VARCHAR(14),
   notes VARCHAR(255),
-  status CHAR(1),
+  status CHAR(1) NOT NULL,
   date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),

@@ -70,7 +70,7 @@ module.exports = {
                           claimee.id = claim.claimee_id AND 
                           approver.id = claim.approver_id AND
                           claim.company_id = company.id AND
-                          claim.status = 'S' AND
+                          (claim.status = 'S' OR claim.status = 'F') AND
                           approver.id = ?`;
       connection.query(queryString, [employee.id], (err, rows) => {
         if (err) {
@@ -110,7 +110,6 @@ module.exports = {
   addOne: function(claim) {
     //TODO queryString to add one claim
     //MISSING PAYROLL FIELD!!!!!
-    console.log(claim);
     return new Promise((resolve, reject) => {
       const queryString = 
                           `INSERT INTO claim
@@ -125,24 +124,22 @@ module.exports = {
                              date_created,
                              date_modified)
                            VALUES
-                            ( ?,?,?,?,?,?,?,?,  NOW(), NOW())`;
+                            (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`;
       connection.query(queryString, 
       [
-        claim.claimeeid,
-        claim.approverid,
-        claim.companyid,
-        claim.costcenter,
+        claim.claimee_id,
+        claim.approver_id,
+        claim.company_id,
+        claim.cost_center_id,
         claim.description,
-        claim.acc_number,
+        claim.account_number,
         claim.notes,
         claim.status
       ]
       , (err, rows) => {
         if (err) {
-          console.log(err);
           reject(err);
         } else {
-          console.log(rows);          
           resolve(rows);
         }
       });

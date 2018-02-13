@@ -66,7 +66,7 @@ class ClaimPage extends React.Component {
             <thead>
               <tr>
                 <th scope="col">Description</th>
-                <th scope="col">Amount</th>
+                <th scope="col">Amount (CAD)</th>
                 <th scope="col">Expense Category</th>
               </tr>
             </thead>

@@ -4,7 +4,6 @@ import ClaimPage from '../../containers/ClaimPage';
 import { Link } from 'react-router-dom';
 import { claimsHelpers } from  '../../helpers';
 
-
 import './style.css';
 
 const PendingClaim = ({ employee, claim, handleAction, hasApprovalAuthority, hasSufficientApprovalLimit }) => {
@@ -43,9 +42,13 @@ const PendingClaim = ({ employee, claim, handleAction, hasApprovalAuthority, has
           </tr>
         </tbody>
       </table>
-      <button className="page-button-red" onClick={handleAction}>Decline</button>
-      { (!hasApprovalAuthority || !hasSufficientApprovalLimit) && <button className="page-button-blue" onClick={handleAction}>Forward</button> }
-      { hasApprovalAuthority && hasSufficientApprovalLimit && <button className="page-button-green" onClick={handleAction}>Approve</button> }
+      <div className="buttons-row">
+        <button className="page-button-red" onClick={handleAction}>Decline</button>
+        { (!hasApprovalAuthority || !hasSufficientApprovalLimit) && <button className="page-button-blue" onClick={handleAction}>Forward</button> }
+        { hasApprovalAuthority && hasSufficientApprovalLimit && <button className="page-button-green" onClick={handleAction}>Approve</button> }
+      </div>
+      { !hasApprovalAuthority && <div className="approval-authority-msg"><i className="ion-android-alert">You do not currently have approval rights for the cost centre associated with this claim.</i></div> }
+      { hasApprovalAuthority && !hasSufficientApprovalLimit && <div className="approval-authority-msg"><i className="ion-android-alert">This claim exceeds your approval limit for this cost centre.</i></div> }
     </div>
   );
 }
@@ -63,7 +66,7 @@ PendingClaim.propTypes = {
     cost_centre_id: PropTypes.number.isRequired,
     description: PropTypes.string,
     notes: PropTypes.string,
-    account_number: PropTypes.string.isRequired,
+    account_number: PropTypes.string,
     status: PropTypes.string.isRequired,
     date_created: PropTypes.string.isRequired,
   }).isRequired,

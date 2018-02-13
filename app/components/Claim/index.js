@@ -65,7 +65,7 @@ Claim.propTypes = {
     cost_centre_id: PropTypes.number.isRequired,
     description: PropTypes.string,
     notes: PropTypes.string,
-    account_number: PropTypes.string.isRequired,
+    account_number: PropTypes.string,
     status: PropTypes.string.isRequired,
     date_created: PropTypes.string.isRequired,
   }).isRequired,
