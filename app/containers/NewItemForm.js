@@ -124,6 +124,35 @@ class NewItemForm extends React.Component {
   }
 }
 
+function validate(values){
+  // create empty errors object to return
+
+  const errors = {};
+
+  // validate the inputs from 'values'
+
+  if (!values.description){
+    errors.description = "Please enter a description!";
+  }
+  if (!values.amount){
+    errors.amount = "Please enter an amount!";
+  }
+  if (!values.hasreceipt){
+    errors.hasreceipt = "Please upload a receipt or check the box! ";
+  }
+  if (!values.expensetype){
+    errors.expensetype = "Please select an expense type!";
+  }
+  if (!values.comment){
+    errors.comment = "Please a comment!";
+  }
+
+
+  // if errors is empty, the form is fine to submit
+  // if errors has any properties, redux form assumes form is invalid
+  return errors;
+}
+
 export default reduxForm({
   form: 'NewItemForm', // a unique identifier for this form
 })(NewItemForm);
