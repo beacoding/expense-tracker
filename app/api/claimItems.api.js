@@ -6,8 +6,10 @@ export const claimItemsAPI = {
     requestAll
 };
 
-function addClaimItem() {
+function addClaimItem(item) {
   //TODO: send a claim item over to the server and dispatch
+  return fetch(`/claim_items/add_item`, apiHelpers.postOptions(item))
+    .then(res => apiHelpers.handleResponse(res));
 }
 
 function removeClaimItem() {

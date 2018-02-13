@@ -8,7 +8,7 @@ export const claimItemsActions = {
     clearAll
 };
 
-function addClaimItem() {
+function addClaimItem(item) {
   //TODO add claimItem
   //expects an obj like
   // {
@@ -20,6 +20,17 @@ function addClaimItem() {
   //   has_receipt
   //   image_url
   // }
+  return dispatch => {
+    dispatch(request());
+    claimItemsAPI.addClaimItem(item)
+      .then(
+        res => dispatch(success()),
+        error => dispatch(failure(error))
+      )
+  };
+  function request() {return {type: claimItemsConstants.ADD_CLAIM_ITEM} }
+  function success() {return {type: claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS} }
+  function failure(error) {return {type: claimItemsConstants.ADD_CLAIM_ITEM_FAILURE, error} }
 }
 
 function removeClaimItem() {
