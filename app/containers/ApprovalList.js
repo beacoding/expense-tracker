@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { claimsActions } from '../actions';
 import { claimItemsActions } from '../actions';
+import { approvalLimitsActions } from '../actions';
 import PendingClaimContainer from './PendingClaimContainer';
 
 class ApprovalList extends React.Component {
@@ -14,6 +15,7 @@ class ApprovalList extends React.Component {
     this.props.dispatch(claimsActions.clearAll());
     this.props.dispatch(claimItemsActions.clearAll());
     this.props.dispatch(claimsActions.requestPendingApprovals());
+    this.props.dispatch(approvalLimitsActions.requestByEmployee());
   }
 
   renderError(error) {
@@ -45,8 +47,8 @@ class ApprovalList extends React.Component {
   }
 
   render() {
-    const { employee, claimsMap, error, isFetching, requestAllClaimItems } = this.props;
-
+    const { employee, claimsMap, error, isFetching, limits } = this.props;
+    
     if (error !== undefined) {
       return this.renderError(error);
     }
@@ -84,15 +86,16 @@ class ApprovalList extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { authentication, claims } = state;
+    const { authentication, claims, limits } = state;
     const { employee } = authentication;
     const { claimsMap, error, isFetching } = claims;
 
     return {
         employee,
         claimsMap,
+        limits,
         error,
-        isFetching,
+        isFetching
     };
 }
 export default withRouter(connect(mapStateToProps)(ApprovalList))

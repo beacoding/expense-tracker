@@ -37,7 +37,6 @@ const updateStatus = async (req,res,next) => {
 }
 
 const addOne = async (req,res,next) => {
-  console.log(req);
   let claim;
   try {
     claim = await Claim.addOne(req.body);

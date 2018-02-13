@@ -55,21 +55,3 @@ render(
     </Provider>,
   document.getElementById('root')
 )
-
-// render(
-//   <Provider store={store}>
-//     <div>
-//       <Router>
-//         <div>
-//         <Route exact path="/" component={ClaimListWithNav} />
-//           <Route exact path="/claims" component={ClaimListWithNav}/>
-//           <Route path="/claims/:claim_id/" component={ClaimPageWithNav}/>
-//           <Route exact path="/approvals" component={ApprovalListWithNav}/>
-//           <Route path="/approvals/:claim_id/" component={ClaimPageWithNav}/>  
-//         </div>      
-//       </Router>
-//       <ReduxModal />
-//     </div>
-//   </Provider>,
-//   document.getElementById('root')
-// )

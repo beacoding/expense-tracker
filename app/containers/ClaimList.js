@@ -20,12 +20,12 @@ class ClaimList extends React.Component {
   handlerFunction() {
     const {employee, form} = this.props;
     const claim = {
-      claimeeid: employee.id,
-      approverid: employee.manager_id,
-      companyid: parseInt(form.NewClaimForm.values.companyid),
-      costcenter: parseInt(form.NewClaimForm.values.costcenter),
+      claimee_id: employee.id,
+      approver_id: employee.manager_id,
+      company_id: parseInt(form.NewClaimForm.values.companyid),
+      cost_center_id: parseInt(form.NewClaimForm.values.costcenter),
       description: form.NewClaimForm.values.description,
-      acc_number: form.NewClaimForm.values.ccaccountnumber,
+      account_number: form.NewClaimForm.values.ccaccountnumber,
       // payroll: false,
       // payroll: form.NewClaimForm.values.payroll,
       notes: form.NewClaimForm.values.notes,
@@ -124,7 +124,6 @@ function mapStateToProps(state) {
     const { authentication, claims, form } = state;
     const { employee } = authentication;
     const { claimsMap, error, isFetching } = claims;
-    
 
     return {
         employee,
