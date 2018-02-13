@@ -24,8 +24,8 @@ const addNewItem = async (req,res,next) => {
     next();
   }
 }
+
 module.exports = {
   findAllWithClaim: findAllWithClaim,
   addNewItem: addNewItem
-
 }

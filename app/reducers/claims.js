@@ -10,8 +10,7 @@ const claims = (state = initialState, action) => {
       objA.claimsMap = objA.claimsMap;
       return objA;
     case claimsConstants.ADD_CLAIM_SUCCESS:
-      // window.location= '/claims/'+ action.claimID;
-      const currentState = Object.assign({}, state);
+    const currentState = Object.assign({}, state);
       return {
         claimsMap: currentState.claimsMap,
         isFetching: false,

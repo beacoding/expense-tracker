@@ -11,8 +11,8 @@ const rootReducer = combineReducers({
   claimItems,
   claims,
   limits,
-  form : reduxFormReducer,
-  modals: modalReducer,
+  form: reduxFormReducer,
+  modals: modalReducer
 });
 
 export default rootReducer;

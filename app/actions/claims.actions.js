@@ -26,7 +26,7 @@ function addClaim(claim) {
     dispatch(request());
     claimsAPI.addClaim(claim)
     .then(
-      res =>  dispatch(success(res.claim.insertId)),
+      res => dispatch(success(res.claim.insertId)),
       error => dispatch(failure(error))
     )
    

@@ -9,17 +9,6 @@ export const claimItemsActions = {
 };
 
 function addClaimItem(item) {
-  //TODO add claimItem
-  //expects an obj like
-  // {
-  //   claim_id,
-  //   description,
-  //   amount,
-  //   comment,
-  //   expense_type,
-  //   has_receipt
-  //   image_url
-  // }
   return dispatch => {
     dispatch(request());
     claimItemsAPI.addClaimItem(item)
@@ -32,6 +21,7 @@ function addClaimItem(item) {
   function success() {return {type: claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS} }
   function failure(error) {return {type: claimItemsConstants.ADD_CLAIM_ITEM_FAILURE, error} }
 }
+
 
 function removeClaimItem() {
   //TODO remove claimItem

@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { claimItemsActions } from '../actions';
 import { claimsActions } from '../actions';
 import ClaimItemContainer from './ClaimItemContainer';
-import {modal} from 'react-redux-modal';
+import { modal } from 'react-redux-modal';
 import NewClaimItemModal from './NewClaimItemModal';
 import ReduxModal from 'react-redux-modal';
+
 
 class ClaimPage extends React.Component {
   constructor(props) {
     super(props);
     this.submitItem = this.submitItem.bind(this);
     this.addItemModal = this.addItemModal.bind(this);
-    
   }
 
   componentDidMount() {
@@ -40,6 +40,39 @@ class ClaimPage extends React.Component {
     this.props.dispatch(claimItemsActions.addClaimItem(item));
     this.props.dispatch(claimItemsActions.requestAll(claim_id));
     modal.clear();
+  }
+
+  submitItem() {
+    let claim_id = window.location.pathname.split("/")[2];
+    const {employee, form} = this.props;
+    const item = {
+      claim_id: parseInt(claim_id),
+      description: form.NewItemForm.values.description,
+      amount: parseInt(form.NewItemForm.values.amount),
+      comment: form.NewItemForm.values.comment,
+      expense_type: parseInt(form.NewItemForm.values.expensetype),
+      has_receipt: 0,
+      image_url: null
+    }
+   
+    this.props.dispatch(claimItemsActions.addClaimItem(item));
+    this.props.dispatch(claimItemsActions.requestAll(claim_id));
+    modal.clear();
+  }
+
+  addItemModal(){
+    modal.add( NewClaimItemModal, {
+      title: 'Add Item',
+      size: 'medium', // large, medium or small,
+      closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
+      hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,
+      hideCloseButton: false, // (optional) if you don't wanna show the top right close button
+      //.. all what you put in here you will get access in the modal props ;)
+      onSubmitItemFunction: this.submitItem
+    });
+  }
+
+  renderAddItem(){
   }
 
   renderError(error) {
@@ -90,10 +123,6 @@ class ClaimPage extends React.Component {
     let claim = claimsMap[claim_id];
     let status = claim.status;
 
-    if (status === null) {
-      // return this.renderAddItem();
-    }
-
     return (
       <div className="claimlist-container">
         <div className="page-header">
@@ -121,7 +150,7 @@ class ClaimPage extends React.Component {
             }
             </tbody>
           </table>
-            { (status == 'P') && <button className="page-button" onClick={this.addItemModal}> New Item</button> }
+          { (status == 'P') && <button className="page-button" onClick={this.addItemModal}> New Item</button> }
         </div>
       </div>
     )
