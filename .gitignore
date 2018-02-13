@@ -100,3 +100,5 @@ ehthumbs.db
 Thumbs.db
 *.swp
 *.swo
+.idea
+.idea/*
