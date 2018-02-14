@@ -21,6 +21,9 @@ function getStatusText(status) {
     case "S":
       status = "Submitted";
       break;
+    case "F":
+      status = "Forwarded";
+      break;
     default:
       status = "Not Yet Submitted";
   }
