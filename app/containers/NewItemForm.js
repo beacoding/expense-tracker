@@ -154,5 +154,6 @@ function validate(values){
 }
 
 export default reduxForm({
-  form: 'NewItemForm', // a unique identifier for this form
+  validate,
+  form: 'NewItemForm' // a unique identifier for this form
 })(NewItemForm);
