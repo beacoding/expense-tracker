@@ -16,7 +16,7 @@ function removeClaimItem() {
   //TODO: remove a claim item over to the server and dispatch
 }
 
-function requestAll(claimID) {
-  return fetch(`/claim_items?claim_id=${claimID}`, apiHelpers.getOptions())
+function requestAll(claim_id) {
+  return fetch(`/claim_items?claim_id=${claim_id}`, apiHelpers.getOptions())
   .then(res => apiHelpers.handleResponse(res));
 }

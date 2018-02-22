@@ -11,7 +11,7 @@ module.exports = {
           claim_item.comment,
           expense_types.category as expense_category,
           claim_item.image_url,
-          claim_item.has_receipt
+          claim_item.no_receipt
         FROM
           claim,
           claim_item,
@@ -44,7 +44,7 @@ module.exports = {
                               amount,
                               comment,
                               expense_type,
-                              has_receipt,
+                              no_receipt,
                               image_url)
                             VALUES
                               (?, ?, ?, ?, ?, ?, ?)`;
@@ -55,7 +55,7 @@ module.exports = {
           item.amount,
           item.comment,
           item.expense_type,
-          item.has_receipt,
+          item.no_receipt,
           item.image_url
         ],
       (err, rows) => {

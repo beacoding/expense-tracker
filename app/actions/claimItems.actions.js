@@ -2,24 +2,24 @@ import { claimItemsConstants } from '../constants';
 import { claimItemsAPI } from '../api'
 
 export const claimItemsActions = {
-    addClaimItem,
-    removeClaimItem,
-    requestAll,
-    clearAll
+  addClaimItem,
+  removeClaimItem,
+  requestAll,
+  clearAll
 };
 
 function addClaimItem(item) {
   return dispatch => {
     dispatch(request());
     claimItemsAPI.addClaimItem(item)
-      .then(
-        res => dispatch(success()),
-        error => dispatch(failure(error))
-      )
+    .then(
+      res => dispatch(success()),
+      error => dispatch(failure(error))
+    )
   };
-  function request() {return {type: claimItemsConstants.ADD_CLAIM_ITEM} }
-  function success() {return {type: claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS} }
-  function failure(error) {return {type: claimItemsConstants.ADD_CLAIM_ITEM_FAILURE, error} }
+  function request() { return { type: claimItemsConstants.ADD_CLAIM_ITEM }}
+  function success() { return { type: claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS }}
+  function failure(error) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_FAILURE, error }}
 }
 
 
@@ -31,24 +31,19 @@ function removeClaimItem() {
   // }
 }
 
-function requestAll(claimID) {
+function requestAll(claim_id) {
   //TODO fetch all with claim id
   return dispatch => {
     dispatch(request());
-    claimItemsAPI.requestAll(claimID)
-      .then(
-          res => {
-            dispatch(success(res.claimItems, claimID)) 
-          }
-          ,
-          error => {
-            dispatch(failure(error))
-          }
-      );
+    claimItemsAPI.requestAll(claim_id)
+    .then(
+      res => dispatch(success(res.claimItems, claim_id)),
+      error => dispatch(failure(error))
+    );
   };
-
-  function request() { return { type: claimItemsConstants.REQUEST_CLAIM_ITEMS } }
-  function success(claimItems, claimID) { return { type: claimItemsConstants.RECEIVE_CLAIM_ITEMS, claimID, claimItems }}
+  
+  function request() { return { type: claimItemsConstants.REQUEST_CLAIM_ITEMS }}
+  function success(claimItems, claimId) { return { type: claimItemsConstants.RECEIVE_CLAIM_ITEMS, claimId, claimItems }}
   function failure(error) { return { type: claimItemsConstants.FAILURE_CLAIM_ITEMS, error }}
 }
 

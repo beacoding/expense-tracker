@@ -21,13 +21,13 @@ class NavBar extends React.Component {
           <img src="/assets/img/logo.png"/>
         </div>
         <ul className="list-unstyled components" >
-            <li><NavLink activeClassName="active" to="/claims"><i className="ion-android-list"></i>My Claims</NavLink></li>
-            <li><NavLink activeClassName="active" to="/approvals"><i className="ion-android-checkmark-circle"></i>Approvals</NavLink></li>
-            <li><a href="/#"><i className="ion-clipboard"></i>Reporting</a></li>
-            <li><a href="/#"><i className="ion-person-stalker"></i>Users</a></li>
-            <li><a href="/#"><i className="ion-android-options"></i>Approval Limits</a></li>
-            <li><a href="/#"><i className="ion-gear-a"></i>Settings</a></li>
-            <li style={{cursor: "pointer"}} onClick={this.logout}><a><i className="ion-power"></i>Log out</a></li>
+          <li><NavLink activeClassName="active" to="/claims"><i className="ion-android-list"></i>My Claims</NavLink></li>
+          <li><NavLink activeClassName="active" to="/approvals"><i className="ion-android-checkmark-circle"></i>Approvals</NavLink></li>
+          <li><a href="/#"><i className="ion-clipboard"></i>Reporting</a></li>
+          <li><a href="/#"><i className="ion-person-stalker"></i>Users</a></li>
+          <li><a href="/#"><i className="ion-android-options"></i>Approval Limits</a></li>
+          <li><a href="/#"><i className="ion-gear-a"></i>Settings</a></li>
+          <li style={{cursor: "pointer"}} onClick={this.logout}><a><i className="ion-power"></i>Log out</a></li>
         </ul>
       </div>
     )
@@ -35,11 +35,11 @@ class NavBar extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { authentication } = state;
-    const { employee } = authentication;
-    return {
-      employee
-    };
+  const { authentication } = state;
+  const { employee } = authentication;
+  return {
+    employee
+  };
 }
 
 export default withRouter(connect(mapStateToProps)(NavBar))

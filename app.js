@@ -16,7 +16,11 @@ var approvalLimits = require('./routes/approvalLimits');
 
 var app = express();
 
-//passport
+// disable client-side caching (because IE...)
+var nocache = require('nocache')
+app.use(nocache())
+
+// passport
 require('./config/passport')(passport); // pass passport for configuration
 
 // view engine setup

@@ -1,41 +1,61 @@
 import { claimItemsConstants } from '../constants';
 
-const initialState = {isFetching: true}
+const initialState = {
+  isFetching: false,
+  claimItemsMap: {},
+  error: undefined
+}
 
 const claimItems = (state = initialState, action) => {
+  let newClaimItemsMap;
+  
   switch (action.type) {
+    // ADD CLAIM ITEM
     case claimItemsConstants.ADD_CLAIM_ITEM:
-      return {
+      return Object.assign({}, state, {
         isFetching: true
-      }
+      });
     case claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS:
-      return {
-        isFetching: false
-      }
+      // TODO: append the newly created claimItem to claimItemsMap
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: undefined
+      });
     case claimItemsConstants.ADD_CLAIM_ITEM_FAILURE:
-      return {
-        isFetching: false,
+      return Object.assign({}, state, {
+        isFetching: true,
         error: action.error
-      }
+      });
+    // REMOVE CLAIM ITEM
     case claimItemsConstants.REMOVE_CLAIM_ITEM:
+      return state;
+    // FETCH CLAIM ITEMS
     case claimItemsConstants.REQUEST_CLAIM_ITEMS:
-      return {
+      return Object.assign({}, state, {
         isFetching: true
-      }
+      });
     case claimItemsConstants.RECEIVE_CLAIM_ITEMS:
-      const obj = Object.assign({}, state);
-      obj.isFetching = false
-      obj[action.claimID] = action.claimItems;
-      return obj;
-    case claimItemsConstants.FAILURE_CLAIM_ITEMS:
-      return {
+      newClaimItemsMap = {};
+      action.claimItems.forEach((claim) => {
+        newClaimItemsMap[action.claimId] = action.claimItems;
+      });
+      return Object.assign({}, state, {
         isFetching: false,
+        claimItemsMap: newClaimItemsMap,
+        error: undefined
+      });
+    case claimItemsConstants.FAILURE_CLAIM_ITEMS:
+      return Object.assign({}, state, {
+        isFetching: true,
         error: action.error
-      }
+      });
+    // CLEAR CLAIM ITEMS
     case claimItemsConstants.CLEAR_CLAIM_ITEMS:
-      return {
-        isFetching: false
-      }
+      return Object.assign({}, state, {
+        isFetching: false,
+        claimItemsMap: {},
+        error: undefined
+      });
     default:
       return state;
   }

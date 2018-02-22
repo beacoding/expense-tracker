@@ -1,12 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { modal } from 'react-redux-modal';
 import { claimItemsActions } from '../actions';
 import { claimsActions } from '../actions';
 import ClaimItemContainer from './ClaimItemContainer';
-import { modal } from 'react-redux-modal';
 import NewClaimItemModal from './NewClaimItemModal';
-import ReduxModal from 'react-redux-modal';
 
 
 class ClaimPage extends React.Component {
@@ -21,37 +20,18 @@ class ClaimPage extends React.Component {
     if (claim_id != undefined) {
       this.props.dispatch(claimItemsActions.requestAll(claim_id));
     }
-
   }
 
   submitItem() {
     let claim_id = window.location.pathname.split("/")[2];
-    const {employee, form} = this.props;
+    const { employee, form } = this.props;
     const item = {
       claim_id: parseInt(claim_id),
-      description: form.NewItemForm.values.description,
-      amount: parseInt(form.NewItemForm.values.amount),
-      comment: form.NewItemForm.values.comment,
-      expense_type: parseInt(form.NewItemForm.values.expensetype),
-      has_receipt: 0,
-      image_url: null
-    }
-   
-    this.props.dispatch(claimItemsActions.addClaimItem(item));
-    this.props.dispatch(claimItemsActions.requestAll(claim_id));
-    modal.clear();
-  }
-
-  submitItem() {
-    let claim_id = window.location.pathname.split("/")[2];
-    const {employee, form} = this.props;
-    const item = {
-      claim_id: parseInt(claim_id),
-      description: form.NewItemForm.values.description,
-      amount: parseInt(form.NewItemForm.values.amount),
-      comment: form.NewItemForm.values.comment,
-      expense_type: parseInt(form.NewItemForm.values.expensetype),
-      has_receipt: 0,
+      description: form.NewClaimItemForm.values.description,
+      amount: parseInt(form.NewClaimItemForm.values.amount),
+      comment: form.NewClaimItemForm.values.comment,
+      expense_type: parseInt(form.NewClaimItemForm.values.expense_type),
+      no_receipt: 1,
       image_url: null
     }
    
@@ -111,7 +91,7 @@ class ClaimPage extends React.Component {
 
     let claim_id = window.location.pathname.split("/")[2];
 
-    const claimItemsList = claimItems[claim_id] || [];
+    const claimItemsList = claimItems.claimItemsMap[claim_id] || [];
     if (claimItemsList === undefined) {
       return this.renderFetching();
     }
@@ -158,18 +138,18 @@ class ClaimPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { authentication, claimItems, claims, form } = state;
-    const { error, isFetching } = claimItems;
-    const { employee } = authentication;
-    const { claimsMap } = claims;
-    return {
-        employee,
-        claimItems,
-        isFetching,
-        claimsMap,
-        error,
-        form
-    };
+  const { authentication, claimItems, claims, form } = state;
+  const { error, isFetching } = claimItems;
+  const { employee } = authentication;
+  const { claimsMap } = claims;
+  return {
+    employee,
+    claimItems,
+    isFetching,
+    claimsMap,
+    error,
+    form
+  };
 }
 
 export default withRouter(connect(mapStateToProps)(ClaimPage))

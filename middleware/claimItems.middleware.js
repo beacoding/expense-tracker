@@ -13,7 +13,6 @@ const findAllWithClaim = async (req,res,next) => {
 }
 
 const addNewItem = async (req,res,next) => {
-  console.log(req);
   let items;
   try {
     items = await ClaimItem.addOne(req.body);
