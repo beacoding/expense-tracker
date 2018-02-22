@@ -19,6 +19,7 @@ class ApprovalList extends React.Component {
   }
 
   reloadData() {
+    this.props.dispatch(claimsActions.clearAll());
     this.props.dispatch(claimsActions.requestPendingApprovals());
   }
 
