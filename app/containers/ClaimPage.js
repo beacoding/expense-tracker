@@ -28,7 +28,7 @@ class ClaimPage extends React.Component {
     const item = {
       claim_id: parseInt(claim_id),
       description: form.NewClaimItemForm.values.description,
-      amount: parseInt(form.NewClaimItemForm.values.amount),
+      amount: parseFloat(form.NewClaimItemForm.values.amount),
       comment: form.NewClaimItemForm.values.comment,
       expense_type: parseInt(form.NewClaimItemForm.values.expense_type),
       no_receipt: 1,

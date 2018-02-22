@@ -16,7 +16,7 @@ class NewClaimForm extends React.Component {
       <div className = {className}>
         <label>{field.label}</label>
         {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-        <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} />
+        <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} max={field.max} maxLength={field.maxLength} />
         <div className="text-help">
           {touched ? error : ""}
         </div>
@@ -106,12 +106,14 @@ class NewClaimForm extends React.Component {
         name="account_number"
         component={this.renderField}
         type="number"
-        placeholder="14-digit Coast Capital Account Number"
+        placeholder="XXXXXXXXXXXXXX"
+        max={99999999999999}
+        maxLength={14}
       />
       <Field
         label="No Coast Capital Account"
         name="no_account_number"
-        default={false}
+        checked={false}
         component={this.renderCheckbox}
       />
       <Field
@@ -147,12 +149,12 @@ class NewClaimForm extends React.Component {
 function validate(values) {
   // create empty errors object to return
   const errors = {};
-  
+
   // validate the inputs from 'values'
   if (!/^(0|[1-9][0-9]{13})$/i.test(values.account_number)) {
     errors.account_number = "Please provide your 14-digit account number.";
   }
-  if (!values.description) {
+  if (!values.description || values.description.trim().length == 0) {
     errors.description = "Please provide a description for your claim.";
   }
   if (!values.company_id) {

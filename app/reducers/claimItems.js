@@ -35,8 +35,8 @@ const claimItems = (state = initialState, action) => {
         isFetching: true
       });
     case claimItemsConstants.RECEIVE_CLAIM_ITEMS:
-      newClaimItemsMap = {};
-      action.claimItems.forEach((claim) => {
+      newClaimItemsMap = state.claimItemsMap;
+      action.claimItems.forEach((claimItem) => {
         newClaimItemsMap[action.claimId] = action.claimItems;
       });
       return Object.assign({}, state, {
@@ -46,7 +46,7 @@ const claimItems = (state = initialState, action) => {
       });
     case claimItemsConstants.FAILURE_CLAIM_ITEMS:
       return Object.assign({}, state, {
-        isFetching: true,
+        isFetching: false,
         error: action.error
       });
     // CLEAR CLAIM ITEMS

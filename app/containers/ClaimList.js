@@ -22,6 +22,7 @@ class ClaimList extends React.Component {
   }
 
   reloadData() {
+    this.props.dispatch(claimsActions.clearAll());
     this.props.dispatch(claimsActions.requestAll());
   }
     

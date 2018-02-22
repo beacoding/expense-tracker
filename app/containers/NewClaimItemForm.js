@@ -9,14 +9,14 @@ class NewClaimItemForm extends React.Component {
   }
   
   renderField(field) {
-    const {meta: { touched, error }} = field;
+    const { meta: { touched, error }} = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
     
     return (
       <div className = {className}>
         <label>{field.label}</label>
         {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-        <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} />
+        <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} min={field.min} step={field.step} />
         <div className="text-help">
           {touched ? error : ""}
         </div>
@@ -108,11 +108,13 @@ class NewClaimItemForm extends React.Component {
         name="amount"
         component={this.renderField}
         type="number"
+        min={0}
+        step={0.01}
       />
       <Field
         label="No Receipt?"
         name="no_receipt"
-        default={1}
+        checked={true}
         component={this.renderCheckbox}
       />
       <Field
@@ -138,7 +140,7 @@ function validate(values) {
   const errors = {};
 
   // validate the inputs from 'values'
-  if (!values.description) {
+  if (!values.description || values.description.trim().length == 0) {
     errors.description = "Please provide a description for this item.";
   }
   if (!values.amount) {
@@ -150,7 +152,7 @@ function validate(values) {
   if (!values.expense_type) {
     errors.expense_type = "Please select an expense type.";
   }
-  if (!values.comment) {
+  if (!values.comment || values.comment.trim().length == 0) {
     errors.comment = "Please provide some context for this item.";
   }
 
