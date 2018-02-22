@@ -33,10 +33,12 @@ function getStatusText(status) {
 // Calculates the total amount of a claim
 function calculateTotal(claim, claimItems) {
   let currentTotal = 0;
-  claimItems.forEach((claimItem) => {
-    let amount = claimItem.amount;
-    currentTotal += amount;
-  });
+  if (claimItems !== undefined) {
+    claimItems.forEach((claimItem) => {
+      let amount = claimItem.amount;
+      currentTotal += amount;
+    });
+  }
 
   claim["total_amount"] = currentTotal.toFixed(2);
 }

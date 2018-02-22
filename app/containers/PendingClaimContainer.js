@@ -76,7 +76,7 @@ class PendingClaimContainer extends React.Component {
             title: 'Forward Claim',
             bodyHtml: `<p>Who would you like to forward this claim request to?</p>`,
             hasDropdown: true,
-            dropdownOptions: this.props.limits.managerOptions,
+            dropdownOptions: this.props.policies.managerOptions,
             dropdownDefaultValue: null,
             dropdownPlaceholder: "Select Manager",
             onChangeFunction: this.setForwardManagerId,
@@ -94,25 +94,24 @@ class PendingClaimContainer extends React.Component {
   }
 
   render() {
-    const { employee, key, claim, claimItems, limits } = this.props;
+    const { employee, key, claim, claimItems, policies } = this.props;
     let hasApprovalAuthority = false;
     let hasSufficientApprovalLimit = false;
 
-    if (claimItems[claim.claim_id] !== undefined) {
-      claimsHelpers.calculateTotal(claim, claimItems[claim.claim_id]);
-      if (limits.limitsMap) {
+    if (claimItems.claimItemsMap[claim.claim_id] !== undefined) {
+      claimsHelpers.calculateTotal(claim, claimItems.claimItemsMap[claim.claim_id]);
+    }
+    if (policies.limitsMap) {
+      // An approval limit exists for this manager,
+      // so they have approval authority for the cost centre
+      if (policies.limitsMap[claim.cost_centre_id]) {
+        hasApprovalAuthority = true;
 
-        // An approval limit exists for this manager,
-        // so they have approval authority for the cost centre
-        if (limits.limitsMap[claim.cost_centre_id]) {
-          hasApprovalAuthority = true;
-
-          // An approval limit of NULL means said manager does not have an upper limit,
-          // so treat as sufficient limit, otherwise ensure claim amount is less than limit
-          if (limits.limitsMap[claim.cost_centre_id].approval_limit == undefined || 
-              claim.total_amount <= limits.limitsMap[claim.cost_centre_id].approval_limit) {
-            hasSufficientApprovalLimit = true;
-          }
+        // An approval limit of NULL means said manager does not have an upper limit,
+        // so treat as sufficient limit, otherwise ensure claim amount is less than limit
+        if (policies.limitsMap[claim.cost_centre_id].approval_limit == undefined || 
+            claim.total_amount <= policies.limitsMap[claim.cost_centre_id].approval_limit) {
+          hasSufficientApprovalLimit = true;
         }
       }
     }
@@ -132,10 +131,10 @@ class PendingClaimContainer extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { claimItems, limits } = state;
+  const { claimItems, policies } = state;
   return {
     claimItems,
-    limits
+    policies
   }
 }
 

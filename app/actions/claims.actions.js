@@ -11,28 +11,16 @@ export const claimsActions = {
 };
 
 function addClaim(claim) {
-  //TODO add claim
-  //expects an obj like
-  // {
-  //   claimee_id,
-  //   approver_id,
-  //   company_id,
-  //   cost_centre_id,
-  //   description,
-  //   account_number,
-  //   notes
-  // }
   return dispatch => {
     dispatch(request());
     claimsAPI.addClaim(claim)
     .then(
-      res => dispatch(success(res.claim.insertId)),
+      res => dispatch(success(res.claim.insertId, claim)),
       error => dispatch(failure(error))
     )
-   
   };
   function request() { return { type: claimsConstants.ADD_CLAIM_REQUEST }}
-  function success(claimID) { return { type: claimsConstants.ADD_CLAIM_SUCCESS, claimID }}
+  function success(claimId, claim) { return { type: claimsConstants.ADD_CLAIM_SUCCESS, claimId, claim }}
   function failure(error) { return { type: claimsConstants.ADD_CLAIM_FAILURE, error }}
 }
 
@@ -50,12 +38,12 @@ function updateStatus(claim_id, approver_id, status) {
     dispatch(request());
     claimsAPI.updateStatus(claim_id, approver_id, status)
     .then(
-      res => dispatch(success()),
+      res => dispatch(success(claim_id)),
       error => dispatch(failure(error))
-      )
+    );
   };
   function request() { return { type: claimsConstants.UPDATE_CLAIM_STATUS_REQUEST }}
-  function success() { return { type: claimsConstants.UPDATE_CLAIM_STATUS_SUCCESS }}
+  function success(claimId) { return { type: claimsConstants.UPDATE_CLAIM_STATUS_SUCCESS, claimId }}
   function failure(error) { return { type: claimsConstants.UPDATE_CLAIM_STATUS_FAILURE, error }}
 }
 
@@ -78,12 +66,12 @@ function requestPendingApprovals() {
   return dispatch => {
     dispatch(request());
     claimsAPI.requestPendingApprovals()
-      .then(
-          res => dispatch(success(res.claims)),
-          error => dispatch(failure(error))
-      );
+    .then(
+      res => dispatch(success(res.claims)),
+      error => dispatch(failure(error))
+    );
   };
-
+  
   function request() { return { type: claimsConstants.REQUEST_PENDING_APPROVALS }}
   function success(claims) { return { type: claimsConstants.RECEIVE_PENDING_APPROVALS, claims }}
   function failure(error) { return { type: claimsConstants.FAILURE_PENDING_APPROVALS, error }}

@@ -9,13 +9,17 @@ import PendingClaimContainer from './PendingClaimContainer';
 class ApprovalList extends React.Component {
   constructor(props) {
     super(props);
+    this.reloadData = this.reloadData.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(claimsActions.clearAll());
-    this.props.dispatch(claimItemsActions.clearAll());
     this.props.dispatch(claimsActions.requestPendingApprovals());
     this.props.dispatch(approvalLimitsActions.requestByEmployee());
+  }
+
+  reloadData() {
+    this.props.dispatch(claimsActions.requestPendingApprovals());
   }
 
   renderError(error) {
@@ -29,6 +33,7 @@ class ApprovalList extends React.Component {
           <div className="page-title">
             Approvals
           </div>
+          <button className="page-button-blue" onClick={this.reloadData}> Refresh</button>  
           <div className="page-route">
             <span className="route-inactive">Home</span>  <span className="route-active"> > Approvals</span>
           </div>
@@ -47,7 +52,7 @@ class ApprovalList extends React.Component {
   }
 
   render() {
-    const { employee, claimsMap, error, isFetching, limits } = this.props;
+    const { employee, claimsMap, policies, error, isFetching } = this.props;
     
     if (error !== undefined) {
       return this.renderError(error);
@@ -67,6 +72,7 @@ class ApprovalList extends React.Component {
           <div className="page-title">
             Approvals
           </div>
+          <button className="page-button-blue" onClick={this.reloadData}> Refresh</button>  
           <div className="page-route">
             <span className="route-inactive">Home</span>  <span className="route-active"> > Approvals</span>
           </div>
@@ -86,16 +92,16 @@ class ApprovalList extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { authentication, claims, limits } = state;
-    const { employee } = authentication;
-    const { claimsMap, error, isFetching } = claims;
+  const { authentication, claims, policies } = state;
+  const { employee } = authentication;
+  const { claimsMap, error, isFetching } = claims;
 
-    return {
-        employee,
-        claimsMap,
-        limits,
-        error,
-        isFetching
-    };
+  return {
+    employee,
+    claimsMap,
+    policies,
+    error,
+    isFetching
+  };
 }
 export default withRouter(connect(mapStateToProps)(ApprovalList))

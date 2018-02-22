@@ -1,87 +1,122 @@
 import { claimsConstants } from '../constants';
 
-const initialState = {isFetching: true}
+const initialState = {
+  isFetching: false,
+  claimsMap: {},
+  claimId: -1,
+  error: undefined
+}
 
 const claims = (state = initialState, action) => {
+  let newClaimsMap;
+
   switch (action.type) {
+    // ADD CLAIM
     case claimsConstants.ADD_CLAIM_REQUEST:
-      const objA = Object.assign({}, state);
-      objA.isFetching = true;
-      objA.claimsMap = objA.claimsMap;
-      return objA;
+      return Object.assign({}, state, {
+        isFetching: true
+      });
     case claimsConstants.ADD_CLAIM_SUCCESS:
-    const currentState = Object.assign({}, state);
-      return {
-        claimsMap: currentState.claimsMap,
+      // append stub of the newly created claim to claimsMap
+      action.claim.claim_id = action.claimId;
+      action.claim.claimee_first_name = 'Processing...';
+      action.claim.claimee_last_name = '';
+      action.claim.approver_first_name = 'Processing...';
+      action.claim.approver_last_name = '';
+      action.claim.company_name = 'Processing...';
+      action.claim.date_created = Date.now();
+      newClaimsMap = state.claimsMap;
+      newClaimsMap[action.claimId] = action.claim;
+      return Object.assign({}, state, {
         isFetching: false,
-        claimID: action.claimID
-      }
+        claimsMap: newClaimsMap,
+        claimId: action.claimId,
+        error: undefined
+      });
     case claimsConstants.ADD_CLAIM_FAILURE:
-      return {
+      return Object.assign({}, state, {
         isFetching: false,
         error: action.error
-      }
+      });
+
+    // REMOVE CLAIM
     case claimsConstants.REMOVE_CLAIM_REQUEST:
+      return state;
     case claimsConstants.REMOVE_CLAIM_SUCCESS:
+      return state;
+    case claimsConstants.REMOVE_CLAIM_FAILURE:
+      return state;
+
+    // UPDATE CLAIM STATUS
     case claimsConstants.UPDATE_CLAIM_STATUS_REQUEST:
-      return {
+      return Object.assign({}, state, {
         isFetching: true
-      }
+      });
     case claimsConstants.UPDATE_CLAIM_STATUS_SUCCESS:
-      return {
-        isFetching: false
-      }
+      // remove updated claim
+      newClaimsMap = state.claimsMap;
+      delete newClaimsMap[action.claim_id];
+      return Object.assign({}, state, {
+        isFetching: false,
+        claimsMap: newClaimsMap,
+        error: undefined
+      });
     case claimsConstants.UPDATE_CLAIM_STATUS_FAILURE:
-      return {
+      return Object.assign({}, state, {
         isFetching: false,
         error: action.error
-      }
+      });
+
+    // FETCH CLAIMS
     case claimsConstants.REQUEST_CLAIMS:
-      return {
+      return Object.assign({}, state, {
         isFetching: true
-      }
+      });
     case claimsConstants.RECEIVE_CLAIMS:
-      const objD = Object.assign({}, state);
-      objD.isFetching = false;
-      objD.claimsMap = objD.claimsMap || {};
+      newClaimsMap = {};
       action.claims.forEach((claim) => {
-        objD.claimsMap[claim.claim_id] = claim;
+        newClaimsMap[claim.claim_id] = claim;
       });
-      return objD;
-      // return {
-      //   claimsList: action.claims,
-      //   isFetching: false
-      // }
+      return Object.assign({}, state, {
+        isFetching: false,
+        claimsMap: newClaimsMap,
+        error: undefined
+      });
     case claimsConstants.FAILURE_CLAIMS:
-      return {
+      return Object.assign({}, state, {
         isFetching: false,
         error: action.error
-      }
-    case claimsConstants.REQUEST_PENDING_APPROVALS:
-      return {
-        isFetching: true
-      }
-    case claimsConstants.RECEIVE_PENDING_APPROVALS:
-      const objB = Object.assign({}, state);
-      objB.isFetching = false;
-      objB.claimsMap = objB.claimsMap || {};
-      action.claims.forEach((claim) => {
-        objB.claimsMap[claim.claim_id] = claim;
       });
-      return objB;
-      // return {
-      //   claimsList: action.claims,
-      //   isFetching: false
-      // }
+
+    // FETCH CLAIMS FOR APPROVAL
+    case claimsConstants.REQUEST_PENDING_APPROVALS:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case claimsConstants.RECEIVE_PENDING_APPROVALS:
+      newClaimsMap = {};
+      action.claims.forEach((claim) => {
+        newClaimsMap[claim.claim_id] = claim;
+      });
+      return Object.assign({}, state, {
+        isFetching: false,
+        claimsMap: newClaimsMap,
+        error: undefined
+      });
     case claimsConstants.FAILURE_PENDING_APPROVALS:
-      return {
+      return Object.assign({}, state, {
         isFetching: false,
         error: action.error
-      }
+      });
+      
+    // CLEAR CLAIMS
     case claimsConstants.CLEAR_CLAIMS:
-      return {
-        isFetching: false
-    }
+      return Object.assign({}, state, {
+        isFetching: false,
+        claimsMap: {},
+        claimId: -1,
+        error: undefined
+      });
     default:
       return state;
   }

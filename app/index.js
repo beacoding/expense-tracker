@@ -1,3 +1,5 @@
+import 'babel-polyfill';
+import 'isomorphic-fetch';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { render } from 'react-dom';

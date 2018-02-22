@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Modal } from 'react-bootstrap'
 import { Field, reduxForm } from 'redux-form';
-import  NewItemForm  from './NewItemForm';
+import  NewClaimItemForm  from './NewClaimItemForm';
 
 
 class NewClaimItemModal extends React.Component {
@@ -18,7 +18,7 @@ class NewClaimItemModal extends React.Component {
   render() {
     return (
       <div>
-        <NewItemForm form='NewItemForm' onSubmit={this.props.onSubmitItemFunction}/>
+        <NewClaimItemForm form='NewClaimItemForm' onSubmit={this.props.onSubmitItemFunction}/>
       </div>
     );
   }

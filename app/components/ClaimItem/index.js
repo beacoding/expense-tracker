@@ -10,7 +10,7 @@ const ClaimItem = ({ employee, claim_item }) => {
     comment, 
     expense_category,
     image_url,
-    has_receipt
+    no_receipt
   } = claim_item;
   
   return (
@@ -30,7 +30,7 @@ ClaimItem.propTypes = {
     comment: PropTypes.string,
     expense_category: PropTypes.string,
     image_url: PropTypes.string,
-    has_receipt: PropTypes.number.isRequired
+    no_receipt: PropTypes.number.isRequired
   }).isRequired,
   employee: PropTypes.shape({
     id: PropTypes.number.isRequired,

@@ -17,9 +17,7 @@ class ClaimContainer extends React.Component {
 
   render() {
     const { employee, key, claim, claimItems } = this.props;
-    if (claimItems[claim.claim_id] !== undefined) {
-      claimsHelpers.calculateTotal(claim, claimItems[claim.claim_id]);
-    }
+    claimsHelpers.calculateTotal(claim, claimItems.claimItemsMap[claim.claim_id]);
     return (
       <Claim claim={claim} employee={employee} key={claim.claim_id} />
     )

@@ -73,7 +73,7 @@ CREATE TABLE claim_item (
   amount DECIMAL(10,2) NOT NULL,
   comment VARCHAR(255) NOT NULL,
   expense_type INT NOT NULL,
-  has_receipt BOOLEAN NOT NULL DEFAULT 0,
+  no_receipt BOOLEAN NOT NULL DEFAULT 1,
   image_url VARCHAR(255),
   PRIMARY KEY (id),
   FOREIGN KEY (claim_id) REFERENCES claim(id),
