@@ -19,25 +19,26 @@ class ClaimPage extends React.Component {
     let claim_id = window.location.pathname.split("/")[2];
     if (claim_id != undefined) {
       this.props.dispatch(claimItemsActions.requestAll(claim_id));
+      this.props.dispatch(claimsActions.requestOne(claim_id))
     }
   }
 
-  submitItem() {
-    let claim_id = window.location.pathname.split("/")[2];
-    const { employee, form } = this.props;
-    const item = {
-      claim_id: parseInt(claim_id),
-      description: form.NewClaimItemForm.values.description,
-      amount: parseFloat(form.NewClaimItemForm.values.amount),
-      comment: form.NewClaimItemForm.values.comment,
-      expense_type: parseInt(form.NewClaimItemForm.values.expense_type),
-      no_receipt: 1,
-      image_url: null
-    }
+  submitItem(e) {
+    console.log("Qwejrklwerklw");
+    // let claim_id = window.location.pathname.split("/")[2];
+    // const { employee, form } = this.props;
+    // const item = {
+    //   claim_id: parseInt(claim_id),
+    //   description: form.NewClaimItemForm.values.description,
+    //   amount: parseFloat(form.NewClaimItemForm.values.amount),
+    //   comment: form.NewClaimItemForm.values.comment,
+    //   expense_type: parseInt(form.NewClaimItemForm.values.expense_type),
+    //   no_receipt: 1,
+    // }
    
-    this.props.dispatch(claimItemsActions.addClaimItem(item));
-    this.props.dispatch(claimItemsActions.requestAll(claim_id));
-    modal.clear();
+    // this.props.dispatch(claimItemsActions.addClaimItem(item));
+    // this.props.dispatch(claimItemsActions.requestAll(claim_id));
+    // modal.clear();
   }
 
   addItemModal(){
@@ -100,8 +101,13 @@ class ClaimPage extends React.Component {
       return this.renderFetching();
     }
 
+
     let claim = claimsMap[claim_id];
-    let status = claim.status;
+    if (claimsMap[claim_id] == undefined) {
+      return this.renderFetching();
+    }
+
+    let status = claim.status
 
     return (
       <div className="claimlist-container">

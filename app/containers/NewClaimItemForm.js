@@ -53,6 +53,21 @@ class NewClaimItemForm extends React.Component {
       </div>
     );
   }
+
+
+
+  renderInput(field) {
+    const { input, type, meta: { touched, error, warning } } = field;
+    delete input.value
+
+    return (
+      <div>
+        <label htmlFor={input.name}>
+          <input {...input} type={type}/>
+        </label>
+      </div>
+    );
+  }
   
   renderExpenseTypeDropdownField(field) {
     const {meta: {touched, error } } = field;
@@ -94,6 +109,8 @@ class NewClaimItemForm extends React.Component {
   render () {
     const { handleSubmit, pristine, reset, submitting } = this.props;
 
+    console.log(handleSubmit);
+
     return (
       <form onSubmit={handleSubmit}>
       <Field
@@ -111,10 +128,11 @@ class NewClaimItemForm extends React.Component {
         min={0}
         step={0.01}
       />
+      <Field name="picture" component={this.renderInput} type="file" className='form-control' />
       <Field
         label="No Receipt?"
         name="no_receipt"
-        checked={true}
+        checked={false}
         component={this.renderCheckbox}
       />
       <Field

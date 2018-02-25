@@ -6,6 +6,7 @@ export const claimsActions = {
   removeClaim,
   updateStatus,
   requestAll,
+  requestOne,
   requestPendingApprovals,
   clearAll
 };
@@ -60,6 +61,24 @@ function requestAll() {
   function request() { return { type: claimsConstants.REQUEST_CLAIMS }}
   function success(claims) { return { type: claimsConstants.RECEIVE_CLAIMS, claims }}
   function failure(error) { return { type: claimsConstants.FAILURE_CLAIMS, error }}
+}
+
+function requestOne(claim_id) {
+  return dispatch => {
+    dispatch(request());
+    claimsAPI.requestOne(claim_id)
+    .then(
+      res => {
+        console.log("this is res", res)
+        dispatch(success(res.claim))
+      },
+      error => dispatch(failure(error))
+    );
+  };
+  
+  function request() { return { type: claimsConstants.REQUEST_CLAIM }}
+  function success(claim) { return { type: claimsConstants.RECEIVE_CLAIM, claim }}
+  function failure(error) { return { type: claimsConstants.FAILURE_CLAIM, error }} 
 }
 
 function requestPendingApprovals() {

@@ -4,7 +4,8 @@ const initialState = {
   isFetching: false,
   claimsMap: {},
   claimId: -1,
-  error: undefined
+  error: undefined,
+  currentClaim: {}
 }
 
 const claims = (state = initialState, action) => {
@@ -83,6 +84,25 @@ const claims = (state = initialState, action) => {
         error: undefined
       });
     case claimsConstants.FAILURE_CLAIMS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      });
+
+    // FETCH ONE CLAIM
+    case claimsConstants.REQUEST_CLAIM:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case claimsConstants.RECEIVE_CLAIM:
+      newClaimsMap = {}
+      newClaimsMap[action.claim.claim_id] = action.claim;
+      return Object.assign({}, state, {
+        isFetching: false,
+        claimsMap: newClaimsMap,
+        error: undefined
+      });
+    case claimsConstants.FAILURE_CLAIM:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error

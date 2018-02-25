@@ -13,6 +13,16 @@ router.get('/all', [authMiddleware.isLoggedIn, claimsMiddleware.findAllWithEmplo
   }
 });
 
+router.get('/one', [authMiddleware.isLoggedIn, claimsMiddleware.findOneWithClaimID], function(req, res, next) {
+  console.log("received a request for one");
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({employee: req.user, claim: req.claim});
+  }
+});
+
 router.get('/pending_approvals', [authMiddleware.isLoggedIn, claimsMiddleware.findPendingApprovalsByManager], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);

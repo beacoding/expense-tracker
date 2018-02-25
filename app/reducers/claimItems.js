@@ -36,6 +36,9 @@ const claimItems = (state = initialState, action) => {
       });
     case claimItemsConstants.RECEIVE_CLAIM_ITEMS:
       newClaimItemsMap = state.claimItemsMap;
+      if (action.claimItems.length == 0) {
+        newClaimItemsMap[action.claimId] = []
+      }
       action.claimItems.forEach((claimItem) => {
         newClaimItemsMap[action.claimId] = action.claimItems;
       });

@@ -4,6 +4,7 @@ export const claimsAPI = {
   removeClaim,
   updateStatus,
   requestAll,
+  requestOne,
   requestPendingApprovals,
 };
 
@@ -28,6 +29,11 @@ function updateStatus(claim_id, approver_id, status) {
 
 function requestAll() {
  return fetch('/claims/all', apiHelpers.getOptions())
+  .then(res => apiHelpers.handleResponse(res));
+}
+
+function requestOne(claim_id) {
+  return fetch(`/claims/one?claim_id=${claim_id}`, apiHelpers.getOptions())
   .then(res => apiHelpers.handleResponse(res));
 }
 
