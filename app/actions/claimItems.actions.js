@@ -13,12 +13,14 @@ function addClaimItem(item) {
     dispatch(request());
     claimItemsAPI.addClaimItem(item)
     .then(
-      res => dispatch(success()),
+      res => {
+        dispatch(success(res.claimItem, item.claim_id))
+      },
       error => dispatch(failure(error))
     )
   };
   function request() { return { type: claimItemsConstants.ADD_CLAIM_ITEM }}
-  function success() { return { type: claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS }}
+  function success(new_claim_item, claim_id) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS, new_claim_item, claim_id }}
   function failure(error) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_FAILURE, error }}
 }
 

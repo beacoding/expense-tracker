@@ -621,3 +621,9 @@ DROPDOWN COMPONENT
 .text-help {
   color: red;
 }
+
+
+
+.receipt-img {
+  max-width: 50px;
+}

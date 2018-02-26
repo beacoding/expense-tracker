@@ -69,7 +69,6 @@ function requestOne(claim_id) {
     claimsAPI.requestOne(claim_id)
     .then(
       res => {
-        console.log("this is res", res)
         dispatch(success(res.claim))
       },
       error => dispatch(failure(error))

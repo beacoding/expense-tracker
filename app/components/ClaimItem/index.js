@@ -10,14 +10,16 @@ const ClaimItem = ({ employee, claim_item }) => {
     comment, 
     expense_category,
     image_url,
-    no_receipt
   } = claim_item;
+
+  let receipt = claim_item.image_url === null ? "No Receipt" : <img className="receipt-img" src={'/uploads/' + image_url}/> 
   
   return (
         <tr>
           <td>{description}</td>
           <td>${amount.toFixed(2)}</td>
           <td>{expense_category}</td>
+          <td>{receipt}</td>
         </tr>
   );
 }
@@ -30,13 +32,12 @@ ClaimItem.propTypes = {
     comment: PropTypes.string,
     expense_category: PropTypes.string,
     image_url: PropTypes.string,
-    no_receipt: PropTypes.number.isRequired
   }).isRequired,
   employee: PropTypes.shape({
     id: PropTypes.number.isRequired,
     first_name: PropTypes.string.isRequired,
     last_name: PropTypes.string,
-    email: PropTypes.string
+    email: PropTypes.string,
   }).isRequired
 }
 

@@ -10,8 +10,7 @@ module.exports = {
           claim_item.amount,
           claim_item.comment,
           expense_types.category as expense_category,
-          claim_item.image_url,
-          claim_item.no_receipt
+          claim_item.image_url
         FROM
           claim,
           claim_item,
@@ -32,7 +31,29 @@ module.exports = {
   
   findOne: function(id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to find one claim item
+      const queryString=`
+        SELECT 
+          claim_item.id as claim_item_id,
+          claim_item.description,
+          claim_item.amount,
+          claim_item.comment,
+          expense_types.category as expense_category,
+          claim_item.image_url
+        FROM
+          claim,
+          claim_item,
+          expense_types
+        WHERE
+          claim.id = claim_item.claim_id AND
+          expense_types.id = claim_item.expense_type AND
+          claim_item.id = ?`
+      connection.query(queryString, [id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
     });
   },
   
@@ -44,10 +65,9 @@ module.exports = {
                               amount,
                               comment,
                               expense_type,
-                              no_receipt,
                               image_url)
                             VALUES
-                              (?, ?, ?, ?, ?, ?, ?)`;
+                              (?, ?, ?, ?, ?, ?)`;
       connection.query(queryString, 
         [
           item.claim_id,
@@ -55,7 +75,6 @@ module.exports = {
           item.amount,
           item.comment,
           item.expense_type,
-          item.no_receipt,
           item.image_url
         ],
       (err, rows) => {

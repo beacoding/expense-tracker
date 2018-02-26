@@ -16,7 +16,6 @@ const findOneWithClaimID = async (req,res,next) => {
   let claim;
   try {
     claim = await Claim.findOneWithClaimID(parseInt(req.query.claim_id));
-    console.log("this is a claim", claim);
     req.claim = claim[0];
     next()
   } catch (err) {

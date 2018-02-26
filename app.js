@@ -7,12 +7,15 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var flash    = require('connect-flash');
+const fileUpload = require('express-fileupload');
 
 var index = require('./routes/index');
 var employees = require('./routes/employees');
 var claims = require('./routes/claims');
 var claimItems = require('./routes/claimItems');
 var approvalLimits = require('./routes/approvalLimits');
+var multer  = require('multer')
+var upload = multer({ dest: './uploads/' })
 
 var app = express();
 
@@ -33,6 +36,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 
 // required for passport
 app.use(session({

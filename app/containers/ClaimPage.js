@@ -23,22 +23,21 @@ class ClaimPage extends React.Component {
     }
   }
 
-  submitItem(e) {
-    console.log("Qwejrklwerklw");
-    // let claim_id = window.location.pathname.split("/")[2];
-    // const { employee, form } = this.props;
-    // const item = {
-    //   claim_id: parseInt(claim_id),
-    //   description: form.NewClaimItemForm.values.description,
-    //   amount: parseFloat(form.NewClaimItemForm.values.amount),
-    //   comment: form.NewClaimItemForm.values.comment,
-    //   expense_type: parseInt(form.NewClaimItemForm.values.expense_type),
-    //   no_receipt: 1,
-    // }
+  submitItem(data) {
+    let claim_id = window.location.pathname.split("/")[2];
+    const { employee, form } = this.props;
+    const item = {
+      claim_id: parseInt(claim_id),
+      description: data.description,
+      amount: parseFloat(data.amount),
+      comment: data.comment,
+      expense_type: parseInt(data.expense_type),
+      receipt: data.receipt[0],
+    }
    
-    // this.props.dispatch(claimItemsActions.addClaimItem(item));
-    // this.props.dispatch(claimItemsActions.requestAll(claim_id));
-    // modal.clear();
+    this.props.dispatch(claimItemsActions.addClaimItem(item));
+    this.props.dispatch(claimItemsActions.requestAll(claim_id));
+    modal.clear();
   }
 
   addItemModal(){
@@ -126,6 +125,7 @@ class ClaimPage extends React.Component {
                 <th scope="col">Description</th>
                 <th scope="col">Amount (CAD)</th>
                 <th scope="col">Expense Category</th>
+                <th scope="col">Receipt</th>
               </tr>
             </thead>
             <tbody>

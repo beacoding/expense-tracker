@@ -109,8 +109,6 @@ class NewClaimItemForm extends React.Component {
   render () {
     const { handleSubmit, pristine, reset, submitting } = this.props;
 
-    console.log(handleSubmit);
-
     return (
       <form onSubmit={handleSubmit}>
       <Field
@@ -128,12 +126,10 @@ class NewClaimItemForm extends React.Component {
         min={0}
         step={0.01}
       />
-      <Field name="picture" component={this.renderInput} type="file" className='form-control' />
-      <Field
-        label="No Receipt?"
-        name="no_receipt"
-        checked={false}
-        component={this.renderCheckbox}
+      <Field 
+       name="receipt" 
+        component={this.renderInput} 
+        type="file" 
       />
       <Field
         label="Expense Type"
@@ -163,9 +159,6 @@ function validate(values) {
   }
   if (!values.amount) {
     errors.amount = "Please enter an amount.";
-  }
-  if (!values.no_receipt) {
-    errors.no_receipt = "Please upload a receipt or check the box.";
   }
   if (!values.expense_type) {
     errors.expense_type = "Please select an expense type.";
