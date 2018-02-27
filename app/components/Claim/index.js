@@ -6,7 +6,7 @@ import { claimsHelpers } from  '../../helpers';
 
 import './style.css';
 
-const Claim = ({ employee, claim }) => {
+const Claim = ({ employee, claim, handleAction }) => {
   const { id, first_name, last_name, email } = employee
   const {
     claim_id,
@@ -46,6 +46,9 @@ const Claim = ({ employee, claim }) => {
           </tr>
         </tbody>
       </table>
+      <div className="buttons-row">
+        { (status == 'P') && <button className="page-button-blue" onClick={handleAction}>Submit Claim</button> }
+      </div>
     </div>
   );
 }
