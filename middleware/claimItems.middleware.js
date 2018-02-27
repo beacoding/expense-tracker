@@ -19,11 +19,11 @@ const addNewItem = async (req,res,next) => {
   // add item locally
 
   try {
-    req.body['image_url'] = req.files[0]["filename"];
+    req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
     items = await ClaimItem.addOne(req.body);
     var claim_item_id = items.insertId;
     var item = await ClaimItem.findOne(claim_item_id);
-    req.item =  item;
+    req.item = item;
     next()
   } catch (err) {
     req.error = err;

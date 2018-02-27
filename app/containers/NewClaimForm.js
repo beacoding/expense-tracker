@@ -130,7 +130,7 @@ class NewClaimForm extends React.Component {
       />
       <Field
         label="Cost Center"
-        name="cost_center_id"
+        name="cost_centre_id"
         component={this.renderCostCenterDropdownField}
       />
       <Field
@@ -160,8 +160,8 @@ function validate(values) {
   if (!values.company_id) {
     errors.company_id = "Please select a company.";
   }
-  if (!values.cost_center_id) {
-    errors.cost_center_id = "Please select a cost center.";
+  if (!values.cost_centre_id) {
+    errors.cost_centre_id = "Please select a cost center.";
   }
   if (!values.notes) {
     errors.notes = "Please provide some context for your claim.";

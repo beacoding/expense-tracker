@@ -170,7 +170,7 @@ module.exports = {
         claim.claimee_id,
         claim.approver_id,
         claim.company_id,
-        claim.cost_center_id,
+        claim.cost_centre_id,
         claim.description,
         claim.account_number,
         claim.notes,
