@@ -14,8 +14,7 @@ export const claimsActions = {
 function addClaim(claim) {
   return dispatch => {
     dispatch(request());
-    claimsAPI.addClaim(claim)
-    .then(
+    return claimsAPI.addClaim(claim).then(
       res => dispatch(success(res.claim.insertId, claim)),
       error => dispatch(failure(error))
     )
@@ -37,8 +36,7 @@ function removeClaim() {
 function updateStatus(claim_id, approver_id, status) {
   return dispatch => {
     dispatch(request());
-    claimsAPI.updateStatus(claim_id, approver_id, status)
-    .then(
+    return claimsAPI.updateStatus(claim_id, approver_id, status).then(
       res => dispatch(success(claim_id)),
       error => dispatch(failure(error))
     );
@@ -51,8 +49,7 @@ function updateStatus(claim_id, approver_id, status) {
 function requestAll() {
   return dispatch => {
     dispatch(request());
-    claimsAPI.requestAll()
-    .then(
+    return claimsAPI.requestAll().then(
       res => dispatch(success(res.claims)),
       error => dispatch(failure(error))
     );
@@ -66,11 +63,8 @@ function requestAll() {
 function requestOne(claim_id) {
   return dispatch => {
     dispatch(request());
-    claimsAPI.requestOne(claim_id)
-    .then(
-      res => {
-        dispatch(success(res.claim))
-      },
+    return claimsAPI.requestOne(claim_id).then(
+      res => dispatch(success(res.claim)),
       error => dispatch(failure(error))
     );
   };
@@ -83,8 +77,7 @@ function requestOne(claim_id) {
 function requestPendingApprovals() {
   return dispatch => {
     dispatch(request());
-    claimsAPI.requestPendingApprovals()
-    .then(
+    return claimsAPI.requestPendingApprovals().then(
       res => dispatch(success(res.claims)),
       error => dispatch(failure(error))
     );

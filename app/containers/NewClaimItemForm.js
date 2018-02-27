@@ -9,7 +9,7 @@ class NewClaimItemForm extends React.Component {
   }
   
   renderField(field) {
-    const { meta: { touched, error }} = field;
+    const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
     
     return (
@@ -24,8 +24,22 @@ class NewClaimItemForm extends React.Component {
     );
   }
 
+  renderFileInput(field) {
+    const { input, type, meta: { touched, error, warning } } = field;
+    const className = `form-group ${touched && error ? "has-danger" : ""}`;
+    delete input.value;
+
+    return (
+      <div className={className}>
+        <div>
+          <label>{field.label} <input className="form-control" {...input} type={type}/> </label>   
+        </div>
+      </div>
+    );
+  }
+
   renderCheckbox(field) {
-    const { meta: { touched, error }} = field;
+    const { meta: { touched, error } } = field;
     const className = `${touched && error ? "has-danger" : ""}`;
 
     return (
@@ -33,13 +47,16 @@ class NewClaimItemForm extends React.Component {
         <div>
           <label>{field.label} <input type="checkbox" style={{marginLeft: 5 + 'px'}} {...field.input} /></label>
         </div>
+        <div className="text-help">
+          {touched ? error : ""}
+        </div>
         <br/>
       </div>
     )
   }
   
   renderTextAreaField(field) {
-    const {meta: {touched, error } } = field;
+    const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
     
     return (
@@ -53,24 +70,9 @@ class NewClaimItemForm extends React.Component {
       </div>
     );
   }
-
-
-
-  renderInput(field) {
-    const { input, type, meta: { touched, error, warning } } = field;
-    delete input.value
-
-    return (
-      <div>
-        <label htmlFor={input.name}>
-          <input {...input} type={type}/>
-        </label>
-      </div>
-    );
-  }
   
   renderExpenseTypeDropdownField(field) {
-    const {meta: {touched, error } } = field;
+    const { meta: {touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
     
     return (
@@ -111,39 +113,46 @@ class NewClaimItemForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit}>
-      <Field
-        label="Description"
-        name="description"
-        component={this.renderField}
-        type="text"
-        placeholder="Enter a description for this item."
-      />
-      <Field
-        label="Amount (CAD)"
-        name="amount"
-        component={this.renderField}
-        type="number"
-        min={0}
-        step={0.01}
-      />
-      <Field 
-       name="receipt" 
-        component={this.renderInput} 
-        type="file" 
-      />
-      <Field
-        label="Expense Type"
-        name="expense_type"
-        component={this.renderExpenseTypeDropdownField}
-      />
-      <Field
-        label="Comments"
-        name="comment"
-        type="textarea"
-        component={this.renderTextAreaField}
-      />
-      <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Submit</button>
-      <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+        <Field
+          label="Description"
+          name="description"
+          component={this.renderField}
+          type="text"
+          placeholder="Enter a description for this item."
+        />
+        <Field
+          label="Amount (CAD)"
+          name="amount"
+          component={this.renderField}
+          type="number"
+          min={0}
+          step={0.01}
+        />
+        <Field 
+          label="Upload Receipt"
+          name="receipt" 
+          component={this.renderFileInput} 
+          type="file" 
+        />
+        <Field
+          label="No Receipt?"
+          name="no_receipt"
+          checked={false}
+          component={this.renderCheckbox}
+        />
+        <Field
+          label="Expense Type"
+          name="expense_type"
+          component={this.renderExpenseTypeDropdownField}
+        />
+        <Field
+          label="Comments"
+          name="comment"
+          type="textarea"
+          component={this.renderTextAreaField}
+        />
+        <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Submit</button>
+        <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
       </form>
     );
   }
@@ -159,6 +168,9 @@ function validate(values) {
   }
   if (!values.amount) {
     errors.amount = "Please enter an amount.";
+  }
+  if (!values.receipt && !values.no_receipt) {
+    errors.no_receipt = "Please upload a copy of your receipt or check the 'No Receipt' box.";
   }
   if (!values.expense_type) {
     errors.expense_type = "Please select an expense type.";

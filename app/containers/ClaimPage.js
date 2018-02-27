@@ -11,8 +11,8 @@ import NewClaimItemModal from './NewClaimItemModal';
 class ClaimPage extends React.Component {
   constructor(props) {
     super(props);
-    this.submitItem = this.submitItem.bind(this);
-    this.addItemModal = this.addItemModal.bind(this);
+    this.createClaimItem = this.createClaimItem.bind(this);
+    this.showNewClaimItemModal = this.showNewClaimItemModal.bind(this);
   }
 
   componentDidMount() {
@@ -23,24 +23,24 @@ class ClaimPage extends React.Component {
     }
   }
 
-  submitItem(data) {
+  createClaimItem(data) {
     let claim_id = window.location.pathname.split("/")[2];
     const { employee, form } = this.props;
+    let receipt = (data.no_receipt === true) ? null : data.receipt[0];
     const item = {
       claim_id: parseInt(claim_id),
       description: data.description,
       amount: parseFloat(data.amount),
       comment: data.comment,
       expense_type: parseInt(data.expense_type),
-      receipt: data.receipt[0],
-    }
-   
-    this.props.dispatch(claimItemsActions.addClaimItem(item));
-    this.props.dispatch(claimItemsActions.requestAll(claim_id));
-    modal.clear();
+      receipt: receipt
+    }   
+    this.props.dispatch(claimItemsActions.addClaimItem(item)).then(() => {
+      modal.clear();
+    });;
   }
 
-  addItemModal(){
+  showNewClaimItemModal(){
     modal.add( NewClaimItemModal, {
       title: 'Add Item',
       size: 'medium', // large, medium or small,
@@ -48,11 +48,8 @@ class ClaimPage extends React.Component {
       hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,
       hideCloseButton: false, // (optional) if you don't wanna show the top right close button
       //.. all what you put in here you will get access in the modal props ;)
-      onSubmitItemFunction: this.submitItem
+      onSubmitFunction: this.createClaimItem
     });
-  }
-
-  renderAddItem(){
   }
 
   renderError(error) {
@@ -61,21 +58,6 @@ class ClaimPage extends React.Component {
 
   renderFetching() {
     return <div className="loader"></div>
-  }
-  
-  addItemModal(){
-    modal.add( NewClaimItemModal, {
-      title: 'Add Item',
-      size: 'medium', // large, medium or small,
-      closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
-      hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,
-      hideCloseButton: false, // (optional) if you don't wanna show the top right close button
-      //.. all what you put in here you will get access in the modal props ;)
-      onSubmitItemFunction: this.submitItem
-    });
-  }
-
-  renderAddItem(){
   }
   
   render() {
@@ -136,7 +118,7 @@ class ClaimPage extends React.Component {
             }
             </tbody>
           </table>
-          { (status == 'P') && <button className="page-button" onClick={this.addItemModal}> New Item</button> }
+          { (status == 'P') && <button className="page-button" onClick={this.showNewClaimItemModal}> New Item</button> }
         </div>
       </div>
     )

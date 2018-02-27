@@ -8,7 +8,6 @@ var storage = multer.diskStorage({
   filename: function (req, file, cb) {
     crypto.pseudoRandomBytes(16, function (err, raw) {
       if (err) return cb(err)
-
       cb(null, raw.toString('hex') + path.extname(file.originalname))
     })
   }
@@ -36,7 +35,7 @@ router.post('/add_item', authMiddleware.isLoggedIn, upload, claimItemsMiddleware
 });
 
 router.get('/*', function(req, res) {
-  if (reqisAuthenticated()) {
+  if (req.isAuthenticated()) {
     res.render('authenticated.ejs', {
       user : req.user,
       claims: req.claims

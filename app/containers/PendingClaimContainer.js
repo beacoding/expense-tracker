@@ -24,21 +24,24 @@ class PendingClaimContainer extends React.Component {
   }
   
   confirmApprove() {
-    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "A"));
-    this.props.dispatch(claimsActions.requestPendingApprovals());
-    modal.clear();
+    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "A")).then(() => {
+      this.props.dispatch(claimsActions.requestPendingApprovals());
+      modal.clear();
+    });
   }
   
   confirmDecline() {
-    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "D"));
-    this.props.dispatch(claimsActions.requestPendingApprovals());
-    modal.clear();
+    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "D")).then(() => {
+      this.props.dispatch(claimsActions.requestPendingApprovals());
+      modal.clear();
+    });
   }
 
   forwardClaim() {
-    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.forward_manager_id, "F"));
-    this.props.dispatch(claimsActions.requestPendingApprovals());
-    modal.clear();
+    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.forward_manager_id, "F")).then(() => {
+      this.props.dispatch(claimsActions.requestPendingApprovals());
+      modal.clear();
+    });
   }
 
   setForwardManagerId(option) {
@@ -70,8 +73,7 @@ class PendingClaimContainer extends React.Component {
         });
         break;
       case "Forward":
-        this.props.dispatch(approvalLimitsActions.requestHasAuthority(this.props.claim.cost_centre_id));
-        setTimeout(() => {
+        this.props.dispatch(approvalLimitsActions.requestHasAuthority(this.props.claim.cost_centre_id)).then(() => {
           modal.add(ModalContainer, {
             title: 'Forward Claim',
             bodyHtml: `<p>Who would you like to forward this claim request to?</p>`,
@@ -86,7 +88,7 @@ class PendingClaimContainer extends React.Component {
             affirmativeText: 'Forward Claim',
             negativeText: 'Cancel'
           });
-        }, 500);
+        });
         break;
       default:
         return;

@@ -11,16 +11,13 @@ export const claimItemsActions = {
 function addClaimItem(item) {
   return dispatch => {
     dispatch(request());
-    claimItemsAPI.addClaimItem(item)
-    .then(
-      res => {
-        dispatch(success(res.claimItem, item.claim_id))
-      },
+    return claimItemsAPI.addClaimItem(item).then(
+      res => dispatch(success(res.claimItem, item.claim_id)),
       error => dispatch(failure(error))
     )
   };
   function request() { return { type: claimItemsConstants.ADD_CLAIM_ITEM }}
-  function success(new_claim_item, claim_id) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS, new_claim_item, claim_id }}
+  function success(newClaimItem, claimId) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS, newClaimItem, claimId }}
   function failure(error) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_FAILURE, error }}
 }
 
@@ -34,11 +31,9 @@ function removeClaimItem() {
 }
 
 function requestAll(claim_id) {
-  //TODO fetch all with claim id
   return dispatch => {
     dispatch(request());
-    claimItemsAPI.requestAll(claim_id)
-    .then(
+    return claimItemsAPI.requestAll(claim_id).then(
       res => dispatch(success(res.claimItems, claim_id)),
       error => dispatch(failure(error))
     );

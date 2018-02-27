@@ -38,25 +38,21 @@ class ClaimList extends React.Component {
   }
 
   createClaim() {
-    const { employee, form, claimId, claims, claimsMap } = this.props;
+    const { employee, form, claims, claimsMap } = this.props;
     const claim = {
       claimee_id: employee.id,
       approver_id: employee.manager_id,
       company_id: parseInt(form.NewClaimForm.values.company_id),
-      cost_center_id: parseInt(form.NewClaimForm.values.cost_center_id),
+      cost_centre_id: parseInt(form.NewClaimForm.values.cost_centre_id),
       description: form.NewClaimForm.values.description,
       account_number: form.NewClaimForm.values.account_number,
       notes: form.NewClaimForm.values.notes,
       status: 'P',
     }
-    this.props.dispatch(claimsActions.addClaim(claim));
-    this.props.dispatch(claimsActions.requestAll());
-    modal.clear();
-    // setTimeout(() => {
-    //   debugger;
-    //   const claimId = this.props.claims.claimId;
-    //   window.location= '/claims/'+ claimId;
-    // }, 4000);
+    this.props.dispatch(claimsActions.addClaim(claim)).then((res) => {
+      modal.clear();
+      window.location= '/claims/'+ res.claimId;
+    });
   }
   
   renderError(error) {
@@ -90,7 +86,7 @@ class ClaimList extends React.Component {
   }
   
   render() {
-    const { employee, claimsMap, error, isFetching, totals, form, claimId } = this.props;
+    const { employee, claimsMap, error, isFetching, totals, form } = this.props;
     
     if (error !== undefined) {
       return this.renderError(error);
@@ -130,14 +126,13 @@ class ClaimList extends React.Component {
 function mapStateToProps(state) {
   const { authentication, claims, form } = state;
   const { employee } = authentication;
-  const { claimsMap, error, isFetching, claimId } = claims;
+  const { claimsMap, error, isFetching } = claims;
 
   return {
       employee,
       claimsMap,
       error,
       isFetching,
-      claimId,
       form
   };
 }

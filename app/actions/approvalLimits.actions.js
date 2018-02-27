@@ -18,8 +18,7 @@ function updateApprovalLimit() {
 function requestAll() {
   return dispatch => {
     dispatch(request());
-    approvalLimitsAPI.requestAll()
-    .then(
+    return approvalLimitsAPI.requestAll().then(
       res => dispatch(success(res.limits)),
       error => dispatch(failure(error))
     );
@@ -33,8 +32,7 @@ function requestAll() {
 function requestByEmployee() {
   return dispatch => {
     dispatch(request());
-    approvalLimitsAPI.requestAllByEmployee()
-    .then(
+    return approvalLimitsAPI.requestAllByEmployee().then(
       res => dispatch(success(res.limits)),
       error => dispatch(failure(error))
     );
@@ -48,8 +46,7 @@ function requestByEmployee() {
 function requestHasAuthority(cost_centre_id) {
   return dispatch => {
     dispatch(request());
-    approvalLimitsAPI.requestHasAuthority(cost_centre_id)
-    .then(
+    return approvalLimitsAPI.requestHasAuthority(cost_centre_id).then(
       res => dispatch(success(res.limits)),
       error => dispatch(failure(error))
     );

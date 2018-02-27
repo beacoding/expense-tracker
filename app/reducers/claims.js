@@ -3,7 +3,6 @@ import { claimsConstants } from '../constants';
 const initialState = {
   isFetching: false,
   claimsMap: {},
-  claimId: -1,
   error: undefined,
   currentClaim: {}
 }
@@ -26,12 +25,11 @@ const claims = (state = initialState, action) => {
       action.claim.approver_last_name = '';
       action.claim.company_name = 'Processing...';
       action.claim.date_created = Date.now();
-      newClaimsMap = state.claimsMap;
+      newClaimsMap = Object.assign({}, state.claimsMap);
       newClaimsMap[action.claimId] = action.claim;
       return Object.assign({}, state, {
         isFetching: false,
         claimsMap: newClaimsMap,
-        claimId: action.claimId,
         error: undefined
       });
     case claimsConstants.ADD_CLAIM_FAILURE:
@@ -55,7 +53,7 @@ const claims = (state = initialState, action) => {
       });
     case claimsConstants.UPDATE_CLAIM_STATUS_SUCCESS:
       // remove updated claim
-      newClaimsMap = state.claimsMap;
+      newClaimsMap = Object.assign({}, state.claimsMap);
       delete newClaimsMap[action.claim_id];
       return Object.assign({}, state, {
         isFetching: false,
@@ -95,7 +93,7 @@ const claims = (state = initialState, action) => {
         isFetching: true
       });
     case claimsConstants.RECEIVE_CLAIM:
-      newClaimsMap = {}
+      newClaimsMap = Object.assign({}, state.claimsMap);
       newClaimsMap[action.claim.claim_id] = action.claim;
       return Object.assign({}, state, {
         isFetching: false,
@@ -134,7 +132,6 @@ const claims = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetching: false,
         claimsMap: {},
-        claimId: -1,
         error: undefined
       });
     default:
