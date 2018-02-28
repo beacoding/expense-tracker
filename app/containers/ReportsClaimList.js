@@ -7,7 +7,7 @@ import { claimItemsActions } from '../actions';
 import ClaimContainer from './ClaimContainer';
 import NewClaimModal from './NewClaimModal';
 
-class ClaimList extends React.Component {
+class ReportsClaimList extends React.Component {
   constructor(props) {
     super(props);
     this.createClaim = this.createClaim.bind(this);
@@ -38,21 +38,25 @@ class ClaimList extends React.Component {
   }
 
   createClaim() {
-    const { employee, form, claims, claimsMap } = this.props;
+    const { employee, form, claimId, claims, claimsMap } = this.props;
     const claim = {
       claimee_id: employee.id,
       approver_id: employee.manager_id,
       company_id: parseInt(form.NewClaimForm.values.company_id),
-      cost_centre_id: parseInt(form.NewClaimForm.values.cost_centre_id),
+      cost_center_id: parseInt(form.NewClaimForm.values.cost_center_id),
       description: form.NewClaimForm.values.description,
       account_number: form.NewClaimForm.values.account_number,
       notes: form.NewClaimForm.values.notes,
       status: 'P',
     }
-    this.props.dispatch(claimsActions.addClaim(claim)).then((res) => {
-      modal.clear();
-      window.location= '/claims/'+ res.claimId;
-    });
+    this.props.dispatch(claimsActions.addClaim(claim));
+    this.props.dispatch(claimsActions.requestAll());
+    modal.clear();
+    // setTimeout(() => {
+    //   debugger;
+    //   const claimId = this.props.claims.claimId;
+    //   window.location= '/claims/'+ claimId;
+    // }, 4000);
   }
   
   renderError(error) {
@@ -62,21 +66,6 @@ class ClaimList extends React.Component {
   renderEmptyList() {
     return (
       <div className="claimlist-container">
-        <div className="page-header">
-          <div className="page-title">
-            My Claims
-          </div>
-          <button className="page-button-blue" onClick={this.reloadData}> Refresh</button>  
-          <button className="page-button" onClick={this.showNewClaimModal}> New Claim</button>  
-          <div className="page-route">
-            <span className="route-inactive">Home</span>  <span className="route-active"> > My Claims</span>
-          </div>
-        </div>
-        <div className="claim-list">
-          <div className="claim-container">
-            You have not created any claims yet.
-          </div>
-        </div>
       </div>
     )
   }
@@ -98,7 +87,7 @@ class ClaimList extends React.Component {
   }
   
   render() {
-    const { employee, claimsMap, error, isFetching, totals, form } = this.props;
+    const { employee, claimsMap, error, isFetching, totals, form, claimId } = this.props;
     
     if (error !== undefined) {
       return this.renderError(error);
@@ -114,16 +103,6 @@ class ClaimList extends React.Component {
     
     return (
       <div className="claimlist-container">
-        <div className="page-header">
-          <div className="page-title">
-            My Claims
-          </div>
-          <button className="page-button-blue" onClick={this.reloadData}> Refresh</button>  
-          <button className="page-button" onClick={this.showNewClaimModal}> New Claim</button>  
-          <div className="page-route">
-            <span className="route-inactive">Home</span>  <span className="route-active"> > My Claims</span>
-          </div>
-        </div>
         { this.renderEntries() }
       </div>
     )
@@ -133,14 +112,15 @@ class ClaimList extends React.Component {
 function mapStateToProps(state) {
   const { authentication, claims, form } = state;
   const { employee } = authentication;
-  const { claimsMap, error, isFetching } = claims;
+  const { claimsMap, error, isFetching, claimId } = claims;
 
   return {
       employee,
       claimsMap,
       error,
       isFetching,
+      claimId,
       form
   };
 }
-export default withRouter(connect(mapStateToProps)(ClaimList))
+export default withRouter(connect(mapStateToProps)(ReportsClaimList))

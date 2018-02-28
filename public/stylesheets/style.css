@@ -622,8 +622,37 @@ DROPDOWN COMPONENT
   color: red;
 }
 
-
-
 .receipt-img {
   max-width: 50px;
+}
+
+.reports-check {
+  text-align: center;
+  font-size: 1.3em;
+}
+
+.reports-check input[type=checkbox] {
+  width:1.1em; 
+  height:1.1em;
+  margin-right: 2px;
+}
+
+.reports {
+  text-align: center; 
+
+}
+
+.reports-search {
+  font-color: lightgrey;
+  max-width: 200px;
+  display: inline-block;
+  margin: 5px 10px 5px 10px;
+}
+
+input:focus {outline: none; }
+
+
+.form-check {
+  display: inline-block;
+  margin: 0 20px 0 20px;
 }

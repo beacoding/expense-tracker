@@ -22,6 +22,15 @@ router.get('/one', [authMiddleware.isLoggedIn, claimsMiddleware.findOneWithClaim
   }
 });
 
+router.get('/with', [authMiddleware.isLoggedIn, claimsMiddleware.findAllWithParams], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({employee: req.user, claims: req.claims});
+  }
+})
+
 router.get('/pending_approvals', [authMiddleware.isLoggedIn, claimsMiddleware.findPendingApprovalsByManager], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);

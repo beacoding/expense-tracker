@@ -14,6 +14,7 @@ var employees = require('./routes/employees');
 var claims = require('./routes/claims');
 var claimItems = require('./routes/claimItems');
 var approvalLimits = require('./routes/approvalLimits');
+var reports = require('./routes/reports');
 var multer  = require('multer')
 var upload = multer({ dest: './uploads/' })
 
@@ -56,6 +57,7 @@ app.use('/claims', claims)
 app.use('/claim_items', claimItems);
 app.use('/approval_limits', approvalLimits);
 app.use('/approvals', claims);
+app.use('/reports', reports);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

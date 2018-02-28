@@ -20,21 +20,119 @@ module.exports = {
                             claim.description, 
                             claim.notes,
                             claim.status, 
-                            claim.date_created
+                            claim.date_created,
+                            manager.id as manager_id,
+                            manager.first_name as manager_first_name,
+                            manager.last_name as manager_last_name,
+                            manager.email as manager_email
                            FROM
                             claim, 
                             employee claimee, 
                             employee approver,
+                            employee manager,
                             company
                            WHERE 
                             claimee.id = claim.claimee_id AND 
                             approver.id = claim.approver_id AND
+                            claimee.manager_id = manager.id AND
                             claim.company_id = company.id AND
                             claimee.email = ?`;
       connection.query(queryString, [employee.email], (err, rows) => {
         if (err) {
           reject(err);
         } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
+  findAllWithParams: function(params) {
+    return new Promise((resolve, reject) => {
+      // build params
+      console.log("there are the params", params);
+      var whereArray = []
+      for (key in params) {
+        if (params[key].length > 0) {
+           switch(key) {
+            case "employee_id":
+              whereArray.push("claimee.id = '" + params[key] + "'")
+              break;
+            case "manager_id":
+              whereArray.push("manager.id = '" + params[key] + "'")
+              break;
+            case "submitted":
+              whereArray.push("claim.status = " + "'S'")
+              break;
+            case "approved":
+              whereArray.push("claim.status = " + "'A'")
+              break;
+            case "declined":
+              whereArray.push("claim.status = " + "'D'")
+              break;
+            case "pending":
+              whereArray.push("claim.status = " + "'P'")
+              break;
+            case "start":
+              if (params["end"].length > 0) {
+                whereArray.push("claim.date_created BETWEEN '" + params["start"] + "' AND '" + params["end"] + "'")
+              }
+              break;
+            case "end":
+              if (params["start"].length > 0) {
+                whereArray.push("claim.date_created BETWEEN '" + params["start"] + "' AND '" + params["end"] + "'")
+              }
+              break;
+            default:
+              break;
+           }
+        }
+      }
+
+      console.log(whereArray);
+
+      var whereString = whereArray.length > 0 ? " AND " + whereArray.join(" AND ") : "";
+
+
+
+      var queryString = `SELECT 
+                            claim.id as claim_id, 
+                            claimee.first_name as claimee_first_name,
+                            claimee.last_name as claimee_last_name, 
+                            claimee.email as claimee_email,
+                            approver.first_name as approver_first_name,
+                            approver.last_name as approver_last_name, 
+                            approver.email as approver_email,
+                            company.name as company_name,
+                            claim.cost_centre_id,
+                            claim.account_number,
+                            claim.description, 
+                            claim.notes,
+                            claim.status, 
+                            claim.date_created,
+                            manager.id as manager_id,
+                            manager.first_name as manager_first_name,
+                            manager.last_name as manager_last_name,
+                            manager.email as manager_email
+                           FROM
+                            claim, 
+                            employee claimee, 
+                            employee approver,
+                            employee manager,
+                            company
+                           WHERE 
+                            claimee.id = claim.claimee_id AND 
+                            approver.id = claim.approver_id AND
+                            claimee.manager_id = manager.id AND
+                            claim.company_id = company.id` + whereString + ";"
+
+      console.log(queryString);
+      connection.query(queryString, (err, rows) => {
+        if (err) {
+          console.log(err)
+          reject(err);
+        } else {
+          console.log(rows);
           resolve(rows);
         }
       });
@@ -60,16 +158,22 @@ module.exports = {
                             claim.description, 
                             claim.notes,
                             claim.status, 
-                            claim.date_created
+                            claim.date_created,
+                            manager.id as manager_id,
+                            manager.first_name as manager_first_name,
+                            manager.last_name as manager_last_name,
+                            manager.email as manager_email
                            FROM
                             claim, 
                             employee claimee, 
                             employee approver,
+                            employee manager,
                             company
                            WHERE 
                             claimee.id = claim.claimee_id AND 
                             approver.id = claim.approver_id AND
                             claim.company_id = company.id AND
+                            claimee.manager_id = manager.id AND
                             claim.id = ?`;
       connection.query(queryString, [claim_id], (err, rows) => {
         if (err) {

@@ -21,7 +21,10 @@ const Claim = ({ employee, claim, handleAction }) => {
     notes,
     status,
     date_created,
-    total_amount
+    total_amount,
+    manager_first_name,
+    manager_last_name,
+    manager_email
   } = claim;
 
   return (
@@ -33,6 +36,7 @@ const Claim = ({ employee, claim, handleAction }) => {
           <tr>
             <th scope="col">Status</th>
             <th scope="col">Approver</th>
+            <th scope="col">Manager</th>
             <th scope="col">Cost Centre</th>
             <th scope="col">Total (CAD)</th>
           </tr>
@@ -41,6 +45,7 @@ const Claim = ({ employee, claim, handleAction }) => {
           <tr>
             <td>{claimsHelpers.getStatusText(status)}</td>
             <td>{approver_first_name + " " + approver_last_name}</td>
+            <td>{manager_first_name + " " + manager_last_name}</td>
             <td>{cost_centre_id}</td>
             <td>{"$" + total_amount}</td>
           </tr>

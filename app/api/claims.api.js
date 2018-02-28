@@ -6,6 +6,7 @@ export const claimsAPI = {
   requestAll,
   requestOne,
   requestPendingApprovals,
+  requestWith
 };
 
 function addClaim(claim) {
@@ -29,6 +30,12 @@ function updateStatus(claim_id, approver_id, status) {
 
 function requestAll() {
  return fetch('/claims/all', apiHelpers.getOptions())
+  .then(res => apiHelpers.handleResponse(res));
+}
+
+function requestWith(params) {
+  var queryParams = jQuery.param(params);
+ return fetch(`/claims/with?` + queryParams, apiHelpers.getOptions())
   .then(res => apiHelpers.handleResponse(res));
 }
 

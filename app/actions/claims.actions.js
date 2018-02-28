@@ -7,6 +7,7 @@ export const claimsActions = {
   updateStatus,
   requestAll,
   requestOne,
+  requestWith,
   requestPendingApprovals,
   clearAll
 };
@@ -58,6 +59,21 @@ function requestAll() {
   function request() { return { type: claimsConstants.REQUEST_CLAIMS }}
   function success(claims) { return { type: claimsConstants.RECEIVE_CLAIMS, claims }}
   function failure(error) { return { type: claimsConstants.FAILURE_CLAIMS, error }}
+}
+
+function requestWith(params) {
+  return dispatch => {
+    dispatch(request());
+    claimsAPI.requestWith(params)
+    .then(
+      res => dispatch(success(res.claims)),
+      error => dispatch(failure(error))
+    );
+
+    function request() { return { type: claimsConstants.REQUEST_CLAIMS }}
+    function success(claims) { return { type: claimsConstants.RECEIVE_CLAIMS, claims }}
+    function failure(error) { return { type: claimsConstants.FAILURE_CLAIMS, error }}
+  }
 }
 
 function requestOne(claim_id) {

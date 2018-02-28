@@ -12,6 +12,19 @@ const findAllWithEmployee = async (req,res,next) => {
   }
 }
 
+const findAllWithParams = async (req,res,next) => {
+  let claims;
+  try {
+    claims = await Claim.findAllWithParams(req.query);
+    req.claims = claims;
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
+
 const findOneWithClaimID = async (req,res,next) => {
   let claim;
   try {
@@ -63,6 +76,7 @@ const addOne = async (req,res,next) => {
 module.exports = {
   findAllWithEmployee: findAllWithEmployee,
   findPendingApprovalsByManager: findPendingApprovalsByManager,
+  findAllWithParams: findAllWithParams,
   addOne: addOne,
   updateStatus: updateStatus,
   findOneWithClaimID: findOneWithClaimID
