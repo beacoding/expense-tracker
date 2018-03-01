@@ -15,7 +15,7 @@ const findAllWithEmployee = async (req,res,next) => {
 const findAllWithParams = async (req,res,next) => {
   let claims;
   try {
-    claims = await Claim.findAllWithParams(req.query);
+    claims = await Claim.findAllWithParams(req.query, req.user);
     req.claims = claims;
     next()
   } catch (err) {

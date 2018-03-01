@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { modal } from 'react-redux-modal';
 import { claimsActions } from '../actions';
 import { claimItemsActions } from '../actions';
-import ClaimContainer from './ClaimContainer';
+import ReportsClaimContainer from './ReportsClaimContainer';
 import NewClaimModal from './NewClaimModal';
 
 class ReportsClaimList extends React.Component {
@@ -18,12 +18,12 @@ class ReportsClaimList extends React.Component {
   componentDidMount() {
     this.props.dispatch(claimsActions.clearAll());
     this.props.dispatch(claimItemsActions.clearAll());
-    this.props.dispatch(claimsActions.requestAll());
+    this.props.dispatch(claimsActions.requestWith({}));
   }
 
   reloadData() {
     this.props.dispatch(claimsActions.clearAll());
-    this.props.dispatch(claimsActions.requestAll());
+    this.props.dispatch(claimsActions.requestWith({}));
   }
     
   showNewClaimModal() {
@@ -69,6 +69,35 @@ class ReportsClaimList extends React.Component {
       </div>
     )
   }
+
+  renderKOI() {
+    const { claimsMap } = this.props;
+    let koi = {};
+    const tranformAcronym = {
+      "A": "Approved",
+      "D": "Declined",
+      "S": "Pending Approval"
+    }
+
+    for (var key in claimsMap) {
+      var claim = claimsMap[key];
+      var status = claim.status
+      if (!(status in koi)) {
+        koi[status] = 0;
+      }
+      koi[status] += 1;
+    }
+
+    return (
+      <div className="koi-entry-container">
+        {Object.entries(koi).map((koi_tuple) => {
+          var status = tranformAcronym[koi_tuple[0]]
+          var counter = koi_tuple[1];
+          return <span className="koi-entry"><span className="koi-entry-header">{status}</span>   <span>{counter}</span></span>
+        })}
+      </div>
+      )
+  }
   
   renderFetching() {
     return <div className="loader"></div>
@@ -79,8 +108,8 @@ class ReportsClaimList extends React.Component {
     return (
       <div className="claim-list">
         {Object.entries(claimsMap).map((claim_tuple) => {
-          var claim = claim_tuple[1]
-          return <ClaimContainer claim={claim} employee={employee} key={claim.claim_id}/>
+          var claim = claim_tuple[1];
+          return <ReportsClaimContainer claim={claim} employee={employee} key={claim.claim_id}/>
         })}
       </div>
       )
@@ -103,6 +132,8 @@ class ReportsClaimList extends React.Component {
     
     return (
       <div className="claimlist-container">
+        {this.renderKOI()}
+
         { this.renderEntries() }
       </div>
     )

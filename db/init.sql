@@ -23,6 +23,7 @@ CREATE TABLE employee (
   password VARCHAR(255) NOT NULL,
   manager_id INT,
   is_admin BOOLEAN NOT NULL DEFAULT 0,
+  is_active BOOLEAN NOT NULL DEFAULT 1,
   PRIMARY KEY (id),
   FOREIGN KEY (manager_id) REFERENCES employee(id),
   CONSTRAINT CHK_employee CHECK (email <> '' AND password <> '')
@@ -75,7 +76,7 @@ CREATE TABLE claim_item (
   expense_type INT NOT NULL,
   image_url VARCHAR(255),
   PRIMARY KEY (id),
-  FOREIGN KEY (claim_id) REFERENCES claim(id),
+  FOREIGN KEY (claim_id) REFERENCES claim(id) ON DELETE CASCADE,
   FOREIGN KEY (expense_type) REFERENCES expense_types(id),
   CONSTRAINT CHK_claim_item CHECK (description <> '' AND amount >= 0.00 AND comment <> '')
 );

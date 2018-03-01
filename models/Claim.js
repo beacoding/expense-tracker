@@ -47,7 +47,7 @@ module.exports = {
     });
   },
 
-  findAllWithParams: function(params) {
+  findAllWithParams: function(params, employee) {
     return new Promise((resolve, reject) => {
       // build params
       console.log("there are the params", params);
@@ -61,6 +61,24 @@ module.exports = {
             case "manager_id":
               whereArray.push("manager.id = '" + params[key] + "'")
               break;
+            case "employee_first_name":
+              whereArray.push("claimee.first_name LIKE '" + params[key] + "%'");
+              break;
+            case "employee_last_name":
+              whereArray.push("claimee.last_name LIKE '" + params[key] + "%'");
+              break;
+            case "employee_email":
+              whereArray.push("claimee.email LIKE '%" + params[key] + "%'");
+              break;
+            case "manager_first_name":
+              whereArray.push("manager.first_name LIKE '" + params[key] + "%'");
+              break;
+            case "manager_last_name":
+              whereArray.push("manager.last_name LIKE '" + params[key] + "%'");
+              break;
+            case "manager_email":
+              whereArray.push("claimee.email LIKE '" + params[key] + "%'");
+              break;
             case "submitted":
               whereArray.push("claim.status = " + "'S'")
               break;
@@ -71,7 +89,7 @@ module.exports = {
               whereArray.push("claim.status = " + "'D'")
               break;
             case "pending":
-              whereArray.push("claim.status = " + "'P'")
+              whereArray.push("claim.status = 'S' OR claim.status = 'F'");
               break;
             case "start":
               if (params["end"].length > 0) {
@@ -124,10 +142,11 @@ module.exports = {
                             claimee.id = claim.claimee_id AND 
                             approver.id = claim.approver_id AND
                             claimee.manager_id = manager.id AND
+                            approver.id = ? AND
                             claim.company_id = company.id` + whereString + ";"
 
       console.log(queryString);
-      connection.query(queryString, (err, rows) => {
+      connection.query(queryString, [employee.id], (err, rows) => {
         if (err) {
           console.log(err)
           reject(err);

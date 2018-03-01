@@ -12,6 +12,13 @@ export const claimsActions = {
   clearAll
 };
 
+function paginate(endpoint) {
+    dispatch({
+      type: claimsConstants.PAGINATE,
+      endpoint
+    });
+}
+
 function addClaim(claim) {
   return dispatch => {
     dispatch(request());
@@ -66,7 +73,9 @@ function requestWith(params) {
     dispatch(request());
     claimsAPI.requestWith(params)
     .then(
-      res => dispatch(success(res.claims)),
+      res => {
+        dispatch(success(res.claims))
+      },
       error => dispatch(failure(error))
     );
 

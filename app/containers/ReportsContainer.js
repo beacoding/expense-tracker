@@ -12,7 +12,6 @@ class ReportsContainer extends React.Component {
   }
 
   componentWillReceiveProps (nextprops) {
-    console.log(nextprops);
     this.props.dispatch(claimsActions.requestWith(nextprops.params))
   }
 
@@ -31,12 +30,6 @@ class ReportsContainer extends React.Component {
   renderCheckBoxes() {
     return (
       <div className="reports">
-        <div className="form-check">
-          <input className="form-check-input" type="checkbox" value="submitted" id="reports-submitted-check" onChange={this.handleParamChangeChecked}/>
-          <label className="form-check-label" htmlFor="reports-submitted-check">
-            Submitted
-          </label>
-        </div>
         <div className="form-check">
           <input className="form-check-input" type="checkbox" value="approved" id="reports-approved-check" onChange={this.handleParamChangeChecked}/>
           <label className="form-check-label" htmlFor="reports-approved-check">
@@ -67,6 +60,25 @@ class ReportsContainer extends React.Component {
         </div>
         <div className="form-group reports-search">
           <input type="text" className="form-control" name="manager_id" id="reports-search-manager" placeholder="Manager ID" onChange={this.handleParamChangeText}/>
+        </div>
+      </div>
+      )
+  }
+
+  renderSearchByManagerOrEmployeeName() {
+    return (
+      <div className="reports">
+        <div className="form-group reports-search">
+          <input type="text" className="form-control" name="employee_first_name" id="reports-search-employee" placeholder="Employee First Name" onChange={this.handleParamChangeText}/>
+        </div>
+        <div className="form-group reports-search">
+          <input type="text" className="form-control" name="employee_last_name" id="reports-search-employee" placeholder="Employee Last Name" onChange={this.handleParamChangeText}/>
+        </div>
+        <div className="form-group reports-search">
+          <input type="text" className="form-control" name="manager_first_name" id="reports-search-manager" placeholder="Manager First Name" onChange={this.handleParamChangeText}/>
+        </div>
+        <div className="form-group reports-search">
+          <input type="text" className="form-control" name="manager_last_name" id="reports-search-manager" placeholder="Manager Last Name" onChange={this.handleParamChangeText}/>
         </div>
       </div>
       )
@@ -108,6 +120,7 @@ class ReportsContainer extends React.Component {
         </div>
         {this.renderCheckBoxes()}
         {this.renderSearchByManagerOrEmployeeID()}
+        {this.renderSearchByManagerOrEmployeeName()}
         {this.renderDateRange()}
         {this.renderClaimList()}
       </div>
@@ -119,7 +132,6 @@ function mapStateToProps(state) {
   const { authentication, reports } = state;
   const { employee } = authentication;
   const { params } = reports;
-  console.log("in here!!!");
   return {
     employee,
     params

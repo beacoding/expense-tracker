@@ -656,3 +656,22 @@ input:focus {outline: none; }
   display: inline-block;
   margin: 0 20px 0 20px;
 }
+
+.koi-entry-container {
+  background-color: white;
+  border-radius: 5px;
+  margin: 0 40px 0 40px;
+  padding: 5px;
+}
+
+.koi-entry {
+  background-color: #eef5fb;
+  padding: 3px;
+  border-radius: 5px;
+  margin: 0 10px 0 10px;
+}
+
+.koi-entry-header {
+  font-weight: bold;
+  margin-right: 10px;
+}
