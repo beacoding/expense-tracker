@@ -4,7 +4,8 @@ const initialState = {
   isFetching: false,
   claimsMap: {},
   error: undefined,
-  currentClaim: {}
+  currentClaim: {},
+  approvedClaims: {}
 }
 
 const claims = (state = initialState, action) => {
@@ -122,6 +123,27 @@ const claims = (state = initialState, action) => {
         error: undefined
       });
     case claimsConstants.FAILURE_PENDING_APPROVALS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      });
+
+    // FETCH CLAIMS THAT WERE APPROVED
+    case claimsConstants.REQUEST_APPROVED_APPROVALS:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case claimsConstants.RECEIVE_APPROVED_APPROVALS:
+      newClaimsMap = {};
+      action.claims.forEach((claim) => {
+        newClaimsMap[claim.claim_id] = claim;
+      });
+      return Object.assign({}, state, {
+        isFetching: false,
+        approvedClaims: newClaimsMap,
+        error: undefined
+      });
+    case claimsConstants.FAILURE_APPROVED_APPROVALS:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error

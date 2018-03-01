@@ -9,6 +9,7 @@ export const claimsActions = {
   requestOne,
   requestWith,
   requestPendingApprovals,
+  requestApprovedApprovals,
   clearAll
 };
 
@@ -111,6 +112,20 @@ function requestPendingApprovals() {
   function request() { return { type: claimsConstants.REQUEST_PENDING_APPROVALS }}
   function success(claims) { return { type: claimsConstants.RECEIVE_PENDING_APPROVALS, claims }}
   function failure(error) { return { type: claimsConstants.FAILURE_PENDING_APPROVALS, error }}
+}
+
+function requestApprovedApprovals() {
+  return dispatch => {
+    dispatch(request());
+    return claimsAPI.requestApprovedApprovals().then(
+      res => dispatch(success(res.claims)),
+      error => dispatch(failure(error))
+    );
+  };
+  
+  function request() { return { type: claimsConstants.REQUEST_APPROVED_APPROVALS }}
+  function success(claims) { return { type: claimsConstants.RECEIVE_APPROVED_APPROVALS, claims }}
+  function failure(error) { return { type: claimsConstants.FAILURE_APPROVED_APPROVALS, error }}
 }
 
 function clearAll() {

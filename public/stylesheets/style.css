@@ -675,3 +675,21 @@ input:focus {outline: none; }
   font-weight: bold;
   margin-right: 10px;
 }
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+  color: white;
+  background-color: #0366c7;
+  border: 1px solid white;
+  border-bottom-color: transparent;
+}
+
+.nav>li>a:hover, .nav>li>a:focus {
+    text-decoration: none;
+    background-color: #bcd7ec;
+    border-color: transparent;
+}
+
+.nav-tabs {
+  margin: 3px 5px 3px 0px;
+  border-bottom-color: white;
+}

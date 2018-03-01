@@ -50,7 +50,6 @@ module.exports = {
   findAllWithParams: function(params, employee) {
     return new Promise((resolve, reject) => {
       // build params
-      console.log("there are the params", params);
       var whereArray = []
       for (key in params) {
         if (params[key].length > 0) {
@@ -234,6 +233,53 @@ module.exports = {
                           approver.id = claim.approver_id AND
                           claim.company_id = company.id AND
                           (claim.status = 'S' OR claim.status = 'F') AND
+                          approver.id = ?`;
+      connection.query(queryString, [employee.id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
+  findApprovedApprovalsByManager: function(employee) {
+    return new Promise((resolve, reject) => {
+      //TODO queryString to fetch all employee claims with employee
+      //must get employee first name, employee last name, expense_type as string
+      //must join with employee, and expense types
+      var queryString = `SELECT 
+                          claim.id as claim_id, 
+                          claimee.first_name as claimee_first_name,
+                          claimee.last_name as claimee_last_name, 
+                          claimee.email as claimee_email,
+                          approver.first_name as approver_first_name,
+                          approver.last_name as approver_last_name, 
+                          approver.email as approver_email,
+                          company.name as company_name,
+                          claim.cost_centre_id,
+                          claim.account_number,
+                          claim.description, 
+                          claim.notes,
+                          claim.status, 
+                          claim.date_created,
+                          manager.id as manager_id,
+                          manager.first_name as manager_first_name,
+                          manager.last_name as manager_last_name,
+                          manager.email as manager_email
+                        FROM
+                          claim, 
+                          employee claimee, 
+                          employee approver,
+                          employee manager,
+                          company
+                        WHERE 
+                          claimee.id = claim.claimee_id AND 
+                          approver.id = claim.approver_id AND
+                          claim.company_id = company.id AND
+                          claimee.manager_id = manager.id AND
+                          claim.status = 'A' AND
                           approver.id = ?`;
       connection.query(queryString, [employee.id], (err, rows) => {
         if (err) {

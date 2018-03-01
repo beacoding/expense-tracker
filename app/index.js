@@ -11,7 +11,7 @@ import ReduxModal from 'react-redux-modal'
 import NavBar from './containers/NavBar';
 import ClaimList from './containers/ClaimList';
 import ClaimPage from './containers/ClaimPage';
-import ApprovalList from './containers/ApprovalList';
+import ApprovalPage from './containers/ApprovalPage';
 import ReportsContainer from './containers/ReportsContainer';
 import reducer from './reducers';
 
@@ -30,7 +30,7 @@ export const store = createStore(
         <NavBar />
       </nav>
       <div id="content">
-        <ApprovalList/>
+        <ApprovalPage/>
       </div>
     </div>
 
@@ -47,7 +47,7 @@ render(
               <Route exact path="/" component={ClaimList} />
               <Route exact path="/claims" component={ClaimList}/>
               <Route path="/claims/:claim_id/" component={ClaimPage}/>
-              <Route exact path="/approvals" component={ApprovalList}/>
+              <Route exact path="/approvals" component={ApprovalPage}/>
               <Route path="/approvals/:claim_id/" component={ClaimPage}/> 
               <Route path="/reports" component={ReportsContainer}/> 
             </Switch>

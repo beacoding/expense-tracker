@@ -15,12 +15,14 @@ class NavBar extends React.Component {
   }
 
   render() {
+    const { employee } = this.props;
     return (
       <div>
         <div className="logo">
           <img src="/assets/img/logo.png"/>
         </div>
         <ul className="list-unstyled components" >
+          <li>Welcome {employee.first_name + " " + employee.last_name + "!"}</li>
           <li><NavLink activeClassName="active" to="/claims"><i className="ion-android-list"></i>My Claims</NavLink></li>
           <li><NavLink activeClassName="active" to="/approvals"><i className="ion-android-checkmark-circle"></i>Approvals</NavLink></li>
           <li><NavLink activeClassName="active" to="/reports"><i className="ion-clipboard"></i>Reporting</NavLink></li>

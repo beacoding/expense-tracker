@@ -6,6 +6,7 @@ export const claimsAPI = {
   requestAll,
   requestOne,
   requestPendingApprovals,
+  requestApprovedApprovals,
   requestWith
 };
 
@@ -48,3 +49,8 @@ function requestPendingApprovals() {
   return fetch('/claims/pending_approvals', apiHelpers.getOptions())
    .then(res => apiHelpers.handleResponse(res));
  }
+
+ function requestApprovedApprovals() {
+   return fetch('/claims/approved_approvals', apiHelpers.getOptions())
+    .then(res => apiHelpers.handleResponse(res));
+  }

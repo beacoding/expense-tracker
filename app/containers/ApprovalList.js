@@ -30,20 +30,6 @@ class ApprovalList extends React.Component {
   renderEmptyList() {
     return (
       <div className="claimlist-container">
-        <div className="page-header">
-          <div className="page-title">
-            Approvals
-          </div>
-          <button className="page-button-blue" onClick={this.reloadData}> Refresh</button>  
-          <div className="page-route">
-            <span className="route-inactive">Home</span>  <span className="route-active"> > Approvals</span>
-          </div>
-        </div>
-        <div className="claim-list">
-          <div className="claim-container">
-            You do not have any claims pending your approval.
-          </div>
-        </div>
       </div>
     )
   }
@@ -68,26 +54,18 @@ class ApprovalList extends React.Component {
     }
 
     return (
-      <div className="claimlist-container">
-        <div className="page-header">
-          <div className="page-title">
-            Approvals
-          </div>
+        <div>
           <button className="page-button-blue" onClick={this.reloadData}> Refresh</button>  
-          <div className="page-route">
-            <span className="route-inactive">Home</span>  <span className="route-active"> > Approvals</span>
+          <div className="claim-list">
+            {Object.entries(claimsMap).map((claim_tuple) => {
+              var claim = claim_tuple[1]
+                return <PendingClaimContainer
+                          claim={claim}
+                          employee={employee}
+                          key={claim.claim_id}/>
+            })}
           </div>
         </div>
-        <div className="claim-list">
-          {Object.entries(claimsMap).map((claim_tuple) => {
-            var claim = claim_tuple[1]
-              return <PendingClaimContainer
-                        claim={claim}
-                        employee={employee}
-                        key={claim.claim_id}/>
-          })}
-        </div>
-      </div>
     )
   }
 }

@@ -62,32 +62,19 @@ class ClaimPage extends React.Component {
   
   render() {
     const { employee, claimItems, isFetching, claimsMap, error } = this.props;
+    let claim_id = window.location.pathname.split("/")[2];
   
     if (error !== undefined) {
       return this.renderError(error);
     }
 
-    if (isFetching === true) {
+    if (!(claim_id in claimsMap)) {
       return this.renderFetching();
     }
-
-    let claim_id = window.location.pathname.split("/")[2];
 
     const claimItemsList = claimItems.claimItemsMap[claim_id] || [];
-    if (claimItemsList === undefined) {
-      return this.renderFetching();
-    }
-
-    if (claimsMap === undefined) {
-      return this.renderFetching();
-    }
-
 
     let claim = claimsMap[claim_id];
-    if (claimsMap[claim_id] == undefined) {
-      return this.renderFetching();
-    }
-
     let status = claim.status
 
     return (

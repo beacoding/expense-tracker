@@ -40,6 +40,15 @@ router.get('/pending_approvals', [authMiddleware.isLoggedIn, claimsMiddleware.fi
   }
 });
 
+router.get('/approved_approvals', [authMiddleware.isLoggedIn, claimsMiddleware.findApprovedApprovalsByManager], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({employee: req.user, claims: req.claims});
+  }
+});
+
 router.post('/add_claim', [authMiddleware.isLoggedIn, claimsMiddleware.addOne], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);
