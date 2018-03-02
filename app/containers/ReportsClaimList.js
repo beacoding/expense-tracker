@@ -114,6 +114,12 @@ class ReportsClaimList extends React.Component {
       </div>
       )
   }
+
+  renderReportsButtons() {
+    return (
+      <button onClick={this.props.handleT4Generation.bind(this, this.props.claimsMap)}> Generate T4 </button>
+      )
+  }
   
   render() {
     const { employee, claimsMap, error, isFetching, totals, form, claimId } = this.props;
@@ -132,8 +138,8 @@ class ReportsClaimList extends React.Component {
     
     return (
       <div className="claimlist-container">
+        {this.renderReportsButtons()}
         {this.renderKOI()}
-
         { this.renderEntries() }
       </div>
     )

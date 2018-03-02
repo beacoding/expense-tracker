@@ -3,12 +3,14 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { reportsActions, claimsActions } from '../actions';
 import ReportsClaimList from './ReportsClaimList';
+import { reportsHelpers } from '../helpers';
 
 class ReportsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.handleParamChangeChecked = this.handleParamChangeChecked.bind(this);
     this.handleParamChangeText = this.handleParamChangeText.bind(this);
+    this.handleT4Generation = this.handleT4Generation.bind(this);
   }
 
   componentWillReceiveProps (nextprops) {
@@ -25,6 +27,10 @@ class ReportsContainer extends React.Component {
     var value = e.target.value.length > 0 ? e.target.value : null
     var param_to_change = e.target.name;
     this.props.dispatch(reportsActions.modifyParams(param_to_change, value));
+  }
+
+  handleT4Generation(claims) {
+    reportsHelpers.generateT4(claims);
   }
 
   renderCheckBoxes() {
@@ -103,7 +109,7 @@ class ReportsContainer extends React.Component {
 
   renderClaimList() {
     return (
-      <ReportsClaimList />
+      <ReportsClaimList handleT4Generation={this.handleT4Generation}/>
       )
   }
 
