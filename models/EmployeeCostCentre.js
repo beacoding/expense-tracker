@@ -81,6 +81,54 @@ module.exports = {
     });
   },
 
+  findAllWithParams: function(params) {
+    return new Promise((resolve, reject) => {
+      var whereArray = []
+      for (key in params) {
+        if (params[key].length > 0) {
+           switch(key) {
+            case "employee_name":
+              whereArray.push("CONCAT(first_name, ' ', last_name) LIKE '" + params[key] + "%'")
+              break;
+            case "employee_id":
+              whereArray.push("employee_id = '" + params[key] + "'")
+              break;
+            case "cost_centre_id":
+              whereArray.push("cost_centre_id = '" + params[key] + "'")
+              break;
+            case "approval_limit":
+              whereArray.push("approval_limit = '" + params[key] + "'")
+              break;
+            default:
+              break;
+           }
+        }
+      }
+
+
+      var whereString = whereArray.length > 0 ? " AND " + whereArray.join(" AND ") : "";
+
+      var queryString = `SELECT
+                          CONCAT(first_name, ' ', last_name) as manager_name,
+                          employee_id,
+                          cost_centre_id,
+                          approval_limit
+                        FROM
+                          employee_cost_centre e,
+                          employee manager
+                        WHERE
+                          e.employee_id = manager.id` + whereString + ";"
+
+      connection.query(queryString, [], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
   addOne: function(newApprovalRight) {
     return new Promise((resolve, reject) => {
       const queryString = 

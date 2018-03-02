@@ -6,13 +6,32 @@ export const approvalLimitsActions = {
   updateApprovalLimit,
   requestAll,
   requestByEmployee,
-  requestHasAuthority
+  requestHasAuthority,
+  modifyParams,
+  requestWith
 };
 
 function addApprovalLimit() {
 }
 
 function updateApprovalLimit() {
+}
+
+function requestWith(params) {
+  return dispatch => {
+    dispatch(request());
+    approvalLimitsAPI.requestWith(params)
+    .then(
+      res => {
+        dispatch(success(res.claims))
+      },
+      error => dispatch(failure(error))
+    );
+
+    function request() { return { type: approvalLimitsConstants.REQUEST_ALL_LIMITS }}
+    function success(limits) { return { type: approvalLimitsConstants.RECEIVE_ALL_LIMITS, limits }}
+    function failure(error) { return { type: approvalLimitsConstants.FAILURE_ALL_LIMITS, error }}
+  }
 }
 
 function requestAll() {
@@ -55,4 +74,8 @@ function requestHasAuthority(cost_centre_id) {
   function request() { return { type: approvalLimitsConstants.REQUEST_FORWARD_MANAGERS }}
   function success(managers) { return { type: approvalLimitsConstants.RECEIVE_FORWARD_MANAGERS, managers }}
   function failure(error) { return { type: approvalLimitsConstants.FAILURE_FORWARD_MANAGERS, error }}
+}
+
+function modifyParams(param_to_change, value) {
+  return { type: approvalLimitsConstants.MODIFY_PARAMS, param_to_change, value };
 }

@@ -3,15 +3,41 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { approvalLimitsActions } from '../actions';
 import ApprovalLimit from '../components/ApprovalLimit';
+import ApprovalLimitsList from './ApprovalLimitsList';
 
 class ApprovalLimitsContainer extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleParamChangeText = this.handleParamChangeText.bind(this);
   }
 
-  componentDidMount() {
-    this.props.dispatch(approvalLimitsActions.requestAll());
+  componentWillReceiveProps (nextprops) {
+    this.props.dispatch(approvalLimitsActions.requestWith(nextprops.params))
   }
+
+  handleParamChangeText(e) {
+    var value = e.target.value.length > 0 ? e.target.value : null
+    var param_to_change = e.target.name;
+    this.props.dispatch(approvalLimitsActions.modifyParams(param_to_change, value));
+  }
+
+  renderSearchByEmployeeOrCostCentre() {
+    return (
+      <div className="reports">
+        <div className="form-group reports-search">
+          <input type="text" className="form-control" name="employee_id" id="reports-search-employee" placeholder="Employee ID" onChange={this.handleParamChangeText}/>
+        </div>
+        <div className="form-group reports-search">
+          <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="Employee Name" onChange={this.handleParamChangeText}/>
+        </div>
+        <div className="form-group reports-search">
+          <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="Cost Centre ID" onChange={this.handleParamChangeText}/>
+        </div>
+      </div>
+      )
+  }
+
 
   renderApprovalLimits() {
     const { employee, limitsMap } = this.props;
@@ -25,26 +51,8 @@ class ApprovalLimitsContainer extends React.Component {
             <span className="route-inactive">Home</span>  <span className="route-active"> > Approval Limits</span>
           </div>
         </div>
-        <div className="claim-list">
-          <div className="claim-container">
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col"> ID </th>
-                  <th scope="col"> Employee </th>
-                  <th scope="col">Cost Centre ID</th>
-                  <th scope="col">Approval Limit</th>
-                </tr>
-              </thead>
-              <tbody>
-                  {Object.entries(limitsMap).map((limits_tuple, i) => {
-                    var limit_entry = limits_tuple[1]
-                    return <ApprovalLimit employee={employee} limit_entry={ limit_entry } key = {i} />
-                  })}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        { this.renderSearchByEmployeeOrCostCentre() }
+        <ApprovalLimitsList />
       </div>
       )
   }
@@ -62,11 +70,11 @@ class ApprovalLimitsContainer extends React.Component {
 function mapStateToProps(state) {
   const { authentication, policies } = state;
   const { employee } = authentication;
-  const { limitsMap, managerOptions } = policies;
+  const { managerOptions, params } = policies;
   return {
     employee,
-    limitsMap,
-    managerOptions
+    managerOptions,
+    params
   };
 }
 

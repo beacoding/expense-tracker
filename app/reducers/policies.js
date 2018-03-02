@@ -4,7 +4,8 @@ const initialState = {
   isFetching: false,
   limitsMap: {},
   managerOptions: [],
-  error: undefined
+  error: undefined,
+  params: {}
 }
 
 const policies = (state = initialState, action) => {
@@ -74,6 +75,15 @@ const policies = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
+      });
+    case approvalLimitsConstants.MODIFY_PARAMS:
+      var param_to_change = action.param_to_change;
+      var value = action.value
+      var newParams = Object.assign({}, state.params);
+      newParams[param_to_change] = value;
+
+      return Object.assign({}, state, {
+        params: newParams
       });
     // DEFAULT
     default:

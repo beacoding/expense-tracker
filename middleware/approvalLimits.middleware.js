@@ -24,6 +24,19 @@ const findAllByEmployee = async (req,res,next) => {
   }
 }
 
+const findAllWithParams = async (req,res,next) => {
+  let limits;
+  try {
+    limits = await EmployeeCostCentre.findAllWithParams(req.query);
+    req.limits = limits;
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
+
 const findEligible = async (req,res,next) => {
   let limits;
   try {
@@ -65,5 +78,6 @@ module.exports = {
   findAllByEmployee: findAllByEmployee,
   findEligible: findEligible,
   addOne: addOne,
-  updateOne: updateOne
+  updateOne: updateOne,
+  findAllWithParams: findAllWithParams
 }

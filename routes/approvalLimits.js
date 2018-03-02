@@ -31,6 +31,15 @@ router.post('/has_authority', [authMiddleware.isLoggedIn, approvalLimitsMiddlewa
   }
 });
 
+router.get('/with', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.findAllWithParams], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({employee: req.user, claims: req.limits});
+  }
+});
+
 router.get('/*', function(req, res) {
   if (req.isAuthenticated()) {
     if (req.user.is_admin === 1) {

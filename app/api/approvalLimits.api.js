@@ -5,7 +5,8 @@ export const approvalLimitsAPI = {
   updateApprovalLimit,
   requestAll,
   requestAllByEmployee,
-  requestHasAuthority
+  requestHasAuthority,
+  requestWith
 };
 
 function addApprovalLimit(newApprovalLimit) {
@@ -41,5 +42,11 @@ function requestHasAuthority(cost_centre_id) {
   return fetch('/approval_limits/has_authority', apiHelpers.postOptions({
     cost_centre_id: cost_centre_id}
   ))
+  .then(res => apiHelpers.handleResponse(res));
+}
+
+function requestWith(params) {
+  var queryParams = jQuery.param(params);
+ return fetch(`/approval_limits/with?` + queryParams, apiHelpers.getOptions())
   .then(res => apiHelpers.handleResponse(res));
 }
