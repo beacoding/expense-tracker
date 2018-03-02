@@ -195,6 +195,7 @@ module.exports = {
                             claim.id = ?`;
       connection.query(queryString, [claim_id], (err, rows) => {
         if (err) {
+          console.log(err);
           reject(err);
         } else {
           resolve(rows);

@@ -55,10 +55,13 @@ const claims = (state = initialState, action) => {
     case claimsConstants.UPDATE_CLAIM_STATUS_SUCCESS:
       // remove updated claim
       newClaimsMap = Object.assign({}, state.claimsMap);
+      var approvedClaimsMap = Object.assign({}, state.approvedClaims);
+      approvedClaimsMap[action.claim_id] = action.claim
       delete newClaimsMap[action.claim_id];
       return Object.assign({}, state, {
         isFetching: false,
         claimsMap: newClaimsMap,
+        approvedClaims: approvedClaimsMap,
         error: undefined
       });
     case claimsConstants.UPDATE_CLAIM_STATUS_FAILURE:

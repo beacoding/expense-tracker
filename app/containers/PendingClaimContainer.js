@@ -20,6 +20,7 @@ class PendingClaimContainer extends React.Component {
   }
 
   componentDidMount() {
+    console.log("qljkwetljkrew", this.props.claim.claim_id);
     this.props.dispatch(claimItemsActions.requestAll(this.props.claim.claim_id));
   }
   

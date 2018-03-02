@@ -46,12 +46,12 @@ function updateStatus(claim_id, approver_id, status) {
   return dispatch => {
     dispatch(request());
     return claimsAPI.updateStatus(claim_id, approver_id, status).then(
-      res => dispatch(success(claim_id)),
+      res => dispatch(success(res.claim)),
       error => dispatch(failure(error))
     );
   };
   function request() { return { type: claimsConstants.UPDATE_CLAIM_STATUS_REQUEST }}
-  function success(claimId) { return { type: claimsConstants.UPDATE_CLAIM_STATUS_SUCCESS, claimId }}
+  function success(claim) { return { type: claimsConstants.UPDATE_CLAIM_STATUS_SUCCESS, claim }}
   function failure(error) { return { type: claimsConstants.UPDATE_CLAIM_STATUS_FAILURE, error }}
 }
 
