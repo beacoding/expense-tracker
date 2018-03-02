@@ -5,6 +5,15 @@ function isLoggedIn(req, res, next) {
   res.redirect('/');
 }
 
+function isAdmin(req, res, next) {
+  if (req.user.is_admin === 1) {
+    return next();
+  }
+
+  res.redirect('/')
+}
+
 module.exports = {
-  isLoggedIn: isLoggedIn
+  isLoggedIn: isLoggedIn,
+  isAdmin: isAdmin
 }

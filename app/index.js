@@ -12,6 +12,8 @@ import NavBar from './containers/NavBar';
 import ClaimList from './containers/ClaimList';
 import ClaimPage from './containers/ClaimPage';
 import ApprovalPage from './containers/ApprovalPage';
+import ApprovalLimitsContainer from './containers/ApprovalLimitsContainer';
+import UserManagementContainer from './containers/UserManagementContainer';
 import ReportsContainer from './containers/ReportsContainer';
 import reducer from './reducers';
 
@@ -50,6 +52,8 @@ render(
               <Route exact path="/approvals" component={ApprovalPage}/>
               <Route path="/approvals/:claim_id/" component={ClaimPage}/> 
               <Route path="/reports" component={ReportsContainer}/> 
+              <Route path="/approval_limits" component={ApprovalLimitsContainer}/> 
+              <Route path="/user_management" component={UserManagementContainer}/> 
             </Switch>
           </div>
         </div>
