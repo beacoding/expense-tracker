@@ -71,8 +71,10 @@ module.exports = {
                           WHERE 
                             employee_id = ? AND
                             cost_centre_id = ?`;
+      console.log(queryString);
       connection.query(queryString, [approval_limit, employee_id, cost_centre_id], (err, rows) => {
         if (err) {
+          console.log(err);
           reject(err);
         } else {
           resolve(rows);

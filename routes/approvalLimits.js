@@ -22,6 +22,15 @@ router.get('/current_user', [authMiddleware.isLoggedIn, approvalLimitsMiddleware
   }
 });
 
+router.post('/update', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.updateOne], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({ limits: req.limits });
+  }
+});
+
 router.post('/has_authority', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.findEligible], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);

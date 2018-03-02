@@ -7,10 +7,16 @@ import ApprovalLimit from '../components/ApprovalLimit';
 class ApprovalLimitsList extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleEditLimit = this.handleEditLimit.bind(this);
   }
     
   componentDidMount() {
     this.props.dispatch(approvalLimitsActions.requestWith({}));
+  }
+
+  handleEditLimit(employee_id, cost_centre_id, data) {
+    this.props.dispatch(approvalLimitsActions.updateApprovalLimit(employee_id, cost_centre_id, data["new_approval_limit"]))
   }
 
   renderEntries() {
@@ -19,7 +25,7 @@ class ApprovalLimitsList extends React.Component {
       <tbody>
       {Object.entries(limitsMap).map((limits_tuple, i) => {
         var limit_entry = limits_tuple[1]
-        return <ApprovalLimit employee={employee} limit_entry={ limit_entry } key = {i} />
+        return <ApprovalLimit handleEditLimit={this.handleEditLimit} employee={employee} limit_entry={ limit_entry } key = {i} />
       })}
       </tbody>
       )

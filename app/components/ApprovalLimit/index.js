@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ClaimPage from '../../containers/ClaimPage';
 import { Link } from 'react-router-dom';
+import InlineEdit from 'react-edit-inline';
 
-const ApprovalLimit = ({ employee, limit_entry }) => {
+const ApprovalLimit = ({ employee, limit_entry, handleEditLimit }) => {
   let {
     manager_name,
     employee_id, 
@@ -11,14 +12,19 @@ const ApprovalLimit = ({ employee, limit_entry }) => {
     approval_limit, 
   } = limit_entry;
 
-  approval_limit = approval_limit === null ? "None" : "$" + approval_limit;
+  let dollar_sign = "$"
+
+  if (approval_limit === null) {
+    approval_limit = "None"
+    dollar_sign = ""
+  }
   
   return (
         <tr>
           <td>{employee_id}</td>
           <td>{manager_name}</td>
           <td>{cost_centre_id}</td>
-          <td>{approval_limit}</td>
+          <td>{dollar_sign}<InlineEdit paramName="new_approval_limit" change={handleEditLimit.bind(this, employee_id, cost_centre_id )} text= {approval_limit} /> </td>
         </tr>
   );
 }

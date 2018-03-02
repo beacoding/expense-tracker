@@ -52,7 +52,8 @@ const findEligible = async (req,res,next) => {
 const updateOne = async (req,res,next) => {
   let limit;
   try {
-    limit = await EmployeeCostCentre.updateOne(req.body);
+    const { employee_id, cost_centre_id, approval_limit } = req.body;
+    limit = await EmployeeCostCentre.updateOne(employee_id, cost_centre_id, approval_limit);
     req.limit = limit;
     next()
   } catch (err) {

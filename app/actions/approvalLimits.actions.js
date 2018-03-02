@@ -14,7 +14,18 @@ export const approvalLimitsActions = {
 function addApprovalLimit() {
 }
 
-function updateApprovalLimit() {
+function updateApprovalLimit(employee_id, cost_centre_id, new_limit) {
+  return dispatch => {
+    dispatch(request());
+    return approvalLimitsAPI.updateApprovalLimit(employee_id, cost_centre_id, new_limit).then(
+      res => dispatch(success(employee_id, cost_centre_id, new_limit)),
+      error => dispatch(failure(error))
+    );
+  };
+  
+  function request() { return { type: approvalLimitsConstants.REQUEST_UPDATE_APPROVAL_LIMIT }}
+  function success(employee_id, cost_centre_id, new_limit) { return { type: approvalLimitsConstants.SUCCESS_UPDATE_APPROVAL_LIMIT, new_limit }}
+  function failure(error) { return { type: approvalLimitsConstants.FAILURE_UPDATE_APPROVAL_LIMIT, error }}
 }
 
 function requestWith(params) {

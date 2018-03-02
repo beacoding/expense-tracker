@@ -14,6 +14,18 @@ const policies = (state = initialState, action) => {
 
   switch (action.type) {
     // REQUESTING ALL APPROVAL LIMITS
+    case approvalLimitsConstants.REQUEST_UPDATE_APPROVAL_LIMIT:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case approvalLimitsConstants.SUCCESS_UPDATE_APPROVAL_LIMIT:
+      return Object.assign({}, state, {
+        isFetching: false
+      });
+    case approvalLimitsConstants.FAILURE_UPDATE_APPROVAL_LIMIT:
+      return Object.assign({}, state, {
+        error: action.error
+      });
     case approvalLimitsConstants.REQUEST_ALL_LIMITS:
       return Object.assign({}, state, {
         isFetching: true
