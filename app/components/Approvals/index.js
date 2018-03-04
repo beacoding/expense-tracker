@@ -14,20 +14,16 @@ const Approvals = ({ props, renderEmptyList, renderError }) => {
     return renderEmptyList();
   }
 
-
   return (
-      <div>
-        <button className="page-button-blue" onClick={reloadData}> Refresh</button>  
-        <div className="claim-list">
-          {Object.entries(claimsMap).map((claim_tuple) => {
-            var claim = claim_tuple[1]
-              return <PendingClaimContainer
-                        claim={claim}
-                        employee={employee}
-                        key={claim.claim_id}/>
-          })}
-        </div>
-      </div>
+    <div className="claim-list">
+      {Object.entries(claimsMap).map((claim_tuple) => {
+        var claim = claim_tuple[1]
+          return <PendingClaimContainer
+                    claim={claim}
+                    employee={employee}
+                    key={claim.claim_id}/>
+      })}
+    </div>
   )
 }
 

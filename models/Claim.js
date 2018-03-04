@@ -245,7 +245,7 @@ module.exports = {
     });
   },
 
-  findApprovedApprovalsByManager: function(employee) {
+  findProcessedApprovalsByManager: function(employee) {
     return new Promise((resolve, reject) => {
       //TODO queryString to fetch all employee claims with employee
       //must get employee first name, employee last name, expense_type as string
@@ -280,7 +280,7 @@ module.exports = {
                           approver.id = claim.approver_id AND
                           claim.company_id = company.id AND
                           claimee.manager_id = manager.id AND
-                          claim.status = 'A' AND
+                          (claim.status = 'A' OR claim.status = 'D') AND
                           approver.id = ?`;
       connection.query(queryString, [employee.id], (err, rows) => {
         if (err) {

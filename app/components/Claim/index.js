@@ -51,9 +51,11 @@ const Claim = ({ employee, claim, handleAction }) => {
           </tr>
         </tbody>
       </table>
+      { (status == 'P') && 
       <div className="buttons-row">
-        { (status == 'P') && <button className="page-button-blue" onClick={handleAction}>Submit Claim</button> }
+        <button className="page-button-blue" onClick={handleAction}>Submit Claim</button>
       </div>
+      }
     </div>
   );
 }

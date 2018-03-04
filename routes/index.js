@@ -31,4 +31,18 @@ module.exports = function(app, passport) {
     req.logout();
     res.redirect('/');
   });
+
+  // CATCH PAGE REFRESHES FROM ADMIN PAGES
+  app.get('/admin/*', function(req, res) {
+    if (req.isAuthenticated()) {
+      if (req.user.is_admin === 1) {
+        res.render('authenticated.ejs', {
+          user : req.user,
+          claims: req.claims
+        });
+      }
+    } else {
+      res.render('index.ejs', {title: "Homepage", message: req.flash('loginMessage') });
+    }
+  });
 };

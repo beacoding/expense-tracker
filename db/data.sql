@@ -21,7 +21,7 @@ VALUES
     (9,'Serge','Ibaka','sibaka@domain.ca','pw123',2,0,1),
     (10,'DeMar','DeRozan','dderozan@domain.ca','pw123',2,0,1),
     (11,'Klay','Thompson','kthompson@domain.ca','pw123',2,0,1),
-    (12,'Luc','Mbah a Moute','lmbah a moute@domain.ca','pw123',2,0,1),
+    (12,'Luc','Mbah a Moute','lmbahamoute@domain.ca','pw123',2,0,1),
     (13,'James','Harden','jharden@domain.ca','pw123',2,0,1),
     (14,'Ish','Smith','ismith@domain.ca','pw123',2,0,1),
     (15,'Vince','Carter','vcarter@domain.ca','pw123',2,0,1),
@@ -137,7 +137,7 @@ VALUES
     (125,'Jacky','Duckfield','jduckfield@domain.ca','pw123',100,0,1),
     (126,'Gasper','Stitt','gstitt@domain.ca','pw123',100,0,1),
     (127,'Roddy','Rushby','rrushby@domain.ca','pw123',100,0,1),
-    (128,'Brigida','O''Rourke','bo''rourke@domain.ca','pw123',100,0,1),
+    (128,'Brigida',"O'Rourke",'borourke@domain.ca','pw123',100,0,1),
     (129,'Gabriela','Lammerding','glammerding@domain.ca','pw123',100,0,1),
     (130,'Robb','Ethelstone','rethelstone@domain.ca','pw123',1,1,1),
     (131,'Fanny','Hardage','fhardage@domain.ca','pw123',130,0,1),
@@ -767,9 +767,9 @@ INSERT INTO claim (claimee_id, approver_id, company_id, cost_centre_id, descript
 VALUES
 	(3,2,1,500,'Jan 31 Lunch Meeting','35289548934435',NULL,'A','2018-02-01','2018-02-01'),
   (3,2,1,538,'Feb 2 Company Dinner','35289548934435',NULL,'S','2018-02-02','2018-02-02'),
-  (3,2,1,500,'Feb 8 Team Building','35289548934435',NULL,'S','2018-02-08','2018-02-08'),
-  (4,2,1,500,'JJ Redicks Fun Day','35289548934435',NULL,'S','2018-02-22','2018-02-22'),
-  (6,2,1,500,'Deandre Jordans Not So Fun Day','35289548934435',NULL,'D','2018-02-27','2018-02-27');
+  (3,2,1,505,'Feb 8 Team Building','35289548934435',NULL,'S','2018-02-08','2018-02-08'),
+  (4,2,1,500,"JJ Redick's Fun Day",'35289548934435',NULL,'S','2018-02-22','2018-02-22'),
+  (6,2,1,500,"DeAndre Jordan's Not So Fun Day",'35289548934435',NULL,'D','2018-02-27','2018-02-27');
 
 -- INSERT SAMPLE CLAIM ITEMS
 INSERT INTO claim_item (claim_id, description, amount, comment, expense_type, image_url)
@@ -779,5 +779,5 @@ VALUES
 	(3,'The Edge Climbing Centre',1008.00,"Main Activity",6,NULL),
 	(3,'Cactus Club - North Burnaby',1687.50,"Team Dinner",9,NULL),  
   (4,'Extreme Air Park',200000.50,"Main Activity",9,NULL),
-  (5,'Not so extreme air park',150.50,"Main Activity",9,NULL);  
+  (5,'Not So Extreme Air Park',150.50,"Main Activity",9,NULL);  
 

@@ -2,10 +2,10 @@ const Json2csvParser = require('json2csv').Parser;
 var FileSaver = require('file-saver');
 
 export const reportsHelpers = {
-  generateT4
+  generateT24
 }
 
-function generateT4(claimsMap) {
+function generateT24(claimsMap) {
   var lookupArr = [];
 
   for (var key in claimsMap) {

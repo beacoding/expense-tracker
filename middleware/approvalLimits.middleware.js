@@ -36,11 +36,10 @@ const findAllWithParams = async (req,res,next) => {
   }
 }
 
-
 const findEligible = async (req,res,next) => {
   let limits;
   try {
-    limits = await EmployeeCostCentre.findForwardManagers(req.body.cost_centre_id);
+    limits = await EmployeeCostCentre.findForwardManagers(req.body.cost_centre_id, req.body.claim_amount);
     req.limits = limits;
     next()
   } catch (err) {

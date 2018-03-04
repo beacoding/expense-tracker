@@ -1,10 +1,8 @@
 import React from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import ApprovalList from './ApprovalList';
-import ApprovedList from './ApprovedList';
 import Approvals from '../components/Approvals';
-import ApprovedClaims from '../components/ApprovedClaims';
+import ProcessedClaims from '../components/ProcessedClaims';
 import { claimsActions } from '../actions';
 import { approvalLimitsActions } from '../actions';
 import { Tabs, Tab } from 'react-bootstrap';
@@ -16,22 +14,22 @@ class ApprovalPage extends React.Component {
 
   componentDidMount() {
     this.props.mountApprovalList();
-    this.props.mountApprovedList();
+    this.props.mountProcessedList();
   }
 
   renderEmptyListApproval() {
     return (
-          <div className="claim-container">
-            You do not have any claims pending your approval.
-          </div>
+      <div className="claim-container">
+        You do not have any claims pending your review.
+      </div>
     )
   }
 
-  renderEmptyListApproved() {
+  renderEmptyListProcessed() {
     return (
-          <div className="claim-container">
-            You have not approved any claims.
-          </div>
+      <div className="claim-container">
+        You have not yet reviewed any claims.
+      </div>
     )
   }
 
@@ -62,14 +60,15 @@ class ApprovalPage extends React.Component {
             </div>
             <div className="page-route">
               <span className="route-inactive">Home</span>  <span className="route-active"> > Approvals</span>
+              <button className="page-button-blue" onClick={this.props.reloadData}> Refresh</button>  
             </div>
           </div>
           <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
             <Tab eventKey={1} title="Pending Approvals">
                 <Approvals props={this.props} renderEmptyList={this.renderEmptyListApproval} renderError={this.renderError} />
             </Tab>
-            <Tab eventKey={2} title="Approved">
-                <ApprovedClaims props={this.props} renderEmptyList={this.renderEmptyListApproved} renderError={this.renderError} />
+            <Tab eventKey={2} title="Processed">
+                <ProcessedClaims props={this.props} renderEmptyList={this.renderEmptyListProcessed} renderError={this.renderError} />
             </Tab>
           </Tabs>
         </div>
@@ -89,9 +88,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(claimsActions.requestPendingApprovals());
       dispatch(approvalLimitsActions.requestByEmployee());
     },
-    mountApprovedList: () => {
+    mountProcessedList: () => {
       dispatch(claimsActions.clearAll());
-      dispatch(claimsActions.requestApprovedApprovals());
+      dispatch(claimsActions.requestProcessedApprovals());
       dispatch(approvalLimitsActions.requestByEmployee());
     }
   }
