@@ -38,10 +38,11 @@ function requestAllByEmployee() {
   .then(res => apiHelpers.handleResponse(res));
 }
 
-function requestHasAuthority(cost_centre_id) {
+function requestHasAuthority(cost_centre_id, claim_amount) {
   return fetch('/approval_limits/has_authority', apiHelpers.postOptions({
-    cost_centre_id: cost_centre_id}
-  ))
+    cost_centre_id: cost_centre_id,
+    claim_amount: claim_amount
+  }))
   .then(res => apiHelpers.handleResponse(res));
 }
 

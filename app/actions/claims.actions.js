@@ -9,7 +9,7 @@ export const claimsActions = {
   requestOne,
   requestWith,
   requestPendingApprovals,
-  requestApprovedApprovals,
+  requestProcessedApprovals,
   clearAll
 };
 
@@ -114,10 +114,10 @@ function requestPendingApprovals() {
   function failure(error) { return { type: claimsConstants.FAILURE_PENDING_APPROVALS, error }}
 }
 
-function requestApprovedApprovals() {
+function requestProcessedApprovals() {
   return dispatch => {
     dispatch(request());
-    return claimsAPI.requestApprovedApprovals().then(
+    return claimsAPI.requestProcessedApprovals().then(
       res => dispatch(success(res.claims)),
       error => dispatch(failure(error))
     );

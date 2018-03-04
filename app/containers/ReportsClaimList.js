@@ -10,53 +10,12 @@ import NewClaimModal from './NewClaimModal';
 class ReportsClaimList extends React.Component {
   constructor(props) {
     super(props);
-    this.createClaim = this.createClaim.bind(this);
-    this.showNewClaimModal = this.showNewClaimModal.bind(this);
-    this.reloadData = this.reloadData.bind(this);
   }
     
   componentDidMount() {
     this.props.dispatch(claimsActions.clearAll());
     this.props.dispatch(claimItemsActions.clearAll());
     this.props.dispatch(claimsActions.requestWith({}));
-  }
-
-  reloadData() {
-    this.props.dispatch(claimsActions.clearAll());
-    this.props.dispatch(claimsActions.requestWith({}));
-  }
-    
-  showNewClaimModal() {
-    modal.add(NewClaimModal, {
-      title: 'New Claim',
-      size: 'medium', // large, medium or small,
-      closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
-      hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,
-      hideCloseButton: false, // (optional) if you don't wanna show the top right close button
-      onSubmitFunction: this.createClaim
-    });
-  }
-
-  createClaim() {
-    const { employee, form, claimId, claims, claimsMap } = this.props;
-    const claim = {
-      claimee_id: employee.id,
-      approver_id: employee.manager_id,
-      company_id: parseInt(form.NewClaimForm.values.company_id),
-      cost_center_id: parseInt(form.NewClaimForm.values.cost_center_id),
-      description: form.NewClaimForm.values.description,
-      account_number: form.NewClaimForm.values.account_number,
-      notes: form.NewClaimForm.values.notes,
-      status: 'P',
-    }
-    this.props.dispatch(claimsActions.addClaim(claim));
-    this.props.dispatch(claimsActions.requestAll());
-    modal.clear();
-    // setTimeout(() => {
-    //   debugger;
-    //   const claimId = this.props.claims.claimId;
-    //   window.location= '/claims/'+ claimId;
-    // }, 4000);
   }
   
   renderError(error) {
@@ -76,7 +35,9 @@ class ReportsClaimList extends React.Component {
     const tranformAcronym = {
       "A": "Approved",
       "D": "Declined",
-      "S": "Pending Approval"
+      "F": "Forwarded",
+      "S": "Pending Review",
+      "P": "Draft"
     }
 
     for (var key in claimsMap) {
@@ -93,7 +54,10 @@ class ReportsClaimList extends React.Component {
         {Object.entries(koi).map((koi_tuple) => {
           var status = tranformAcronym[koi_tuple[0]]
           var counter = koi_tuple[1];
-          return <span className="koi-entry"><span className="koi-entry-header">{status}</span>   <span>{counter}</span></span>
+          return  <span className="koi-entry">
+                    <span className="koi-entry-header">{status}</span>
+                    <span>{counter}</span>
+                  </span>
         })}
       </div>
       )
@@ -117,7 +81,9 @@ class ReportsClaimList extends React.Component {
 
   renderReportsButtons() {
     return (
-      <button onClick={this.props.handleT4Generation.bind(this, this.props.claimsMap)}> Generate T4 </button>
+      <div className="reports-buttons-row">
+        <button className="page-button" onClick={this.props.handleT24Generation.bind(this, this.props.claimsMap)}> Generate T24 </button>
+      </div>
       )
   }
   
@@ -137,10 +103,10 @@ class ReportsClaimList extends React.Component {
     }
     
     return (
-      <div className="claimlist-container">
+      <div>
         {this.renderReportsButtons()}
         {this.renderKOI()}
-        { this.renderEntries() }
+        {this.renderEntries()}
       </div>
     )
   }

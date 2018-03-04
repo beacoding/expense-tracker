@@ -14,7 +14,7 @@ class UserMangementContainer extends React.Component {
     return (
       <div className="claimlist-container">
       </div>
-      )
+    )
   }
 }
 

@@ -73,10 +73,10 @@ function requestByEmployee() {
   function failure(error) { return { type: approvalLimitsConstants.FAILURE_USER_LIMITS, error }}
 }
 
-function requestHasAuthority(cost_centre_id) {
+function requestHasAuthority(cost_centre_id, claim_amount) {
   return dispatch => {
     dispatch(request());
-    return approvalLimitsAPI.requestHasAuthority(cost_centre_id).then(
+    return approvalLimitsAPI.requestHasAuthority(cost_centre_id, claim_amount).then(
       res => dispatch(success(res.limits)),
       error => dispatch(failure(error))
     );

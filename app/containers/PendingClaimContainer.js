@@ -73,7 +73,7 @@ class PendingClaimContainer extends React.Component {
         });
         break;
       case "Forward":
-        this.props.dispatch(approvalLimitsActions.requestHasAuthority(this.props.claim.cost_centre_id)).then(() => {
+        this.props.dispatch(approvalLimitsActions.requestHasAuthority(this.props.claim.cost_centre_id, parseFloat(this.props.claim.total_amount))).then(() => {
           modal.add(ModalContainer, {
             title: 'Forward Claim',
             bodyHtml: `<p>Who would you like to forward this claim request to?</p>`,

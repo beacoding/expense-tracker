@@ -10,7 +10,7 @@ class ReportsContainer extends React.Component {
     super(props);
     this.handleParamChangeChecked = this.handleParamChangeChecked.bind(this);
     this.handleParamChangeText = this.handleParamChangeText.bind(this);
-    this.handleT4Generation = this.handleT4Generation.bind(this);
+    this.handleT24Generation = this.handleT24Generation.bind(this);
   }
 
   componentWillReceiveProps (nextprops) {
@@ -29,8 +29,8 @@ class ReportsContainer extends React.Component {
     this.props.dispatch(reportsActions.modifyParams(param_to_change, value));
   }
 
-  handleT4Generation(claims) {
-    reportsHelpers.generateT4(claims);
+  handleT24Generation(claims) {
+    reportsHelpers.generateT24(claims);
   }
 
   renderCheckBoxes() {
@@ -98,19 +98,19 @@ class ReportsContainer extends React.Component {
     return (
       <div className="reports">
         <div className="form-group reports-search">
-          <input type="text" className="form-control" name="start" id="reports-date-from" label="From" placeholder="2018-01-01" onChange={this.handleParamChangeText}/>
+          <input type="date" className="form-control" name="start" id="reports-date-from" label="From" placeholder="From:" onChange={this.handleParamChangeText}/>
         </div>
         <div className="form-group reports-search">
-          <input type="text" className="form-control" name="end" id="reports-date-to" label="To" placeholder="2018-01-10" onChange={this.handleParamChangeText}/>
+          <input type="date" className="form-control" name="end" id="reports-date-to" label="To" placeholder="To:" onChange={this.handleParamChangeText}/>
         </div>
       </div>
-      )
+    )
   }
 
   renderClaimList() {
     return (
-      <ReportsClaimList handleT4Generation={this.handleT4Generation}/>
-      )
+      <ReportsClaimList handleT24Generation={this.handleT24Generation}/>
+    )
   }
 
   render() {
@@ -118,10 +118,10 @@ class ReportsContainer extends React.Component {
       <div className="claimlist-container">
         <div className="page-header">
           <div className="page-title">
-            Reports
+            Reports and Files
           </div>
           <div className="page-route">
-            <span className="route-inactive">Home</span>  <span className="route-active"> > Reports</span>
+            <span className="route-inactive">Home</span>  <span className="route-active"> > Reports and Files</span>
           </div>
         </div>
         {this.renderCheckBoxes()}

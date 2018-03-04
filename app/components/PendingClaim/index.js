@@ -47,8 +47,11 @@ const PendingClaim = ({ employee, claim, handleAction, hasApprovalAuthority, has
         { (!hasApprovalAuthority || !hasSufficientApprovalLimit) && <button className="page-button-blue" onClick={handleAction}>Forward</button> }
         { hasApprovalAuthority && hasSufficientApprovalLimit && <button className="page-button-green" onClick={handleAction}>Approve</button> }
       </div>
-      { !hasApprovalAuthority && <div className="approval-authority-msg"><i className="ion-android-alert">You do not currently have approval rights for the cost centre associated with this claim.</i></div> }
-      { hasApprovalAuthority && !hasSufficientApprovalLimit && <div className="approval-authority-msg"><i className="ion-android-alert">This claim exceeds your approval limit for this cost centre.</i></div> }
+      { (!hasApprovalAuthority || !hasSufficientApprovalLimit) && <div className="approval-authority-row">
+        { !hasApprovalAuthority && <div className="approval-authority-msg"><i className="ion-android-alert">You do not currently have approval rights for the cost centre associated with this claim.</i></div> }
+        { hasApprovalAuthority && !hasSufficientApprovalLimit && <div className="approval-authority-msg"><i className="ion-android-alert">This claim exceeds your approval limit for this cost centre.</i></div> }
+      </div>
+      }
     </div>
   );
 }

@@ -40,7 +40,7 @@ router.get('/pending_approvals', [authMiddleware.isLoggedIn, claimsMiddleware.fi
   }
 });
 
-router.get('/approved_approvals', [authMiddleware.isLoggedIn, claimsMiddleware.findApprovedApprovalsByManager], function(req, res, next) {
+router.get('/processed_approvals', [authMiddleware.isLoggedIn, claimsMiddleware.findProcessedApprovalsByManager], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);
     res.send({error: req.error});

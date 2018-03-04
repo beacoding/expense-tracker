@@ -153,7 +153,7 @@ SIDEBAR STYLE
 }
 
 .claim-list {
-  padding: 30px;
+  padding: 0px;
 }
 
 .page-title {
@@ -180,15 +180,20 @@ SIDEBAR STYLE
   height: 71px; 
 }
 
+.welcome-user {
+  padding: 15px 15px 0 15px;
+  color: darkblue;
+}
+
 .route-active {
   color: #bac6ce;
 }
 
 .claim-container {
   background-color: white;
-  padding: 50px 30px 50px 30px;
+  margin: 30px;
+  padding: 30px;
   border-radius: 3px;
-  margin: 20px 5px 20px 5px;
   box-shadow: 2px 2px #e6e4e4;
 }
 
@@ -301,9 +306,13 @@ a.article, a.article:hover {
   color: #fff !important;
 }
 
+.approval-authority-row {
+  margin-top: 15px;
+  height: 15px;
+}
+
 .approval-authority-msg {
   float: right;
-  margin: 15px 0px;
 }
 
 .buttons-row {
@@ -660,20 +669,25 @@ input:focus {outline: none; }
 .koi-entry-container {
   background-color: white;
   border-radius: 5px;
-  margin: 0 40px 0 40px;
+  margin: 30px;
   padding: 5px;
 }
 
 .koi-entry {
   background-color: #eef5fb;
-  padding: 3px;
+  margin: 5px;
+  padding: 5px;
   border-radius: 5px;
-  margin: 0 10px 0 10px;
 }
 
 .koi-entry-header {
   font-weight: bold;
   margin-right: 10px;
+}
+
+.reports-buttons-row {
+  height: 37px;
+  padding: 0px 30px;
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {

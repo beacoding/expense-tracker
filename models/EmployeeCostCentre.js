@@ -40,7 +40,8 @@ module.exports = {
     });
   },
 
-  findForwardManagers: function(cost_centre_id) {
+  findForwardManagers: function(cost_centre_id, claim_amount) {
+    console.log(claim_amount);
     return new Promise((resolve, reject) => {
       var queryString =  `SELECT
                             CONCAT(first_name, ' ', last_name) as manager_name,
@@ -52,8 +53,9 @@ module.exports = {
                             employee manager
                           WHERE
                             e.employee_id = manager.id AND
-                            e.cost_centre_id = ?`;
-      connection.query(queryString, [cost_centre_id], (err, rows) => {
+                            e.cost_centre_id = ? AND
+                            (e.approval_limit >= ? OR e.approval_limit IS NULL)`;
+      connection.query(queryString, [cost_centre_id, claim_amount], (err, rows) => {
         if (err) {
           reject(err);
         } else {
