@@ -6,13 +6,16 @@ import { claimItemsActions } from '../actions';
 import { claimsActions } from '../actions';
 import ClaimItemContainer from './ClaimItemContainer';
 import NewClaimItemModal from './NewClaimItemModal';
-
+import ModalContainer from './ModalContainer'
 
 class ClaimPage extends React.Component {
   constructor(props) {
     super(props);
+    this.returnToClaimsList = this.returnToClaimsList.bind(this);
     this.createClaimItem = this.createClaimItem.bind(this);
     this.showNewClaimItemModal = this.showNewClaimItemModal.bind(this);
+    this.confirmSubmit = this.confirmSubmit.bind(this);    
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -20,6 +23,15 @@ class ClaimPage extends React.Component {
     if (claim_id != undefined) {
       this.props.dispatch(claimItemsActions.requestAll(claim_id));
       this.props.dispatch(claimsActions.requestOne(claim_id))
+    }
+  }
+
+  returnToClaimsList() {
+    let page = window.location.pathname.split("/")[1];
+    if (page == 'claims') {
+      window.location= '/claims/';
+    } else {
+      window.location= '/approvals/';      
     }
   }
 
@@ -52,6 +64,30 @@ class ClaimPage extends React.Component {
     });
   }
 
+  confirmSubmit() {
+    let claim_id = window.location.pathname.split("/")[2];
+    this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then(() => {
+      modal.clear();
+      this.returnToClaimsList();
+    });
+  }
+
+  handleSubmit() {
+    modal.add(ModalContainer, {
+      title: 'Submit Claim?',
+      bodyHtml: `
+      <p>Are you sure you want to submit this claim request?</p>
+      <p>Once the claim has been submitted, it can no longer be modified.</p>
+      <br/>
+      `,
+      size: 'medium',
+      hideCloseButton: true,
+      affirmativeAction: this.confirmSubmit,
+      affirmativeText: 'Yes',
+      negativeText: 'No'
+    });
+  }
+
   renderError(error) {
     return <div> {error} </div>
   }
@@ -81,31 +117,44 @@ class ClaimPage extends React.Component {
       <div className="claimlist-container">
         <div className="page-header">
           <div className="page-title">
-            View Claim
+            View Claim > {claim.description}
           </div>
           <div className="page-route">
-            <span className="route-inactive">Home</span>  <span className="route-inactive"> > View Claim</span>  <span className="route-active"> > {claim.description}</span>
+            <span className="route-inactive"></span>
+            <button className="page-button" style={{float: 'left'}} onClick={this.returnToClaimsList}>Back</button>
           </div>
         </div>
         <div className="claim-list">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Description</th>
-                <th scope="col">Amount (CAD)</th>
-                <th scope="col">Expense Category</th>
-                <th scope="col">Receipt</th>
-              </tr>
-            </thead>
-            <tbody>
-            {
-              claimItemsList.map((claimItem) => {
-                return <ClaimItemContainer key={claimItem.claim_item_id} employee={employee} claim_item={claimItem} />
-              })
-            }
-            </tbody>
-          </table>
-          { (status == 'P') && <button className="page-button" onClick={this.showNewClaimItemModal}> New Item</button> }
+          <div className="claim-container">
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Description</th>
+                  <th scope="col">Amount (CAD)</th>
+                  <th scope="col">Expense Category</th>
+                  <th scope="col">Receipt</th>
+                </tr>
+              </thead>
+              <tbody>
+              {
+                claimItemsList.map((claimItem) => {
+                  return <ClaimItemContainer key={claimItem.claim_item_id} employee={employee} claim_item={claimItem} />
+                })
+              }
+              </tbody>
+            </table>
+          </div>
+          { (status == 'P') && 
+          <div>
+            <div className="padded-buttons-row">
+              <button className="page-button-blue" onClick={this.handleSubmit}>Submit Claim</button>
+              <button className="page-button" onClick={this.showNewClaimItemModal}> New Item</button>
+            </div>
+            <div className="help-text-row">
+              <i className="ion-android-alert help-text">You may leave this page and continue this claim later. Your claim items are automatically saved.</i>
+            </div>
+          </div>
+          }
         </div>
       </div>
     )

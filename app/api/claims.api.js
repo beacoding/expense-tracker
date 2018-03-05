@@ -20,11 +20,12 @@ function removeClaim() {
   //TODO: remove a claim over to the server and dispatch
 }
 
-function updateStatus(claim_id, approver_id, status) {
+function updateStatus(claim_id, approver_id, status, notes) {
   return fetch('/claims/update_status', apiHelpers.postOptions({
     claim_id: claim_id,
     approver_id: approver_id,
-    status: status
+    status: status,
+    notes: notes
   }))
    .then(res => apiHelpers.handleResponse(res));
 }

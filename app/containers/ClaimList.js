@@ -46,7 +46,6 @@ class ClaimList extends React.Component {
       cost_centre_id: parseInt(form.NewClaimForm.values.cost_centre_id),
       description: form.NewClaimForm.values.description,
       account_number: form.NewClaimForm.values.account_number,
-      notes: form.NewClaimForm.values.notes,
       status: 'P',
     }
     this.props.dispatch(claimsActions.addClaim(claim)).then((res) => {

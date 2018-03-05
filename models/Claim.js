@@ -106,12 +106,7 @@ module.exports = {
         }
       }
 
-      console.log(whereArray);
-
       var whereString = whereArray.length > 0 ? " AND " + whereArray.join(" AND ") : "";
-
-
-
       var queryString = `SELECT 
                             claim.id as claim_id, 
                             claimee.first_name as claimee_first_name,
@@ -143,14 +138,10 @@ module.exports = {
                             claimee.manager_id = manager.id AND
                             approver.id = ? AND
                             claim.company_id = company.id` + whereString + ";"
-
-      console.log(queryString);
       connection.query(queryString, [employee.id], (err, rows) => {
         if (err) {
-          console.log(err)
           reject(err);
         } else {
-          console.log(rows);
           resolve(rows);
         }
       });
@@ -195,7 +186,6 @@ module.exports = {
                             claim.id = ?`;
       connection.query(queryString, [claim_id], (err, rows) => {
         if (err) {
-          console.log(err);
           reject(err);
         } else {
           resolve(rows);
@@ -292,16 +282,17 @@ module.exports = {
     });
   },
 
-  updateStatus: function(claim_id, approver_id, status) {
+  updateStatus: function(claim_id, approver_id, status, notes) {
     return new Promise((resolve, reject) => {
       var queryString = `UPDATE claim
                           SET 
                             claim.approver_id = ?,
                             claim.status = ?,
+                            claim.notes = ?,
                             claim.date_modified = NOW()
                           WHERE 
                             claim.id = ?`;
-      connection.query(queryString, [approver_id, status, claim_id], (err, rows) => {
+      connection.query(queryString, [approver_id, status, notes, claim_id], (err, rows) => {
         if (err) {
           reject(err);
         } else {
@@ -334,7 +325,7 @@ module.exports = {
                              date_created,
                              date_modified)
                            VALUES
-                            (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`;
+                            (?, ?, ?, ?, ?, ?, NULL, ?, NOW(), NOW())`;
       connection.query(queryString, 
       [
         claim.claimee_id,
@@ -343,7 +334,6 @@ module.exports = {
         claim.cost_centre_id,
         claim.description,
         claim.account_number,
-        claim.notes,
         claim.status
       ]
       , (err, rows) => {

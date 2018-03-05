@@ -51,6 +51,7 @@ const Claim = ({ employee, claim, handleAction }) => {
           </tr>
         </tbody>
       </table>
+      { claim.notes && <i className="ion-android-alert"> Approver Notes: {claim.notes}</i>}
       { (status == 'P') && 
       <div className="buttons-row">
         <button className="page-button-blue" onClick={handleAction}>Submit Claim</button>

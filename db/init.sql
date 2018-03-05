@@ -94,10 +94,10 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.claim TO 'app_u
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.claim_item TO 'app_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.company TO 'app_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.cost_centre TO 'app_user'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.employee TO 'app_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.employee_cost_centre TO 'app_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.expense_types TO 'app_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.policy TO 'app_user'@'%';
-GRANT SELECT ON cc_expense_claims_system.employee TO 'app_user'@'%';
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < db/init.sql

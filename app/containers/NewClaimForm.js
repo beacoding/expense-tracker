@@ -133,12 +133,6 @@ class NewClaimForm extends React.Component {
         name="cost_centre_id"
         component={this.renderCostCenterDropdownField}
       />
-      <Field
-        label="Notes"
-        name="notes"
-        component={this.renderTextAreaField}
-        type="textarea"
-      />
       <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Submit</button>
       <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
       </form>
@@ -162,9 +156,6 @@ function validate(values) {
   }
   if (!values.cost_centre_id) {
     errors.cost_centre_id = "Please select a cost center.";
-  }
-  if (!values.notes) {
-    errors.notes = "Please provide some context for your claim.";
   }
 
   // if errors is empty, the form is fine to submit

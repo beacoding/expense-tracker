@@ -81,7 +81,7 @@ class ReportsClaimList extends React.Component {
 
   renderReportsButtons() {
     return (
-      <div className="reports-buttons-row">
+      <div className="padded-buttons-row">
         <button className="page-button" onClick={this.props.handleT24Generation.bind(this, this.props.claimsMap)}> Generate T24 </button>
       </div>
       )
