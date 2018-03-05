@@ -27,7 +27,12 @@ class ClaimPage extends React.Component {
   }
 
   returnToClaimsList() {
-    window.location= '/claims/';
+    let page = window.location.pathname.split("/")[1];
+    if (page == 'claims') {
+      window.location= '/claims/';
+    } else {
+      window.location= '/approvals/';      
+    }
   }
 
   createClaimItem(data) {

@@ -41,7 +41,6 @@ module.exports = {
   },
 
   findForwardManagers: function(cost_centre_id, claim_amount) {
-    console.log(claim_amount);
     return new Promise((resolve, reject) => {
       var queryString =  `SELECT
                             CONCAT(first_name, ' ', last_name) as manager_name,
@@ -73,10 +72,8 @@ module.exports = {
                           WHERE 
                             employee_id = ? AND
                             cost_centre_id = ?`;
-      console.log(queryString);
       connection.query(queryString, [approval_limit, employee_id, cost_centre_id], (err, rows) => {
         if (err) {
-          console.log(err);
           reject(err);
         } else {
           resolve(rows);

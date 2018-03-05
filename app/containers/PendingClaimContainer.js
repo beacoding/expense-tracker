@@ -14,9 +14,12 @@ class PendingClaimContainer extends React.Component {
     this.handleAction = this.handleAction.bind(this);
     this.confirmApprove = this.confirmApprove.bind(this);
     this.confirmDecline = this.confirmDecline.bind(this);
-    this.forwardClaim = this.forwardClaim.bind(this);    
-    this.setForwardManagerId = this.setForwardManagerId.bind(this);    
+    this.forwardClaim = this.forwardClaim.bind(this);   
+    this.clearInputs = this.clearInputs.bind(this);       
+    this.setForwardManagerId = this.setForwardManagerId.bind(this);  
+    this.setClaimNotes = this.setClaimNotes.bind(this);          
     this.forward_manager_id = null;
+    this.claim_notes = null;
   }
 
   componentDidMount() {
@@ -24,28 +27,38 @@ class PendingClaimContainer extends React.Component {
   }
   
   confirmApprove() {
-    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "A")).then(() => {
+    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "A", this.claim_notes)).then(() => {
       this.props.dispatch(claimsActions.requestPendingApprovals());
       modal.clear();
     });
   }
   
   confirmDecline() {
-    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "D")).then(() => {
+    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "D", this.claim_notes)).then(() => {
       this.props.dispatch(claimsActions.requestPendingApprovals());
       modal.clear();
     });
   }
 
   forwardClaim() {
-    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.forward_manager_id, "F")).then(() => {
+    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.forward_manager_id, "F", this.claim_notes)).then(() => {
       this.props.dispatch(claimsActions.requestPendingApprovals());
       modal.clear();
     });
   }
 
+  clearInputs() {
+    this.forward_manager_id = null;
+    this.claim_notes = null;
+    modal.clear();
+  }
+  
   setForwardManagerId(option) {
     this.forward_manager_id = option.value;
+  }
+
+  setClaimNotes(action) {
+    this.claim_notes = action.target.value;
   }
   
   handleAction(action) {
@@ -53,22 +66,40 @@ class PendingClaimContainer extends React.Component {
       case "Approve":
         modal.add(ModalContainer, {
           title: 'Confirm Approve?',
-          bodyHtml: '<p>Are you sure you want to approve this claim request?</p>',
+          bodyHtml: `
+            <p>Are you sure you want to approve this claim request?</p>
+            <p>You may use the text area below to leave a comment.</p>            
+          `,
+          hasTextArea: true,
+          textAreaValue: this.claim_notes,
+          textAreaPlaceholder: this.props.claim.notes || "Approver Notes",
+          onTextAreaChangeFunction: this.setClaimNotes,
+          textAreaRequired: true,
           size: 'medium',
           hideCloseButton: true,
           affirmativeAction: this.confirmApprove,
           affirmativeText: 'Yes',
+          negativeAction: this.clearInputs,
           negativeText: 'No'
         });
         break;
       case "Decline":
         modal.add(ModalContainer, {
           title: 'Confirm Decline?',
-          bodyHtml: '<p>Are you sure you want to decline this claim request?</p>',
+          bodyHtml: `
+            <p>Are you sure you want to decline this claim request?</p>
+            <p>You may use the text area below to leave a comment.</p>            
+          `,
+          hasTextArea: true,
+          textAreaValue: this.claim_notes,
+          textAreaPlaceholder: this.props.claim.notes || "Approver Notes",
+          onTextAreaChangeFunction: this.setClaimNotes,
+          textAreaRequired: true,
           size: 'medium',
           hideCloseButton: true,
           affirmativeAction: this.confirmDecline,
           affirmativeText: 'Yes',
+          negativeAction: this.clearInputs,          
           negativeText: 'No'
         });
         break;
@@ -76,16 +107,25 @@ class PendingClaimContainer extends React.Component {
         this.props.dispatch(approvalLimitsActions.requestHasAuthority(this.props.claim.cost_centre_id, parseFloat(this.props.claim.total_amount))).then(() => {
           modal.add(ModalContainer, {
             title: 'Forward Claim',
-            bodyHtml: `<p>Who would you like to forward this claim request to?</p>`,
+            bodyHtml: `
+              <p>Who would you like to forward this claim request to?</p>
+              <p>You may use the text area below to leave a comment.</p>            
+            `,
             hasDropdown: true,
             dropdownOptions: this.props.policies.managerOptions,
             dropdownDefaultValue: null,
             dropdownPlaceholder: "Select Manager",
-            onChangeFunction: this.setForwardManagerId,
+            onDropdownChangeFunction: this.setForwardManagerId,
+            hasTextArea: true,
+            textAreaValue: this.claim_notes,
+            textAreaPlaceholder: this.props.claim.notes || "Approver Notes",
+            onTextAreaChangeFunction: this.setClaimNotes,
+            textAreaRequired: true,
             size: 'medium',
             hideCloseButton: true,
             affirmativeAction: this.forwardClaim,
             affirmativeText: 'Forward Claim',
+            negativeAction: this.clearInputs,            
             negativeText: 'Cancel'
           });
         });

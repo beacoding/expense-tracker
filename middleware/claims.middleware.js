@@ -64,14 +64,12 @@ const findProcessedApprovalsByManager = async (req,res,next) => {
 const updateStatus = async (req,res,next) => {
   let claims;
   try {
-    const { claim_id, approver_id, status } = req.body
-    claims = await Claim.updateStatus(claim_id, approver_id, status);
+    const { claim_id, approver_id, status, notes } = req.body
+    claims = await Claim.updateStatus(claim_id, approver_id, status, notes);
     var claim = await Claim.findOneWithClaimID(claim_id);
-    console.log(claim);
     req.claim = claim[0];
     next()
   } catch (err) {
-    console.log(err);
     req.error = err;
     next();
   }

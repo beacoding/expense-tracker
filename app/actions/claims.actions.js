@@ -42,10 +42,10 @@ function removeClaim() {
   dispatch({type: claimsConstants.REMOVE_CLAIM_REQUEST});
 }
 
-function updateStatus(claim_id, approver_id, status) {
+function updateStatus(claim_id, approver_id, status, notes) {
   return dispatch => {
     dispatch(request());
-    return claimsAPI.updateStatus(claim_id, approver_id, status).then(
+    return claimsAPI.updateStatus(claim_id, approver_id, status, notes).then(
       res => dispatch(success(res.claim)),
       error => dispatch(failure(error))
     );
