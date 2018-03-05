@@ -197,6 +197,10 @@ SIDEBAR STYLE
   box-shadow: 2px 2px #e6e4e4;
 }
 
+.claimitems-container {
+  padding: 30px;
+}
+
 .claim-description {
   font-size: 1.3em;
 }
@@ -317,6 +321,15 @@ a.article, a.article:hover {
 
 .buttons-row {
   height: 37px;
+}
+
+.help-text-row {
+  height: 15px;
+  padding: 15px 30px;
+}
+
+.help-text {
+  float: right;
 }
 
 
@@ -685,7 +698,7 @@ input:focus {outline: none; }
   margin-right: 10px;
 }
 
-.reports-buttons-row {
+.padded-buttons-row {
   height: 37px;
   padding: 0px 30px;
 }

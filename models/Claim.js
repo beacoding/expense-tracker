@@ -334,7 +334,7 @@ module.exports = {
                              date_created,
                              date_modified)
                            VALUES
-                            (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`;
+                            (?, ?, ?, ?, ?, ?, NULL, ?, NOW(), NOW())`;
       connection.query(queryString, 
       [
         claim.claimee_id,
@@ -343,7 +343,6 @@ module.exports = {
         claim.cost_centre_id,
         claim.description,
         claim.account_number,
-        claim.notes,
         claim.status
       ]
       , (err, rows) => {
