@@ -53,6 +53,7 @@ const ReportsClaim = ({ employee, claim }) => {
           </tr>
         </tbody>
       </table>
+      { claim.notes && <i className="ion-android-alert"> Approver Notes: {claim.notes}</i>}
     </div>
   );
 }
