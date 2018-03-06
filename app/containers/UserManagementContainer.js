@@ -41,7 +41,7 @@ class UserMangementContainer extends React.Component {
 function mapStateToProps(state) {
   const { authentication } = state;
   const { employee } = authentication;
-  return {
+  return{
     employee
   };
 }
@@ -65,3 +65,5 @@ export default withRouter(connect(mapStateToProps)(UserMangementContainer))
 //   - check for S/F claims under selected account → auto F to selected account’s manager
 //   - delete any un-submitted claims
 //   - action success returns user to User Page (now indicating deactivated)
+
+

@@ -49,6 +49,7 @@ const findEligible = async (req,res,next) => {
 }
 
 const updateOne = async (req,res,next) => {
+  console.log("here!!", req.body);
   let limit;
   try {
     const { employee_id, cost_centre_id, approval_limit } = req.body;

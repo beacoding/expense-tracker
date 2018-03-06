@@ -25,8 +25,9 @@ function removeApprovalLimit() {
   //TODO: remove a claim over to the server and dispatch
 }
 
-function updateApprovalLimit(params) {
-  return fetch('/approval_limits/update', apiHelpers.postOptions(params))
+function updateApprovalLimit(employee_id, cost_centre_id, new_limit) {
+  console.log("these are the params", employee_id, cost_centre_id, new_limit);
+  return fetch('/approval_limits/update', apiHelpers.postOptions({employee_id: employee_id, cost_centre_id: cost_centre_id, approval_limit: new_limit}))
   .then(res => apiHelpers.handleResponse(res));
 }
 
