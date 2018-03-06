@@ -123,7 +123,7 @@ function mapStateToProps(state) {
     managerOptions,
     params,
     cost_centres,
-    users
+    users,
   };
 }
 

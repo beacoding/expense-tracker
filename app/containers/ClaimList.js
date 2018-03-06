@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { modal } from 'react-redux-modal';
 import { claimsActions } from '../actions';
-import { claimItemsActions } from '../actions';
+import { claimItemsActions, approvalLimitsActions } from '../actions';
 import ClaimContainer from './ClaimContainer';
 import NewClaimModal from './NewClaimModal';
 
@@ -19,6 +19,7 @@ class ClaimList extends React.Component {
     this.props.dispatch(claimsActions.clearAll());
     this.props.dispatch(claimItemsActions.clearAll());
     this.props.dispatch(claimsActions.requestAll());
+    this.props.dispatch(approvalLimitsActions.findAllCostCentres())
   }
 
   reloadData() {
@@ -33,7 +34,8 @@ class ClaimList extends React.Component {
       closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
       hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,
       hideCloseButton: false, // (optional) if you don't wanna show the top right close button
-      onSubmitFunction: this.createClaim
+      onSubmitFunction: this.createClaim,
+      cost_centres: this.props.cost_centres
     });
   }
 
@@ -130,15 +132,17 @@ class ClaimList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { authentication, claims, form } = state;
+  const { authentication, claims, form, policies } = state;
   const { employee } = authentication;
   const { claimsMap, error, isFetching } = claims;
+  const {  cost_centres } = policies;
 
   return {
       employee,
       claimsMap,
       error,
       isFetching,
+      cost_centres,
       form
   };
 }

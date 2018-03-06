@@ -14,8 +14,8 @@ class ClaimPage extends React.Component {
     this.returnToClaimsList = this.returnToClaimsList.bind(this);
     this.createClaimItem = this.createClaimItem.bind(this);
     this.showNewClaimItemModal = this.showNewClaimItemModal.bind(this);
-    this.confirmSubmit = this.confirmSubmit.bind(this);    
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.confirmSubmit = this.confirmSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +33,29 @@ class ClaimPage extends React.Component {
     } else {
       window.location= '/approvals/';      
     }
+  }
+
+  confirmSubmit() {
+    this.props.dispatch(claimsActions.updateStatus(window.location.pathname.split("/")[2], this.props.employee.manager_id, "S")).then(() => {
+      this.props.dispatch(claimsActions.requestAll());
+      modal.clear();
+    });
+  }
+
+  handleSubmit() {
+    modal.add(ModalContainer, {
+      title: 'Submit Claim?',
+      bodyHtml: `
+      <p>Are you sure you want to submit this claim request?</p>
+      <p>Once the claim has been submitted, it can no longer be modified.</p>
+      <br/>
+      `,
+      size: 'medium',
+      hideCloseButton: true,
+      affirmativeAction: this.confirmSubmit,
+      affirmativeText: 'Yes',
+      negativeText: 'No'
+    });
   }
 
   createClaimItem(data) {
@@ -147,7 +170,14 @@ class ClaimPage extends React.Component {
           </table>
           { (status == 'P') &&
           <div className="buttons-row">
+            { (status == 'P') && 
+            <div>
             <button className="page-button-blue" onClick={this.handleSubmit}>Submit Claim</button>
+            <div className="help-text-row">
+              <i className="ion-android-alert help-text">You may leave this page and continue this claim later. Your claim items are automatically saved.</i>
+            </div>
+            </div>
+          }
           </div>
           }
         </div>
