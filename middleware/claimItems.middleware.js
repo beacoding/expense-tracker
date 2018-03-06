@@ -31,7 +31,18 @@ const addNewItem = async (req,res,next) => {
   }
 }
 
+const deleteOne = async (req, res, next) => {
+  try {
+    await ClaimItem.deleteOne(req.body.claim_item_id);
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
 module.exports = {
   findAllWithClaim: findAllWithClaim,
-  addNewItem: addNewItem
+  addNewItem: addNewItem,
+  deleteOne: deleteOne
 }

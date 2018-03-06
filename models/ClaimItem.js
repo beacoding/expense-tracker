@@ -94,10 +94,20 @@ module.exports = {
     }); 
   },
   
-  deleteOne: function(claimItem) {
+  deleteOne: function(claim_item_id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to delete one claimItem
+      const queryString = `DELETE FROM claim_item WHERE id = ?`;
+      connection.query(queryString, 
+        [
+        claim_item_id
+        ],
+      (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
     }); 
   }
 }
-  

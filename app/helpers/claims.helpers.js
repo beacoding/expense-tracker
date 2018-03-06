@@ -34,8 +34,9 @@ function getStatusText(status) {
 function calculateTotal(claim, claimItems) {
   let currentTotal = 0;
   if (claimItems !== undefined) {
-    claimItems.forEach((claimItem) => {
-      let amount = claimItem.amount;
+    Object.entries(claimItems).forEach((claimItem) => {
+      var claim_item_entry = claimItem[1]
+      let amount = claim_item_entry.amount;
       currentTotal += amount;
     });
   }

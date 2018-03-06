@@ -195,6 +195,7 @@ SIDEBAR STYLE
   padding: 30px;
   border-radius: 3px;
   box-shadow: 2px 2px #e6e4e4;
+  position: relative;
 }
 
 .claimitems-container {
@@ -719,4 +720,31 @@ input:focus {outline: none; }
 .nav-tabs {
   margin: 3px 5px 3px 0px;
   border-bottom-color: white;
+}
+
+.file-generator-container {
+  text-align: right;
+}
+
+.file-generator-container button {
+  background-color: #0067C6;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+  padding: 10px 15px 10px 15px;
+  box-shadow: 2px 2px #0067C6;
+  text-decoration: none;
+  margin: 15px;
+  margin-right: 40px;
+}
+
+.delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.2em;
+  color: red;
+  margin: 5px;
+  cursor: pointer;
+  position: absolute;
 }

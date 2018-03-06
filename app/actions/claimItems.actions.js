@@ -3,7 +3,7 @@ import { claimItemsAPI } from '../api'
 
 export const claimItemsActions = {
   addClaimItem,
-  removeClaimItem,
+  deleteClaimItem,
   requestAll,
   clearAll
 };
@@ -21,14 +21,19 @@ function addClaimItem(item) {
   function failure(error) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_FAILURE, error }}
 }
 
-
-function removeClaimItem() {
-  //TODO remove claimItem
-  //expects object like
-  // {
-  //   id
-  // }
-}
+function deleteClaimItem(claim_id, claim_item_id) {
+  return dispatch => {
+    dispatch(request());
+    return claimItemsAPI.deleteClaimItem(claim_item_id).then(
+      res => dispatch(success(claim_id, claim_item_id)),
+      error => {
+        return dispatch(failure(error))
+      }
+    )
+  };
+  function request() { return { type: claimItemsConstants.DELETE_CLAIM_ITEM_REQUEST }}
+  function success(claim_id, claim_item_id) { return { type: claimItemsConstants.DELETE_CLAIM_ITEM_SUCCESS, claim_id, claim_item_id }}
+  function failure(error) { return { type: claimItemsConstants.DELETE_CLAIM_ITEM_FAILURE, error }}}
 
 function requestAll(claim_id) {
   return dispatch => {

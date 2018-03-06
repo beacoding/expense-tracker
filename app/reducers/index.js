@@ -4,6 +4,7 @@ import claimItems from './claimItems';
 import claims from './claims';
 import policies from './policies';
 import reports from './reports';
+import employees from './employees';
 import { reducer as reduxFormReducer } from 'redux-form';
 import { reducer as modalReducer } from 'react-redux-modal'
 
@@ -13,6 +14,8 @@ const rootReducer = combineReducers({
   claims,
   policies,
   reports,
+  employees,
+  policies,
   form: reduxFormReducer,
   modals: modalReducer
 });

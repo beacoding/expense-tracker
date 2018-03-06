@@ -87,6 +87,16 @@ const addOne = async (req,res,next) => {
   }
 }
 
+const deleteOne = async (req, res, next) => {
+  try {
+    await Claim.deleteOne(req.body.claim_id);
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
 module.exports = {
   findAllWithEmployee: findAllWithEmployee,
   findPendingApprovalsByManager: findPendingApprovalsByManager,
@@ -94,5 +104,6 @@ module.exports = {
   findAllWithParams: findAllWithParams,
   addOne: addOne,
   updateStatus: updateStatus,
-  findOneWithClaimID: findOneWithClaimID
+  findOneWithClaimID: findOneWithClaimID,
+  deleteOne: deleteOne
 }

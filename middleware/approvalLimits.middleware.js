@@ -61,13 +61,28 @@ const updateOne = async (req,res,next) => {
   }
 }
 
+const findAllCostCentres = async (req, res, next) => {
+  let cost_centres;
+  try {
+    cost_centres = await EmployeeCostCentre.findAllCostCentres();
+    req.cost_centres = cost_centres;
+    next()
+  } catch (err) {
+    console.log(err);
+    req.error = err;
+    next();
+  }
+}
+
 const addOne = async (req,res,next) => {
   let limit;
   try {
+    console.log(req.body, "oww")
     limit = await EmployeeCostCentre.addOne(req.body);
     req.limit = limit;
     next()
   } catch (err) {
+    console.log(err);
     req.error = err;
     next();
   }
@@ -79,5 +94,6 @@ module.exports = {
   findEligible: findEligible,
   addOne: addOne,
   updateOne: updateOne,
-  findAllWithParams: findAllWithParams
+  findAllWithParams: findAllWithParams,
+  findAllCostCentres: findAllCostCentres
 }

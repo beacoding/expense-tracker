@@ -48,7 +48,8 @@ class ApprovalLimitsList extends React.Component {
               { this.renderEntries() }
           </table>
         </div>
-      </div>    )
+      </div>    
+      )
   }
 }
 

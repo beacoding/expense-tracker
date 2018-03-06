@@ -16,13 +16,15 @@ const claimItems = (state = initialState, action) => {
         isFetching: true
       });
     case claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS:
-      var claim_id = action.claimId;
+      console.log("this is the action", action)
+      let newItem = action.newClaimItem[0];
+      let claim_id = action.claimId;
       newClaimItemsMap = Object.assign({}, state.claimItemsMap);
       if (newClaimItemsMap[claim_id] === undefined) {
-        newClaimItemsMap[claim_id] = [action.newClaimItem[0]]
-      } else {
-        newClaimItemsMap[claim_id].push(action.newClaimItem[0]);
-      }
+        newClaimItemsMap[claim_id] = {}
+      } 
+
+      newClaimItemsMap[claim_id][newItem.claim_item_id] = newItem
       return Object.assign({}, state, {
         isFetching: false,
         claimItemsMap: newClaimItemsMap,
@@ -34,7 +36,20 @@ const claimItems = (state = initialState, action) => {
         error: action.error
       });
     // REMOVE CLAIM ITEM
-    case claimItemsConstants.REMOVE_CLAIM_ITEM:
+    case claimItemsConstants.DELETE_CLAIM_ITEM_REQUEST:
+      return state;
+    case claimItemsConstants.DELETE_CLAIM_ITEM_SUCCESS:
+      newClaimItemsMap = Object.assign({}, state.claimItemsMap);
+      console.log("ljafljsdf", action);
+      console.log(newClaimItemsMap);
+      delete newClaimItemsMap[parseInt(action.claim_id)][action.claim_item_id];
+      return Object.assign({}, state, {
+        isFetching: false,
+        claimItemsMap: newClaimItemsMap,
+        error: undefined
+      });
+      return state;
+    case claimItemsConstants.DELETE_CLAIM_ITEM_FAILURE:
       return state;
     // FETCH CLAIM ITEMS
     case claimItemsConstants.REQUEST_CLAIM_ITEMS:
@@ -44,10 +59,13 @@ const claimItems = (state = initialState, action) => {
     case claimItemsConstants.RECEIVE_CLAIM_ITEMS:
       newClaimItemsMap = Object.assign({}, state.claimItemsMap);
       if (action.claimItems.length == 0) {
-        newClaimItemsMap[action.claimId] = []
+        newClaimItemsMap[action.claimId] = {}
       }
       action.claimItems.forEach((claimItem) => {
-        newClaimItemsMap[action.claimId] = action.claimItems;
+        if (newClaimItemsMap[action.claimId] === undefined) {
+          newClaimItemsMap[action.claimId] = {};
+        }
+        newClaimItemsMap[action.claimId][claimItem.claim_item_id] = claimItem;
       });
       return Object.assign({}, state, {
         isFetching: false,
@@ -66,6 +84,8 @@ const claimItems = (state = initialState, action) => {
         claimItemsMap: {},
         error: undefined
       });
+
+
     default:
       return state;
   }

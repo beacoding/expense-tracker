@@ -6,12 +6,18 @@ export const approvalLimitsAPI = {
   requestAll,
   requestAllByEmployee,
   requestHasAuthority,
+  findAllCostCentres,
   requestWith
 };
 
-function addApprovalLimit(newApprovalLimit) {
+function addApprovalLimit(params) {
   //TODO: send a claim over to the server and dispatch
-  return fetch('/approval_limits/add', apiHelpers.postOptions(newApprovalLimit))
+  return fetch('/approval_limits/add', apiHelpers.postOptions(params))
+  .then(res => apiHelpers.handleResponse(res));
+}
+
+function findAllCostCentres() {
+  return fetch('/approval_limits/find_all_cost_centres', apiHelpers.getOptions())
   .then(res => apiHelpers.handleResponse(res));
 }
 
@@ -19,12 +25,9 @@ function removeApprovalLimit() {
   //TODO: remove a claim over to the server and dispatch
 }
 
-function updateApprovalLimit(employee_id, cost_centre_id, new_limit) {
-  return fetch('/approval_limits/update', apiHelpers.postOptions({
-    employee_id: employee_id,
-    cost_centre_id: cost_centre_id,
-    approval_limit: new_limit
-  }))
+function updateApprovalLimit(params) {
+  console.log(params, "qlwer");
+  return fetch('/approval_limits/update', apiHelpers.postOptions(params))
   .then(res => apiHelpers.handleResponse(res));
 }
 

@@ -58,6 +58,15 @@ router.post('/add_claim', [authMiddleware.isLoggedIn, claimsMiddleware.addOne], 
   }
 });
 
+router.post('/delete_claim', [authMiddleware.isLoggedIn, claimsMiddleware.deleteOne], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send(201);
+  }
+});
+
 router.post('/update_status', [authMiddleware.isLoggedIn, claimsMiddleware.updateStatus], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);

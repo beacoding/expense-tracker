@@ -24,7 +24,7 @@ const ApprovalLimit = ({ employee, limit_entry, handleEditLimit }) => {
           <td>{employee_id}</td>
           <td>{manager_name}</td>
           <td>{cost_centre_id}</td>
-          <td>{dollar_sign}<InlineEdit paramName="new_approval_limit" change={handleEditLimit.bind(this, employee_id, cost_centre_id )} text= {approval_limit} /> </td>
+          <td>{dollar_sign}<InlineEdit paramName="new_approval_limit" change={handleEditLimit.bind(this, employee_id, cost_centre_id )} text= {approval_limit} />  <i className="ion-edit"></i></td>
         </tr>
   );
 }

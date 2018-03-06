@@ -13,6 +13,8 @@ class ClaimContainer extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.confirmSubmit = this.confirmSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +44,29 @@ class ClaimContainer extends React.Component {
     });
   }
 
+  confirmDelete() {
+    this.props.dispatch(claimsActions.deleteClaim(this.props.claim.claim_id)).then(() => {
+      this.props.dispatch(claimsActions.requestAll());
+      modal.clear();
+    });
+  }
+
+  handleDelete() {
+    modal.add(ModalContainer, {
+      title: 'Delete Claim?',
+      bodyHtml: `
+      <p>Are you sure you want to delete this claim request?</p>
+      <p>Once the claim has been deleted, it can no longer be accessed.</p>
+      <br/>
+      `,
+      size: 'medium',
+      hideCloseButton: true,
+      affirmativeAction: this.confirmDelete,
+      affirmativeText: 'Yes',
+      negativeText: 'No'
+    });
+  }
+
   render() {
     const { employee, key, claim, claimItems } = this.props;
     claimsHelpers.calculateTotal(claim, claimItems.claimItemsMap[claim.claim_id]);
@@ -50,6 +75,7 @@ class ClaimContainer extends React.Component {
         claim={claim}
         employee={employee}
         handleAction={this.handleSubmit}
+        handleDelete={this.handleDelete}
         key={claim.claim_id} />
     )
   }

@@ -22,6 +22,7 @@ function generateT24(claimsMap) {
       lookupEntry.account_number = claim.account_number;
       lookupEntry.description = claim.description;
       lookupEntry.amount = claim.total_amount;
+      lookupEntry.date = claim.date_created;
       lookupArr.push(lookupEntry);
     }
   }
@@ -32,7 +33,40 @@ function generateT24(claimsMap) {
   const csv = json2csvParser.parse(lookupArr);
 
 
-  const filename = 'export.csv';
+  const filename = 't24.csv';
+
+  var blob = new Blob([csv], {type: "csv/csv;charset=utf-8"});
+  FileSaver.saveAs(blob, filename );
+}
+
+
+function generatePayroll(claimsMap) {
+  var lookupArr = [];
+
+  for (var key in claimsMap) {
+    var claim = claimsMap[key];
+    if (!claim.account_number) {
+      var lookupEntry = {
+        "employee_name": "",
+        "employee_id": "",
+        "date_created": Date.now(),
+        "expense_reimbursement": 0,
+      }
+      lookupEntry.employee_name = claim.claimee_first_name + " " + claim.claimee_last_name;
+      lookupEntry.employee_id = claim.description;
+      lookupEntry.expense_reimbursement = claim.total_amount;
+      lookupEntry.date = claim.date_created;
+      lookupArr.push(lookupEntry);
+    }
+  }
+  const fields = ['employee_name', 'employee_id', 'expense_reimbursement'];
+
+
+  const json2csvParser = new Json2csvParser({ fields, delimiter: '|'  });
+  const csv = json2csvParser.parse(lookupArr);
+
+
+  const filename = 'payroll.csv';
 
   var blob = new Blob([csv], {type: "csv/csv;charset=utf-8"});
   FileSaver.saveAs(blob, filename );

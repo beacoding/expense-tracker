@@ -352,9 +352,22 @@ module.exports = {
     }); 
   },
 
-  deleteOne: function(claim) {
+  deleteOne: function(claim_id) {
     return new Promise((resolve, reject) => {
       //TODO queryString to delete one claim
+      const queryString = 
+                          `DELETE FROM claim WHERE id = ?`;
+      connection.query(queryString, 
+      [
+        claim_id
+      ]
+      , (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
     }); 
   }
 }

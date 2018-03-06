@@ -31,6 +31,24 @@ router.post('/update', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.upda
   }
 });
 
+router.get('/find_all_cost_centres', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.findAllCostCentres], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({ cost_centres: req.cost_centres });
+  }
+});
+
+router.post('/add', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.addOne], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({ limits: req.limits });
+  }
+});
+
 router.post('/has_authority', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.findEligible], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);

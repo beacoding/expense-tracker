@@ -8,10 +8,36 @@ export const approvalLimitsActions = {
   requestByEmployee,
   requestHasAuthority,
   modifyParams,
+  findAllCostCentres,
   requestWith
 };
 
-function addApprovalLimit() {
+function findAllCostCentres() {
+  return dispatch => {
+    dispatch(request());
+    return approvalLimitsAPI.findAllCostCentres().then(
+      res => dispatch(success(res.cost_centres)),
+      error => dispatch(failure(error))
+    );
+  };
+  
+  function request() { return { type: approvalLimitsConstants.REQUEST_COST_CENTRES }}
+  function success(cost_centres) { return { type: approvalLimitsConstants.RECEIVE_COST_CENTRES, cost_centres }}
+  function failure(error) { return { type: approvalLimitsConstants.FAILURE_COST_CENTRES, error }}
+}
+
+function addApprovalLimit(params) {
+  return dispatch => {
+    dispatch(request());
+    return approvalLimitsAPI.addApprovalLimit(params).then(
+      res => dispatch(success(params)),
+      error => dispatch(failure(error))
+    );
+  };
+  
+  function request() { return { type: approvalLimitsConstants.REQUEST_ADD_APPROVAL_LIMIT }}
+  function success(employee_id, cost_centre_id, new_limit) { return { type: approvalLimitsConstants.SUCCESS_ADD_APPROVAL_LIMIT, new_limit }}
+  function failure(error) { return { type: approvalLimitsConstants.FAILURE_ADD_APPROVAL_LIMIT, error }}
 }
 
 function updateApprovalLimit(employee_id, cost_centre_id, new_limit) {

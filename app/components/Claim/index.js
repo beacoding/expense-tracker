@@ -6,7 +6,7 @@ import { claimsHelpers } from  '../../helpers';
 
 import './style.css';
 
-const Claim = ({ employee, claim, handleAction }) => {
+const Claim = ({ employee, claim, handleAction, handleDelete }) => {
   const { id, first_name, last_name, email } = employee
   const {
     claim_id,
@@ -57,6 +57,7 @@ const Claim = ({ employee, claim, handleAction }) => {
         <button className="page-button-blue" onClick={handleAction}>Submit Claim</button>
       </div>
       }
+      <div className="delete" onClick={handleDelete}>x</div>
     </div>
   );
 }

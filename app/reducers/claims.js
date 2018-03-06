@@ -40,11 +40,18 @@ const claims = (state = initialState, action) => {
       });
 
     // REMOVE CLAIM
-    case claimsConstants.REMOVE_CLAIM_REQUEST:
+    case claimsConstants.DELETE_CLAIM_REQUEST:
       return state;
-    case claimsConstants.REMOVE_CLAIM_SUCCESS:
+    case claimsConstants.DELETE_CLAIM_SUCCESS:
+      newClaimsMap = Object.assign({}, state.claimsMap);
+      delete newClaimsMap[action.claim_id];
+      return Object.assign({}, state, {
+        isFetching: false,
+        claimsMap: newClaimsMap,
+        error: undefined
+      });
       return state;
-    case claimsConstants.REMOVE_CLAIM_FAILURE:
+    case claimsConstants.DELETE_CLAIM_FAILURE:
       return state;
 
     // UPDATE CLAIM STATUS

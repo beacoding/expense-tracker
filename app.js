@@ -13,6 +13,7 @@ var index = require('./routes/index');
 var employees = require('./routes/employees');
 var claims = require('./routes/claims');
 var claimItems = require('./routes/claimItems');
+var policies = require('./routes/policies');
 var approvalLimits = require('./routes/approvalLimits');
 var userManagement = require('./routes/userManagement');
 var reports = require('./routes/reports');
@@ -60,6 +61,7 @@ app.use('/approval_limits', approvalLimits);
 app.use('/user_management', userManagement);
 app.use('/approvals', claims);
 app.use('/reports', reports);
+app.use('/policies', policies)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

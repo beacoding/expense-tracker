@@ -3,7 +3,7 @@ import { claimsAPI } from '../api'
 
 export const claimsActions = {
   addClaim,
-  removeClaim,
+  deleteClaim,
   updateStatus,
   requestAll,
   requestOne,
@@ -33,13 +33,17 @@ function addClaim(claim) {
   function failure(error) { return { type: claimsConstants.ADD_CLAIM_FAILURE, error }}
 }
 
-function removeClaim() {
-  //TODO remove claim
-  //expects 
-  // {
-  //  id
-  // }
-  dispatch({type: claimsConstants.REMOVE_CLAIM_REQUEST});
+function deleteClaim(claim_id) {
+  return dispatch => {
+    dispatch(request());
+    return claimsAPI.deleteClaim(claim_id).then(
+      res => dispatch(success(res.claim.insertId)),
+      error => dispatch(failure(error))
+    )
+  };
+  function request() { return { type: claimsConstants.DELETE_CLAIM_REQUEST }}
+  function success(claim_id) { return { type: claimsConstants.DELETE_CLAIM_SUCCESS, claim_id }}
+  function failure(error) { return { type: claimsConstants.DELETE_CLAIM_FAILURE, error }}
 }
 
 function updateStatus(claim_id, approver_id, status, notes) {

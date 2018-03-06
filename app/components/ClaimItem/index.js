@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
-const ClaimItem = ({ employee, claim_item }) => {
+const ClaimItem = ({ employee, claim_item, handleDeleteItem }) => {
   const {
     claim_item_id,
     description, 
@@ -20,6 +20,7 @@ const ClaimItem = ({ employee, claim_item }) => {
           <td>${amount.toFixed(2)}</td>
           <td>{expense_category}</td>
           <td>{receipt}</td>
+          <td className="delete-item" onClick={handleDeleteItem}>x</td>
         </tr>
   );
 }

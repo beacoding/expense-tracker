@@ -1,7 +1,7 @@
 import { apiHelpers } from '../helpers'
 export const claimsAPI = {
   addClaim,
-  removeClaim,
+  deleteClaim,
   updateStatus,
   requestAll,
   requestOne,
@@ -16,8 +16,9 @@ function addClaim(claim) {
    .then(res => apiHelpers.handleResponse(res));
 }
 
-function removeClaim() {
-  //TODO: remove a claim over to the server and dispatch
+function deleteClaim(claim_id) {
+    return fetch('/claims/delete_claim', apiHelpers.postOptions({claim_id: claim_id}))
+     .then(res => apiHelpers.handleResponse(res));
 }
 
 function updateStatus(claim_id, approver_id, status, notes) {

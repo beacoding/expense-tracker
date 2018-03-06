@@ -130,20 +130,33 @@ module.exports = {
     });
   },
 
-  addOne: function(newApprovalRight) {
+  findAllCostCentres: function() {
     return new Promise((resolve, reject) => {
       const queryString = 
-                          `INSERT INTO employee_cost_centre
-                            (employee_id, cost_centre_id, approval_limit)
-                           VALUES
-                            (?, ?, ?)`;
+                          `SELECT DISTINCT cost_centre_id FROM employee_cost_centre`;
+      connection.query(queryString, [], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    }); 
+  },
+
+  addOne: function(body) {
+    console.log(body);
+    return new Promise((resolve, reject) => {
+      const queryString = `INSERT INTO employee_cost_centre (employee_id, cost_centre_id, approval_limit)
+                            VALUES
+                              (?, ?, ?)`;
       connection.query(queryString, 
-      [
-        newApprovalRight.employee_id,
-        newApprovalRight.cost_centre_id,
-        newApprovalRight.approval_limit
-      ]
-      , (err, rows) => {
+        [
+          body.employee_id,
+          body.cost_centre_id,
+          body.approval_limit
+        ],
+      (err, rows) => {
         if (err) {
           reject(err);
         } else {
