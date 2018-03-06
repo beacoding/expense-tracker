@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
-const ClaimItem = ({ employee, claim_item, handleDeleteItem }) => {
+const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem }) => {
   const {
     claim_item_id,
     description, 
@@ -15,13 +15,13 @@ const ClaimItem = ({ employee, claim_item, handleDeleteItem }) => {
   let receipt = claim_item.image_url === null ? "No Receipt" : <img className="receipt-img" src={'/uploads/' + image_url}/> 
   
   return (
-        <tr>
-          <td>{description}</td>
-          <td>${amount.toFixed(2)}</td>
-          <td>{expense_category}</td>
-          <td>{receipt}</td>
-          <td className="delete-item" onClick={handleDeleteItem}>x</td>
-        </tr>
+    <tr>
+      <td>{description}</td>
+      <td>${amount.toFixed(2)}</td>
+      <td>{expense_category}</td>
+      <td>{receipt}</td>
+      <td>{ claim_status == 'P' && <i className="ion-close-circled pointer" onClick={handleDeleteItem}></i> }</td>
+    </tr>
   );
 }
 

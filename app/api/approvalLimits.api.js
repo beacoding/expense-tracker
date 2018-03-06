@@ -26,7 +26,6 @@ function removeApprovalLimit() {
 }
 
 function updateApprovalLimit(params) {
-  console.log(params, "qlwer");
   return fetch('/approval_limits/update', apiHelpers.postOptions(params))
   .then(res => apiHelpers.handleResponse(res));
 }

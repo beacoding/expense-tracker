@@ -68,7 +68,6 @@ const findAllCostCentres = async (req, res, next) => {
     req.cost_centres = cost_centres;
     next()
   } catch (err) {
-    console.log(err);
     req.error = err;
     next();
   }
@@ -77,12 +76,10 @@ const findAllCostCentres = async (req, res, next) => {
 const addOne = async (req,res,next) => {
   let limit;
   try {
-    console.log(req.body, "oww")
     limit = await EmployeeCostCentre.addOne(req.body);
     req.limit = limit;
     next()
   } catch (err) {
-    console.log(err);
     req.error = err;
     next();
   }
