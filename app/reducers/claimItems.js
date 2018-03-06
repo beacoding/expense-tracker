@@ -16,7 +16,6 @@ const claimItems = (state = initialState, action) => {
         isFetching: true
       });
     case claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS:
-      console.log("this is the action", action)
       let newItem = action.newClaimItem[0];
       let claim_id = action.claimId;
       newClaimItemsMap = Object.assign({}, state.claimItemsMap);
@@ -40,8 +39,6 @@ const claimItems = (state = initialState, action) => {
       return state;
     case claimItemsConstants.DELETE_CLAIM_ITEM_SUCCESS:
       newClaimItemsMap = Object.assign({}, state.claimItemsMap);
-      console.log("ljafljsdf", action);
-      console.log(newClaimItemsMap);
       delete newClaimItemsMap[parseInt(action.claim_id)][action.claim_item_id];
       return Object.assign({}, state, {
         isFetching: false,

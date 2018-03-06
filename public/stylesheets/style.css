@@ -25,6 +25,16 @@ a, a:hover, a:focus {
   transition: all 0.3s;
 }
 
+.pointer {
+  cursor: pointer !important;
+}
+
+.no-select {
+  cursor: default !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;  
+}
+
 .navbar {
   padding: 15px 10px;
   background: #fff;
@@ -64,6 +74,8 @@ SIDEBAR STYLE
   background: white;
   color: grey;
   transition: all 0.3s;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 #sidebar.active {
@@ -149,7 +161,9 @@ SIDEBAR STYLE
   padding: 30px;
   background-color: white;
   margin: 0;
-  
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;  
 }
 
 .claim-list {
@@ -183,6 +197,9 @@ SIDEBAR STYLE
 .welcome-user {
   padding: 15px 15px 0 15px;
   color: darkblue;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .route-active {
@@ -196,10 +213,16 @@ SIDEBAR STYLE
   border-radius: 3px;
   box-shadow: 2px 2px #e6e4e4;
   position: relative;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .claimitems-container {
   padding: 30px;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .claim-description {
@@ -685,6 +708,9 @@ input:focus {outline: none; }
   border-radius: 5px;
   margin: 30px;
   padding: 5px;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .koi-entry {

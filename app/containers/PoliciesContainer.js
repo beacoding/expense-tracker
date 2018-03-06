@@ -25,7 +25,7 @@ class PoliciesContainer extends React.Component {
           var value = policy[1];
           return (<tr key={i}>
             <td>{key}</td>
-            <td>$<InlineEdit paramName="new_policy_value" change={this.handleEditLimit.bind(this, key)} text= {value} /><i className="ion-edit"></i> </td>
+            <td>$<InlineEdit paramName="new_policy_value" change={this.handleEditLimit.bind(this, key)} text= {value} />  <i className="ion-edit"></i> </td>
             </tr>)
         })}
         </tbody>

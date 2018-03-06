@@ -54,10 +54,10 @@ const Claim = ({ employee, claim, handleAction, handleDelete }) => {
       { claim.notes && <i className="ion-android-alert"> Approver Notes: {claim.notes}</i>}
       { (status == 'P') && 
       <div className="buttons-row">
+        <button className="page-button-red" onClick={handleDelete}>Delete Claim</button>        
         <button className="page-button-blue" onClick={handleAction}>Submit Claim</button>
       </div>
       }
-      <div className="delete" onClick={handleDelete}>x</div>
     </div>
   );
 }

@@ -7,7 +7,6 @@ const findAll = async (req,res,next) => {
     req.policies = policies;
     next()
   } catch (err) {
-    console.log(err);
     req.error = err;
     next();
   }
@@ -20,7 +19,6 @@ const updateOne = async (req, res, next) => {
     await Policy.updateOne(name, value);
     next()
   } catch(err) {
-    console.log(err);
     req.error = err;
     next()
   }

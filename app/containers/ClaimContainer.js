@@ -55,8 +55,8 @@ class ClaimContainer extends React.Component {
     modal.add(ModalContainer, {
       title: 'Delete Claim?',
       bodyHtml: `
-      <p>Are you sure you want to delete this claim request?</p>
-      <p>Once the claim has been deleted, it can no longer be accessed.</p>
+      <p>Are you sure you want to delete this claim?</p>
+      <p>All claim items will be deleted and you will need to re-enter all of the information.</p>
       <br/>
       `,
       size: 'medium',

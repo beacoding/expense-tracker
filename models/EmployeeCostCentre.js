@@ -145,7 +145,6 @@ module.exports = {
   },
 
   addOne: function(body) {
-    console.log(body);
     return new Promise((resolve, reject) => {
       const queryString = `INSERT INTO employee_cost_centre (employee_id, cost_centre_id, approval_limit)
                             VALUES

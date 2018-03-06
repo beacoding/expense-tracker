@@ -30,7 +30,6 @@ module.exports = {
   },
 
   findAllWithManagerID: function(manager_id) {
-    console.log(manager_id);
     return new Promise((resolve, reject) => {
       var queryString = `SELECT
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,

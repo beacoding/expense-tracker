@@ -29,10 +29,8 @@ module.exports = {
                             value = ?
                           WHERE 
                             name = ?`;
-      console.log(queryString);
       connection.query(queryString, [value, name], (err, rows) => {
         if (err) {
-          console.log(err);
           reject(err);
         } else {
           resolve(rows);
