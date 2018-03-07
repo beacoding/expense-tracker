@@ -11,7 +11,6 @@ export const claimsAPI = {
 };
 
 function addClaim(claim) {
-  //TODO: send a claim over to the server and dispatch
   return fetch('/claims/add_claim', apiHelpers.postOptions(claim))
    .then(res => apiHelpers.handleResponse(res));
 }

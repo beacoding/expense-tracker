@@ -5,8 +5,7 @@ router.get('/*', function(req, res) {
   if (req.isAuthenticated()) {
     if (req.user.is_admin === 1) {
       res.render('authenticated.ejs', {
-        user : req.user,
-        claims: req.claims
+        user : req.user
       });
     }
   } else {
@@ -15,4 +14,3 @@ router.get('/*', function(req, res) {
 });
 
 module.exports = router;
-``

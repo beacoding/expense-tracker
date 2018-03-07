@@ -23,20 +23,6 @@ class NewClaimForm extends React.Component {
       </div>
     );
   }
-
-  renderCheckbox(field) {
-    const { meta: { touched, error }} = field;
-    const className = `${touched && error ? "has-danger" : ""}`;
-
-    return (
-      <div className={className}>
-        <div>
-          <label>{field.label} <input type="checkbox" style={{marginLeft: 5 + 'px'}} {...field.input} /></label>
-        </div>
-        <br/>
-      </div>
-    )
-  }
   
   renderTextAreaField(field) {
     const { meta: {touched, error }} = field;
@@ -104,41 +90,38 @@ class NewClaimForm extends React.Component {
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
       <form onSubmit={handleSubmit}>
-      <Field
-        label="14-digit Coast Capital Account Number"
-        // name = what piece of state this field is going to produce
-        name="account_number"
-        component={this.renderField}
-        type="number"
-        placeholder="XXXXXXXXXXXXXX"
-        max={99999999999999}
-        maxLength={14}
-      />
-      <Field
-        label="No Coast Capital Account"
-        name="no_account_number"
-        checked={false}
-        component={this.renderCheckbox}
-      />
-      <Field
-        label="Description"
-        name="description"
-        component={this.renderField}
-        type="text"
-        placeholder="Enter a descriptive title for your claim."
-      />
-      <Field
-        label="Company"
-        name="company_id"
-        component={this.renderCompanyDropdownField}
-      />
-      <Field
-        label="Cost Center"
-        name="cost_centre_id"
-        component={this.renderCostCenterDropdownField.bind(this)}
-      />
-      <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Submit</button>
-      <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+        <Field
+          label="14-digit Coast Capital Account Number"
+          // name = what piece of state this field is going to produce
+          name="account_number"
+          component={this.renderField}
+          type="text"
+          placeholder="XXXXXXXXXXXXXX"
+          maxLength={14}
+        />
+        <div className="form-group">
+          <i className="ion-android-alert"> Leave this blank if you do not have a Coast Capital account.</i>
+          <br/>
+        </div>
+        <Field
+          label="Description"
+          name="description"
+          component={this.renderField}
+          type="text"
+          placeholder="Enter a descriptive title for your claim."
+        />
+        <Field
+          label="Company"
+          name="company_id"
+          component={this.renderCompanyDropdownField}
+        />
+        <Field
+          label="Cost Center"
+          name="cost_centre_id"
+          component={this.renderCostCenterDropdownField.bind(this)}
+        />
+        <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Submit</button>
+        <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
       </form>
     );
   }
@@ -149,8 +132,8 @@ function validate(values) {
   const errors = {};
 
   // validate the inputs from 'values'
-  if (!/^(0|[1-9][0-9]{13})$/i.test(values.account_number)) {
-    errors.account_number = "Please provide your 14-digit account number.";
+  if (values.account_number && (!/^\d{14}$/.test(values.account_number))) {
+    errors.account_number = "Please ensure your account number has 14-digits.";
   }
   if (!values.description || values.description.trim().length == 0) {
     errors.description = "Please provide a description for your claim.";

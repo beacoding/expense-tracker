@@ -57,10 +57,6 @@ module.exports = {
   },
 
   updatePassword: function(id) {
-    console.log("were in model");
-    console.log(id.id);
-    console.log("this is password");
-    console.log(id.password);
     return new Promise((resolve, reject) => {
       var queryString = `UPDATE employee
                           SET

@@ -53,11 +53,12 @@ render(
               <Route path="/claims/:claim_id/" component={ClaimPage}/>
               <Route exact path="/approvals" component={ApprovalPage}/>
               <Route path="/approvals/:claim_id/" component={ClaimPage}/> 
-              <Route path="/admin/reports" component={ReportsContainer}/> 
-              <Route path="/admin/limits" component={ApprovalLimitsContainer}/>
-              <Route path="/profile" component={Profile}/> 
+              <Route exact path="/admin/reports" component={ReportsContainer}/>
+              <Route path="/admin/reports/:claim_id" component={ClaimPage}/> 
+              <Route path="/admin/limits" component={ApprovalLimitsContainer}/> 
               <Route path="/admin/users" component={UserManagementContainer}/> 
               <Route path="/admin/policies" component={PoliciesContainer}/> 
+              <Route path="/profile" component={Profile}/> 
             </Switch>
           </div>
         </div>

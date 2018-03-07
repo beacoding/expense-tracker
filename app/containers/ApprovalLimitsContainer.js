@@ -11,7 +11,6 @@ import { modal } from 'react-redux-modal';
 class ApprovalLimitsContainer extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleParamChangeText = this.handleParamChangeText.bind(this);
     this.handleAddLimit = this.handleAddLimit.bind(this);
     this.showNewApprovalLimitModal = this.showNewApprovalLimitModal.bind(this);
@@ -22,7 +21,7 @@ class ApprovalLimitsContainer extends React.Component {
     this.props.dispatch(employeesActions.requestAll())
   }
 
-  componentWillReceiveProps (nextprops) {
+  componentWillReceiveProps(nextprops) {
     this.props.dispatch(approvalLimitsActions.requestWith(nextprops.params))
   }
 
@@ -34,6 +33,7 @@ class ApprovalLimitsContainer extends React.Component {
 
   handleAddLimit(data) {
     const { employee, form } = this.props;
+    debugger;
     const approvalLimit  = {
       employee_id: form.NewApprovalLimitForm.values.employee.value,
       approval_limit: parseFloat(data.amount),
@@ -45,7 +45,7 @@ class ApprovalLimitsContainer extends React.Component {
   }
 
   showNewApprovalLimitModal(){
-    modal.add( NewApprovalLimitModal, {
+    modal.add(NewApprovalLimitModal, {
       title: 'Add Approval Limit',
       size: 'medium', // large, medium or small,
       closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
@@ -76,12 +76,11 @@ class ApprovalLimitsContainer extends React.Component {
 
   renderReportsButtons() {
     return (
-      <div className="reports-buttons-row">
+      <div className="padded-buttons-row">
         <button className="page-button" onClick={this.showNewApprovalLimitModal}> Add New Limit </button>
       </div>
       )
   }
-
 
   renderApprovalLimits() {
     const { employee, limitsMap } = this.props;
@@ -95,13 +94,12 @@ class ApprovalLimitsContainer extends React.Component {
             <span className="route-inactive">Home</span>  <span className="route-active"> > Approval Limits</span>
           </div>
         </div>
-        { this.renderReportsButtons() }
         { this.renderSearchByEmployeeOrCostCentre() }
+        { this.renderReportsButtons() }
         <ApprovalLimitsList />
       </div>
-      )
+    )
   }
-
 
   render() {
     return (

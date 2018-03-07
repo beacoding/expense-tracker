@@ -16,10 +16,17 @@ class ClaimPage extends React.Component {
     this.showNewClaimItemModal = this.showNewClaimItemModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.confirmSubmit = this.confirmSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
   }
 
   componentDidMount() {
-    let claim_id = window.location.pathname.split("/")[2];
+    let claim_id = undefined;
+    if (window.location.pathname.split("/")[1] != "admin") {
+      claim_id = window.location.pathname.split("/")[2];
+    } else {
+      claim_id = window.location.pathname.split("/")[3];
+    }
     if (claim_id != undefined) {
       this.props.dispatch(claimItemsActions.requestAll(claim_id));
       this.props.dispatch(claimsActions.requestOne(claim_id))
@@ -29,16 +36,19 @@ class ClaimPage extends React.Component {
   returnToClaimsList() {
     let page = window.location.pathname.split("/")[1];
     if (page == 'claims') {
-      window.location= '/claims/';
+      window.location = '/claims/';
+    } else if (page == 'approvals') {
+      window.location = '/approvals/';      
     } else {
-      window.location= '/approvals/';      
+      window.location = '/admin/reports/';      
     }
   }
-
+  
   confirmSubmit() {
-    this.props.dispatch(claimsActions.updateStatus(window.location.pathname.split("/")[2], this.props.employee.manager_id, "S")).then(() => {
-      this.props.dispatch(claimsActions.requestAll());
+    let claim_id = window.location.pathname.split("/")[2];
+    this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then(() => {
       modal.clear();
+      this.returnToClaimsList();
     });
   }
 
@@ -53,6 +63,30 @@ class ClaimPage extends React.Component {
       size: 'medium',
       hideCloseButton: true,
       affirmativeAction: this.confirmSubmit,
+      affirmativeText: 'Yes',
+      negativeText: 'No'
+    });
+  }
+
+  confirmDelete() {
+    let claim_id = window.location.pathname.split("/")[2];
+    this.props.dispatch(claimsActions.deleteClaim(claim_id)).then(() => {
+      modal.clear();
+      window.location = '/claims/';
+    });
+  }
+
+  handleDelete() {
+    modal.add(ModalContainer, {
+      title: 'Delete Claim?',
+      bodyHtml: `
+      <p>Are you sure you want to delete this claim?</p>
+      <p>All claim items will be deleted and you will need to re-enter all of the information.</p>
+      <br/>
+      `,
+      size: 'medium',
+      hideCloseButton: true,
+      affirmativeAction: this.confirmDelete,
       affirmativeText: 'Yes',
       negativeText: 'No'
     });
@@ -87,13 +121,6 @@ class ClaimPage extends React.Component {
     });
   }
 
-  confirmSubmit() {
-    let claim_id = window.location.pathname.split("/")[2];
-    this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then(() => {
-      modal.clear();
-      this.returnToClaimsList();
-    });
-  }
 
   handleSubmit() {
     modal.add(ModalContainer, {
@@ -118,12 +145,17 @@ class ClaimPage extends React.Component {
   renderFetching() {
     return <div className="loader"></div>
   }
-  
 
   render() {
     const { employee, claimItems, isFetching, claimsMap, error } = this.props;
-    let claim_id = window.location.pathname.split("/")[2];
-  
+    
+    let claim_id = undefined;
+    if (window.location.pathname.split("/")[1] != "admin") {
+      claim_id = window.location.pathname.split("/")[2];
+    } else {
+      claim_id = window.location.pathname.split("/")[3];
+    }
+
     if (error !== undefined) {
       return this.renderError(error);
     }
@@ -168,19 +200,18 @@ class ClaimPage extends React.Component {
             }
             </tbody>
           </table>
-          { (status == 'P') &&
-          <div className="buttons-row">
-            { (status == 'P') && 
-            <div>
-            <button className="page-button-blue" onClick={this.handleSubmit}>Submit Claim</button>
-            <div className="help-text-row">
-              <i className="ion-android-alert help-text">You may leave this page and continue this claim later. Your claim items are automatically saved.</i>
-            </div>
-            </div>
-          }
-          </div>
-          }
         </div>
+        { (status == 'P') &&
+        <div>
+          <div className="padded-buttons-row">
+            <button className="page-button-red" onClick={this.handleDelete}>Delete Claim</button>        
+            <button className="page-button-blue" onClick={this.handleSubmit}>Submit Claim</button>
+          </div>
+          <div className="help-text-row">
+            <i className="ion-android-alert help-text">You may leave this page and continue this claim later. Your claim items are automatically saved.</i>
+          </div>
+        </div>
+        }
       </div>
     )
   }

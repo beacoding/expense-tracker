@@ -1,14 +1,16 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
+import { modal } from 'react-redux-modal';
 import { approvalLimitsActions } from '../actions';
 import ApprovalLimit from '../components/ApprovalLimit';
+import ModalContainer from './ModalContainer'
 
 class ApprovalLimitsList extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleEditLimit = this.handleEditLimit.bind(this);
+    this.handleDeleteLimit = this.handleDeleteLimit.bind(this);    
   }
     
   componentDidMount() {
@@ -16,40 +18,68 @@ class ApprovalLimitsList extends React.Component {
   }
 
   handleEditLimit(employee_id, cost_centre_id, data) {
-    this.props.dispatch(approvalLimitsActions.updateApprovalLimit(employee_id, cost_centre_id, data["new_approval_limit"]))
+    this.props.dispatch(approvalLimitsActions.updateApprovalLimit(employee_id, cost_centre_id, data["new_approval_limit"]));
+  }
+
+  confirmRevokeLimit(employee_id, cost_centre_id) {
+    this.props.dispatch(approvalLimitsActions.revokeApprovalLimit(employee_id, cost_centre_id)).then(() => {
+      modal.clear();
+    });
+  }
+
+  handleDeleteLimit(employee_id, cost_centre_id) {
+    modal.add(ModalContainer, {
+      title: 'Revoke Approval Authority?',
+      bodyHtml: `
+      <p>Are you sure you want to revoke this employee's approval authority for this cost centre?</p>
+      <br/>
+      `,
+      size: 'medium',
+      hideCloseButton: true,
+      affirmativeAction: this.confirmRevokeLimit.bind(this, employee_id, cost_centre_id),
+      affirmativeText: 'Yes',
+      negativeText: 'No'
+    });
   }
 
   renderEntries() {
     const { employee, limitsMap } = this.props;
+    var keyCounter = 0;
+    let approvalLimits = {};
+    Object.entries(limitsMap).map((cost_centre_tuple) => {
+      Object.entries(cost_centre_tuple[1]).map((limit_tuple) => {
+        approvalLimits[limit_tuple[0]] = limit_tuple;
+      });
+    });
+
     return (
       <tbody>
-      {Object.entries(limitsMap).map((limits_tuple, i) => {
-        var limit_entry = limits_tuple[1]
-        return <ApprovalLimit handleEditLimit={this.handleEditLimit} employee={employee} limit_entry={ limit_entry } key = {i} />
+      {Object.entries(approvalLimits).map((limit_tuple, i) => {
+        var limit_entry = limit_tuple[1][1];
+        return <ApprovalLimit handleEditLimit={this.handleEditLimit} handleDeleteLimit={this.handleDeleteLimit} employee={employee} limit_entry={limit_entry} key={i} />
       })}
       </tbody>
       )
   }
 
   render() {
-    
     return (
       <div className="claim-list">
         <div className="claim-container">
           <table className="table table-striped">
             <thead>
               <tr>
-                <th scope="col"> ID </th>
-                <th scope="col"> Employee </th>
+                <th scope="col">Employee </th>
                 <th scope="col">Cost Centre ID</th>
                 <th scope="col">Approval Limit</th>
+                <th></th>
               </tr>
             </thead>
-              { this.renderEntries() }
+            { this.renderEntries() }
           </table>
         </div>
       </div>    
-      )
+    )
   }
 }
 

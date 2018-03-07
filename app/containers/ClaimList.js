@@ -136,7 +136,7 @@ function mapStateToProps(state) {
   const { authentication, claims, form, policies } = state;
   const { employee } = authentication;
   const { claimsMap, error, isFetching } = claims;
-  const {  cost_centres } = policies;
+  const { cost_centres } = policies;
 
   return {
       employee,

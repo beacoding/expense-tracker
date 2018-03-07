@@ -3,9 +3,6 @@ var connection = require('../config/connect');
 module.exports = {
   findAllWithEmployee: function(employee) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to fetch all employee claims with employee
-      //must get manager first name, manager last name, expense_type as string
-      //must join with employee, and expense types
       var queryString = `SELECT 
                             claim.id as claim_id, 
                             claimee.first_name as claimee_first_name,
@@ -150,9 +147,6 @@ module.exports = {
 
   findOneWithClaimID: function(claim_id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to fetch all employee claims with employee
-      //must get manager first name, manager last name, expense_type as string
-      //must join with employee, and expense types
       var queryString = `SELECT 
                             claim.id as claim_id, 
                             claimee.first_name as claimee_first_name,
@@ -196,9 +190,6 @@ module.exports = {
 
   findPendingApprovalsByManager: function(employee) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to fetch all employee claims with employee
-      //must get employee first name, employee last name, expense_type as string
-      //must join with employee, and expense types
       var queryString = `SELECT 
                           claim.id as claim_id, 
                           claimee.first_name as claimee_first_name,
@@ -237,9 +228,6 @@ module.exports = {
 
   findProcessedApprovalsByManager: function(employee) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to fetch all employee claims with employee
-      //must get employee first name, employee last name, expense_type as string
-      //must join with employee, and expense types
       var queryString = `SELECT 
                           claim.id as claim_id, 
                           claimee.first_name as claimee_first_name,
@@ -309,8 +297,6 @@ module.exports = {
   },
 
   addOne: function(claim) {
-    //TODO queryString to add one claim
-    //MISSING PAYROLL FIELD!!!!!
     return new Promise((resolve, reject) => {
       const queryString = 
                           `INSERT INTO claim
@@ -354,9 +340,7 @@ module.exports = {
 
   deleteOne: function(claim_id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to delete one claim
-      const queryString = 
-                          `DELETE FROM claim WHERE id = ?`;
+      const queryString = `DELETE FROM claim WHERE id = ?`;
       connection.query(queryString, 
       [
         claim_id

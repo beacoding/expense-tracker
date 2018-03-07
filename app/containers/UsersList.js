@@ -59,6 +59,7 @@ class UsersList extends React.Component {
                 <th scope="col"> Employee </th>
                 <th scope="col"> Manager </th>
                 <th scope="col"> Status </th>
+                <th scope="col"> </th>                
               </tr>
             </thead>
               { this.renderEntries() }

@@ -49,7 +49,6 @@ const findEligible = async (req,res,next) => {
 }
 
 const updateOne = async (req,res,next) => {
-  console.log("here!!", req.body);
   let limit;
   try {
     const { employee_id, cost_centre_id, approval_limit } = req.body;
@@ -86,12 +85,26 @@ const addOne = async (req,res,next) => {
   }
 }
 
+const revokeOne = async (req,res,next) => {
+  let limit;
+  try {
+    const { employee_id, cost_centre_id } = req.body;
+    limit = await EmployeeCostCentre.revokeOne(employee_id, cost_centre_id);
+    req.limit = limit;
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
 module.exports = {
   findAll: findAll,
   findAllByEmployee: findAllByEmployee,
   findEligible: findEligible,
   addOne: addOne,
   updateOne: updateOne,
+  revokeOne: revokeOne,
   findAllWithParams: findAllWithParams,
   findAllCostCentres: findAllCostCentres
 }
