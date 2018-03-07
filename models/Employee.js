@@ -56,9 +56,24 @@ module.exports = {
     }); 
   },
 
-  updateOne: function(id) {
+  updatePassword: function(id) {
+    console.log("were in model");
+    console.log(id.id);
+    console.log("this is password");
+    console.log(id.password);
     return new Promise((resolve, reject) => {
-      //TODO queryString to update one employee
+      var queryString = `UPDATE employee
+                          SET
+                            password = ?
+                          WHERE 
+                            id = ?`;
+      connection.query(queryString, [id.password, id.id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
     }); 
   },
 

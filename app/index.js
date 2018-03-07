@@ -16,6 +16,7 @@ import ApprovalLimitsContainer from './containers/ApprovalLimitsContainer';
 import UserManagementContainer from './containers/UserManagementContainer';
 import PoliciesContainer from './containers/PoliciesContainer';
 import ReportsContainer from './containers/ReportsContainer';
+import Profile from './containers/ProfilesPage';
 import reducer from './reducers';
 
 const loggerMiddleware = createLogger();
@@ -53,7 +54,8 @@ render(
               <Route exact path="/approvals" component={ApprovalPage}/>
               <Route path="/approvals/:claim_id/" component={ClaimPage}/> 
               <Route path="/admin/reports" component={ReportsContainer}/> 
-              <Route path="/admin/limits" component={ApprovalLimitsContainer}/> 
+              <Route path="/admin/limits" component={ApprovalLimitsContainer}/>
+              <Route path="/profile" component={Profile}/> 
               <Route path="/admin/users" component={UserManagementContainer}/> 
               <Route path="/admin/policies" component={PoliciesContainer}/> 
             </Switch>

@@ -46,7 +46,7 @@ class NavBar extends React.Component {
           <li><NavLink activeClassName="active" to="/claims"><i className="ion-android-list"></i>My Claims</NavLink></li>
           <li><NavLink activeClassName="active" to="/approvals"><i className="ion-android-checkmark-circle"></i>Approvals</NavLink></li>
           {this.renderAdmin()}
-          <li><a href="#"><i className="ion-gear-a"></i>Settings</a></li>
+          <li><NavLink activeClassName="active" to="/profile"><i className="ion-gear-a"></i>Profile</NavLink></li>
           <li style={{cursor: "pointer"}} onClick={this.logout}><a><i className="ion-power"></i>Log out</a></li>
         </ul>
       </div>

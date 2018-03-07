@@ -26,6 +26,20 @@ router.get('/with', [authMiddleware.isLoggedIn, employeesMiddleware.findAllWithM
   }
 });
 
+router.post('/update_password', [authMiddleware.isLoggedIn, employeesMiddleware.updatePassword], function(req, res, next) {
+  console.log("reached here");
+  console.log(req);
+  console.log(req.error);
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    console.log(res);
+    console.log(req.password);
+    res.send({password: req.password});
+  }
+});
+
 router.get('/*', function(req, res) {
   if (req.isAuthenticated()) {
     res.render('authenticated.ejs', {
@@ -36,5 +50,7 @@ router.get('/*', function(req, res) {
     res.render('index.ejs', {title: "Homepage", message: req.flash('loginMessage') });
   }
 });
+
+
 
 module.exports = router;
