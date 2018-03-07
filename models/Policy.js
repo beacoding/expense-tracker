@@ -17,13 +17,12 @@ module.exports = {
 
   addOne: function(id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to add one employee
+      //TODO queryString to add a policy
     }); 
   },
 
   updateOne: function(name, value) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to update one employee
       var queryString = `UPDATE policy
                           SET
                             value = ?
@@ -41,7 +40,7 @@ module.exports = {
 
   deleteOne: function(id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to delete one employee
+      //TODO queryString to delete a policy
     }); 
   }
 }

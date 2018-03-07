@@ -4,7 +4,7 @@ import ClaimPage from '../../containers/ClaimPage';
 import { Link } from 'react-router-dom';
 import InlineEdit from 'react-edit-inline';
 
-const ApprovalLimit = ({ employee, limit_entry, handleEditLimit }) => {
+const ApprovalLimit = ({ employee, limit_entry, handleEditLimit, handleDeleteLimit }) => {
   let {
     manager_name,
     employee_id, 
@@ -17,15 +17,17 @@ const ApprovalLimit = ({ employee, limit_entry, handleEditLimit }) => {
   if (approval_limit === null) {
     approval_limit = "None"
     dollar_sign = ""
+  } else {
+    approval_limit = approval_limit;
   }
   
   return (
-        <tr>
-          <td>{employee_id}</td>
-          <td>{manager_name}</td>
-          <td>{cost_centre_id}</td>
-          <td>{dollar_sign}<InlineEdit paramName="new_approval_limit" change={handleEditLimit.bind(this, employee_id, cost_centre_id )} text= {approval_limit} />  <i className="ion-edit"></i></td>
-        </tr>
+    <tr>
+      <td>{manager_name}</td>
+      <td>{cost_centre_id}</td>
+      <td>{dollar_sign}<InlineEdit paramName="new_approval_limit" change={handleEditLimit.bind(this, employee_id, cost_centre_id)} text={approval_limit} />  <i className="ion-edit"></i></td>
+      <td><i className="ion-close-circled pointer" onClick={handleDeleteLimit.bind(this, employee_id, cost_centre_id)}></i></td>
+    </tr>
   );
 }
 

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ClaimPage from '../../containers/ClaimPage';
 import { Link } from 'react-router-dom';
 import { claimsHelpers } from  '../../helpers';
-
 import './style.css';
 
 const Claim = ({ employee, claim, handleAction, handleDelete }) => {
@@ -51,13 +50,7 @@ const Claim = ({ employee, claim, handleAction, handleDelete }) => {
           </tr>
         </tbody>
       </table>
-      { claim.notes && <i className="ion-android-alert"> Approver Notes: {claim.notes}</i>}
-      { (status == 'P') && 
-      <div className="buttons-row">
-        <button className="page-button-red" onClick={handleDelete}>Delete Claim</button>        
-        <button className="page-button-blue" onClick={handleAction}>Submit Claim</button>
-      </div>
-      }
+      { claim.notes && <i className="ion-android-alert"> Approver Notes: {claim.notes}</i> }
     </div>
   );
 }

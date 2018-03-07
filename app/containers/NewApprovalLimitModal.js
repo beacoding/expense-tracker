@@ -17,7 +17,7 @@ class NewApprovalLimitModal extends React.Component {
   render() {
     return (
       <div>
-          <NewApprovalLimitForm employees={this.props.employees} cost_centres={this.props.cost_centres} form='NewApprovalLimitForm' onSubmit={this.props.onSubmitFunction}/>
+        <NewApprovalLimitForm employees={this.props.employees} cost_centres={this.props.cost_centres} form='NewApprovalLimitForm' onSubmit={this.props.onSubmitFunction}/>
       </div>
     );
    }

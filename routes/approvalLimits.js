@@ -49,6 +49,15 @@ router.post('/add', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.addOne]
   }
 });
 
+router.post('/revoke', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.revokeOne], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({ limits: req.limits });
+  }
+});
+
 router.post('/has_authority', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.findEligible], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);
@@ -63,7 +72,7 @@ router.get('/with', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.findAll
     res.status(500);
     res.send({error: req.error});
   } else {
-    res.send({employee: req.user, claims: req.limits});
+    res.send({employee: req.user, limits: req.limits});
   }
 });
 
@@ -71,8 +80,7 @@ router.get('/*', function(req, res) {
   if (req.isAuthenticated()) {
     if (req.user.is_admin === 1) {
       res.render('authenticated.ejs', {
-        user : req.user,
-        claims: req.claims
+        user: req.user
       });
     }
   } else {

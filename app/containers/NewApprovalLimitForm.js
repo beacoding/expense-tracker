@@ -11,7 +11,6 @@ import 'react-virtualized-select/styles.css'
 class NewApprovalLimitForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       selectedOption: '',
     }
@@ -36,7 +35,6 @@ class NewApprovalLimitForm extends React.Component {
   handleSelectName(selectedOption) {
     this.setState({ selectedOption });
   }
-
   
   renderTextAreaField(field) {
     const { meta: {touched, error }} = field;
@@ -49,18 +47,18 @@ class NewApprovalLimitForm extends React.Component {
     const value = selectedOption && selectedOption.value;
 
     return (  
+      <div className = {className}>
+        <label>{field.label}</label>
         <Select
-            className="form-control" 
-            name="university"
-            value={value}
-            options={options}
-            filterOptions={filterOptions}
-            onChange={this.handleSelectName.bind(this)}
-            {...field.input}
+          value={value}
+          options={options}
+          filterOptions={filterOptions}
+          onChange={this.handleSelectName.bind(this)}
+          {...field.input}
         />
+      </div>
    );
   }
-
 
   renderCostCenterDropdownField(field) {
     const { meta: {touched, error }} = field;
@@ -75,7 +73,7 @@ class NewApprovalLimitForm extends React.Component {
           <option value="" disabled> Select a cost center. </option>
           {
             cost_centres.map((cost_centre) => {
-              let cost_centre_id = cost_centre.cost_centre_id
+              let cost_centre_id = cost_centre.id
               return <option value={cost_centre_id}>{cost_centre_id}</option>
             })
           }
@@ -86,31 +84,32 @@ class NewApprovalLimitForm extends React.Component {
       </div>
     );
   }
+  
   // form for submit new claim initial items
   render () {
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
       <form onSubmit={handleSubmit}>
-      <Field
-        label="Employee"
-        name="employee"
-        component={this.renderTextAreaField.bind(this)}
-      />
-      <Field
-        label="Cost Centre"
-        name="cost_centre_id"
-        component={this.renderCostCenterDropdownField.bind(this)}
-      />
-      <Field
-        label="Approval Limit (CAD)"
-        name="amount"
-        component={this.renderField}
-        type="number"
-        min={0}
-        step={0.01}
-      />
-     <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Submit</button>
-      <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+        <Field
+          label="Employee"
+          name="employee"
+          component={this.renderTextAreaField.bind(this)}
+        />
+        <Field
+          label="Cost Centre"
+          name="cost_centre_id"
+          component={this.renderCostCenterDropdownField.bind(this)}
+        />
+        <Field
+          label="Approval Limit (CAD)"
+          name="amount"
+          component={this.renderField}
+          type="number"
+          min={0}
+          step={0.01}
+        />
+        <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Submit</button>
+        <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
       </form>
     );
   }

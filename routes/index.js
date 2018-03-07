@@ -37,8 +37,7 @@ module.exports = function(app, passport) {
     if (req.isAuthenticated()) {
       if (req.user.is_admin === 1) {
         res.render('authenticated.ejs', {
-          user : req.user,
-          claims: req.claims
+          user : req.user
         });
       }
     } else {

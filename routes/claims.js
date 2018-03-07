@@ -79,16 +79,11 @@ router.post('/update_status', [authMiddleware.isLoggedIn, claimsMiddleware.updat
 router.get('/*', function(req, res) {
   if (req.isAuthenticated()) {
     res.render('authenticated.ejs', {
-      user : req.user,
-      claims: req.claims
+      user : req.user
     });
   } else {
     res.render('index.ejs', {title: "Homepage", message: req.flash('loginMessage') });
   }
 });
-
-// router.get('/delete', [authMiddleware.isLoggedIn, claimsMiddleware.deleteOne], function(req, res, next) {
-//   //TODO delete claim
-// });
 
 module.exports = router;

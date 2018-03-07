@@ -82,6 +82,22 @@ module.exports = {
     });
   },
 
+  revokeOne: function(employee_id, cost_centre_id) {
+    return new Promise((resolve, reject) => {
+      var queryString = `DELETE FROM employee_cost_centre
+                          WHERE 
+                            employee_id = ? AND
+                            cost_centre_id = ?`;
+      connection.query(queryString, [employee_id, cost_centre_id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
   findAllWithParams: function(params) {
     return new Promise((resolve, reject) => {
       var whereArray = []
@@ -106,9 +122,7 @@ module.exports = {
         }
       }
 
-
       var whereString = whereArray.length > 0 ? " AND " + whereArray.join(" AND ") : "";
-
       var queryString = `SELECT
                           CONCAT(first_name, ' ', last_name) as manager_name,
                           employee_id,
@@ -132,8 +146,7 @@ module.exports = {
 
   findAllCostCentres: function() {
     return new Promise((resolve, reject) => {
-      const queryString = 
-                          `SELECT DISTINCT cost_centre_id FROM employee_cost_centre`;
+      const queryString = `SELECT id FROM cost_centre`;
       connection.query(queryString, [], (err, rows) => {
         if (err) {
           reject(err);

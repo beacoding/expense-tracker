@@ -4,6 +4,7 @@ import { approvalLimitsAPI } from '../api'
 export const approvalLimitsActions = {
   addApprovalLimit,
   updateApprovalLimit,
+  revokeApprovalLimit,
   requestAll,
   requestByEmployee,
   requestHasAuthority,
@@ -36,22 +37,49 @@ function addApprovalLimit(params) {
   };
   
   function request() { return { type: approvalLimitsConstants.REQUEST_ADD_APPROVAL_LIMIT }}
-  function success(employee_id, cost_centre_id, new_limit) { return { type: approvalLimitsConstants.SUCCESS_ADD_APPROVAL_LIMIT, new_limit }}
+  function success(new_limit) { return { type: approvalLimitsConstants.SUCCESS_ADD_APPROVAL_LIMIT, new_limit }}
   function failure(error) { return { type: approvalLimitsConstants.FAILURE_ADD_APPROVAL_LIMIT, error }}
 }
 
-function updateApprovalLimit(employee_id, cost_centre_id, new_limit) {
+function updateApprovalLimit(employee_id, cost_centre_id, limit) {
   return dispatch => {
     dispatch(request());
-    return approvalLimitsAPI.updateApprovalLimit(employee_id, cost_centre_id, new_limit).then(
-      res => dispatch(success(employee_id, cost_centre_id, new_limit)),
+    return approvalLimitsAPI.updateApprovalLimit(employee_id, cost_centre_id, limit).then(
+      res => {
+        let new_limit = {
+          employee_id: employee_id,
+          cost_centre_id: cost_centre_id,
+          new_limit: limit
+        }
+        dispatch(success(new_limit))
+      },
       error => dispatch(failure(error))
     );
   };
   
   function request() { return { type: approvalLimitsConstants.REQUEST_UPDATE_APPROVAL_LIMIT }}
-  function success(employee_id, cost_centre_id, new_limit) { return { type: approvalLimitsConstants.SUCCESS_UPDATE_APPROVAL_LIMIT, new_limit }}
+  function success(new_limit) { return { type: approvalLimitsConstants.SUCCESS_UPDATE_APPROVAL_LIMIT, new_limit }}
   function failure(error) { return { type: approvalLimitsConstants.FAILURE_UPDATE_APPROVAL_LIMIT, error }}
+}
+
+function revokeApprovalLimit(employee_id, cost_centre_id) {
+  return dispatch => {
+    dispatch(request());
+    return approvalLimitsAPI.revokeApprovalLimit(employee_id, cost_centre_id).then(
+      res => {
+        let revoked_limit = {
+          employee_id: employee_id,
+          cost_centre_id: cost_centre_id
+        }
+        dispatch(success(revoked_limit))
+      },
+      error => dispatch(failure(error))
+    );
+  };
+  
+  function request() { return { type: approvalLimitsConstants.REQUEST_REVOKE_APPROVAL_LIMIT }}
+  function success(revoked_limit) { return { type: approvalLimitsConstants.SUCCESS_REVOKE_APPROVAL_LIMIT, revoked_limit }}
+  function failure(error) { return { type: approvalLimitsConstants.FAILURE_REVOKE_APPROVAL_LIMIT, error }}
 }
 
 function requestWith(params) {
@@ -60,7 +88,7 @@ function requestWith(params) {
     approvalLimitsAPI.requestWith(params)
     .then(
       res => {
-        dispatch(success(res.claims))
+        dispatch(success(res.limits))
       },
       error => dispatch(failure(error))
     );

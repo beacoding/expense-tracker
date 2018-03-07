@@ -151,8 +151,8 @@ class PendingClaimContainer extends React.Component {
 
         // An approval limit of NULL means said manager does not have an upper limit,
         // so treat as sufficient limit, otherwise ensure claim amount is less than limit
-        if (policies.limitsMap[claim.cost_centre_id].approval_limit == undefined || 
-            claim.total_amount <= policies.limitsMap[claim.cost_centre_id].approval_limit) {
+        if (policies.limitsMap[claim.cost_centre_id][employee.id].approval_limit == undefined || 
+            claim.total_amount <= policies.limitsMap[claim.cost_centre_id][employee.id].approval_limit) {
           hasSufficientApprovalLimit = true;
         }
       }

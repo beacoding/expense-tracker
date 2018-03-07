@@ -15,7 +15,7 @@ const policies = (state = initialState, action) => {
   let newManagerOptions;
 
   switch (action.type) {
-    // REQUESTING ALL APPROVAL LIMITS
+    // REQUEST LIST OF COST CENTRES
     case approvalLimitsConstants.REQUEST_COST_CENTRES:
       return Object.assign({}, state, {
         isFetching: true
@@ -29,31 +29,67 @@ const policies = (state = initialState, action) => {
       return Object.assign({}, state, {
         error: action.error
       });
+    
+    // ADD APPROVAL LIMIT
     case approvalLimitsConstants.REQUEST_ADD_APPROVAL_LIMIT:
       return Object.assign({}, state, {
         isFetching: true
       });
     case approvalLimitsConstants.SUCCESS_ADD_APPROVAL_LIMIT:
+      newLimitsMap = Object.assign({}, state.limitsMap);
+      if (newLimitsMap[action.new_limit.cost_centre_id] === undefined) {
+        newLimitsMap[action.new_limit.cost_centre_id] = {};
+      }
+      newLimitsMap[action.new_limit.cost_centre_id][action.new_limit.employee_id] = action.new_limit;
       return Object.assign({}, state, {
-        isFetching: false
-
+        isFetching: false,
+        limitsMap: newLimitsMap,
+        error: undefined
       });
     case approvalLimitsConstants.FAILURE_ADD_APPROVAL_LIMIT:
       return Object.assign({}, state, {
         error: action.error
       });
+
+    // UPDATE APPROVAL LIMIT
     case approvalLimitsConstants.REQUEST_UPDATE_APPROVAL_LIMIT:
       return Object.assign({}, state, {
         isFetching: true
       });
     case approvalLimitsConstants.SUCCESS_UPDATE_APPROVAL_LIMIT:
+      newLimitsMap = Object.assign({}, state.limitsMap);
+      newLimitsMap[action.new_limit.cost_centre_id][action.new_limit.employee_id] = action.new_limit;
       return Object.assign({}, state, {
-        isFetching: false
+        isFetching: false,
+        limitsMap: newLimitsMap,
+        error: undefined
       });
     case approvalLimitsConstants.FAILURE_UPDATE_APPROVAL_LIMIT:
       return Object.assign({}, state, {
+        isFetching: false,
         error: action.error
       });
+
+    // REVOKE APPROVAL LIMIT
+    case approvalLimitsConstants.REQUEST_REVOKE_APPROVAL_LIMIT:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case approvalLimitsConstants.SUCCESS_REVOKE_APPROVAL_LIMIT:
+      newLimitsMap = Object.assign({}, state.limitsMap);
+      delete newLimitsMap[action.revoked_limit.cost_centre_id][action.revoked_limit.employee_id];
+      return Object.assign({}, state, {
+        isFetching: false,
+        limitsMap: newLimitsMap,
+        error: undefined
+      });
+    case approvalLimitsConstants.FAILURE_REVOKE_APPROVAL_LIMIT:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      });
+
+    // REQUEST ALL APPROVAL LIMITS
     case approvalLimitsConstants.REQUEST_ALL_LIMITS:
       return Object.assign({}, state, {
         isFetching: true
@@ -61,7 +97,10 @@ const policies = (state = initialState, action) => {
     case approvalLimitsConstants.RECEIVE_ALL_LIMITS:
       newLimitsMap = {};
       action.limits.forEach((limit) => {
-        newLimitsMap[limit.cost_centre_id] = limit;
+        if (newLimitsMap[limit.cost_centre_id] === undefined) {
+          newLimitsMap[limit.cost_centre_id] = {};
+        }
+        newLimitsMap[limit.cost_centre_id][limit.employee_id] = limit;
       });
       return Object.assign({}, state, {
         isFetching: false,
@@ -73,6 +112,7 @@ const policies = (state = initialState, action) => {
         isFetching: false,
         error: action.error
       });
+
     // REQUEST POLICIES
     case policiesConstants.REQUEST_POLICIES:
       return state
@@ -109,8 +149,6 @@ const policies = (state = initialState, action) => {
         error: action.error
       });
 
-
-
     // REQUESTING APPROVAL LIMITS BY USER
     case approvalLimitsConstants.REQUEST_USER_LIMITS:
       return Object.assign({}, state, {
@@ -119,7 +157,8 @@ const policies = (state = initialState, action) => {
     case approvalLimitsConstants.RECEIVE_USER_LIMITS:
       newLimitsMap = {};
       action.limits.forEach((limit) => {
-        newLimitsMap[limit.cost_centre_id] = limit;
+        newLimitsMap[limit.cost_centre_id] = {};
+        newLimitsMap[limit.cost_centre_id][limit.employee_id] = limit;
       });
       return Object.assign({}, state, {
         isFetching: false,
@@ -131,6 +170,7 @@ const policies = (state = initialState, action) => {
         isFetching: false,
         error: action.error
       });
+
     // REQUESTING FORWARD ELIGIBLE MANAGERS
     case approvalLimitsConstants.REQUEST_FORWARD_MANAGERS:
       return Object.assign({}, state, {
@@ -154,15 +194,16 @@ const policies = (state = initialState, action) => {
         isFetching: false,
         error: action.error
       });
+
     case approvalLimitsConstants.MODIFY_PARAMS:
       var param_to_change = action.param_to_change;
       var value = action.value
       var newParams = Object.assign({}, state.params);
       newParams[param_to_change] = value;
-
       return Object.assign({}, state, {
         params: newParams
       });
+
     // DEFAULT
     default:
       return state;

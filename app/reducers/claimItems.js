@@ -45,7 +45,6 @@ const claimItems = (state = initialState, action) => {
         claimItemsMap: newClaimItemsMap,
         error: undefined
       });
-      return state;
     case claimItemsConstants.DELETE_CLAIM_ITEM_FAILURE:
       return state;
     // FETCH CLAIM ITEMS
