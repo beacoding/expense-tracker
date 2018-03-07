@@ -63,6 +63,7 @@ class ClaimList extends React.Component {
   renderEmptyList() {
     return (
       <div className="claimlist-container">
+        
         <div className="page-header">
           <div className="page-title">
             My Claims

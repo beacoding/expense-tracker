@@ -7,6 +7,18 @@ const initialState = {
 
 const reports = (state = initialState, action) => {
   switch (action.type) {
+    case employeesConstants.REQUEST_UPDATE_PASSWORD:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case employeesConstants.SUCCESS_UPDATE_PASSWORD:
+      return Object.assign({}, state, {
+        isFetching: false
+      });
+    case employeesConstants.FAILURE_UPDATE_PASSWORD:
+      return Object.assign({}, state, {
+        error: action.error
+      });
     case employeesConstants.REQUEST_EMPLOYEES:
       return Object.assign({}, state, {
         isFetching: true
