@@ -32,7 +32,7 @@ var config = {
       loader: 'babel-loader',
       include: APP_DIR,
       query: {
-        presets: ['es2015', 'react']
+        presets: ['env', 'react']
       }
     },{
       test: /\.css$/,
@@ -49,9 +49,8 @@ var config = {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
-    new webpack.optimize.DedupePlugin(), //dedupe similar code 
     new webpack.optimize.UglifyJsPlugin(), //minify everything
-    new webpack.optimize.AggressiveMergingPlugin(),//Merge chunks
+    new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
     new CompressionPlugin({   
       asset: "[path].gz[query]",
       algorithm: "gzip",

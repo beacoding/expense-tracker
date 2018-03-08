@@ -731,9 +731,12 @@ DROPDOWN COMPONENT
   margin-right: 2px;
 }
 
-.reports {
-  text-align: center; 
+.reports-filter-container {
+  padding: 30px; 
+}
 
+.reports-filter-row {
+  text-align: center;
 }
 
 .reports-search {
@@ -745,10 +748,26 @@ DROPDOWN COMPONENT
 
 input:focus {outline: none; }
 
+.approval-limits-filter-row {
+  margin-left: -75px;
+  padding: 30px 30px 0 30px;
+  text-align: center;
+}
+
+.approval-limits-search {
+  font-color: lightgrey;
+  max-width: 200px;
+  display: inline-block;
+  margin: 5px 10px 5px 10px;
+}
 
 .form-check {
   display: inline-block;
   margin: 0 20px 0 20px;
+}
+
+.form-check-input {
+  margin-right: 5px !important;
 }
 
 .koi-entry-container {

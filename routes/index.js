@@ -44,4 +44,15 @@ module.exports = function(app, passport) {
       res.render('index.ejs', {title: "Homepage", message: req.flash('loginMessage') });
     }
   });
+
+  // CATCH PAGE REFRESHES FROM PROFILE PAGE
+  app.get('/profile', function(req, res) {
+    if (req.isAuthenticated()) {
+      res.render('authenticated.ejs', {
+        user : req.user
+      });
+    } else {
+      res.render('index.ejs', {title: "Homepage", message: req.flash('loginMessage') });
+    }
+  });
 };

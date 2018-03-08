@@ -111,7 +111,7 @@ class ClaimPage extends React.Component {
 
   showNewClaimItemModal(){
     modal.add( NewClaimItemModal, {
-      title: 'Add Item',
+      title: 'Add Claim Item',
       size: 'medium', // large, medium or small,
       closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
       hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,

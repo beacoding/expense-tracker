@@ -74,7 +74,7 @@ class NewClaimForm extends React.Component {
           <option value="" disabled> Select a cost center. </option>
           {
             cost_centres.map((cost_centre) => {
-              let cost_centre_id = cost_centre.cost_centre_id
+              let cost_centre_id = cost_centre.id
               return <option value={cost_centre_id}>{cost_centre_id}</option>
             })
           }
@@ -91,7 +91,7 @@ class NewClaimForm extends React.Component {
     return (
       <form onSubmit={handleSubmit}>
         <Field
-          label="14-digit Coast Capital Account Number"
+          label="14-digit Coast Capital Account Number:"
           // name = what piece of state this field is going to produce
           name="account_number"
           component={this.renderField}
@@ -104,24 +104,24 @@ class NewClaimForm extends React.Component {
           <br/>
         </div>
         <Field
-          label="Description"
+          label="Description:"
           name="description"
           component={this.renderField}
           type="text"
           placeholder="Enter a descriptive title for your claim."
         />
         <Field
-          label="Company"
+          label="Company:"
           name="company_id"
           component={this.renderCompanyDropdownField}
         />
         <Field
-          label="Cost Center"
+          label="Cost Center:"
           name="cost_centre_id"
           component={this.renderCostCenterDropdownField.bind(this)}
         />
-        <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Submit</button>
-        <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+        <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Save Claim</button>
+        <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Reset</button>
       </form>
     );
   }

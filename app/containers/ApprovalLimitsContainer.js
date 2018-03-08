@@ -33,7 +33,6 @@ class ApprovalLimitsContainer extends React.Component {
 
   handleAddLimit(data) {
     const { employee, form } = this.props;
-    debugger;
     const approvalLimit  = {
       employee_id: form.NewApprovalLimitForm.values.employee.value,
       approval_limit: parseFloat(data.amount),
@@ -60,14 +59,12 @@ class ApprovalLimitsContainer extends React.Component {
 
   renderSearchByEmployeeOrCostCentre() {
     return (
-      <div className="reports">
-        <div className="form-group reports-search">
-          <input type="text" className="form-control" name="employee_id" id="reports-search-employee" placeholder="Employee ID" onChange={this.handleParamChangeText}/>
-        </div>
-        <div className="form-group reports-search">
+      <div className="approval-limits-filter-row">
+        <div className="approval-limits-search"><h4>Filter By:</h4></div>
+        <div className="form-group approval-limits-search">
           <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="Employee Name" onChange={this.handleParamChangeText}/>
         </div>
-        <div className="form-group reports-search">
+        <div className="form-group approval-limits-search">
           <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="Cost Centre ID" onChange={this.handleParamChangeText}/>
         </div>
       </div>
@@ -91,7 +88,7 @@ class ApprovalLimitsContainer extends React.Component {
            Approval Limits
           </div>
           <div className="page-route">
-            <span className="route-inactive">Home</span>  <span className="route-active"> > Approval Limits</span>
+            <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > Approval Limits</span>
           </div>
         </div>
         { this.renderSearchByEmployeeOrCostCentre() }
