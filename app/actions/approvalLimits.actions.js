@@ -49,7 +49,10 @@ function updateApprovalLimit(employee_id, cost_centre_id, limit) {
         let new_limit = {
           employee_id: employee_id,
           cost_centre_id: cost_centre_id,
-          new_limit: limit
+          approval_limit: limit
+        }
+        if (new_limit.approval_limit === '') {
+          new_limit.approval_limit = null;
         }
         dispatch(success(new_limit))
       },

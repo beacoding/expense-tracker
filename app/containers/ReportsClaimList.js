@@ -52,10 +52,10 @@ class ReportsClaimList extends React.Component {
 
     return (
       <div className="koi-entry-container">
-        {Object.entries(koi).map((koi_tuple) => {
+        {Object.entries(koi).map((koi_tuple, i) => {
           var status = tranformAcronym[koi_tuple[0]]
           var counter = koi_tuple[1];
-          return  <span className="koi-entry">
+          return  <span className="koi-entry" key={i}>
                     <span className="koi-entry-header">{status}</span>
                     <span>{counter}</span>
                   </span>

@@ -40,6 +40,5 @@ function calculateTotal(claim, claimItems) {
       currentTotal += amount;
     });
   }
-
   claim["total_amount"] = currentTotal.toFixed(2);
 }

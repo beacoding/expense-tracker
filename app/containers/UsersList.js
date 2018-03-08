@@ -20,7 +20,7 @@ class UsersList extends React.Component {
       <tbody>
       {Object.entries(users).map((user, i) => {
         var user_entry = user[1]
-        return <User user={user_entry} handleStatusChange={this.props.handleStatusChange} />
+        return <User user={user_entry} key={user_entry.id} handleStatusChange={this.props.handleStatusChange} />
       })}
       </tbody>
       )
@@ -34,7 +34,7 @@ class UsersList extends React.Component {
       <tbody>
       {Object.entries(users).map((user, i) => {
         var user_entry = user[1]
-        return <UsersOfManager user={user_entry} handleStatusChange={this.props.handleStatusChange} />
+        return <UsersOfManager user={user_entry} key={user_entry.id} handleStatusChange={this.props.handleStatusChange} />
       })}
       </tbody>
       )
