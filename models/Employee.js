@@ -8,6 +8,24 @@ module.exports = {
   },
 
   findAll: function(id) {
+    return new Promise((resolve, reject) => {      
+      var queryString = `SELECT
+                          CONCAT(e.first_name, ' ', e.last_name) as employee_name,
+                          e.is_active,
+                          e.id
+                        FROM
+                          employee e`;
+      connection.query(queryString, [], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
+  findAllWithManagers: function(id) {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT
                           CONCAT(manager.first_name, ' ', manager.last_name) as manager_name,

@@ -11,7 +11,7 @@ class UsersList extends React.Component {
   }
     
   componentDidMount() {
-    this.props.dispatch(employeesActions.requestAll());
+    this.props.dispatch(employeesActions.requestAllWithManagers());
   }
 
   renderEntries() {
@@ -74,7 +74,7 @@ class UsersList extends React.Component {
 function mapStateToProps(state) {
   const { authentication, policies, employees } = state;
   const { employee } = authentication;
-  const users = employees.employees
+  const users = employees.employees_with_managers;
   const employeesOfManagerMap = employees.employeesOfManagerMap
   return {
     employee,

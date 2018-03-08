@@ -12,6 +12,18 @@ const findAll = async (req,res,next) => {
   }
 }
 
+const findAllWithManagers = async (req,res,next) => {
+  let limits;
+  try {
+    employees = await Employee.findAllWithManagers();
+    req.employees = employees;
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
 const findAllWithManagerID = async (req,res,next) => {
   let employees;
   try {
@@ -39,6 +51,7 @@ const updatePassword = async (req, res, next) => {
 
 module.exports = {
   findAll: findAll,
+  findAllWithManagers: findAllWithManagers,
   findAllWithManagerID: findAllWithManagerID,
   updatePassword: updatePassword
 }

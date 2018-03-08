@@ -17,6 +17,15 @@ router.get('/all', [authMiddleware.isLoggedIn, employeesMiddleware.findAll], fun
   }
 });
 
+router.get('/all_with_managers', [authMiddleware.isLoggedIn, employeesMiddleware.findAllWithManagers], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({employee: req.user, employees: req.employees});
+  }
+});
+
 router.get('/with', [authMiddleware.isLoggedIn, employeesMiddleware.findAllWithManagerID], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);

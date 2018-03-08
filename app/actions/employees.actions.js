@@ -3,6 +3,7 @@ import { employeesAPI } from '../api'
 
 export const employeesActions = {
   requestAll,
+  requestAllWithManagers,
   requestEmployees,
   updatePassword
 };
@@ -21,6 +22,22 @@ function requestAll() {
   function request() { return { type: employeesConstants.REQUEST_EMPLOYEES }}
   function success(employees) { return { type: employeesConstants.RECEIVE_EMPLOYEES, employees }}
   function failure(error) { return { type: employeesConstants.FAILURE_EMPLOYEES, error }}
+}
+
+function requestAllWithManagers() {
+  return dispatch => {
+    dispatch(request());
+    return employeesAPI.requestAllWithManagers().then(
+      res => {
+        dispatch(success(res.employees))
+      },
+      error => dispatch(failure(error))
+    );
+  };
+  
+  function request() { return { type: employeesConstants.REQUEST_EMPLOYEES_WITH_MANAGERS }}
+  function success(employees) { return { type: employeesConstants.RECEIVE_EMPLOYEES_WITH_MANAGERS, employees }}
+  function failure(error) { return { type: employeesConstants.FAILURE_EMPLOYEES_MANAGERS, error }}
 }
 
 function updatePassword(id) {

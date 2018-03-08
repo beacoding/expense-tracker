@@ -2,6 +2,7 @@ import { employeesConstants } from '../constants';
 
 const initialState = {
   employees: [],
+  employees_with_managers: [],
   employeesOfManagerMap: {},
 }
 
@@ -30,6 +31,21 @@ const reports = (state = initialState, action) => {
         error: undefined
       });
     case employeesConstants.FAILURE_EMPLOYEES:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      });
+    case employeesConstants.REQUEST_EMPLOYEES_WITH_MANAGERS:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case employeesConstants.RECEIVE_EMPLOYEES_WITH_MANAGERS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        employees_with_managers: action.employees,
+        error: undefined
+      });
+    case employeesConstants.FAILURE_EMPLOYEES_WITH_MANAGERS:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
