@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ClaimPage from '../../containers/ClaimPage';
 import { Link } from 'react-router-dom';
-import InlineEdit from 'react-edit-inline';
+import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek'
 
 const ApprovalLimit = ({ employee, limit_entry, handleEditLimit, handleDeleteLimit }) => {
   let {
@@ -12,20 +12,32 @@ const ApprovalLimit = ({ employee, limit_entry, handleEditLimit, handleDeleteLim
     approval_limit, 
   } = limit_entry;
 
-  let dollar_sign = "$"
+  let dollar_sign = '';
 
-  if (approval_limit === null) {
-    approval_limit = "None"
-    dollar_sign = ""
+  if (approval_limit !== null) {
+    approval_limit = approval_limit.toFixed(2);
+    dollar_sign = "$";
   } else {
-    approval_limit = approval_limit;
+    approval_limit = "No Limit";
   }
+
+  if (manager_name === undefined) {
+    manager_name = "Loading...";
+    employee_id = "Loading...";
+    cost_centre_id = "Loading...";
+    approval_limit = "Loading...";    
+  }
+
+  let isLimitInputAcceptable = (limitInput) => {
+    var floatRegex = /^[0-9]*\.?[0-9]+|^$/;
+    return floatRegex.test(limitInput);
+  };
   
   return (
     <tr>
       <td>{manager_name}</td>
       <td>{cost_centre_id}</td>
-      <td>{dollar_sign}<InlineEdit paramName="new_approval_limit" change={handleEditLimit.bind(this, employee_id, cost_centre_id)} text={approval_limit} />  <i className="ion-edit"></i></td>
+      <td>{dollar_sign}<RIEInput value={approval_limit} change={handleEditLimit.bind(this, employee_id, cost_centre_id)} propName='new_approval_limit' validate={isLimitInputAcceptable} />  <i className="ion-edit"></i></td>
       <td><i className="ion-close-circled pointer" onClick={handleDeleteLimit.bind(this, employee_id, cost_centre_id)}></i></td>
     </tr>
   );

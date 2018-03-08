@@ -58,7 +58,11 @@ const policies = (state = initialState, action) => {
       });
     case approvalLimitsConstants.SUCCESS_UPDATE_APPROVAL_LIMIT:
       newLimitsMap = Object.assign({}, state.limitsMap);
-      newLimitsMap[action.new_limit.cost_centre_id][action.new_limit.employee_id] = action.new_limit;
+      if (action.new_limit.approval_limit === null) {
+        newLimitsMap[action.new_limit.cost_centre_id][action.new_limit.employee_id].approval_limit = null;
+      } else {
+        newLimitsMap[action.new_limit.cost_centre_id][action.new_limit.employee_id].approval_limit = parseFloat(action.new_limit.approval_limit);
+      }
       return Object.assign({}, state, {
         isFetching: false,
         limitsMap: newLimitsMap,

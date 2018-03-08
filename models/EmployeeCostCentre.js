@@ -65,13 +65,22 @@ module.exports = {
   },
 
   updateOne: function(employee_id, cost_centre_id, approval_limit) {
-    return new Promise((resolve, reject) => {
+    if (approval_limit === '') {
+      var queryString = `UPDATE employee_cost_centre
+                          SET
+                            approval_limit = NULL
+                          WHERE 
+                            employee_id = ? AND
+                            cost_centre_id = ?`;
+    } else { 
       var queryString = `UPDATE employee_cost_centre
                           SET
                             approval_limit = ?
                           WHERE 
                             employee_id = ? AND
                             cost_centre_id = ?`;
+    }
+    return new Promise((resolve, reject) => {
       connection.query(queryString, [approval_limit, employee_id, cost_centre_id], (err, rows) => {
         if (err) {
           reject(err);

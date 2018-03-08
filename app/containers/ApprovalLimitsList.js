@@ -48,10 +48,11 @@ class ApprovalLimitsList extends React.Component {
     let approvalLimits = {};
     Object.entries(limitsMap).map((cost_centre_tuple) => {
       Object.entries(cost_centre_tuple[1]).map((limit_tuple) => {
-        approvalLimits[limit_tuple[0]] = limit_tuple;
+        approvalLimits[keyCounter] = limit_tuple;
+        keyCounter++;
       });
     });
-
+    
     return (
       <tbody>
       {Object.entries(approvalLimits).map((limit_tuple, i) => {
