@@ -42,7 +42,7 @@ class PoliciesContainer extends React.Component {
            Policies
           </div>
           <div className="page-route">
-            <span className="route-inactive">Home</span>  <span className="route-active"> > Policies </span>
+            <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > Policies </span>
           </div>
         </div>
         <div className="claim-list">

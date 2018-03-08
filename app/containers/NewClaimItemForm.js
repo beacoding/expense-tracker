@@ -114,14 +114,14 @@ class NewClaimItemForm extends React.Component {
     return (
       <form onSubmit={handleSubmit}>
         <Field
-          label="Description"
+          label="Description:"
           name="description"
           component={this.renderField}
           type="text"
           placeholder="Enter a description for this item."
         />
         <Field
-          label="Amount (CAD)"
+          label="Amount (CAD):"
           name="amount"
           component={this.renderField}
           type="number"
@@ -141,18 +141,18 @@ class NewClaimItemForm extends React.Component {
           component={this.renderCheckbox}
         />
         <Field
-          label="Expense Type"
+          label="Expense Type:"
           name="expense_type"
           component={this.renderExpenseTypeDropdownField}
         />
         <Field
-          label="Comments"
+          label="Comments:"
           name="comment"
           type="textarea"
           component={this.renderTextAreaField}
         />
-        <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Submit</button>
-        <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+        <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Save Claim Item</button>
+        <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Reset</button>
       </form>
     );
   }

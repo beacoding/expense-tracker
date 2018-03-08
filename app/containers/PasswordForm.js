@@ -44,14 +44,14 @@ class PasswordForm extends React.Component {
       return (
         <form onSubmit={handleSubmit}>
             <Field
-            label="Old Password"
+            label="Old Password:"
             name="old_password"
             type="password"
             placeholder={old_password}
             component={this.renderOldPassword.bind(this)}
         />
         <Field
-            label="New Password"
+            label="New Password:"
             name="new_password"
             type="password"
             placeholder="New Password"

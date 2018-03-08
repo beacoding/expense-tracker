@@ -25,7 +25,7 @@ class UserMangementContainer extends React.Component {
          User Management
         </div>
         <div className="page-route">
-          <span className="route-inactive">Home</span>  <span className="route-active"> > User Management </span>
+          <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > User Management </span>
         </div>
       </div>
       <div className="claimlist-container">

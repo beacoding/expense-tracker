@@ -15,7 +15,7 @@ class Profile extends React.Component {
 
   showProfileModal(){
     modal.add(ProfileModal, {
-    title: 'Password Change',
+    title: 'Change Password',
     size: 'medium', // large, medium or small,
     closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
     hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,
@@ -44,7 +44,7 @@ class Profile extends React.Component {
            Profile
           </div>
           <div className="page-route">
-            <span className="route-inactive">Home</span>  <span className="route-active"> > Settings</span>
+            <span className="route-inactive">Home</span>  <span className="route-active"> > Profile</span>
           </div>
         </div>
           
@@ -68,21 +68,18 @@ class Profile extends React.Component {
                         <td>Last Name:</td>
                         <td>{employee.last_name}</td>
                       </tr>
-                      
                       <tr>
-                        <td>Manager ID:</td>
-                        <td>{employee.manager_id}</td>
+                        <td>Manager:</td>
+                        <td>{employee.manager_name}</td>
                       </tr>
-                        <tr>
+                      <tr>
+                        <td>Email:</td>
+                        <td>{employee.email}</td>
+                      </tr>   
+                      <tr>
                         <td>Password:</td>
                         <td><button className="profile-button" onClick={this.showProfileModal}> Change</button></td>
                       </tr>
-                      <tr>
-                        <td>Email</td>
-                        <td>{employee.email}</td>
-                      </tr>   
-                 
-                     
                     </tbody>
                   </table>
             </Panel.Body>

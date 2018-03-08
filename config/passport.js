@@ -6,39 +6,41 @@ var bcrypt = require('bcrypt-nodejs');
 var connection = require('./connect');
 
 module.exports = function(passport) {
-    passport.serializeUser(function(user, done) {
-        done(null, user.id);
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+  
+  passport.deserializeUser(function(id, done) {
+    connection.query(`SELECT u.id, u.first_name, u.last_name, u.email, u.password, u.manager_id, u.is_admin, u.is_active, CONCAT(m.first_name, ' ', m.last_name) as manager_name 
+                        FROM employee u, employee m
+                        WHERE u.manager_id = m.id AND u.id = ?`, [id], function(err, rows){
+      done(err, rows[0]);
     });
-
-    passport.deserializeUser(function(id, done) {
-        connection.query("SELECT * FROM employee WHERE id = ? ",[id], function(err, rows){
-            done(err, rows[0]);
-        });
-    });
-
-    passport.use(
-        'local-login',
-        new LocalStrategy({
-            // by default, local strategy uses email and password, we will override with email
-            usernameField : 'email',
-            passwordField : 'password',
-            passReqToCallback : true // allows us to pass back the entire request to the callback
-        },
-        function(req, email, password, done) { // callback with email and password from our form
-           connection.query("SELECT * FROM employee WHERE email = ?", [email], function(err, rows){
-                if (err)
-                    return done(err);
-                if (!rows.length) {
-                    return done(null, false, req.flash('loginMessage', 'User does not exist.')); // req.flash is the way to set flashdata using connect-flash
-                }
-                if (password != rows[0].password) {
-                  return done(null, false, req.flash('loginMessage', 'Incorrect password. Please try again.'))
-                }
-
-                delete rows[0]["password"];
-
-                return done(null, rows[0]);
-            });
-        })
-    );
+  });
+  
+  passport.use(
+    'local-login',
+    new LocalStrategy({
+      // by default, local strategy uses email and password, we will override with email
+      usernameField : 'email',
+      passwordField : 'password',
+      passReqToCallback : true // allows us to pass back the entire request to the callback
+    },
+    function(req, email, password, done) { // callback with email and password from our form
+      connection.query(`SELECT u.id, u.first_name, u.last_name, u.email, u.password, u.manager_id, u.is_admin, u.is_active, CONCAT(m.first_name, ' ', m.last_name) as manager_name 
+                          FROM employee u, employee m
+                          WHERE u.manager_id = m.id AND u.email = ?`, [email], function(err, rows){
+        if (err)
+        return done(err);
+        if (!rows.length) {
+          return done(null, false, req.flash('loginMessage', 'User does not exist.')); // req.flash is the way to set flashdata using connect-flash
+        }
+        if (password != rows[0].password) {
+          return done(null, false, req.flash('loginMessage', 'Incorrect password. Please try again.'))
+        }
+        delete rows[0]["password"];
+        return done(null, rows[0]);
+      });
+    })
+  );
 };
