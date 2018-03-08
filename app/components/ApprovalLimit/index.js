@@ -12,9 +12,21 @@ const ApprovalLimit = ({ employee, limit_entry, handleEditLimit, handleDeleteLim
     approval_limit, 
   } = limit_entry;
 
+  let dollar_sign = '';
+
   if (approval_limit !== null) {
     approval_limit = approval_limit.toFixed(2);
-  } else approval_limit = "No Limit";
+    dollar_sign = "$";
+  } else {
+    approval_limit = "No Limit";
+  }
+
+  if (manager_name === undefined) {
+    manager_name = "Loading...";
+    employee_id = "Loading...";
+    cost_centre_id = "Loading...";
+    approval_limit = "Loading...";    
+  }
 
   let isLimitInputAcceptable = (limitInput) => {
     var floatRegex = /^[0-9]*\.?[0-9]+|^$/;
@@ -25,7 +37,7 @@ const ApprovalLimit = ({ employee, limit_entry, handleEditLimit, handleDeleteLim
     <tr>
       <td>{manager_name}</td>
       <td>{cost_centre_id}</td>
-      <td><RIEInput value={approval_limit} change={handleEditLimit.bind(this, employee_id, cost_centre_id)} propName='new_approval_limit' validate={isLimitInputAcceptable} />  <i className="ion-edit"></i></td>
+      <td>{dollar_sign}<RIEInput value={approval_limit} change={handleEditLimit.bind(this, employee_id, cost_centre_id)} propName='new_approval_limit' validate={isLimitInputAcceptable} />  <i className="ion-edit"></i></td>
       <td><i className="ion-close-circled pointer" onClick={handleDeleteLimit.bind(this, employee_id, cost_centre_id)}></i></td>
     </tr>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { policiesActions } from '../actions';
-import InlineEdit from 'react-edit-inline';
+import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek'
 
 class PoliciesContainer extends React.Component {
   componentDidMount() {
@@ -12,8 +12,13 @@ class PoliciesContainer extends React.Component {
   }
 
   handleEditLimit(name, data) {
-    let new_value = parseInt(data["new_policy_value"]);
+    let new_value = parseFloat(data["new_policy_value"]);
     this.props.dispatch(policiesActions.updateValue(name, new_value));
+  }
+
+  isLimitInputAcceptable(limitInput) {
+    var floatRegex = /^[0-9]*\.?[0-9]+/;
+    return floatRegex.test(limitInput);
   }
 
   renderEntries() {
@@ -25,7 +30,7 @@ class PoliciesContainer extends React.Component {
           var value = policy[1];
           return (<tr key={i}>
             <td>{key}</td>
-            <td>$<InlineEdit paramName="new_policy_value" change={this.handleEditLimit.bind(this, key)} text= {value} />  <i className="ion-edit"></i> </td>
+            <td>$<RIEInput propName="new_policy_value" change={this.handleEditLimit.bind(this, key)} value={value} validate={this.isLimitInputAcceptable}/>  <i className="ion-edit"></i> </td>
             </tr>)
         })}
         </tbody>
