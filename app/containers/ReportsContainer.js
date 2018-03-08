@@ -18,7 +18,7 @@ class ReportsContainer extends React.Component {
   }
 
   handleParamChangeChecked(e) {
-    var value = e.target.checked == true ? e.target.checked : null
+    var value = e.target.checked == true ? e.target.checked : false
     var param_to_change = e.target.value;
     this.props.dispatch(reportsActions.modifyParams(param_to_change, value));
   }
@@ -38,20 +38,26 @@ class ReportsContainer extends React.Component {
       <div className="reports-filter-row">
         <div className="form-check">
           <label className="form-check-label no-select" htmlFor="reports-approved-check">
-            <input className="form-check-input" type="checkbox" value="approved" id="reports-approved-check" onChange={this.handleParamChangeChecked}/>
+            <input defaultChecked={true} className="form-check-input" type="checkbox" value="approved" id="reports-approved-check" onChange={this.handleParamChangeChecked}/>
             Approved
           </label>
         </div>
         <div className="form-check">
           <label className="form-check-label no-select" htmlFor="reports-declined-check">
-            <input className="form-check-input" type="checkbox" value="declined" id="reports-declined-check" onChange={this.handleParamChangeChecked}/>
+            <input defaultChecked={true} className="form-check-input" type="checkbox" value="declined" id="reports-declined-check" onChange={this.handleParamChangeChecked}/>
             Declined
           </label>
         </div>
         <div className="form-check">
           <label className="form-check-label no-select" htmlFor="reports-pending-check">
-            <input className="form-check-input" type="checkbox" value="pending" id="reports-pending-check" onChange={this.handleParamChangeChecked}/>
+            <input defaultChecked={true} className="form-check-input" type="checkbox" value="pending" id="reports-pending-check" onChange={this.handleParamChangeChecked}/>
             Pending
+          </label>
+        </div>
+        <div className="form-check">
+          <label className="form-check-label no-select" htmlFor="reports-drafts-check">
+            <input defaultChecked={true} className="form-check-input" type="checkbox" value="drafts" id="reports-drafts-check" onChange={this.handleParamChangeChecked}/>
+            Drafts
           </label>
         </div>
       </div>

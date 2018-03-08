@@ -49,7 +49,6 @@ module.exports = {
       // build params
       var whereArray = [];
       var orArray = [];
-      console.log(params);
 
       for (key in params) {
         if (params[key].length > 0) {
@@ -82,14 +81,32 @@ module.exports = {
               orArray.push("claim.status = " + "'S'")
               break;
             case "approved":
-              orArray.push("claim.status = " + "'A'")
+              if (params[key] === 'true') {
+                orArray.push("claim.status = " + "'A'")
+              } else {
+                whereArray.push("claim.status != " + "'A'")
+              }
               break;
             case "declined":
-              orArray.push("claim.status = " + "'D'")
+              if (params[key] === 'true') {
+                orArray.push("claim.status = " + "'D'")
+              } else {
+                whereArray.push("claim.status != " + "'D'")
+              }
               break;
             case "pending":
-              orArray.push("claim.status = 'S' OR claim.status = 'F'");
+              if (params[key] === 'true') {
+                orArray.push("claim.status = 'S' OR claim.status = 'F'")
+              } else {
+                whereArray.push("claim.status != 'S' AND claim.status != 'F'")
+              }
               break;
+            case "drafts":
+              if (params[key] === 'true') {
+                orArray.push("claim.status = " + "'P'")
+              } else {
+                whereArray.push("claim.status != " + "'P'")
+              }
             case "start":
               if (params["end"].length > 0) {
                 whereArray.push("claim.date_created BETWEEN '" + params["start"] + "' AND '" + params["end"] + "'")
@@ -109,7 +126,7 @@ module.exports = {
       var orString = orArray.length > 0 ? (" AND (" + orArray.join(" OR ") + ")" ) : ""; 
       var whereString = whereArray.length > 0 ? " AND " + whereArray.join(" AND ") : "";
       whereString += orString;
-      console.log(whereString);
+
       var queryString = `SELECT 
                             claim.id as claim_id, 
                             claimee.first_name as claimee_first_name,

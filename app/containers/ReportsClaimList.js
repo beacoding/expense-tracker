@@ -24,7 +24,8 @@ class ReportsClaimList extends React.Component {
   
   renderEmptyList() {
     return (
-      <div className="claimlist-container">
+      <div className="claim-container">
+        No claims found with your filter choices.
       </div>
     )
   }
@@ -69,6 +70,7 @@ class ReportsClaimList extends React.Component {
 
   renderEntries() {
     const { employee, claimsMap } = this.props;
+
     return (
       <div className="claim-list">
         {Object.entries(claimsMap).map((claim_tuple) => {

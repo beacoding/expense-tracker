@@ -5,9 +5,10 @@ const initialState = {
     employee_id: null,
     manager_id: null,
     submitted: null,
-    approved: null,
-    declined: null,
-    pending: null,
+    approved: true,
+    declined: true,
+    pending: true,
+    drafts: true,
     start: null,
     end: null
   }
