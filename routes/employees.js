@@ -35,6 +35,33 @@ router.get('/with', [authMiddleware.isLoggedIn, employeesMiddleware.findAllWithM
   }
 });
 
+router.get('/with_employee', [authMiddleware.isLoggedIn, employeesMiddleware.findOne], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({ employee: req.employee});
+  }
+});
+
+router.post('/disable_employee', [authMiddleware.isLoggedIn, employeesMiddleware.disableOne], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({});
+  }
+});
+
+router.post('/enable_employee', [authMiddleware.isLoggedIn, employeesMiddleware.enableOne], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({});
+  }
+});
+
 router.post('/update_password', [authMiddleware.isLoggedIn, employeesMiddleware.updatePassword], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);

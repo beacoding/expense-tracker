@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter, NavLink } from 'react-router-dom';
 import './style.css';
 
 const User = ({ user, handleStatusChange }) => {
@@ -18,7 +19,7 @@ const User = ({ user, handleStatusChange }) => {
           <td>{employee_name}</td>
           <td>{manager_name}</td>
           <td>{status}</td>
-          <td name="user" onClick={handleStatusChange.bind(this, id )}>  <i className="ion-edit"></i></td>
+          <td name="user"> <NavLink to={"/admin/users/"+ id}> <i className="ion-edit"></i></NavLink></td>
         </tr>
   );
 }
