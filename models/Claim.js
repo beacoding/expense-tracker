@@ -47,7 +47,10 @@ module.exports = {
   findAllWithParams: function(params, employee) {
     return new Promise((resolve, reject) => {
       // build params
-      var whereArray = []
+      var whereArray = [];
+      var orArray = [];
+      console.log(params);
+
       for (key in params) {
         if (params[key].length > 0) {
            switch(key) {
@@ -76,16 +79,16 @@ module.exports = {
               whereArray.push("claimee.email LIKE '" + params[key] + "%'");
               break;
             case "submitted":
-              whereArray.push("claim.status = " + "'S'")
+              orArray.push("claim.status = " + "'S'")
               break;
             case "approved":
-              whereArray.push("claim.status = " + "'A'")
+              orArray.push("claim.status = " + "'A'")
               break;
             case "declined":
-              whereArray.push("claim.status = " + "'D'")
+              orArray.push("claim.status = " + "'D'")
               break;
             case "pending":
-              whereArray.push("claim.status = 'S' OR claim.status = 'F'");
+              orArray.push("claim.status = 'S' OR claim.status = 'F'");
               break;
             case "start":
               if (params["end"].length > 0) {
@@ -103,7 +106,10 @@ module.exports = {
         }
       }
 
+      var orString = orArray.length > 0 ? (" AND (" + orArray.join(" OR ") + ")" ) : ""; 
       var whereString = whereArray.length > 0 ? " AND " + whereArray.join(" AND ") : "";
+      whereString += orString;
+      console.log(whereString);
       var queryString = `SELECT 
                             claim.id as claim_id, 
                             claimee.first_name as claimee_first_name,
