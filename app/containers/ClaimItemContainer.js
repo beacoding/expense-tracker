@@ -14,6 +14,7 @@ class ClaimItemContainer extends React.Component {
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
     this.editClaimItem = this.editClaimItem.bind(this);
     this.handleChangeExpenseCategory = this.handleChangeExpenseCategory.bind(this);
+    this.handleEditItem = this.handleEditItem.bind(this);
   }
 
   confirmDeleteItem() {
@@ -33,7 +34,7 @@ class ClaimItemContainer extends React.Component {
 
   editClaimItem(data) {
     let claim_id = window.location.pathname.split("/")[2];
-    const { employee, form } = this.props;
+    const { employee, form } = this.mapStateToPropsops;
     let receipt = (data.no_receipt === true) ? null : data.receipt[0];
     const item = {
       claim_id: parseInt(claim_id),
@@ -59,8 +60,10 @@ class ClaimItemContainer extends React.Component {
   //   });
   // }
 
-  handleEditItem(key, data) {
-    console.log(key, "Adsjfksd");
+  handleEditItem(key, item) {
+    let claim_id = window.location.pathname.split("/")[2];
+    item.claim_id = claim_id;
+    this.props.dispatch(claimItemsActions.editClaimItem(item));
   }
 
   handleDeleteItem() {

@@ -36,7 +36,9 @@ const updateOne = async (req,res,next) => {
   // add item locally
 
   try {
-    req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
+    if (req.body.image_url) {
+      req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
+    }
     items = await ClaimItem.updateOne(req.body.item, req.body.i);
     var item = await ClaimItem.findOne(req.body.id);
     req.item = item;

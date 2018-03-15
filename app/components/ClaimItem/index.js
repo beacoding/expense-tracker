@@ -43,8 +43,8 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
   if (claim_status === 'P') {
     return (
       <tr>
-        <td><RIEInput value={description} change={handleEditItem.bind(this, "description")} propName='new_description' /> <i className="ion-edit"></i> </td>
-        <td>$<RIEInput value={amount.toFixed(2)} change={handleEditItem.bind(this, "amount")} propName='new_amount' />  <i className="ion-edit"></i></td>
+        <td><RIEInput value={description} change={handleEditItem.bind(this, "description")} propName='description' /> <i className="ion-edit"></i> </td>
+        <td>$<RIEInput value={amount.toFixed(2)} change={handleEditItem.bind(this, "amount")} propName='amount' />  <i className="ion-edit"></i></td>
         <td>      
         <select defaultValue={defaultValue} onChange={handleChangeExpenseCategory}>
             <option />
@@ -68,7 +68,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
             <option value={18}>Travel</option>
         </select>
       </td>
-        <td><RIEInput value={comment} change={handleEditItem.bind(this, "comment")} propName='new_comment' /> <i className="ion-edit"></i> </td>
+        <td><RIEInput value={comment} change={handleEditItem.bind(this, "comment")} propName='comment' /> <i className="ion-edit"></i> </td>
         <td>{receipt} <input name="myFile" type="file"/></td>
         <td><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i></td>
       </tr>
