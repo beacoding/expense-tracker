@@ -841,3 +841,7 @@ input:focus {outline: none; }
   cursor: pointer;
   position: absolute;
 }
+
+.editable:empty:after {
+  content: 'Click to Edit';
+}
