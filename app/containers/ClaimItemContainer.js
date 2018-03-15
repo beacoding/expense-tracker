@@ -92,7 +92,7 @@ class ClaimItemContainer extends React.Component {
   render() {
     const { claim_item, claim_status, employee } = this.props;
     return (
-      <ClaimItem handleChangeExpenseCategory={this.handleChangeExpenseCategory} employee={employee} claim_item={claim_item} claim_status={claim_status} handleDeleteItem={this.handleDeleteItem} handleEditItem={this.handleEditItem} expense_categories/>
+      <ClaimItem handleChangeExpenseCategory={this.handleChangeExpenseCategory} employee={employee} claim_item={claim_item} claim_status={claim_status} expense_types={this.props.expense_types} handleDeleteItem={this.handleDeleteItem} handleEditItem={this.handleEditItem}/>
     )
   }
 }

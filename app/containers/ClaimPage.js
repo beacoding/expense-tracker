@@ -149,7 +149,7 @@ class ClaimPage extends React.Component {
   }
 
   render() {
-    const { employee, claimItems, isFetching, claimsMap, error } = this.props;
+    const { employee, claimItems, isFetching, claimsMap, expense_types, error } = this.props;
     
     let claim_id = undefined;
     if (window.location.pathname.split("/")[1] != "admin") {
@@ -198,7 +198,7 @@ class ClaimPage extends React.Component {
             {
               Object.entries(claimItemsObj).map((claimItem) => {
                 const claim_item_entry = claimItem[1];
-                return <ClaimItemContainer key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} employee={employee} claim_item={claim_item_entry} createClaimItem={this.createClaimItem} />
+                return <ClaimItemContainer key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} expense_types={expense_types} employee={employee} claim_item={claim_item_entry} createClaimItem={this.createClaimItem} />
               })
             }
             </tbody>

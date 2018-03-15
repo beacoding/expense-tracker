@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './style.css';
 import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek'
 
-const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, expense_categories, handleChangeExpenseCategory }) => {
+const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, expense_types, handleChangeExpenseCategory }) => {
   const {
     claim_item_id,
     description, 
@@ -13,26 +13,13 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
     image_url,
   } = claim_item;
 
-  const valueMap = {
-    "AUTO GAS": 1,
-    "AUTO REPAIRS": 2,
-    "BOOKS & SUBSCRIPTIONS": 3,
-    "CONFERENCE FEE": 4,
-    "DELIGHT THE CUSTOMER": 5,
-    "FUND FOR FUN": 6,
-    "GOLF": 7,
-    "HOTEL": 8,
-    "MEALS & ENTERTAINMENT STAFF": 9,
-    "MEALS & ENTERTAINMENT PROMO": 10,
-    "MEETINGS": 11,
-    "MILEAGE": 12,
-    "OTHER": 13,
-    "PARKING": 14,
-    "PERSONAL/PROFESSIONAL DUES, MEMBERSHIP": 15,
-    "PRIZES": 16,
-    "TELEPHONE": 17,
-    "TRAVEL": 18
-  }
+  const valueMap = {}
+
+  expense_types.map((expense_type) => {
+    let expense_type_id = expense_type.id;
+    let expense_type_category = expense_type.category;
+    valueMap[expense_type_category] = expense_type_id;
+  });
 
   let receipt = claim_item.image_url === null ? "No Receipt" : <img className="receipt-img" src={'/uploads/' + image_url}/> 
   let defaultValue = valueMap[expense_category.toUpperCase()];
@@ -42,26 +29,15 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
         <td><RIEInput value={description} change={handleEditItem.bind(this, "description")} propName='description' /> <i className="ion-edit"></i> </td>
         <td>$<RIEInput value={amount.toFixed(2)} change={handleEditItem.bind(this, "amount")} propName='amount' />  <i className="ion-edit"></i></td>
         <td>      
-          <select defaultValue={defaultValue} onChange={handleChangeExpenseCategory}>
-            <option />
-            <option value={1}>AUTO GAS</option>
-            <option value={2}>AUTO REPAIRS</option>
-            <option value={3}>BOOKS & SUBSCRIPTIONS</option>
-            <option value={4}>CONFERENCE FEE</option>
-            <option value={5}>DELIGHT THE CUSTOMER</option>
-            <option value={6}>FUND FOR FUN</option>
-            <option value={7}>GOLF</option>
-            <option value={8}>HOTEL</option>
-            <option value={9}>MEALS & ENTERTAINMENT STAFF</option>
-            <option value={10}>MEALS & ENTERTAINMENT PROMO</option>
-            <option value={11}>MEETINGS</option>
-            <option value={12}>MILEAGE</option>
-            <option value={13}>OTHER</option>
-            <option value={14}>PARKING</option>
-            <option value={15}>PERSONAL/PROFESSIONAL DUES, MEMBERSHIP</option>
-            <option value={16}>PRIZES</option>
-            <option value={17}>TELEPHONE</option>
-            <option value={18}>TRAVEL</option>
+          <select value={defaultValue} onChange={handleChangeExpenseCategory}>
+            <option value="" disabled> Select an expense category. </option>
+            {
+              expense_types.map((expense_type) => {
+                let expense_type_id = expense_type.id;
+                let expense_type_category = expense_type.category;
+                return <option value={expense_type_id} key={expense_type_id}>{expense_type_category}</option>
+              })
+            }
           </select>
         </td>
         <td>{receipt} <input name="myFile" type="file"/></td>
