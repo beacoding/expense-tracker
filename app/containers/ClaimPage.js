@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { modal } from 'react-redux-modal';
-import { claimItemsActions } from '../actions';
+import { claimItemsActions, policiesActions } from '../actions';
 import { claimsActions } from '../actions';
 import ClaimItemContainer from './ClaimItemContainer';
 import NewClaimItemModal from './NewClaimItemModal';
@@ -29,7 +29,8 @@ class ClaimPage extends React.Component {
     }
     if (claim_id != undefined) {
       this.props.dispatch(claimItemsActions.requestAll(claim_id));
-      this.props.dispatch(claimsActions.requestOne(claim_id))
+      this.props.dispatch(claimsActions.requestOne(claim_id));
+      this.props.dispatch(policiesActions.requestExpenseTypes());
     }
   }
 
@@ -117,7 +118,8 @@ class ClaimPage extends React.Component {
       hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,
       hideCloseButton: false, // (optional) if you don't wanna show the top right close button
       //.. all what you put in here you will get access in the modal props ;)
-      onSubmitFunction: this.createClaimItem
+      onSubmitFunction: this.createClaimItem,
+      expense_types: this.props.expense_types
     });
   }
 
@@ -147,7 +149,7 @@ class ClaimPage extends React.Component {
   }
 
   render() {
-    const { employee, claimItems, isFetching, claimsMap, error } = this.props;
+    const { employee, claimItems, isFetching, claimsMap, expense_types, error } = this.props;
     
     let claim_id = undefined;
     if (window.location.pathname.split("/")[1] != "admin") {
@@ -187,16 +189,16 @@ class ClaimPage extends React.Component {
                 <th scope="col">Description</th>
                 <th scope="col">Amount (CAD)</th>
                 <th scope="col">Expense Category</th>
-                <th scope="col">Comments</th>
                 <th scope="col">Receipt</th>
-                <th scope="col"> </th>
+                <th scope="col">Comments</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
             {
               Object.entries(claimItemsObj).map((claimItem) => {
                 const claim_item_entry = claimItem[1];
-                return <ClaimItemContainer key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} employee={employee} claim_item={claim_item_entry} createClaimItem={this.createClaimItem} />
+                return <ClaimItemContainer key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} expense_types={expense_types} employee={employee} claim_item={claim_item_entry} createClaimItem={this.createClaimItem} />
               })
             }
             </tbody>
@@ -219,15 +221,17 @@ class ClaimPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { authentication, claimItems, claims, form } = state;
+  const { authentication, claimItems, claims, form, policies } = state;
   const { error, isFetching } = claimItems;
   const { employee } = authentication;
   const { claimsMap } = claims;
+  const { expense_types } = policies;
   return {
     employee,
     claimItems,
     isFetching,
     claimsMap,
+    expense_types,
     error,
     form
   };

@@ -9,15 +9,15 @@ module.exports = {
           claim_item.description,
           claim_item.amount,
           claim_item.comment,
-          expense_types.category as expense_category,
+          expense_type.category as expense_category,
           claim_item.image_url
         FROM
           claim,
           claim_item,
-          expense_types
+          expense_type
         WHERE
           claim.id = claim_item.claim_id AND
-          expense_types.id = claim_item.expense_type AND
+          expense_type.id = claim_item.expense_type AND
           claim_id = ?`
       connection.query(queryString, [claim_id], (err, rows) => {
         if (err) {
@@ -37,15 +37,15 @@ module.exports = {
           claim_item.description,
           claim_item.amount,
           claim_item.comment,
-          expense_types.category as expense_category,
+          expense_type.category as expense_category,
           claim_item.image_url
         FROM
           claim,
           claim_item,
-          expense_types
+          expense_type
         WHERE
           claim.id = claim_item.claim_id AND
-          expense_types.id = claim_item.expense_type AND
+          expense_type.id = claim_item.expense_type AND
           claim_item.id = ?`
       connection.query(queryString, [id], (err, rows) => {
         if (err) {

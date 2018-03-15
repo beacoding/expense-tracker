@@ -38,7 +38,7 @@ CREATE TABLE employee_cost_centre (
   FOREIGN KEY (cost_centre_id) REFERENCES cost_centre(id)
 );
 
-CREATE TABLE expense_types (
+CREATE TABLE expense_type (
   id INT AUTO_INCREMENT NOT NULL,
   category VARCHAR(80) NOT NULL, 
   description VARCHAR(255),
@@ -77,7 +77,7 @@ CREATE TABLE claim_item (
   image_url VARCHAR(255),
   PRIMARY KEY (id),
   FOREIGN KEY (claim_id) REFERENCES claim(id) ON DELETE CASCADE,
-  FOREIGN KEY (expense_type) REFERENCES expense_types(id),
+  FOREIGN KEY (expense_type) REFERENCES expense_type(id),
   CONSTRAINT CHK_claim_item CHECK (description <> '' AND amount >= 0.00 AND comment <> '')
 );
 
@@ -96,7 +96,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.company TO 'app
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.cost_centre TO 'app_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.employee TO 'app_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.employee_cost_centre TO 'app_user'@'%';
-GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.expense_types TO 'app_user'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.expense_type TO 'app_user'@'%';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cc_expense_claims_system.policy TO 'app_user'@'%';
 
 /*  Execute this file from the command line by typing:

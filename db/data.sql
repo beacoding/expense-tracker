@@ -734,7 +734,7 @@ VALUES
     (136,0790,10000.00);
 
 -- POPULATE EXPENSE TYPES
-INSERT INTO expense_types (category, description, general_ledger)
+INSERT INTO expense_type (category, description, general_ledger)
 VALUES
 	('AUTO GAS','Community or Facilities Employees Only',633710),
 	('AUTO REPAIRS','Community or Facilities Employees Only',633720),

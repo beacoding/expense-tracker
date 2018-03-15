@@ -74,31 +74,21 @@ class NewClaimItemForm extends React.Component {
   renderExpenseTypeDropdownField(field) {
     const { meta: {touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
-    
+    const { expense_types } = this.props;
+
     return (
       <div className = {className}>
       <label>{field.label}</label>
       {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
       <select className="form-control" {...field.input}>
-      <option />
-      <option value={1}>Auto Gas</option>
-      <option value={2}>Auto Repairs</option>
-      <option value={3}>Books & Subscriptions</option>
-      <option value={4}>Conference Fee</option>
-      <option value={5}>Delight the Customer</option>
-      <option value={6}>Fund for Fun</option>
-      <option value={7}>Golf</option>
-      <option value={8}>Hotel</option>
-      <option value={9}>Meals & Entertainment Staff</option>
-      <option value={10}>Meals & Entertainment Promo</option>
-      <option value={11}>Meetings</option>
-      <option value={12}>Mileage</option>
-      <option value={13}>Other</option>
-      <option value={14}>Parking</option>
-      <option value={15}>Personal/Professional Dues, Membership</option>
-      <option value={16}>Prizes</option>
-      <option value={17}>Telephone</option>
-      <option value={18}>Travel</option>
+      <option value="" disabled> Select an expense category. </option>
+      {
+        expense_types.map((expense_type) => {
+          let expense_type_id = expense_type.id;
+          let expense_type_category = expense_type.category;
+          return <option value={expense_type_id} key={expense_type_id}>{expense_type_category}</option>
+        })
+      }
       </select>
       <div className="text-help">
       {touched ? error : ""}
@@ -142,7 +132,7 @@ class NewClaimItemForm extends React.Component {
         <Field
           label="Expense Type:"
           name="expense_type"
-          component={this.renderExpenseTypeDropdownField}
+          component={this.renderExpenseTypeDropdownField.bind(this)}
         />
         <Field
           label="Comments:"

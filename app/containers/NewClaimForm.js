@@ -43,6 +43,7 @@ class NewClaimForm extends React.Component {
   renderCompanyDropdownField(field) {
     const { meta: {touched, error }} = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
+    const { companies } = this.props;
     
     return (
       <div className = {className}>
@@ -50,9 +51,13 @@ class NewClaimForm extends React.Component {
         {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
         <select className="form-control" {...field.input}>
           <option value="" disabled> Select a company. </option>
-          <option value={1}>CCFM - Financial Management</option>
-          <option value={2}>CCSCU - Banking</option>
-          <option value={3}>TFL - Travelers Finance LTD</option>
+          {
+            companies.map((company) => {
+              let company_id = company.id;
+              let company_name = company.name;
+              return <option value={company_id} key={company_id}>{company_name}</option>
+            })
+          }
         </select>
         <div className="text-help">
           {touched ? error : ""}
@@ -64,7 +69,7 @@ class NewClaimForm extends React.Component {
   renderCostCenterDropdownField(field) {
     const { meta: {touched, error }} = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
-    const {cost_centres} = this.props;
+    const { cost_centres } = this.props;
     
     return (
       <div className = {className}>
@@ -75,7 +80,7 @@ class NewClaimForm extends React.Component {
           {
             cost_centres.map((cost_centre) => {
               let cost_centre_id = cost_centre.id
-              return <option value={cost_centre_id}>{cost_centre_id}</option>
+              return <option value={cost_centre_id} key={cost_centre_id}>{cost_centre_id}</option>
             })
           }
         </select>
@@ -113,7 +118,7 @@ class NewClaimForm extends React.Component {
         <Field
           label="Company:"
           name="company_id"
-          component={this.renderCompanyDropdownField}
+          component={this.renderCompanyDropdownField.bind(this)}
         />
         <Field
           label="Cost Center:"

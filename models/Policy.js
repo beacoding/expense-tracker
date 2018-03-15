@@ -15,6 +15,32 @@ module.exports = {
     });
   },
 
+  findCompanies: function(id) {
+    return new Promise((resolve, reject) => {
+      var queryString = `SELECT * FROM company`;
+      connection.query(queryString, [], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
+  findExpenseTypes: function(id) {
+    return new Promise((resolve, reject) => {
+      var queryString = `SELECT * FROM expense_type`;
+      connection.query(queryString, [], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
   addOne: function(id) {
     return new Promise((resolve, reject) => {
       //TODO queryString to add a policy

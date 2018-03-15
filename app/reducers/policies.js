@@ -7,6 +7,8 @@ const initialState = {
   error: undefined,
   params: {},
   cost_centres: [],
+  companies: [],
+  expense_types: [],
   policies: {}
 }
 
@@ -112,6 +114,36 @@ const policies = (state = initialState, action) => {
         error: undefined
       });
     case approvalLimitsConstants.FAILURE_ALL_LIMITS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      });
+
+    // REQUEST COMPANIES FROM DB
+    case policiesConstants.REQUEST_COMPANIES:
+      return state
+    case policiesConstants.RECEIVE_COMPANIES:
+      return Object.assign({}, state, {
+        isFetching: false,
+        companies: action.companies,
+        error: undefined
+      });
+    case policiesConstants.FAILURE_COMPANIES:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      });
+
+    // REQUEST EXPENSE TYPES FROM DB
+    case policiesConstants.REQUEST_EXPENSE_TYPES:
+      return state
+    case policiesConstants.RECEIVE_EXPENSE_TYPES:
+      return Object.assign({}, state, {
+        isFetching: false,
+        expense_types: action.expense_types,
+        error: undefined
+      });
+    case policiesConstants.FAILURE_EXPENSE_TYPES:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error

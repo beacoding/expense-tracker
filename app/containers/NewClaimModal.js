@@ -17,7 +17,7 @@ class NewClaimModal extends React.Component {
   render() {
     return (
       <div>
-          <NewClaimForm cost_centres={this.props.cost_centres} form='NewClaimForm' onSubmit={this.props.onSubmitFunction}/>
+          <NewClaimForm cost_centres={this.props.cost_centres} companies={this.props.companies} form='NewClaimForm' onSubmit={this.props.onSubmitFunction}/>
       </div>
     );
    }
