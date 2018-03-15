@@ -9,10 +9,36 @@ class UserMangementContainer extends React.Component {
     super(props);
 
     this.handleStatusChange = this.handleStatusChange.bind(this);
+    this.handleParamChangeText = this.handleParamChangeText.bind(this);
   }
 
   handleStatusChange(employee_id) {
     this.props.dispatch(employeesActions.requestEmployees(employee_id));
+  }
+
+  componentWillReceiveProps(nextprops) {
+    this.props.dispatch(employeesActions.requestWith(nextprops.params))
+  }
+
+
+  handleParamChangeText(e) {
+    var value = e.target.value.length > 0 ? e.target.value : null
+    var param_to_change = e.target.name;
+    this.props.dispatch(employeesActions.modifyParams(param_to_change, value));
+  }
+
+  renderSearchByEmployeeOrManager() {
+    return (
+      <div className="approval-limits-filter-row">
+        <div className="approval-limits-search"><h4>Filter By:</h4></div>
+        <div className="form-group approval-limits-search">
+          <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="Employee Name" onChange={this.handleParamChangeText}/>
+        </div>
+        <div className="form-group approval-limits-search">
+          <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="Manager Name" onChange={this.handleParamChangeText}/>
+        </div>
+      </div>
+      )
   }
 
 
@@ -28,6 +54,7 @@ class UserMangementContainer extends React.Component {
           <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > User Management </span>
         </div>
       </div>
+      {this.renderSearchByEmployeeOrManager()}
       <div className="claimlist-container">
         <UsersList handleStatusChange={this.handleStatusChange}/>
       </div>

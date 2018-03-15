@@ -3,11 +3,17 @@ import { apiHelpers } from '../helpers'
 export const claimItemsAPI = {
   addClaimItem,
   deleteClaimItem,
-  requestAll
+  requestAll,
+  editClaimItem
 };
 
 function addClaimItem(item) {
   return fetch(`/claim_items/add_item`, apiHelpers.postFormOptions(item))
+  .then(res => apiHelpers.handleResponse(res));
+}
+
+function editClaimItem(item, id) {
+  return fetch(`/claim_items/edit_item`, apiHelpers.postFormOptions({item: item, id: id}))
   .then(res => apiHelpers.handleResponse(res));
 }
 

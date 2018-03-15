@@ -21,6 +21,7 @@
     "connect-flash": "^0.1.1",
     "connect-multiparty": "^2.1.0",
     "cookie-parser": "^1.4.3",
+    "core-js": "^2.5.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "es6-promise": "^4.2.4",
@@ -61,7 +62,8 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "redux-undo": "^0.6.1",
-    "serve-favicon": "^2.4.5"
+    "serve-favicon": "^2.4.5",
+    "shim": "^0.6.0"
   },
   "devDependencies": {
     "babel-loader": "^6.2.5",

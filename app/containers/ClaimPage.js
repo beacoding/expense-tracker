@@ -187,6 +187,7 @@ class ClaimPage extends React.Component {
                 <th scope="col">Description</th>
                 <th scope="col">Amount (CAD)</th>
                 <th scope="col">Expense Category</th>
+                <th scope="col">Comments</th>
                 <th scope="col">Receipt</th>
                 <th scope="col"> </th>
               </tr>
@@ -195,7 +196,7 @@ class ClaimPage extends React.Component {
             {
               Object.entries(claimItemsObj).map((claimItem) => {
                 const claim_item_entry = claimItem[1];
-                return <ClaimItemContainer key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} employee={employee} claim_item={claim_item_entry} />
+                return <ClaimItemContainer key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} employee={employee} claim_item={claim_item_entry} createClaimItem={this.createClaimItem} />
               })
             }
             </tbody>

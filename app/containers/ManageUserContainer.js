@@ -97,7 +97,6 @@ class ManageUserContainer extends React.Component {
         <td><button className="page-button-blue" onClick={this.showEnableUserModal}> Enable User</button></td>
       </tr>
       )
-
   }
 
   renderActionsEnabled() {
@@ -107,9 +106,7 @@ class ManageUserContainer extends React.Component {
         <td><button className="page-button-red" onClick={this.showUserManagementDeleteUserModal}> Disable User </button></td>
       </tr>
       )
-
   }
-
 
   render() {
     const { employee, user } = this.props;

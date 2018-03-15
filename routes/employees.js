@@ -35,6 +35,8 @@ router.get('/with', [authMiddleware.isLoggedIn, employeesMiddleware.findAllWithM
   }
 });
 
+
+
 router.get('/with_employee', [authMiddleware.isLoggedIn, employeesMiddleware.findOne], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);

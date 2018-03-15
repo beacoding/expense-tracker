@@ -31,6 +31,22 @@ const addNewItem = async (req,res,next) => {
   }
 }
 
+const updateOne = async (req,res,next) => {
+  let items;
+  // add item locally
+
+  try {
+    req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
+    items = await ClaimItem.updateOne(req.body.item, req.body.i);
+    var item = await ClaimItem.findOne(req.body.id);
+    req.item = item;
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
 const deleteOne = async (req, res, next) => {
   try {
     await ClaimItem.deleteOne(req.body.claim_item_id);
@@ -44,5 +60,6 @@ const deleteOne = async (req, res, next) => {
 module.exports = {
   findAllWithClaim: findAllWithClaim,
   addNewItem: addNewItem,
-  deleteOne: deleteOne
+  deleteOne: deleteOne,
+  updateOne: updateOne
 }

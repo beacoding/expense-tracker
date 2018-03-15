@@ -11,7 +11,7 @@ class NewClaimItemForm extends React.Component {
   renderField(field) {
     const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
-    
+
     return (
       <div className = {className}>
         <label>{field.label}</label>
@@ -109,10 +109,9 @@ class NewClaimItemForm extends React.Component {
   
   //form for submit new claim initial items
   render () {
-    const { handleSubmit, pristine, reset, submitting } = this.props;
-
+    const { handleSubmit, pristine, reset, submitting, initialValues } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form initialValues={initialValues}  onSubmit={handleSubmit}>
         <Field
           label="Description:"
           name="description"
@@ -184,7 +183,15 @@ function validate(values) {
   return errors;
 }
 
+function mapStateToProps(state, ownProps) {
+  console.log(ownProps.currentValues, "jlqeklr")
+  return {
+    initialValues: ownProps.currentValues
+  }
+}
+
+
 export default reduxForm({
   validate,
   form: 'NewClaimItemForm' // a unique identifier for this form
-})(NewClaimItemForm);
+}, mapStateToProps)(NewClaimItemForm);

@@ -34,6 +34,16 @@ router.post('/add_item', authMiddleware.isLoggedIn, upload, claimItemsMiddleware
   }
 });
 
+router.post('/edit_item', authMiddleware.isLoggedIn, upload, claimItemsMiddleware.updateOne, function(req, res, next) {
+  if (req.error !== undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({claimItem: req.item})
+  }
+});
+
+
 router.post('/delete_item', [authMiddleware.isLoggedIn, claimItemsMiddleware.deleteOne], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);

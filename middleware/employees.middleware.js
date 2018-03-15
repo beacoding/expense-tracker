@@ -43,7 +43,6 @@ const updatePassword = async (req, res, next) => {
     req.password = password;
     next()
   } catch (err) {
-    console.log("qwerw", err)
     req.error = err;
     next();
   }

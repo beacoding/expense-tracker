@@ -7,7 +7,8 @@ export const employeesAPI = {
   requestEmployee,
   disableEmployee,
   enableEmployee,
-  updatePassword
+  updatePassword,
+  requestWith
 };
 
 function requestAll() {
@@ -47,7 +48,12 @@ function requestEmployee(employee_id) {
 }
 
 function updatePassword(employee) {
-  console.log("qlerwer", employee)
   return fetch(`/employees/update_password`, apiHelpers.postOptions(employee))
+  .then(res => apiHelpers.handleResponse(res));
+}
+
+function requestWith(params) {
+  var queryParams = jQuery.param(params);
+ return fetch(`/employees/with?` + queryParams, apiHelpers.getOptions())
   .then(res => apiHelpers.handleResponse(res));
 }

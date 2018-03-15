@@ -5,12 +5,15 @@ import { modal } from 'react-redux-modal';
 import { claimItemsActions } from '../actions';
 import ClaimItem from '../components/ClaimItem'
 import ModalContainer from './ModalContainer'
+import NewClaimItemModal from './NewClaimItemModal'
 
 class ClaimItemContainer extends React.Component {
   constructor(props) {
     super(props);
     this.confirmDeleteItem = this.confirmDeleteItem.bind(this);    
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
+    this.editClaimItem = this.editClaimItem.bind(this);
+    this.handleChangeExpenseCategory = this.handleChangeExpenseCategory.bind(this);
   }
 
   confirmDeleteItem() {
@@ -18,6 +21,46 @@ class ClaimItemContainer extends React.Component {
     this.props.dispatch(claimItemsActions.deleteClaimItem(claim_id, claim_item.claim_item_id)).then(() => {
       modal.clear();
     });
+  }
+
+  isDescriptionValid(description) {
+    if (description.trim().length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  editClaimItem(data) {
+    let claim_id = window.location.pathname.split("/")[2];
+    const { employee, form } = this.props;
+    let receipt = (data.no_receipt === true) ? null : data.receipt[0];
+    const item = {
+      claim_id: parseInt(claim_id),
+      description: data.description,
+      amount: parseFloat(data.amount),
+      comment: data.comment,
+      expense_type: parseInt(data.expense_type),
+      receipt: receipt
+    }   
+    this.props.dispatch(claimItemsActions.editClaimItem(item)).then(() => {
+      modal.clear();
+    });;
+  }
+
+  // handleEditItem(description) {
+  //   const { claim_item } = this.props;
+  //   modal.add(NewClaimItemModal, {
+  //     title: 'Edit Claim Item',
+  //     size: 'medium',
+  //     hideCloseButton: true,
+  //     currentValues: claim_item,
+  //     onSubmitFunction: this.editClaimItem
+  //   });
+  // }
+
+  handleEditItem(key, data) {
+    console.log(key, "Adsjfksd");
   }
 
   handleDeleteItem() {
@@ -31,14 +74,22 @@ class ClaimItemContainer extends React.Component {
       hideCloseButton: true,
       affirmativeAction: this.confirmDeleteItem,
       affirmativeText: 'Yes',
-      negativeText: 'No'
-    });
+      negativeText: 'No',
+    }); 
+  }
+
+  handleChangeExpenseCategory(e) {
+    console.log(e.target.value, "wkler")
+  }
+
+  handleEditReceipt(e) {
+    console.log(e.target.files);
   }
 
   render() {
     const { claim_item, claim_status, employee } = this.props;
     return (
-      <ClaimItem employee={employee} claim_item={claim_item} claim_status={claim_status} handleDeleteItem={this.handleDeleteItem}/>
+      <ClaimItem handleChangeExpenseCategory={this.handleChangeExpenseCategory} employee={employee} claim_item={claim_item} claim_status={claim_status} handleDeleteItem={this.handleDeleteItem} handleEditItem={this.handleEditItem} expense_categories/>
     )
   }
 }

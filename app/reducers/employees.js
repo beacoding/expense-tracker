@@ -4,7 +4,8 @@ const initialState = {
   employees: [],
   employees_with_managers: [],
   employeesOfManagerMap: {},
-  current_employee: null
+  current_employee: null,
+  params: {}
 }
 
 const reports = (state = initialState, action) => {
@@ -114,6 +115,31 @@ const reports = (state = initialState, action) => {
         error: undefined
       });
     case employeesConstants.FAILURE_EMPLOYEES_OF_MANAGER:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      });
+    case employeesConstants.MODIFY_PARAMS:
+      var param_to_change = action.param_to_change;
+      var value = action.value
+      var newParams = Object.assign({}, state.params);
+      newParams[param_to_change] = value;
+      return Object.assign({}, state, {
+        params: newParams
+      });
+    case employeesConstants.REQUEST_WITH:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case employeesConstants.RECEIVE_WITH:
+      var newMap = Object.assign({}, state.employeesOfManagerMap);
+      newMap[action.manager_id] = action.employees
+      return Object.assign({}, state, {
+        isFetching: false,
+        employeesOfManagerMap: newMap,
+        error: undefined
+      });
+    case employeesConstants.FAILURE_WITH:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error

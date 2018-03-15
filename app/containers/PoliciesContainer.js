@@ -21,6 +21,15 @@ class PoliciesContainer extends React.Component {
     return floatRegex.test(limitInput);
   }
 
+  createPolicy() {
+    this.setState({
+      rows: this.state.rows.push(<tr key={i}>
+            <td><RIEInput propName="new_policy_value"/>  <i className="ion-edit"></i></td>
+            <td>$<RIEInput propName="new_policy_value"/>  <i className="ion-edit"></i> </td>
+            </tr>)
+    })
+  }
+
   renderEntries() {
     const { policies } = this.props.policies
     return ( 

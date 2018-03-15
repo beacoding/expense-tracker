@@ -29,11 +29,20 @@ const claimItems = (state = initialState, action) => {
         claimItemsMap: newClaimItemsMap,
         error: undefined
       });
-    case claimItemsConstants.ADD_CLAIM_ITEM_FAILURE:
+    case claimItemsConstants.EDIT_CLAIM_ITEM_FAILURE:
       return Object.assign({}, state, {
         isFetching: true,
         error: action.error
       });
+    // EDIT CLAIM ITEM
+    case claimItemsConstants.EDIT_CLAIM_ITEM:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case claimItemsConstants.EDIT_CLAIM_ITEM_SUCCESS:
+      return state
+    case claimItemsConstants.ADD_CLAIM_ITEM_FAILURE:
+      return state
     // REMOVE CLAIM ITEM
     case claimItemsConstants.DELETE_CLAIM_ITEM_REQUEST:
       return state;

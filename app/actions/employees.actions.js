@@ -8,7 +8,9 @@ export const employeesActions = {
   requestEmployee,
   updatePassword,
   enableEmployee,
-  disableEmployee
+  disableEmployee,
+  modifyParams,
+  requestWith
 };
 
 function requestAll() {
@@ -105,6 +107,23 @@ function enableEmployee(employee_id) {
   function failure(error) { return { type: employeesConstants.FAILURE_ENABLE_EMPLOYEE, error }}
 }
 
+function requestWith(params) {
+  return dispatch => {
+    dispatch(request());
+    approvalLimitsAPI.requestWith(params)
+    .then(
+      res => {
+        dispatch(success(res.employees))
+      },
+      error => dispatch(failure(error))
+    );
+
+    function request() { return { type: approvalLimitsConstants.REQUEST_WITH }}
+    function success(employees) { return { type: approvalLimitsConstants.RECEIVE_WITH, employees }}
+    function failure(error) { return { type: approvalLimitsConstants.FAILURE_WITH, error }}
+  }
+}
+
 function requestEmployee(employee_id) {
   return dispatch => {
     dispatch(request());
@@ -119,4 +138,8 @@ function requestEmployee(employee_id) {
   function request() { return { type: employeesConstants.REQUEST_EMPLOYEE }}
   function success(employee) { return { type: employeesConstants.RECEIVE_EMPLOYEE, employee }}
   function failure(error) { return { type: employeesConstants.FAILURE_EMPLOYEE, error }}
+}
+
+function modifyParams(param_to_change, value) {
+  return { type: employeesConstants.MODIFY_PARAMS, param_to_change, value };
 }
