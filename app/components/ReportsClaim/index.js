@@ -6,7 +6,7 @@ import { claimsHelpers } from  '../../helpers';
 
 import './style.css';
 
-const ReportsClaim = ({ employee, claim }) => {
+const ReportsClaim = ({ employee, claim, routedFrom }) => {
   const { id, first_name, last_name, email } = employee
   const {
     claim_id,
@@ -29,7 +29,8 @@ const ReportsClaim = ({ employee, claim }) => {
 
   return (
     <div className="claim-container">
-      <div className="claim-description"><Link to={`/admin/reports/${claim_id}`}>{description}</Link></div>
+      { routedFrom == 'approvals' && <div className="claim-description"><Link to={`/approvals/${claim_id}`}>{description}</Link></div>}
+      { routedFrom == 'admin' && <div className="claim-description"><Link to={`/admin/reports/${claim_id}`}>{description}</Link></div>}     
       <div><small className="claim-date">{claimsHelpers.toDateString(date_created)}</small></div>
       <table className="table">
         <thead>

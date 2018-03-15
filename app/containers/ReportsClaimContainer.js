@@ -18,8 +18,9 @@ class ReportsClaimContainer extends React.Component {
   render() {
     const { employee, key, claim, claimItems } = this.props;
     claimsHelpers.calculateTotal(claim, claimItems.claimItemsMap[claim.claim_id]);
+    const callingPage = window.location.pathname.split("/")[1];
     return (
-      <ReportsClaim claim={claim} employee={employee} key={claim.claim_id} />
+      <ReportsClaim claim={claim} employee={employee} routedFrom={callingPage} key={claim.claim_id} />
     )
   }
 }
