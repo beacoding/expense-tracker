@@ -40,6 +40,10 @@ function postFormOptions(data) {
     form_data.append(key, data[key]);
   }
 
+  for(var pair of form_data.entries()) {
+     console.log(pair[0]+ ', '+ pair[1]); 
+  }
+
   return {
     method: 'POST',
     credentials: 'include',

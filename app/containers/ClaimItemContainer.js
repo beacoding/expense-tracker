@@ -15,6 +15,7 @@ class ClaimItemContainer extends React.Component {
     this.editClaimItem = this.editClaimItem.bind(this);
     this.handleChangeExpenseCategory = this.handleChangeExpenseCategory.bind(this);
     this.handleEditItem = this.handleEditItem.bind(this);
+    this.handleEditReceipt = this.handleEditReceipt.bind(this);
   }
 
   confirmDeleteItem() {
@@ -34,7 +35,7 @@ class ClaimItemContainer extends React.Component {
 
   editClaimItem(data) {
     let claim_id = window.location.pathname.split("/")[2];
-    const { employee, form } = this.mapStateToPropsops;
+    const { employee, form } = this.mapStateToProps;
     let receipt = (data.no_receipt === true) ? null : data.receipt[0];
     const item = {
       claim_id: parseInt(claim_id),
@@ -44,7 +45,7 @@ class ClaimItemContainer extends React.Component {
       expense_type: parseInt(data.expense_type),
       receipt: receipt
     }   
-    this.props.dispatch(claimItemsActions.editClaimItem(item)).then(() => {
+    this.props.dispatch(claimItemsActions.editClaimItem(item, )).then(() => {
       modal.clear();
     });;
   }
@@ -60,10 +61,9 @@ class ClaimItemContainer extends React.Component {
   //   });
   // }
 
-  handleEditItem(key, item) {
-    let claim_id = window.location.pathname.split("/")[2];
-    item.claim_id = claim_id;
-    this.props.dispatch(claimItemsActions.editClaimItem(item));
+  handleEditItem(key, claim_item_id, item) {
+    let claim_id = parseInt(window.location.pathname.split("/")[2]);
+    this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item_id));
   }
 
   handleDeleteItem() {
@@ -81,18 +81,24 @@ class ClaimItemContainer extends React.Component {
     }); 
   }
 
-  handleChangeExpenseCategory(e) {
-    console.log(e.target.value, "wkler")
+  handleChangeExpenseCategory(claim_item_id, e) {
+    let claim_id = window.location.pathname.split("/")[2];
+    let item = {}
+    item.expense_type = e.target.value;
+    this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item_id));
   }
 
-  handleEditReceipt(e) {
-    console.log(e.target.files);
+  handleEditReceipt(claim_item_id, e) {
+    let claim_id = window.location.pathname.split("/")[2];
+    let item = {};
+    item.receipt = e.target.files[0];
+    this.props.dispatch(claimItemsActions.editReceipt(item, claim_id, claim_item_id))
   }
 
   render() {
     const { claim_item, claim_status, employee } = this.props;
     return (
-      <ClaimItem handleChangeExpenseCategory={this.handleChangeExpenseCategory} employee={employee} claim_item={claim_item} claim_status={claim_status} expense_types={this.props.expense_types} handleDeleteItem={this.handleDeleteItem} handleEditItem={this.handleEditItem}/>
+      <ClaimItem  handleEditReceipt={this.handleEditReceipt} handleChangeExpenseCategory={this.handleChangeExpenseCategory} employee={employee} claim_item={claim_item} claim_status={claim_status} expense_types={this.props.expense_types} handleDeleteItem={this.handleDeleteItem} handleEditItem={this.handleEditItem}/>
     )
   }
 }

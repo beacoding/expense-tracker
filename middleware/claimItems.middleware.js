@@ -32,21 +32,36 @@ const addNewItem = async (req,res,next) => {
 }
 
 const updateOne = async (req,res,next) => {
-  let items;
   // add item locally
-
   try {
     if (req.body.image_url) {
       req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
     }
-    items = await ClaimItem.updateOne(req.body.item, req.body.i);
+    await ClaimItem.updateOne(req.body.item, req.body.id);
     var item = await ClaimItem.findOne(req.body.id);
     req.item = item;
     next()
   } catch (err) {
+    console.log(err);
     req.error = err;
     next();
   }
+}
+
+const updateReceipt = async (req, res, next) => {
+  // add item locally
+  try {
+    req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
+    await ClaimItem.updateReceipt(req.body, req.body.id);
+    var item = await ClaimItem.findOne(req.body.id);
+    req.item = item;
+    next()
+  } catch (err) {
+    console.log(err);
+    req.error = err;
+    next();
+  }
+
 }
 
 const deleteOne = async (req, res, next) => {
@@ -63,5 +78,6 @@ module.exports = {
   findAllWithClaim: findAllWithClaim,
   addNewItem: addNewItem,
   deleteOne: deleteOne,
-  updateOne: updateOne
+  updateOne: updateOne,
+  updateReceipt: updateReceipt
 }

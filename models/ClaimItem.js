@@ -88,10 +88,44 @@ module.exports = {
   },
   
   
-  updateOne: function(claimItem) {
+  updateOne: function(params, id) {
     return new Promise((resolve, reject) => {
       //TODO queryString to update one claimItem
-    }); 
+      var setArray = [];
+      for (key in params) {
+          switch(key) {
+            case "amount":
+              setArray.push("claim_item.amount = '" + parseInt(params[key]) + "'");
+              break;
+            case "description":
+              setArray.push("claim_item.description = '" + params[key] + "'");
+              break;
+            case "expense_type":
+              setArray.push("claim_item.expense_type = '" + parseInt(params[key]) + "'");
+              break;
+            case "comment":
+              setArray.push("claim_item.comment = '" + params[key] + "'");
+              break;
+            default:
+              break;
+          }
+      }
+
+     var setString = setArray.length > 0 ? setArray.join(" AND ") : "";
+        const queryString = `UPDATE claim_item
+                              SET ` + 
+                              setString + 
+                              ` WHERE 
+                                claim_item.id = ?`;
+        console.log(queryString);
+        connection.query(queryString, [ id ], (err, rows) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(rows[0]);
+          }
+        });
+    });
   },
   
   deleteOne: function(claim_item_id) {
@@ -109,5 +143,24 @@ module.exports = {
         }
       });
     }); 
+  },
+
+  updateReceipt: function(item, claim_item_id) {
+    return new Promise((resolve, reject) => {
+      const queryString = `UPDATE claim_item SET claim_item.image_url = ? WHERE claim_item.id = ?`;
+      console.log(item);
+      connection.query(queryString, 
+        [
+        item.image_url,
+        claim_item_id
+        ],
+      (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
   }
 }

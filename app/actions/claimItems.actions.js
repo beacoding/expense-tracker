@@ -6,7 +6,8 @@ export const claimItemsActions = {
   deleteClaimItem,
   requestAll,
   editClaimItem,
-  clearAll
+  clearAll,
+  editReceipt
 };
 
 function addClaimItem(item) {
@@ -22,16 +23,37 @@ function addClaimItem(item) {
   function failure(error) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_FAILURE, error }}
 }
 
-function editClaimItem(item, id) {
-  return dispatch => {
+function editClaimItem(item, claim_id, claim_item_id) {
+   return dispatch => {
     dispatch(request());
-    return claimItemsAPI.editClaimItem(item, id).then(
-      res => dispatch(success(res.claimItem, item.claim_id)),
-      error => dispatch(failure(error))
+    return claimItemsAPI.editClaimItem(item, claim_item_id).then(
+      res => {
+        return dispatch(success(res.claimItem[0], claim_item_id, parseInt(claim_id)))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     )
   };
   function request() { return { type: claimItemsConstants.EDIT_CLAIM_ITEM }}
-  function success(newClaimItem, claimId) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM_SUCCESS, newClaimItem, claimId }}
+  function success(newClaimItem, id, claimId) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM_SUCCESS, newClaimItem, claimId, id }}
+  function failure(error) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM_FAILURE, error }}
+}
+
+function editReceipt(item, claim_id, claim_item_id) {
+   return dispatch => {
+    dispatch(request());
+    return claimItemsAPI.editReceipt(item, claim_item_id).then(
+      res => {
+        return dispatch(success(res.claimItem[0], claim_item_id, parseInt(claim_id)))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
+    )
+  };
+  function request() { return { type: claimItemsConstants.EDIT_CLAIM_ITEM }}
+  function success(newClaimItem, id, claimId) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM_SUCCESS, newClaimItem, claimId, id }}
   function failure(error) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM_FAILURE, error }}
 }
 

@@ -4,6 +4,7 @@ export const claimItemsAPI = {
   addClaimItem,
   deleteClaimItem,
   requestAll,
+  editReceipt,
   editClaimItem
 };
 
@@ -13,7 +14,13 @@ function addClaimItem(item) {
 }
 
 function editClaimItem(item, id) {
-  return fetch(`/claim_items/edit_item`, apiHelpers.postFormOptions({item: item, id: id}))
+  return fetch(`/claim_items/edit_item`, apiHelpers.postOptions({item: item, id: id}))
+  .then(res => apiHelpers.handleResponse(res));
+}
+
+function editReceipt(item, id) {
+  item.id = id;
+  return fetch(`/claim_items/edit_receipt`, apiHelpers.postFormOptions(item))
   .then(res => apiHelpers.handleResponse(res));
 }
 

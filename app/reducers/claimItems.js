@@ -40,7 +40,13 @@ const claimItems = (state = initialState, action) => {
         isFetching: true
       });
     case claimItemsConstants.EDIT_CLAIM_ITEM_SUCCESS:
-      return state
+      newClaimItemsMap = Object.assign({}, state.claimItemsMap);
+      newClaimItemsMap[parseInt(action.claimId)][action.id] = action.newClaimItem;
+      return Object.assign({}, state, {
+        isFetching: false,
+        claimItemsMap: newClaimItemsMap,
+        error: undefined
+      });
     case claimItemsConstants.ADD_CLAIM_ITEM_FAILURE:
       return state
     // REMOVE CLAIM ITEM
