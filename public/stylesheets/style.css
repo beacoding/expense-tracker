@@ -289,6 +289,10 @@ SIDEBAR STYLE
   color: #bac6ce;
 }
 
+.btn:hover {
+  color: white;
+}
+
 .page-button {
   float: right;
   background-color: #fc8c1e;
@@ -732,7 +736,9 @@ DROPDOWN COMPONENT
 }
 
 .reports-filter-container {
-  padding: 30px; 
+  padding: 30px;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .reports-filter-row {
@@ -740,25 +746,29 @@ DROPDOWN COMPONENT
 }
 
 .reports-search {
-  font-color: lightgrey;
-  max-width: 200px;
   display: inline-block;
   margin: 5px 10px 5px 10px;
+  max-width: 200px;
+  vertical-align: middle;
 }
 
 input:focus {outline: none; }
 
+.approval-limits-filter-container {
+  padding: 30px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 .approval-limits-filter-row {
-  margin-left: -75px;
-  padding: 30px 30px 0 30px;
   text-align: center;
 }
 
 .approval-limits-search {
-  font-color: lightgrey;
-  max-width: 200px;
   display: inline-block;
   margin: 5px 10px 5px 10px;
+  max-width: 200px;
+  vertical-align: middle;  
 }
 
 .form-check {

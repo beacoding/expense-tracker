@@ -36,9 +36,9 @@ const ReportsClaim = ({ employee, claim, routedFrom }) => {
         <thead>
           <tr>
             <th scope="col">Status</th>
-            <th scope="col">claimant</th>
-            <th scope="col">Approver</th>
+            <th scope="col">Claimant</th>
             <th scope="col">Manager</th>
+            <th scope="col">Approver</th>
             <th scope="col">Cost Centre</th>
             <th scope="col">Total (CAD)</th>
           </tr>
@@ -47,8 +47,8 @@ const ReportsClaim = ({ employee, claim, routedFrom }) => {
           <tr>
             <td>{claimsHelpers.getStatusText(status)}</td>
             <td>{claimant_first_name + " " + claimant_last_name}</td>
-            <td>{approver_first_name + " " + approver_last_name}</td>
             <td>{manager_first_name + " " + manager_last_name}</td>
+            <td>{approver_first_name + " " + approver_last_name}</td>
             <td>{cost_centre_id}</td>
             <td>{"$" + total_amount}</td>
           </tr>

@@ -25,14 +25,14 @@ class NewClaimItemForm extends React.Component {
   }
 
   renderFileInput(field) {
-    const { input, type, meta: { touched, error, warning } } = field;
+    const { input, type, accept, meta: { touched, error, warning } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
     delete input.value;
 
     return (
       <div className={className}>
         <div>
-          <label>{field.label} <input className="form-control" {...input} type={type}/> </label>   
+          <label>{field.label} <input className="form-control" {...input} type={type} accept={accept}/> </label>   
         </div>
       </div>
     );
@@ -47,6 +47,7 @@ class NewClaimItemForm extends React.Component {
         <div>
           <label>{field.label} <input type="checkbox" style={{marginLeft: 5 + 'px'}} {...field.input} /></label>
         </div>
+        <i className="ion-android-alert"> Only check this box if you do not have a receipt.</i>
         <div className="text-help">
           {touched ? error : ""}
         </div>
@@ -122,6 +123,7 @@ class NewClaimItemForm extends React.Component {
           name="receipt" 
           component={this.renderFileInput} 
           type="file" 
+          accept="image/*"
         />
         <Field
           label="No Receipt?"
@@ -140,8 +142,10 @@ class NewClaimItemForm extends React.Component {
           type="textarea"
           component={this.renderTextAreaField}
         />
-        <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Save Claim Item</button>
-        <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Reset</button>
+        <div className="buttons-row">
+          <button type="submit" className="btn page-button-blue" disabled={pristine || submitting}>Save Claim Item</button>
+          <button type="button" className="btn page-button-red" disabled={pristine || submitting} onClick={reset}>Reset</button>
+        </div>
       </form>
     );
   }

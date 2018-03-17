@@ -37,7 +37,7 @@ class ReportsContainer extends React.Component {
     return (
       <div className="reports-filter-row">
         <div className="form-check">
-          <div>Filter by Claim Status:</div>
+          <div><label>Filter by Claim Status:</label></div>
         </div>
         <div className="form-check">
           <label className="form-check-label no-select" htmlFor="reports-approved-check">
@@ -67,32 +67,30 @@ class ReportsContainer extends React.Component {
       ) 
   }
 
-  renderSearchByManagerOrEmployeeID() {
-    return (
-      <div className="form-group reports-filter-row">
-        <div className="form-group reports-search">
-          <input type="text" className="form-control" name="employee_id" id="reports-search-employee" placeholder="Employee ID" onChange={this.handleParamChangeText}/>
-        </div>
-        <div className="form-group reports-search">
-          <input type="text" className="form-control" name="manager_id" id="reports-search-manager" placeholder="Manager ID" onChange={this.handleParamChangeText}/>
-        </div>
-      </div>
-      )
-  }
+  // renderSearchByManagerOrEmployeeID() {
+  //   return (
+  //     <div className="form-group reports-filter-row">
+  //       <div className="form-group reports-search">
+  //         <input type="text" className="form-control" name="employee_id" id="reports-search-employee" placeholder="Employee ID" onChange={this.handleParamChangeText}/>
+  //       </div>
+  //       <div className="form-group reports-search">
+  //         <input type="text" className="form-control" name="manager_id" id="reports-search-manager" placeholder="Manager ID" onChange={this.handleParamChangeText}/>
+  //       </div>
+  //     </div>
+  //     )
+  // }
 
   renderSearchByManagerOrEmployeeName() {
     return (
       <div className="form-group">
         <div className="reports-filter-row">
-          <div className="reports-search">Filter by claimant:</div>
+          <div className="reports-search"><label>Filter by Claimant:</label></div>
           <div className="form-group reports-search">
             <input type="text" className="form-control" name="employee_name" id="reports-search-employee" placeholder="Employee Name" onChange={this.handleParamChangeText}/>
           </div>
-        </div>
-        <div className="reports-filter-row">
-          <div className="reports-search">Filter by Approver:</div>        
+          <div className="reports-search"><label>or Approver:</label></div>        
           <div className="form-group reports-search">
-            <input type="text" className="form-control" name="manager_name" id="reports-search-manager" placeholder="Manager Name" onChange={this.handleParamChangeText}/>
+            <input type="text" className="form-control" name="manager_name" id="reports-search-manager" placeholder="Approver Name" onChange={this.handleParamChangeText}/>
           </div>
         </div>
       </div>
@@ -106,13 +104,13 @@ class ReportsContainer extends React.Component {
   renderDateRange() {
     return (
       <div className="form-group reports-filter-row">
-        <div className="reports-search">Created from:</div>
+        <div className="reports-search"><label>Created from</label></div>
         <div className="form-group reports-search">
-          <input type="date" className="form-control" name="start" id="reports-date-from" label="From" placeholder="2018-01-01" onChange={this.handleParamChangeText}/>
+          <input type="date" className="form-control" name="start" id="reports-date-from" label="From" placeholder="YYYY-MM-DD" onChange={this.handleParamChangeText}/>
         </div>
-        <div className="reports-search">to</div>
+        <div className="reports-search"><label>to</label></div>
         <div className="form-group reports-search">
-          <input type="date" className="form-control" name="end" id="reports-date-to" label="To" placeholder="2018-03-31" onChange={this.handleParamChangeText}/>
+          <input type="date" className="form-control" name="end" id="reports-date-to" label="To" placeholder="YYYY-MM-DD" onChange={this.handleParamChangeText}/>
         </div>
       </div>
     )
