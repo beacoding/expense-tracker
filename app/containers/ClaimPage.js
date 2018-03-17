@@ -163,12 +163,12 @@ class ClaimPage extends React.Component {
     // FOR THE COLOURED BAR
     let stepCompletionIndex = 0;
     if (claim.total_amount > 0) {
-        stepCompletionIndex = 1;
+      stepCompletionIndex = 1;
       if (status == 'S' || status == 'F') {
-          stepCompletionIndex = 2;
-        if (status == 'A' || status == 'D') {
-          stepCompletionIndex = 3;
-        }
+        stepCompletionIndex = 2;
+      }
+      if (status == 'A' || status == 'D') {
+        stepCompletionIndex = 3;
       }
     }
 
