@@ -11,6 +11,7 @@ class ReportsContainer extends React.Component {
     this.handleParamChangeChecked = this.handleParamChangeChecked.bind(this);
     this.handleParamChangeText = this.handleParamChangeText.bind(this);
     this.handleT24Generation = this.handleT24Generation.bind(this);
+    this.handlePayrollGeneration = this.handlePayrollGeneration.bind(this);    
   }
 
   componentWillReceiveProps (nextprops) {
@@ -31,6 +32,14 @@ class ReportsContainer extends React.Component {
 
   handleT24Generation(claims) {
     reportsHelpers.generateT24(claims);
+  }
+
+  handlePayrollGeneration(claims) {
+    reportsHelpers.generatePayroll(claims);
+  }
+
+  handleAllEntriesGeneration(claims) {
+    reportsHelpers.generateAllEntries(claims);
   }
 
   renderCheckBoxes() {
@@ -97,10 +106,6 @@ class ReportsContainer extends React.Component {
     )
   }
 
-  renderCostCentreDropDown() {
-
-  }
-
   renderDateRange() {
     return (
       <div className="form-group reports-filter-row">
@@ -118,7 +123,9 @@ class ReportsContainer extends React.Component {
 
   renderClaimList() {
     return (
-      <ReportsClaimList handleT24Generation={this.handleT24Generation}/>
+      <ReportsClaimList handleT24Generation={this.handleT24Generation}
+                        handlePayrollGeneration={this.handlePayrollGeneration}
+                        handleAllEntriesGeneration={this.handleAllEntriesGeneration}/>
     )
   }
 

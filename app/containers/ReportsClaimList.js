@@ -84,7 +84,10 @@ class ReportsClaimList extends React.Component {
   renderReportsButtons() {
     return (
       <div className="padded-buttons-row">
-        <button className="page-button" onClick={this.props.handleT24Generation.bind(this, this.props.claimsMap)}> Generate T24 </button>
+        <button className="page-button" onClick={this.props.handleAllEntriesGeneration.bind(this, this.props.claimsMap)}> All Entries </button>              
+        <button className="page-button" onClick={this.props.handlePayrollGeneration.bind(this, this.props.claimsMap)}> Payroll </button>        
+        <button className="page-button" onClick={this.props.handleT24Generation.bind(this, this.props.claimsMap)}> T24 </button>
+        <div className="no-select" style={{float: 'right', padding: '10px 15px'}}><label>Export As:</label></div>
       </div>
       )
   }

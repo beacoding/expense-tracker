@@ -5,6 +5,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT 
                             claim.id as claim_id, 
+                            claimant.id as claimant_id,
                             claimant.first_name as claimant_first_name,
                             claimant.last_name as claimant_last_name, 
                             claimant.email as claimant_email,
@@ -123,6 +124,7 @@ module.exports = {
 
       var queryString = `SELECT 
                             claim.id as claim_id, 
+                            claimant.id as claimant_id,
                             claimant.first_name as claimant_first_name,
                             claimant.last_name as claimant_last_name, 
                             claimant.email as claimant_email,
@@ -166,6 +168,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT 
                             claim.id as claim_id, 
+                            claimant.id as claimant_id,
                             claimant.first_name as claimant_first_name,
                             claimant.last_name as claimant_last_name, 
                             claimant.email as claimant_email,
@@ -209,6 +212,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT 
                           claim.id as claim_id, 
+                          claimant.id as claimant_id,
                           claimant.first_name as claimant_first_name,
                           claimant.last_name as claimant_last_name, 
                           claimant.email as claimant_email,
@@ -247,6 +251,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT 
                           claim.id as claim_id, 
+                          claimant.id as claimant_id,
                           claimant.first_name as claimant_first_name,
                           claimant.last_name as claimant_last_name, 
                           claimant.email as claimant_email,
