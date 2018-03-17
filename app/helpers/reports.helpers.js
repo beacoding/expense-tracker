@@ -27,6 +27,10 @@ function generateT24(claimsMap) {
       lookupArr.push(lookupEntry);
     }
   }
+  if (lookupArr.length < 1) {
+    // in case there are no entries
+    lookupArr.push({})
+  }
   const json2csvParser = new Json2csvParser({ header: false, delimiter: '|'  });
   const csv = json2csvParser.parse(lookupArr);
   const filename = 'T24_' + new Date().toISOString().substr(0, 10) + '.csv';
@@ -61,6 +65,10 @@ function generatePayroll(claimsMap) {
   Object.entries(entryMap).map((entry) => {
     entryArr.push(entry[1]);
   });
+  if (entryArr.length < 1) {
+    // in case there are no entries
+    entryArr.push({})
+  }
   const json2csvParser = new Json2csvParser({ header: false, delimiter: '|'  });
   const csv = json2csvParser.parse(entryArr);
   const filename = 'payroll_' + new Date().toISOString().substr(0, 10) + '.csv';
