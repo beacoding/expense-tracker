@@ -2,11 +2,13 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { modal } from 'react-redux-modal';
+import classNames from 'classnames';
 import { claimItemsActions, policiesActions } from '../actions';
 import { claimsActions } from '../actions';
 import ClaimItemContainer from './ClaimItemContainer';
 import NewClaimItemModal from './NewClaimItemModal';
 import ModalContainer from './ModalContainer'
+import { claimsHelpers } from '../helpers';
 
 class ClaimPage extends React.Component {
   constructor(props) {
@@ -123,23 +125,6 @@ class ClaimPage extends React.Component {
     });
   }
 
-
-  handleSubmit() {
-    modal.add(ModalContainer, {
-      title: 'Submit Claim?',
-      bodyHtml: `
-      <p>Are you sure you want to submit this claim request?</p>
-      <p>Once the claim has been submitted, it can no longer be modified.</p>
-      <br/>
-      `,
-      size: 'medium',
-      hideCloseButton: true,
-      affirmativeAction: this.confirmSubmit,
-      affirmativeText: 'Yes',
-      negativeText: 'No'
-    });
-  }
-
   renderError(error) {
     return <div> {error} </div>
   }
@@ -152,7 +137,11 @@ class ClaimPage extends React.Component {
     const { employee, claimItems, isFetching, claimsMap, expense_types, error } = this.props;
     
     let claim_id = undefined;
+    let claimantView = false;
     if (window.location.pathname.split("/")[1] != "admin") {
+      if (window.location.pathname.split("/")[1] == 'claims' ) {
+        claimantView = true;
+      }
       claim_id = window.location.pathname.split("/")[2];
     } else {
       claim_id = window.location.pathname.split("/")[3];
@@ -168,7 +157,20 @@ class ClaimPage extends React.Component {
     const claimItemsObj = claimItems.claimItemsMap[claim_id] || {};
 
     let claim = claimsMap[claim_id];
-    let status = claim.status
+    let status = claim.status;
+    claimsHelpers.calculateTotal(claim, claimItemsObj);
+
+    // FOR THE COLOURED BAR
+    let stepCompletionIndex = 0;
+    if (claim.total_amount > 0) {
+        stepCompletionIndex = 1;
+      if (status == 'S' || status == 'F') {
+          stepCompletionIndex = 2;
+        if (status == 'A' || status == 'D') {
+          stepCompletionIndex = 3;
+        }
+      }
+    }
 
     return (
       <div className="claimlist-container">
@@ -182,6 +184,25 @@ class ClaimPage extends React.Component {
           </div>
         </div>
         <div className="claim-container">
+          { claimantView && <div className="progress-meter">
+            <div className="track" >
+              <span className="progress" style={{width: ((stepCompletionIndex / 3) * 100) + "%"}}></span>
+            </div>
+            <ol className="progress-points">
+              <li className={classNames('progress-point', { completed: (claim.total_amount > 0), active: status == 'P' })}>
+                <span className="label">Add Claim Items</span>
+              </li>
+              <li className={classNames('progress-point', { completed: status !== 'P', active: claim.total_amount > 0 })}>
+                <span className="label">Submit Claim</span>
+              </li>
+              <li className={classNames('progress-point', { completed: (status == 'A' || status == 'D'), active: (status == 'S' || status == 'F')})}>
+                <span className="label">Manager Review</span>
+              </li>
+              <li className={classNames('progress-point', { completed: (status == 'A' || status == 'D'), active: false })}>
+                <span className="label">Claim Processed</span>
+              </li>
+            </ol>
+          </div> }
           { (status == 'P') && <button className="page-button" onClick={this.showNewClaimItemModal}> New Item</button> }
           <table className="table table-striped">
             <thead>
@@ -203,6 +224,7 @@ class ClaimPage extends React.Component {
             }
             </tbody>
           </table>
+        { claim.notes && <i className="ion-android-alert"> Approver Notes: {claim.notes}</i> }
         </div>
         { (status == 'P') &&
         <div>

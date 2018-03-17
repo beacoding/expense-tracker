@@ -37,6 +37,9 @@ class ReportsContainer extends React.Component {
     return (
       <div className="reports-filter-row">
         <div className="form-check">
+          <div>Filter by Claim Status:</div>
+        </div>
+        <div className="form-check">
           <label className="form-check-label no-select" htmlFor="reports-approved-check">
             <input defaultChecked={true} className="form-check-input" type="checkbox" value="approved" id="reports-approved-check" onChange={this.handleParamChangeChecked}/>
             Approved
@@ -66,7 +69,7 @@ class ReportsContainer extends React.Component {
 
   renderSearchByManagerOrEmployeeID() {
     return (
-      <div className="reports-filter-row">
+      <div className="form-group reports-filter-row">
         <div className="form-group reports-search">
           <input type="text" className="form-control" name="employee_id" id="reports-search-employee" placeholder="Employee ID" onChange={this.handleParamChangeText}/>
         </div>
@@ -79,21 +82,21 @@ class ReportsContainer extends React.Component {
 
   renderSearchByManagerOrEmployeeName() {
     return (
-      <div className="reports-filter-row">
-        <div className="form-group reports-search">
-          <input type="text" className="form-control" name="employee_first_name" id="reports-search-employee" placeholder="Employee First Name" onChange={this.handleParamChangeText}/>
+      <div className="form-group">
+        <div className="reports-filter-row">
+          <div className="reports-search">Filter by claimant:</div>
+          <div className="form-group reports-search">
+            <input type="text" className="form-control" name="employee_name" id="reports-search-employee" placeholder="Employee Name" onChange={this.handleParamChangeText}/>
+          </div>
         </div>
-        <div className="form-group reports-search">
-          <input type="text" className="form-control" name="employee_last_name" id="reports-search-employee" placeholder="Employee Last Name" onChange={this.handleParamChangeText}/>
-        </div>
-        <div className="form-group reports-search">
-          <input type="text" className="form-control" name="manager_first_name" id="reports-search-manager" placeholder="Manager First Name" onChange={this.handleParamChangeText}/>
-        </div>
-        <div className="form-group reports-search">
-          <input type="text" className="form-control" name="manager_last_name" id="reports-search-manager" placeholder="Manager Last Name" onChange={this.handleParamChangeText}/>
+        <div className="reports-filter-row">
+          <div className="reports-search">Filter by Approver:</div>        
+          <div className="form-group reports-search">
+            <input type="text" className="form-control" name="manager_name" id="reports-search-manager" placeholder="Manager Name" onChange={this.handleParamChangeText}/>
+          </div>
         </div>
       </div>
-      )
+    )
   }
 
   renderCostCentreDropDown() {
@@ -102,10 +105,12 @@ class ReportsContainer extends React.Component {
 
   renderDateRange() {
     return (
-      <div className="reports-filter-row">
+      <div className="form-group reports-filter-row">
+        <div className="reports-search">Created from:</div>
         <div className="form-group reports-search">
           <input type="date" className="form-control" name="start" id="reports-date-from" label="From" placeholder="2018-01-01" onChange={this.handleParamChangeText}/>
         </div>
+        <div className="reports-search">to</div>
         <div className="form-group reports-search">
           <input type="date" className="form-control" name="end" id="reports-date-to" label="To" placeholder="2018-03-31" onChange={this.handleParamChangeText}/>
         </div>
@@ -130,11 +135,11 @@ class ReportsContainer extends React.Component {
             <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > Files and Reports</span>
           </div>
         </div>
-        <div className="reports-filter-container">
-          {this.renderCheckBoxes()}
-          {this.renderSearchByManagerOrEmployeeID()}
+        <div className="reports-filter-container no-select">
+          {/* {this.renderSearchByManagerOrEmployeeID()} */}
           {this.renderSearchByManagerOrEmployeeName()}
           {this.renderDateRange()}
+          {this.renderCheckBoxes()}
         </div>
         {this.renderClaimList()}
       </div>

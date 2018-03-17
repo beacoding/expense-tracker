@@ -9,8 +9,8 @@ const Claim = ({ employee, claim, handleAction, handleDelete }) => {
   const { id, first_name, last_name, email } = employee
   const {
     claim_id,
-    claimee_first_name,
-    claimee_last_name,
+    claimant_first_name,
+    claimant_last_name,
     approver_first_name,
     approver_last_name,
     company_name,
@@ -58,8 +58,8 @@ const Claim = ({ employee, claim, handleAction, handleDelete }) => {
 Claim.propTypes = {
   claim: PropTypes.shape({
     claim_id: PropTypes.number.isRequired,
-    claimee_first_name: PropTypes.string.isRequired,
-    claimee_last_name: PropTypes.string.isRequired,
+    claimant_first_name: PropTypes.string.isRequired,
+    claimant_last_name: PropTypes.string.isRequired,
     approver_first_name: PropTypes.string.isRequired,
     approver_last_name: PropTypes.string.isRequired,
     company_name: PropTypes.string.isRequired,
