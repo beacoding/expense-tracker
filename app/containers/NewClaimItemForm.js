@@ -81,7 +81,7 @@ class NewClaimItemForm extends React.Component {
     return (
       <div className={className}>
         <div>
-          <label>{field.label} <input className="form-control" {...input} type={type} accept={accept}/> </label>   
+          <label>{field.label} <input className="form-control" {...input} type={type} accept={accept}/> </label>
         </div>
       </div>
     );
@@ -177,11 +177,11 @@ class NewClaimItemForm extends React.Component {
             step={0.01}
             id="mileage"
           />
-          <Field 
+          <Field
             label="Upload Receipt"
-            name="receipt" 
-            component={this.renderFileInput} 
-            type="file" 
+            name="receipt"
+            component={this.renderFileInput}
+            type="file"
             accept="image/*"
           />
           <Field
@@ -226,11 +226,11 @@ class NewClaimItemForm extends React.Component {
             step={0.01}
             id="amount"
           />
-          <Field 
+          <Field
             label="Upload Receipt"
-            name="receipt" 
-            component={this.renderFileInput} 
-            type="file" 
+            name="receipt"
+            component={this.renderFileInput}
+            type="file"
             accept="image/*"
           />
           <Field
