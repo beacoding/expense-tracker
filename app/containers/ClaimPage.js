@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { modal } from 'react-redux-modal';
-import { classNames } from 'classnames';
+import classNames from 'classnames';
 import { claimItemsActions, policiesActions } from '../actions';
 import { claimsActions } from '../actions';
 import ClaimItemContainer from './ClaimItemContainer';
@@ -189,7 +189,7 @@ class ClaimPage extends React.Component {
               <span className="progress" style={{width: ((stepCompletionIndex / 3) * 100) + "%"}}></span>
             </div>
             <ol className="progress-points">
-              <li className={classNames('progress-point', { completed: claim.total_amount > 0, active: status == 'P' })}>
+              <li className={classNames('progress-point', { completed: (claim.total_amount > 0), active: status == 'P' })}>
                 <span className="label">Add Claim Items</span>
               </li>
               <li className={classNames('progress-point', { completed: status !== 'P', active: claim.total_amount > 0 })}>

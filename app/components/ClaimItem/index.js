@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
-import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek'
+import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek';
+import ImageZoom from 'react-medium-image-zoom';
 
 const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, expense_types, handleChangeExpenseCategory }) => {
   const {
@@ -21,7 +22,20 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
     valueMap[expense_type_category] = expense_type_id;
   });
 
-  let receipt = claim_item.image_url === null ? "No Receipt" : <img className="receipt-img" src={'/uploads/' + image_url}/> 
+  let receipt = (claim_item.image_url) === null ? "No Receipt" : 
+  <ImageZoom
+    image={{
+      src: '/uploads/' + claim_item.image_url,
+      alt: claim_item.description + ' Receipt',
+      className: 'img',
+      style: { width: '50px' }
+    }}
+    zoomImage={{
+      src: '/uploads/' + claim_item.image_url,
+      alt: claim_item.description + ' Receipt'
+    }}
+  />
+
   let defaultValue = valueMap[expense_category.toUpperCase()];
   if (claim_status === 'P') {
     return (
