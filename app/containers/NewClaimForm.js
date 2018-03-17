@@ -125,8 +125,10 @@ class NewClaimForm extends React.Component {
           name="cost_centre_id"
           component={this.renderCostCenterDropdownField.bind(this)}
         />
-        <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Save Claim</button>
-        <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Reset</button>
+        <div className="buttons-row">
+          <button type="submit" className="btn page-button-blue" disabled={pristine || submitting}>Save Claim</button>
+          <button type="button" className="btn page-button-red" disabled={pristine || submitting} onClick={reset}>Reset</button>
+        </div>
       </form>
     );
   }

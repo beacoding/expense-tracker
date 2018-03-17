@@ -29,18 +29,20 @@ class UserMangementContainer extends React.Component {
 
   renderSearchByEmployeeOrManager() {
     return (
-      <div className="approval-limits-filter-row">
-        <div className="approval-limits-search"><h4>Filter By:</h4></div>
-        <div className="form-group approval-limits-search">
-          <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="Employee Name" onChange={this.handleParamChangeText}/>
-        </div>
-        <div className="form-group approval-limits-search">
-          <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="Manager Name" onChange={this.handleParamChangeText}/>
+      <div className="approval-limits-filter-container">
+        <div className="approval-limits-filter-row">
+          <div className="approval-limits-search"><label>Filter by Employee:</label></div>
+          <div className="form-group approval-limits-search">
+            <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="Employee Name" onChange={this.handleParamChangeText}/>
+          </div>
+          <div className="approval-limits-search"><label>or Employee's Manager:</label></div>
+          <div className="form-group approval-limits-search">
+            <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="Manager Name" onChange={this.handleParamChangeText}/>
+          </div>
         </div>
       </div>
-      )
+    )
   }
-
 
   render() {
     const { employee, users } = this.props;

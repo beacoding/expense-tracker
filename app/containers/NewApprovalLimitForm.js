@@ -108,8 +108,10 @@ class NewApprovalLimitForm extends React.Component {
           min={0}
           step={0.01}
         />
-        <button type="submit" className="btn btn-primary" disabled={pristine || submitting}>Submit</button>
-        <button type="button" className="btn btn-danger" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+        <div className="buttons-row">
+          <button type="submit" className="btn page-button-blue" disabled={pristine || submitting}>Submit</button>
+          <button type="button" className="btn page-button-red" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+        </div>
       </form>
     );
   }

@@ -154,10 +154,8 @@ class ManageUserContainer extends React.Component {
                         </tr>   
                       </tbody>
                     </table>
-
                 <br/>
 
-                <strong> Actions </strong>
                 {user.is_active == 1 ? this.renderActionsEnabled() : this.renderActionsDisabled()}
               </Panel.Body>
             </Panel>
