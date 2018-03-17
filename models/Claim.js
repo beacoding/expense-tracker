@@ -5,9 +5,9 @@ module.exports = {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT 
                             claim.id as claim_id, 
-                            claimee.first_name as claimee_first_name,
-                            claimee.last_name as claimee_last_name, 
-                            claimee.email as claimee_email,
+                            claimant.first_name as claimant_first_name,
+                            claimant.last_name as claimant_last_name, 
+                            claimant.email as claimant_email,
                             approver.first_name as approver_first_name,
                             approver.last_name as approver_last_name, 
                             approver.email as approver_email,
@@ -24,16 +24,16 @@ module.exports = {
                             manager.email as manager_email
                            FROM
                             claim, 
-                            employee claimee, 
+                            employee claimant, 
                             employee approver,
                             employee manager,
                             company
                            WHERE 
-                            claimee.id = claim.claimee_id AND 
+                            claimant.id = claim.claimant_id AND 
                             approver.id = claim.approver_id AND
-                            claimee.manager_id = manager.id AND
+                            claimant.manager_id = manager.id AND
                             claim.company_id = company.id AND
-                            claimee.email = ?`;
+                            claimant.email = ?`;
       connection.query(queryString, [employee.email], (err, rows) => {
         if (err) {
           reject(err);
@@ -54,28 +54,22 @@ module.exports = {
         if (params[key].length > 0) {
            switch(key) {
             case "employee_id":
-              whereArray.push("claimee.id = '" + params[key] + "'")
+              whereArray.push("claimant.id = '" + params[key] + "'")
               break;
             case "manager_id":
               whereArray.push("manager.id = '" + params[key] + "'")
               break;
-            case "employee_first_name":
-              whereArray.push("claimee.first_name LIKE '" + params[key] + "%'");
-              break;
-            case "employee_last_name":
-              whereArray.push("claimee.last_name LIKE '" + params[key] + "%'");
+            case "employee_name":
+              whereArray.push("(claimant.first_name LIKE '" + params[key] + "%' OR claimant.last_name LIKE '" + params[key] + "%')");
               break;
             case "employee_email":
-              whereArray.push("claimee.email LIKE '%" + params[key] + "%'");
+              whereArray.push("claimant.email LIKE '%" + params[key] + "%'");
               break;
-            case "manager_first_name":
-              whereArray.push("manager.first_name LIKE '" + params[key] + "%'");
-              break;
-            case "manager_last_name":
-              whereArray.push("manager.last_name LIKE '" + params[key] + "%'");
+            case "manager_name":
+              whereArray.push("(manager.first_name LIKE '" + params[key] + "%' OR manager.last_name LIKE '" + params[key] + "%')");
               break;
             case "manager_email":
-              whereArray.push("claimee.email LIKE '" + params[key] + "%'");
+              whereArray.push("claimant.email LIKE '" + params[key] + "%'");
               break;
             case "submitted":
               orArray.push("claim.status = " + "'S'")
@@ -129,9 +123,9 @@ module.exports = {
 
       var queryString = `SELECT 
                             claim.id as claim_id, 
-                            claimee.first_name as claimee_first_name,
-                            claimee.last_name as claimee_last_name, 
-                            claimee.email as claimee_email,
+                            claimant.first_name as claimant_first_name,
+                            claimant.last_name as claimant_last_name, 
+                            claimant.email as claimant_email,
                             approver.first_name as approver_first_name,
                             approver.last_name as approver_last_name, 
                             approver.email as approver_email,
@@ -148,14 +142,14 @@ module.exports = {
                             manager.email as manager_email
                            FROM
                             claim, 
-                            employee claimee, 
+                            employee claimant, 
                             employee approver,
                             employee manager,
                             company
                            WHERE 
-                            claimee.id = claim.claimee_id AND 
+                            claimant.id = claim.claimant_id AND 
                             approver.id = claim.approver_id AND
-                            claimee.manager_id = manager.id AND
+                            claimant.manager_id = manager.id AND
                             approver.id = ? AND
                             claim.company_id = company.id` + whereString + ";"
       connection.query(queryString, [employee.id], (err, rows) => {
@@ -172,9 +166,9 @@ module.exports = {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT 
                             claim.id as claim_id, 
-                            claimee.first_name as claimee_first_name,
-                            claimee.last_name as claimee_last_name, 
-                            claimee.email as claimee_email,
+                            claimant.first_name as claimant_first_name,
+                            claimant.last_name as claimant_last_name, 
+                            claimant.email as claimant_email,
                             approver.first_name as approver_first_name,
                             approver.last_name as approver_last_name, 
                             approver.email as approver_email,
@@ -191,15 +185,15 @@ module.exports = {
                             manager.email as manager_email
                            FROM
                             claim, 
-                            employee claimee, 
+                            employee claimant, 
                             employee approver,
                             employee manager,
                             company
                            WHERE 
-                            claimee.id = claim.claimee_id AND 
+                            claimant.id = claim.claimant_id AND 
                             approver.id = claim.approver_id AND
                             claim.company_id = company.id AND
-                            claimee.manager_id = manager.id AND
+                            claimant.manager_id = manager.id AND
                             claim.id = ?`;
       connection.query(queryString, [claim_id], (err, rows) => {
         if (err) {
@@ -215,9 +209,9 @@ module.exports = {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT 
                           claim.id as claim_id, 
-                          claimee.first_name as claimee_first_name,
-                          claimee.last_name as claimee_last_name, 
-                          claimee.email as claimee_email,
+                          claimant.first_name as claimant_first_name,
+                          claimant.last_name as claimant_last_name, 
+                          claimant.email as claimant_email,
                           approver.first_name as approver_first_name,
                           approver.last_name as approver_last_name, 
                           approver.email as approver_email,
@@ -230,11 +224,11 @@ module.exports = {
                           claim.date_created
                         FROM
                           claim, 
-                          employee claimee, 
+                          employee claimant, 
                           employee approver,
                           company
                         WHERE 
-                          claimee.id = claim.claimee_id AND 
+                          claimant.id = claim.claimant_id AND 
                           approver.id = claim.approver_id AND
                           claim.company_id = company.id AND
                           (claim.status = 'S' OR claim.status = 'F') AND
@@ -253,9 +247,9 @@ module.exports = {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT 
                           claim.id as claim_id, 
-                          claimee.first_name as claimee_first_name,
-                          claimee.last_name as claimee_last_name, 
-                          claimee.email as claimee_email,
+                          claimant.first_name as claimant_first_name,
+                          claimant.last_name as claimant_last_name, 
+                          claimant.email as claimant_email,
                           approver.first_name as approver_first_name,
                           approver.last_name as approver_last_name, 
                           approver.email as approver_email,
@@ -272,15 +266,15 @@ module.exports = {
                           manager.email as manager_email
                         FROM
                           claim, 
-                          employee claimee, 
+                          employee claimant, 
                           employee approver,
                           employee manager,
                           company
                         WHERE 
-                          claimee.id = claim.claimee_id AND 
+                          claimant.id = claim.claimant_id AND 
                           approver.id = claim.approver_id AND
                           claim.company_id = company.id AND
-                          claimee.manager_id = manager.id AND
+                          claimant.manager_id = manager.id AND
                           (claim.status = 'A' OR claim.status = 'D') AND
                           approver.id = ?`;
       connection.query(queryString, [employee.id], (err, rows) => {
@@ -323,7 +317,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const queryString = 
                           `INSERT INTO claim
-                            (claimee_id,
+                            (claimant_id,
                              approver_id,
                              company_id,
                              cost_centre_id,
@@ -337,7 +331,7 @@ module.exports = {
                             (?, ?, ?, ?, ?, ?, NULL, ?, NOW(), NOW())`;
       connection.query(queryString, 
       [
-        claim.claimee_id,
+        claim.claimant_id,
         claim.approver_id,
         claim.company_id,
         claim.cost_centre_id,

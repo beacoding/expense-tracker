@@ -50,7 +50,7 @@ CREATE TABLE expense_type (
 
 CREATE TABLE claim (
   id INT AUTO_INCREMENT NOT NULL,
-  claimee_id INT NOT NULL,
+  claimant_id INT NOT NULL,
   approver_id INT,
   company_id INT NOT NULL,
   cost_centre_id INT NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE claim (
   date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (claimee_id) REFERENCES employee(id),
+  FOREIGN KEY (claimant_id) REFERENCES employee(id),
   FOREIGN KEY (approver_id) REFERENCES employee(id),
   FOREIGN KEY (company_id) REFERENCES company(id),
   FOREIGN KEY (cost_centre_id) REFERENCES cost_centre(id)

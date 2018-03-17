@@ -10,8 +10,8 @@ const ReportsClaim = ({ employee, claim, routedFrom }) => {
   const { id, first_name, last_name, email } = employee
   const {
     claim_id,
-    claimee_first_name,
-    claimee_last_name,
+    claimant_first_name,
+    claimant_last_name,
     approver_first_name,
     approver_last_name,
     company_name,
@@ -36,7 +36,7 @@ const ReportsClaim = ({ employee, claim, routedFrom }) => {
         <thead>
           <tr>
             <th scope="col">Status</th>
-            <th scope="col">Claimee</th>
+            <th scope="col">claimant</th>
             <th scope="col">Approver</th>
             <th scope="col">Manager</th>
             <th scope="col">Cost Centre</th>
@@ -46,7 +46,7 @@ const ReportsClaim = ({ employee, claim, routedFrom }) => {
         <tbody>
           <tr>
             <td>{claimsHelpers.getStatusText(status)}</td>
-            <td>{claimee_first_name + " " + claimee_last_name}</td>
+            <td>{claimant_first_name + " " + claimant_last_name}</td>
             <td>{approver_first_name + " " + approver_last_name}</td>
             <td>{manager_first_name + " " + manager_last_name}</td>
             <td>{cost_centre_id}</td>
@@ -62,8 +62,8 @@ const ReportsClaim = ({ employee, claim, routedFrom }) => {
 ReportsClaim.propTypes = {
   claim: PropTypes.shape({
     claim_id: PropTypes.number.isRequired,
-    claimee_first_name: PropTypes.string.isRequired,
-    claimee_last_name: PropTypes.string.isRequired,
+    claimant_first_name: PropTypes.string.isRequired,
+    claimant_last_name: PropTypes.string.isRequired,
     approver_first_name: PropTypes.string.isRequired,
     approver_last_name: PropTypes.string.isRequired,
     manager_first_name: PropTypes.string.isRequired,

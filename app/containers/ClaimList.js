@@ -44,7 +44,7 @@ class ClaimList extends React.Component {
   createClaim() {
     const { employee, form, claims, claimsMap } = this.props;
     const claim = {
-      claimee_id: employee.id,
+      claimant_id: employee.id,
       approver_id: employee.manager_id,
       company_id: parseInt(form.NewClaimForm.values.company_id),
       cost_centre_id: parseInt(form.NewClaimForm.values.cost_centre_id),

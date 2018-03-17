@@ -28,10 +28,8 @@ function generateT24(claimsMap) {
   }
   const fields = ['account_number', 'currency', 'date', 'description', 'amount', 'SAM',];
 
-
   const json2csvParser = new Json2csvParser({ fields, delimiter: '|'  });
   const csv = json2csvParser.parse(lookupArr);
-
 
   const filename = 't24.csv';
 
@@ -52,7 +50,7 @@ function generatePayroll(claimsMap) {
         "date_created": Date.now(),
         "expense_reimbursement": 0,
       }
-      lookupEntry.employee_name = claim.claimee_first_name + " " + claim.claimee_last_name;
+      lookupEntry.employee_name = claim.claimant_first_name + " " + claim.claimant_last_name;
       lookupEntry.employee_id = claim.description;
       lookupEntry.expense_reimbursement = claim.total_amount;
       lookupEntry.date = claim.date_created;
@@ -61,10 +59,8 @@ function generatePayroll(claimsMap) {
   }
   const fields = ['employee_name', 'employee_id', 'expense_reimbursement'];
 
-
   const json2csvParser = new Json2csvParser({ fields, delimiter: '|'  });
   const csv = json2csvParser.parse(lookupArr);
-
 
   const filename = 'payroll.csv';
 

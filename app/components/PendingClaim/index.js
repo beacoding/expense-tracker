@@ -10,8 +10,8 @@ const PendingClaim = ({ employee, claim, handleAction, hasApprovalAuthority, has
   const { id, first_name, last_name, email } = employee
   const {
     claim_id,
-    claimee_first_name,
-    claimee_last_name,
+    claimant_first_name,
+    claimant_last_name,
     approver_first_name,
     approver_last_name,
     company_name,
@@ -37,7 +37,7 @@ const PendingClaim = ({ employee, claim, handleAction, hasApprovalAuthority, has
         </thead>
         <tbody>
           <tr>
-            <td>{claimee_first_name + " " + claimee_last_name}</td>
+            <td>{claimant_first_name + " " + claimant_last_name}</td>
             <td>{"$" + total_amount}</td>
           </tr>
         </tbody>
@@ -59,9 +59,9 @@ const PendingClaim = ({ employee, claim, handleAction, hasApprovalAuthority, has
 PendingClaim.propTypes = {
   claim: PropTypes.shape({
     claim_id: PropTypes.number.isRequired,
-    claimee_first_name: PropTypes.string.isRequired,
-    claimee_last_name: PropTypes.string.isRequired,
-    claimee_last_name: PropTypes.string.isRequired,
+    claimant_first_name: PropTypes.string.isRequired,
+    claimant_last_name: PropTypes.string.isRequired,
+    claimant_last_name: PropTypes.string.isRequired,
     approver_first_name: PropTypes.string.isRequired,
     approver_last_name: PropTypes.string.isRequired,
     approver_last_name: PropTypes.string.isRequired,

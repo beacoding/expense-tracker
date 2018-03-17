@@ -763,7 +763,7 @@ VALUES
 	(3,'Per Mileage Reimbursement',0.48);
 
 -- INSERT SAMPLE CLAIMS
-INSERT INTO claim (claimee_id, approver_id, company_id, cost_centre_id, description, account_number, notes, status, date_created, date_modified)
+INSERT INTO claim (claimant_id, approver_id, company_id, cost_centre_id, description, account_number, notes, status, date_created, date_modified)
 VALUES
 	(3,2,1,500,'Jan 31 Lunch Meeting','35289548934435',NULL,'A','2018-02-01','2018-02-01'),
   (3,2,1,538,'Feb 2 Company Dinner','35289548934435',NULL,'S','2018-02-02','2018-02-02'),

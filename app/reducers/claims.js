@@ -20,8 +20,8 @@ const claims = (state = initialState, action) => {
     case claimsConstants.ADD_CLAIM_SUCCESS:
       // append stub of the newly created claim to claimsMap
       action.claim.claim_id = action.claimId;
-      action.claim.claimee_first_name = 'Processing...';
-      action.claim.claimee_last_name = '';
+      action.claim.claimant_first_name = 'Processing...';
+      action.claim.claimant_last_name = '';
       action.claim.approver_first_name = 'Processing...';
       action.claim.approver_last_name = '';
       action.claim.company_name = 'Processing...';
