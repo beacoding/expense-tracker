@@ -12,7 +12,10 @@ module.exports = {
                           employee_cost_centre e,
                           employee manager
                         WHERE
-                          e.employee_id = manager.id`;
+                          e.employee_id = manager.id
+                        ORDER BY
+                          e.date_created
+                          `;
       connection.query(queryString, [], (err, rows) => {
         if (err) {
           reject(err);

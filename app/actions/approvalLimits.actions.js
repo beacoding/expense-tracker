@@ -17,7 +17,9 @@ function findAllCostCentres() {
   return dispatch => {
     dispatch(request());
     return approvalLimitsAPI.findAllCostCentres().then(
-      res => dispatch(success(res.cost_centres)),
+      res => {
+        dispatch(success(res.cost_centres))
+      },
       error => dispatch(failure(error))
     );
   };
@@ -31,10 +33,12 @@ function addApprovalLimit(params) {
   return dispatch => {
     dispatch(request());
     return approvalLimitsAPI.addApprovalLimit(params).then(
-      res => dispatch(success(params)),
+      res => {
+        return dispatch(success(params))
+      },
       error => {
-        console.log(error, "Werwe");
-        dispatch(failure(error))
+        console.log(error, "asdlkfs");
+        return dispatch(failure(error))
       }
     );
   };

@@ -24,7 +24,6 @@ router.get('/current_user', [authMiddleware.isLoggedIn, approvalLimitsMiddleware
 
 router.post('/update', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.updateOne], function(req, res, next) {
   if (req.error != undefined) {
-    res.status(500);
     res.send({error: req.error});
   } else {
     res.send({ limits: req.limits });
@@ -42,7 +41,7 @@ router.get('/find_all_cost_centres', [authMiddleware.isLoggedIn, approvalLimitsM
 
 router.post('/add', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.addOne], function(req, res, next) {
   if (req.error != undefined) {
-    res.status(500).send({error: req.error});
+    res.status(400).send({error: req.error});
   } else {
     res.send({ limits: req.limits });
   }

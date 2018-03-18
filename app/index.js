@@ -19,6 +19,8 @@ import ReportsContainer from './containers/ReportsContainer';
 import ManageUserContainer from './containers/ManageUserContainer';
 import Profile from './containers/ProfilesPage';
 import reducer from './reducers';
+import ReduxToastr from 'react-redux-toastr'
+
 
 const loggerMiddleware = createLogger();
 
@@ -67,10 +69,10 @@ render(
       </Router>
       <ReduxModal />
       <ReduxToastr
-        timeOut={4000}
+        timeOut={10000}
         newestOnTop={false}
         preventDuplicates
-        position="top-left"
+        position="top-right"
         transitionIn="fadeIn"
         transitionOut="fadeOut"
         progressBar/>

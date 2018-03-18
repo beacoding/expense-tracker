@@ -33,6 +33,8 @@ CREATE TABLE employee_cost_centre (
   employee_id INT NOT NULL,
   cost_centre_id INT NOT NULL,
   approval_limit DECIMAL(10,2),
+  date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (employee_id, cost_centre_id),
   FOREIGN KEY (employee_id) REFERENCES employee(id),
   FOREIGN KEY (cost_centre_id) REFERENCES cost_centre(id)

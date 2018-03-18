@@ -6,11 +6,21 @@ export const apiHelpers = {
 };
 
 function handleResponse(response) {
-    if (!response.ok) { 
-        return Promise.reject(response.statusText);
+  let promise = new Promise ((resolve, reject) => {
+    console.log("in here", response)
+      resolve(response.json());
+  })
+
+  return promise.then((obj) => {
+    if (obj.error !== undefined ) {
+      return Promise.reject(obj);
+    } else {
+      return  Promise.resolve(obj);
     }
-    return response.json();
+  });
 }
+
+
 
 function getOptions() {
   return {

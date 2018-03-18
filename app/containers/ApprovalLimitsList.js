@@ -5,6 +5,8 @@ import { modal } from 'react-redux-modal';
 import { approvalLimitsActions } from '../actions';
 import ApprovalLimit from '../components/ApprovalLimit';
 import ModalContainer from './ModalContainer'
+import {toastr} from 'react-redux-toastr';
+import {toastrHelpers} from '../helpers';
 
 class ApprovalLimitsList extends React.Component {
   constructor(props) {
@@ -64,34 +66,37 @@ class ApprovalLimitsList extends React.Component {
   }
 
   render() {
-    return (
-      <div className="claim-list">
-        <div className="claim-container">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Employee </th>
-                <th scope="col">Cost Centre ID</th>
-                <th scope="col">Approval Limit</th>
-                <th></th>
-              </tr>
-            </thead>
-            { this.renderEntries() }
-          </table>
+    const { errorAddApprovalLimit } = this.props;
+
+      return (
+        <div className="claim-list">
+          <div className="claim-container">
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Employee </th>
+                  <th scope="col">Cost Centre ID</th>
+                  <th scope="col">Approval Limit</th>
+                  <th></th>
+                </tr>
+              </thead>
+              { this.renderEntries() }
+            </table>
+          </div>
         </div>
-      </div>    
-    )
+        )
   }
 }
 
 function mapStateToProps(state) {
   const { authentication, policies } = state;
   const { employee } = authentication;
-  const { limitsMap, managerOptions } = policies;
+  const { limitsMap, managerOptions, errorAddApprovalLimit } = policies;
   return {
     employee,
     limitsMap,
     managerOptions,
+    errorAddApprovalLimit
   };
 }
 export default withRouter(connect(mapStateToProps)(ApprovalLimitsList))

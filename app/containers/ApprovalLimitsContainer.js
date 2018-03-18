@@ -7,6 +7,8 @@ import ApprovalLimitsList from './ApprovalLimitsList';
 import NewApprovalLimitModal from './NewApprovalLimitModal';
 import { Field, reduxForm } from 'redux-form';
 import { modal } from 'react-redux-modal';
+import {toastr} from 'react-redux-toastr';
+import {toastrHelpers} from '../helpers';
 
 class ApprovalLimitsContainer extends React.Component {
   constructor(props) {
@@ -33,12 +35,21 @@ class ApprovalLimitsContainer extends React.Component {
 
   handleAddLimit(data) {
     const { employee, form } = this.props;
+    const employee_name = form.NewApprovalLimitForm.values.employee.label;
+    const cost_centre_id = parseInt(form.NewApprovalLimitForm.values.cost_centre_id);
     const approvalLimit  = {
       employee_id: form.NewApprovalLimitForm.values.employee.value,
       approval_limit: parseFloat(data.amount),
-      cost_centre_id: parseInt(form.NewApprovalLimitForm.values.cost_centre_id),
+      cost_centre_id: cost_centre_id,
     }
-    this.props.dispatch(approvalLimitsActions.addApprovalLimit(approvalLimit)).then(() => {
+    this.props.dispatch(approvalLimitsActions.addApprovalLimit(approvalLimit)).then((res) => {
+      if (res.type === "SUCCESS_ADD_APPROVAL_LIMIT") {
+        toastr.removeByType("error")
+        toastr.success('Added New Limit', 'Added a new approval limit for ' + employee_name)
+      } else {
+        toastr.removeByType("error");
+        toastr.error('Duplicate Entry', employee_name +  'is already associated with the cost centre ' + cost_centre_id, toastrHelpers.getErrorOptions())
+      }
       modal.clear();
     });;
   }

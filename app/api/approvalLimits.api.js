@@ -12,32 +12,32 @@ export const approvalLimitsAPI = {
 
 function addApprovalLimit(params) {
   return fetch('/approval_limits/add', apiHelpers.postOptions(params))
-  .then(res => apiHelpers.handleResponse(res));
+  .then( apiHelpers.handleResponse);
 }
 
-function findAllCostCentres() {
+function findAllCostCentres() { 
   return fetch('/approval_limits/find_all_cost_centres', apiHelpers.getOptions())
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function revokeApprovalLimit(employee_id, cost_centre_id) {
   return fetch('/approval_limits/revoke', apiHelpers.postOptions({employee_id: employee_id, cost_centre_id: cost_centre_id}))
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function updateApprovalLimit(employee_id, cost_centre_id, new_limit) {
   return fetch('/approval_limits/update', apiHelpers.postOptions({employee_id: employee_id, cost_centre_id: cost_centre_id, approval_limit: new_limit}))
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function requestAll() {
   return fetch('/approval_limits/all', apiHelpers.getOptions())
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function requestAllByEmployee() {
   return fetch('/approval_limits/current_user', apiHelpers.getOptions())
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function requestHasAuthority(cost_centre_id, claim_amount) {
@@ -45,11 +45,11 @@ function requestHasAuthority(cost_centre_id, claim_amount) {
     cost_centre_id: cost_centre_id,
     claim_amount: claim_amount
   }))
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function requestWith(params) {
   var queryParams = jQuery.param(params);
  return fetch(`/approval_limits/with?` + queryParams, apiHelpers.getOptions())
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }

@@ -5,6 +5,7 @@ const initialState = {
   limitsMap: {},
   managerOptions: [],
   error: undefined,
+  errorAddApprovalLimit: undefined,
   params: {},
   cost_centres: [],
   companies: [],
@@ -35,7 +36,8 @@ const policies = (state = initialState, action) => {
     // ADD APPROVAL LIMIT
     case approvalLimitsConstants.REQUEST_ADD_APPROVAL_LIMIT:
       return Object.assign({}, state, {
-        isFetching: true
+        isFetching: true,
+        errorAddApprovalLimit: undefined
       });
     case approvalLimitsConstants.SUCCESS_ADD_APPROVAL_LIMIT:
       newLimitsMap = Object.assign({}, state.limitsMap);
@@ -46,13 +48,12 @@ const policies = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetching: false,
         limitsMap: newLimitsMap,
-        error: undefined
+        errorAddApprovalLimit: undefined
       });
     case approvalLimitsConstants.FAILURE_ADD_APPROVAL_LIMIT:
       return Object.assign({}, state, {
-        error: action.error
+        errorAddApprovalLimit: action.error
       });
-
     // UPDATE APPROVAL LIMIT
     case approvalLimitsConstants.REQUEST_UPDATE_APPROVAL_LIMIT:
       return Object.assign({}, state, {

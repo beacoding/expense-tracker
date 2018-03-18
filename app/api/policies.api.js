@@ -9,20 +9,20 @@ export const policiesAPI = {
 
 function requestAll() {
   return fetch(`/policies/all`, apiHelpers.getOptions())
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function requestCompanies() {
   return fetch(`/policies/companies`, apiHelpers.getOptions())
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function requestExpenseTypes() {
   return fetch(`/policies/expense_types`, apiHelpers.getOptions())
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function updateValue(name, value) {
   return fetch(`/policies/update`, apiHelpers.postOptions({name: name, value: value}))
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }

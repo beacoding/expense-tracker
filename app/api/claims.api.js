@@ -12,12 +12,12 @@ export const claimsAPI = {
 
 function addClaim(claim) {
   return fetch('/claims/add_claim', apiHelpers.postOptions(claim))
-   .then(res => apiHelpers.handleResponse(res));
+   .then(apiHelpers.handleResponse);
 }
 
 function deleteClaim(claim_id) {
   return fetch('/claims/delete_claim', apiHelpers.postOptions({claim_id: claim_id}))
-    .then(res => apiHelpers.handleResponse(res));
+   .then(apiHelpers.handleResponse);
 }
 
 function updateStatus(claim_id, approver_id, status, notes) {
@@ -27,31 +27,31 @@ function updateStatus(claim_id, approver_id, status, notes) {
     status: status,
     notes: notes
   }))
-   .then(res => apiHelpers.handleResponse(res));
+   .then(apiHelpers.handleResponse);
 }
 
 function requestAll() {
  return fetch('/claims/all', apiHelpers.getOptions())
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function requestWith(params) {
   var queryParams = jQuery.param(params);
  return fetch(`/claims/with?` + queryParams, apiHelpers.getOptions())
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function requestOne(claim_id) {
   return fetch(`/claims/one?claim_id=${claim_id}`, apiHelpers.getOptions())
-  .then(res => apiHelpers.handleResponse(res));
+  .then(apiHelpers.handleResponse);
 }
 
 function requestPendingApprovals() {
   return fetch('/claims/pending_approvals', apiHelpers.getOptions())
-   .then(res => apiHelpers.handleResponse(res));
+   .then(apiHelpers.handleResponse);
  }
 
  function requestProcessedApprovals() {
    return fetch('/claims/processed_approvals', apiHelpers.getOptions())
-    .then(res => apiHelpers.handleResponse(res));
+    .then(apiHelpers.handleResponse);
   }
