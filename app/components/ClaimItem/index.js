@@ -23,18 +23,28 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
     valueMap[expense_type_category] = expense_type_id;
   });
 
+  let consts = {zoomStyle: 'opacity: 0.1;background-color: black;'}
+
   let receipt = (claim_item.image_url) === null ? "No Receipt" : 
   <ImageZoom
     image={{
       src: '/uploads/' + claim_item.image_url,
       alt: claim_item.description + ' Receipt',
       className: 'img',
-      style: { width: '50px' }
+      style: { width: '50px', backgroundColor: 'black' }
     }}
     zoomImage={{
+      alt: claim_item.description + 's Receipt',  
       src: '/uploads/' + claim_item.image_url,
-      alt: claim_item.description + ' Receipt'
+      alt: claim_item.description + ' Receipt',
+      style: { backgroundColor: 'black' }
     }}
+    defaultStyles={{
+      overlay: {
+        backgroundColor: 'rgba(0,0,0,0.7)'
+      }
+    }}
+    {...consts}
   />
 
   let defaultValue = valueMap[expense_category.toUpperCase()];
