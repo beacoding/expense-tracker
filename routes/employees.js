@@ -31,14 +31,21 @@ router.get('/with', [authMiddleware.isLoggedIn, employeesMiddleware.findAllWithM
   }
 });
 
-
-
 router.get('/with_employee', [authMiddleware.isLoggedIn, employeesMiddleware.findOne], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);
     res.send({error: req.error});
   } else {
     res.send({ employee: req.employee});
+  }
+});
+
+router.post('/create', [authMiddleware.isLoggedIn, employeesMiddleware.addOne], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({employee: req.employee});
   }
 });
 

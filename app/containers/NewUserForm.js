@@ -8,11 +8,11 @@ import 'react-select/dist/react-select.css';
 import 'react-virtualized/styles.css'
 import 'react-virtualized-select/styles.css'
 
-class NewApprovalLimitForm extends React.Component {
+class NewUserForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: '',
+      selectedManager: '',
     }
   }
   
@@ -32,19 +32,23 @@ class NewApprovalLimitForm extends React.Component {
     );
   }
 
-  handleSelectName(selectedOption) {
-    this.setState({ selectedOption });
+  handleSelectName(selectedManager) {
+    this.setState({ selectedManager });
+  }
+
+  handleBlur() {
+    // do nothing...
   }
   
-  renderTextAreaField(field) {
+  renderManagerSelectField(field) {
     const { meta: {touched, error }} = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
     const options = this.props.employees.map((employee) => {
       return {value: employee.id, label: employee.employee_name}
     })
     const filterOptions = createFilterOptions({ options });
-    const { selectedOption } = this.state;
-    const value = selectedOption && selectedOption.value;
+    const { selectedManager } = this.state;
+    const value = selectedManager && selectedManager.value;
 
     return (  
       <div className = {className}>
@@ -60,24 +64,32 @@ class NewApprovalLimitForm extends React.Component {
    );
   }
 
-  renderCostCenterDropdownField(field) {
-    const { meta: {touched, error }} = field;
+  renderCheckbox(field) {
+    const { meta: { touched, error } } = field;
+    const className = `${touched && error ? "has-danger" : ""}`;
+
+    return (
+      <div className={className}>
+        <div>
+          <label>{field.label} <input type="checkbox" style={{marginLeft: 5 + 'px'}} {...field.input} /></label>
+        </div>
+        <div className="text-help">
+          {touched ? error : ""}
+        </div>
+        <br/>
+      </div>
+    )
+  }
+
+  renderIdField(field) {
+    const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
-    const {cost_centres} = this.props
 
     return (
       <div className = {className}>
         <label>{field.label}</label>
         {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-        <select className="form-control" {...field.input}>
-          <option value="" disabled> Select a cost center. </option>
-          {
-            cost_centres.map((cost_centre) => {
-              let cost_centre_id = cost_centre.id
-              return <option value={cost_centre_id} key={cost_centre_id}>{cost_centre_id}</option>
-            })
-          }
-        </select>
+        <input id="id" className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} min={field.min} step={field.step} />
         <div className="text-help">
           {touched ? error : ""}
         </div>
@@ -85,31 +97,59 @@ class NewApprovalLimitForm extends React.Component {
     );
   }
   
-  // form for submit new claim initial items
   render () {
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
       <form onSubmit={handleSubmit}>
+          <Field
+            label="Employee ID:"
+            name="id"
+            component={this.renderIdField}
+            type="number"
+            min={0}
+            step={1}
+          />
         <Field
-          label="Employee"
-          name="employee"
-          component={this.renderTextAreaField.bind(this)}
-        />
-        <Field
-          label="Cost Centre"
-          name="cost_centre_id"
-          component={this.renderCostCenterDropdownField.bind(this)}
-        />
-        <Field
-          label="Approval Limit (CAD)"
-          name="amount"
+          label="First Name:"
+          name="first_name"
           component={this.renderField}
-          type="number"
-          min={0}
-          step={0.01}
+          type="text"
+          placeholder=""
+        />
+        <Field
+          label="Last Name:"
+          name="last_name"
+          component={this.renderField}
+          type="text"
+          placeholder=""
+        />
+        <Field
+          label="Email Address:"
+          name="email"
+          component={this.renderField}
+          type="text"
+          placeholder="This will also serve as the employee's username."
+        />
+        <Field
+          label="Password:"
+          name="password"
+          component={this.renderField}
+          type="password"
+          placeholder=""
+        />
+        <Field
+          label="Manager:"
+          name="manager_id"
+          component={this.renderManagerSelectField.bind(this)}
+        />
+        <Field
+          label="System Administrator?"
+          name="is_admin"
+          checked={false}
+          component={this.renderCheckbox}
         />
         <div className="buttons-row">
-          <button type="submit" className="btn page-button-blue" disabled={pristine || submitting}>Save</button>
+          <button type="submit" className="btn page-button-blue" disabled={pristine || submitting}>Submit</button>
           <button type="button" className="btn page-button-red" disabled={pristine || submitting} onClick={reset}>Reset</button>
         </div>
       </form>
@@ -118,5 +158,5 @@ class NewApprovalLimitForm extends React.Component {
 }
 
 export default reduxForm({
-  form: 'NewApprovalLimitForm' // a unique identifier for this form
-})(NewApprovalLimitForm);
+  form: 'NewUserForm' // a unique identifier for this form
+})(NewUserForm);

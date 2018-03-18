@@ -16,8 +16,8 @@ function addClaim(claim) {
 }
 
 function deleteClaim(claim_id) {
-    return fetch('/claims/delete_claim', apiHelpers.postOptions({claim_id: claim_id}))
-     .then(res => apiHelpers.handleResponse(res));
+  return fetch('/claims/delete_claim', apiHelpers.postOptions({claim_id: claim_id}))
+    .then(res => apiHelpers.handleResponse(res));
 }
 
 function updateStatus(claim_id, approver_id, status, notes) {

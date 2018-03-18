@@ -14,7 +14,7 @@ class ReportsContainer extends React.Component {
     this.handlePayrollGeneration = this.handlePayrollGeneration.bind(this);    
   }
 
-  componentWillReceiveProps (nextprops) {
+  componentWillReceiveProps(nextprops) {
     this.props.dispatch(claimsActions.requestWith(nextprops.params))
   }
 

@@ -36,6 +36,18 @@ const findAllWithManagerID = async (req,res,next) => {
   }
 }
 
+const findAllWithParams = async (req,res,next) => {
+  let employees;
+  try {
+    employees = await Employee.findAllWithParams(req.query);
+    req.employees = employees;
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
 const updatePassword = async (req, res, next) => {
   let password;
   try {
@@ -62,6 +74,16 @@ const findOne = async (req, res, next) => {
   try {
     employee = await Employee.findOne(req.query.employee_id);
     req.employee = employee;
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
+const addOne = async (req,res,next) => {
+  try {
+    info = await Employee.addOne(req.body);
     next()
   } catch (err) {
     req.error = err;
@@ -98,6 +120,7 @@ module.exports = {
   findOne: findOne,
   findAllWithManagerID: findAllWithManagerID,
   updatePassword: updatePassword,
+  addOne: addOne,
   enableOne: enableOne,
   disableOne: disableOne
 }

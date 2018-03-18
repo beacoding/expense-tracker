@@ -120,7 +120,6 @@ class ClaimPage extends React.Component {
   }
 
   showNewClaimItemModal(){
-    console.log(this.props.form.NewClaimItemForm, "sdfkjl");
     modal.add( NewClaimItemModal, {
       title: 'Add Claim Item',
       size: 'medium', // large, medium or small,
