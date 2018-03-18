@@ -39,9 +39,18 @@ const findAllWithManagerID = async (req,res,next) => {
 const updatePassword = async (req, res, next) => {
   let password;
   try {
+    console.log(req.body);
+    console.log(req.body.old_password);
+    if(req.body.old_password != req.body.employeepass){
+      req.error = "password error";
+      console.log(req.error);
+      next()
+    }
+    else{
     password = await Employee.updatePassword(req.body);
     req.password = password;
     next()
+    }
   } catch (err) {
     req.error = err;
     next();

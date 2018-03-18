@@ -4,43 +4,84 @@
     <title>Coast Capital Expense Claims System</title>
     <script src="/javascripts/jquery-3.3.1.min.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css"> <!-- load bootstrap css -->
-    <link rel="stylesheet" type="text/css" href="/stylesheets/fontawesome.min.css"> <!-- load fontawesome -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,400,400italic,500,500italic,700,700italic,900,900italic&subset=latin,latin-ext,cyrillic,cyrillic-ext,greek-ext,greek,vietnamese">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/index.css"> <!-- load custom styles -->
-    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"> <!-- load custom styles-->    
-    <link rel="stylesheet" type="text/css" href="/stylesheets/ionicons.min.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/react-select.css">
-  </head>
-  <body>
-    <div class="container">
-      <img src="https://www.uvic.ca/innovation/assets/images/graphics/logos/coastlogo.PNG"/>
-      <span class="header">Expense Claims System</span>
-      <div class="subheader">
-        <h2>Expense Claim Forms, Simplified.</h2>
-        <p>Login to get started!</p>
-      </div>
-      <div class="login-container">
-        
-        <!-- LOGIN FORM -->
-        <form action="/login" method="post">
-          <div class="form-group">
-            <input type="email" placeholder="username@coastcapital.com" class="form-control" id="login-email" name="email" required>
-          </div>
-          <div class="form-group">
-            <input type="password" placeholder="Enter your password" class="form-control" id="login-password" name="password" required>
-          </div>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="loginfonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="loginfonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="login/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="login/select2/select2.min.css">
 
-          <!-- show any messages that come back with authentication -->
-          <% if (message.length > 0) { %>
-              <div class="alert alert-danger"><%= message %></div>
-          <% } %>
-          <div class="form-group" style="height: 37px">
-            <button class="page-button-green" type="submit">Login</button>
+  
+    <link rel="stylesheet" type="text/css" href="/css/main.css"> <!-- load custom styles -->
+    <link rel="stylesheet" type="text/css" href="/css/util.css"> <!-- load custom styles-->    
+
+  </head>	
+      <div class="limiter">
+        <div class="container-login100">
+          <div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30">
+            <form action="/login" method="post" class="login100-form validate-form">
+              <span class="login100-form-title p-b-55">
+                <img src="images/coastcapital.png" width="150" height="150">
+                <br>
+                Expense Claims System
+              </span>
+    
+              <div class="wrap-input100 validate-input m-b-16" data-validate = "Valid email is required: ex@abc.xyz">
+                <input class="input100" type="email" placeholder="Email" class="form-control" id="login-email" name="email" required>
+                <span class="focus-input100"></span>
+                <span class="symbol-input100">
+                  <span class="lnr lnr-envelope"></span>
+                </span>
+              </div>
+    
+              <div class="wrap-input100 validate-input m-b-16" data-validate = "Password is required">
+                <input class="input100" type="password" placeholder="Password" class="form-control" id="login-password" name="password" required>
+                <span class="focus-input100"></span>
+                <span class="symbol-input100">
+                  <span class="lnr lnr-lock"></span>
+                </span>
+              </div>
+              <% if (message.length > 0) { %>
+                <div class="alert alert-danger"><%= message %></div>
+            <% } %>
+              <div class="contact100-form-checkbox m-l-4">
+                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                <label class="label-checkbox100" for="ckb1">
+                  Remember me
+                </label>
+              </div>
+              
+              <div class="container-login100-form-btn p-t-25">
+                <button class="login100-form-btn" type="submit">
+                  Login
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
-        <hr/>
+        </div>
       </div>
-    </div>
-  </body>
+      
+      
+    
+      
+    <!--===============================================================================================-->	
+      <script src="login/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+      <script src="login/bootstrap/js/popper.js"></script>
+      <script src="login/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+      <script src="login/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+      <script src="js/main.js"></script>
+    
+    </body>
 </html>
