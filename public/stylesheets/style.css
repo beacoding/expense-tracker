@@ -88,7 +88,6 @@ PROFILE PAGE STYLE
   border-top: 0;
 }
 
-
 .table-user-information > tbody > tr > td {
   border-top: 0;
 }
@@ -112,6 +111,11 @@ PROFILE PAGE STYLE
 /* ---------------------------------------------------
 END OF PROFILE PAGE
 ----------------------------------------------------- */
+.item-table{
+  display:table;
+  table-layout: fixed;
+}
+
 /* ---------------------------------------------------
 SIDEBAR STYLE
 ----------------------------------------------------- */
