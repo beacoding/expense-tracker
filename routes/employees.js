@@ -45,7 +45,7 @@ router.post('/create', [authMiddleware.isLoggedIn, employeesMiddleware.addOne], 
     res.status(500);
     res.send({error: req.error});
   } else {
-    res.send({employee: req.employee});
+    res.send({employees: req.employees});
   }
 });
 

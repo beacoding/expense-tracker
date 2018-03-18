@@ -55,6 +55,7 @@ class NewApprovalLimitForm extends React.Component {
           filterOptions={filterOptions}
           onChange={this.handleSelectName.bind(this)}
           {...field.input}
+          onBlur={() => {}}
         />
       </div>
    );

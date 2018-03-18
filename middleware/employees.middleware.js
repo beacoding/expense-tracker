@@ -1,6 +1,6 @@
 var Employee = require('../models/Employee');
 
-const findAll = async (req,res,next) => {
+const findAll = async (req, res, next) => {
   let limits;
   try {
     employees = await Employee.findAll();
@@ -12,7 +12,7 @@ const findAll = async (req,res,next) => {
   }
 }
 
-const findAllWithManagers = async (req,res,next) => {
+const findAllWithManagers = async (req, res, next) => {
   let limits;
   try {
     employees = await Employee.findAllWithManagers();
@@ -24,7 +24,7 @@ const findAllWithManagers = async (req,res,next) => {
   }
 }
 
-const findAllWithManagerID = async (req,res,next) => {
+const findAllWithManagerID = async (req, res, next) => {
   let employees;
   try {
     employees = await Employee.findAllWithManagerID(req.query.manager_id);
@@ -36,7 +36,7 @@ const findAllWithManagerID = async (req,res,next) => {
   }
 }
 
-const findAllWithParams = async (req,res,next) => {
+const findAllWithParams = async (req, res, next) => {
   let employees;
   try {
     employees = await Employee.findAllWithParams(req.query);
@@ -51,14 +51,14 @@ const findAllWithParams = async (req,res,next) => {
 const updatePassword = async (req, res, next) => {
   let password;
   try {
-    if(req.body.old_password != req.body.employeepass){
+    if (req.body.old_password != req.body.employeepass) {
       req.error = "Current password does not match..";
       next()
     }
     else{
-    password = await Employee.updatePassword(req.body);
-    req.password = password;
-    next()
+      password = await Employee.updatePassword(req.body);
+      req.password = password;
+      next()
     }
   } catch (err) {
     req.error = err;
@@ -78,9 +78,11 @@ const findOne = async (req, res, next) => {
   }
 }
 
-const addOne = async (req,res,next) => {
+const addOne = async (req, res, next) => {
   try {
-    info = await Employee.addOne(req.body);
+    let info = await Employee.addOne(req.body);
+    let employees = await Employee.findAllWithManagers();
+    req.employees = employees;
     next()
   } catch (err) {
     req.error = err;

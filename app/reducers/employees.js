@@ -25,6 +25,7 @@ const employees = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetching: false,
         employees: employeesWithAddition,
+        employees_with_managers: action.employees,
         error: undefined
       });
     case employeesConstants.ADD_EMPLOYEE_FAILURE:
