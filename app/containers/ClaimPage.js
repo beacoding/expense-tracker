@@ -7,8 +7,9 @@ import { claimItemsActions, policiesActions } from '../actions';
 import { claimsActions } from '../actions';
 import ClaimItemContainer from './ClaimItemContainer';
 import NewClaimItemModal from './NewClaimItemModal';
-import ModalContainer from './ModalContainer'
+import ModalContainer from './ModalContainer';
 import { claimsHelpers } from '../helpers';
+import {toastr} from 'react-redux-toastr';
 
 class ClaimPage extends React.Component {
   constructor(props) {

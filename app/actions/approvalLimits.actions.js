@@ -32,7 +32,10 @@ function addApprovalLimit(params) {
     dispatch(request());
     return approvalLimitsAPI.addApprovalLimit(params).then(
       res => dispatch(success(params)),
-      error => dispatch(failure(error))
+      error => {
+        console.log(error, "Werwe");
+        dispatch(failure(error))
+      }
     );
   };
   

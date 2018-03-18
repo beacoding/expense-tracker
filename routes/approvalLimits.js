@@ -35,15 +35,14 @@ router.get('/find_all_cost_centres', [authMiddleware.isLoggedIn, approvalLimitsM
   if (req.error != undefined) {
     res.status(500);
     res.send({error: req.error});
-  } else {
+ } else {
     res.send({ cost_centres: req.cost_centres });
   }
 });
 
 router.post('/add', [authMiddleware.isLoggedIn, approvalLimitsMiddleware.addOne], function(req, res, next) {
   if (req.error != undefined) {
-    res.status(500);
-    res.send({error: req.error});
+    res.status(500).send({error: req.error});
   } else {
     res.send({ limits: req.limits });
   }

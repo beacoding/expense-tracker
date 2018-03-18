@@ -80,7 +80,7 @@ const addOne = async (req,res,next) => {
     req.limit = limit;
     next()
   } catch (err) {
-    req.error = err;
+    req.error = err.code;
     next();
   }
 }

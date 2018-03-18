@@ -6,7 +6,8 @@ import policies from './policies';
 import reports from './reports';
 import employees from './employees';
 import { reducer as reduxFormReducer } from 'redux-form';
-import { reducer as modalReducer } from 'react-redux-modal'
+import { reducer as modalReducer } from 'react-redux-modal';
+import {reducer as toastrReducer} from 'react-redux-toastr'
 
 const rootReducer = combineReducers({
   authentication,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   reports,
   employees,
   policies,
+  toastr: toastrReducer,
   form: reduxFormReducer,
   modals: modalReducer
 });
