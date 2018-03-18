@@ -102,14 +102,14 @@ class ClaimPage extends React.Component {
     let receipt = (data.no_receipt === true) ? null : data.receipt[0];
 
     if (parseInt(data.expense_type) === 1) {
-      let distance = isNaN(data.mileage) ? 0 : parseInt(data.mileage);
-      let amount = (distance * max_policy_limits["Per Mileage Reimbursement"]).toFixed(2) || 0.00;
+      let distance = isNaN(data.mileage) ? 0 : data.mileage;
+      let amount = (distance * max_policy_limits["Per Mileage Reimbursement"]) || 0.00;
       data.amount = amount;
     }
     const item = {
       claim_id: parseInt(claim_id),
       description: data.description,
-      amount: parseFloat(data.amount),
+      amount: data.amount,
       comment: data.comment,
       expense_type: parseInt(data.expense_type),
       receipt: receipt
@@ -229,7 +229,7 @@ class ClaimPage extends React.Component {
             {
               Object.entries(claimItemsObj).map((claimItem) => {
                 const claim_item_entry = claimItem[1];
-                return <ClaimItemContainer key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} expense_types={expense_types} employee={employee} claim_item={claim_item_entry} createClaimItem={this.createClaimItem} />
+                return <ClaimItemContainer key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} expense_types={expense_types} employee={employee} claim_item={claim_item_entry} createClaimItem={this.createClaimItem} policies={this.props.max_policy_limits} />
               })
             }
             </tbody>

@@ -6,6 +6,7 @@ import { claimItemsActions } from '../actions';
 import ClaimItem from '../components/ClaimItem'
 import ModalContainer from './ModalContainer'
 import NewClaimItemModal from './NewClaimItemModal'
+import { claimItemsHelpers } from '../helpers';
 
 class ClaimItemContainer extends React.Component {
   constructor(props) {
@@ -16,6 +17,8 @@ class ClaimItemContainer extends React.Component {
     this.handleChangeExpenseCategory = this.handleChangeExpenseCategory.bind(this);
     this.handleEditItem = this.handleEditItem.bind(this);
     this.handleEditReceipt = this.handleEditReceipt.bind(this);
+    this.handleChangeDistance = this.handleChangeDistance.bind(this);
+    this.handleEditMileage = this.handleEditMileage.bind(this);
   }
 
   confirmDeleteItem() {
@@ -40,7 +43,7 @@ class ClaimItemContainer extends React.Component {
     const item = {
       claim_id: parseInt(claim_id),
       description: data.description,
-      amount: parseFloat(data.amount),
+      amount: data.amount,
       comment: data.comment,
       expense_type: parseInt(data.expense_type),
       receipt: receipt
@@ -67,6 +70,13 @@ class ClaimItemContainer extends React.Component {
     this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item_id));
   }
 
+  handleEditMileage(key, claim_item_id, item) {
+    let claim_id = parseInt(window.location.pathname.split("/")[2]);
+    let claimItem = {};
+    claimItem.amount = claimItemsHelpers.distanceToAmount(item.mileage, this.props.policies["Per Mileage Reimbursement"]);
+    this.props.dispatch(claimItemsActions.editClaimItem(claimItem, claim_id, claim_item_id));
+  }
+
   handleDeleteItem() {
     modal.add(ModalContainer, {
       title: 'Delete Claim Item?',
@@ -80,6 +90,10 @@ class ClaimItemContainer extends React.Component {
       affirmativeText: 'Yes',
       negativeText: 'No',
     }); 
+  }
+
+  handleChangeDistance(e)  {
+   $("#distance-amount-" + this.props.claim_item.claim_item_id).val(claimItemsHelpers.distanceToAmount(e.target.value, this.props.policies["Per Mileage Reimbursement"]));
   }
 
   handleChangeExpenseCategory(claim_item_id, e) {
@@ -99,7 +113,7 @@ class ClaimItemContainer extends React.Component {
   render() {
     const { claim_item, claim_status, employee } = this.props;
     return (
-      <ClaimItem  handleEditReceipt={this.handleEditReceipt} handleChangeExpenseCategory={this.handleChangeExpenseCategory} employee={employee} claim_item={claim_item} claim_status={claim_status} expense_types={this.props.expense_types} handleDeleteItem={this.handleDeleteItem} handleEditItem={this.handleEditItem}/>
+      <ClaimItem handleEditMileage={this.handleEditMileage} policies={this.props.policies} handleEditReceipt={this.handleEditReceipt} handleChangeExpenseCategory={this.handleChangeExpenseCategory} employee={employee} claim_item={claim_item} claim_status={claim_status} expense_types={this.props.expense_types} handleDeleteItem={this.handleDeleteItem} handleEditItem={this.handleEditItem} handleChangeDistance={this.handleChangeDistance}/>
     )
   }
 }

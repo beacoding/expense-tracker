@@ -95,7 +95,7 @@ module.exports = {
       for (key in params) {
           switch(key) {
             case "amount":
-              setArray.push("claim_item.amount = '" + parseInt(params[key]) + "'");
+              setArray.push("claim_item.amount = '" + parseFloat(params[key]) + "'");
               break;
             case "description":
               setArray.push("claim_item.description = '" + params[key] + "'");

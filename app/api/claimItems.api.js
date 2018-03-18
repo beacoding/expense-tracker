@@ -14,6 +14,7 @@ function addClaimItem(item) {
 }
 
 function editClaimItem(item, id) {
+  console.log("qewrqwe", item);
   return fetch(`/claim_items/edit_item`, apiHelpers.postOptions({item: item, id: id}))
   .then(res => apiHelpers.handleResponse(res));
 }
