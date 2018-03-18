@@ -51,11 +51,8 @@ const findAllWithParams = async (req,res,next) => {
 const updatePassword = async (req, res, next) => {
   let password;
   try {
-    console.log(req.body);
-    console.log(req.body.old_password);
     if(req.body.old_password != req.body.employeepass){
-      req.error = "password error";
-      console.log(req.error);
+      req.error = "Current password does not match..";
       next()
     }
     else{

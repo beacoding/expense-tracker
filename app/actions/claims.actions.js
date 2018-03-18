@@ -22,39 +22,39 @@ function paginate(endpoint) {
 
 function addClaim(claim) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(claim));
     return claimsAPI.addClaim(claim).then(
       res => dispatch(success(res.claim.insertId, claim)),
       error => dispatch(failure(error))
     )
   };
-  function request() { return { type: claimsConstants.ADD_CLAIM_REQUEST }}
+  function request(claim) { return { type: claimsConstants.ADD_CLAIM_REQUEST, claim }}
   function success(claimId, claim) { return { type: claimsConstants.ADD_CLAIM_SUCCESS, claimId, claim }}
   function failure(error) { return { type: claimsConstants.ADD_CLAIM_FAILURE, error }}
 }
 
 function deleteClaim(claim_id) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(claim_id));
     return claimsAPI.deleteClaim(claim_id).then(
       res => dispatch(success(res.claim.insertId)),
       error => dispatch(failure(error))
     )
   };
-  function request() { return { type: claimsConstants.DELETE_CLAIM_REQUEST }}
+  function request(claim_id) { return { type: claimsConstants.DELETE_CLAIM_REQUEST, claim_id }}
   function success(claim_id) { return { type: claimsConstants.DELETE_CLAIM_SUCCESS, claim_id }}
   function failure(error) { return { type: claimsConstants.DELETE_CLAIM_FAILURE, error }}
 }
 
 function updateStatus(claim_id, approver_id, status, notes) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(claim_id, approver_id, status, notes));
     return claimsAPI.updateStatus(claim_id, approver_id, status, notes).then(
       res => dispatch(success(res.claim)),
       error => dispatch(failure(error))
     );
   };
-  function request() { return { type: claimsConstants.UPDATE_CLAIM_STATUS_REQUEST }}
+  function request(claim_id, approver_id, status, notes) { return { type: claimsConstants.UPDATE_CLAIM_STATUS_REQUEST, claim_id, approver_id, status, notes }}
   function success(claim) { return { type: claimsConstants.UPDATE_CLAIM_STATUS_SUCCESS, claim }}
   function failure(error) { return { type: claimsConstants.UPDATE_CLAIM_STATUS_FAILURE, error }}
 }
@@ -92,14 +92,14 @@ function requestWith(params) {
 
 function requestOne(claim_id) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(claim_id));
     return claimsAPI.requestOne(claim_id).then(
       res => dispatch(success(res.claim)),
       error => dispatch(failure(error))
     );
   };
   
-  function request() { return { type: claimsConstants.REQUEST_CLAIM }}
+  function request(claim_id) { return { type: claimsConstants.REQUEST_CLAIM, claim_id }}
   function success(claim) { return { type: claimsConstants.RECEIVE_CLAIM, claim }}
   function failure(error) { return { type: claimsConstants.FAILURE_CLAIM, error }} 
 }

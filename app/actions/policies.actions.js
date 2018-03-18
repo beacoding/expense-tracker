@@ -52,14 +52,14 @@ function requestExpenseTypes() {
 
 function updateValue(name, value) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(name, value));
     return policiesAPI.updateValue(name, value).then(
       res => dispatch(success(name, value)),
       error => dispatch(failure(error))
       )
   }
   
-  function request() { return { type: policiesConstants.REQUEST_UPDATE_POLICIES }}
+  function request(name, value) { return { type: policiesConstants.REQUEST_UPDATE_POLICIES, name, value }}
   function success(name, value) { return { type: policiesConstants.SUCCESS_UPDATE_POLICIES, name, value }}
   function failure(error) { return { type: policiesConstants.FAILURE_UPDATE_POLICIES, error }}
 }

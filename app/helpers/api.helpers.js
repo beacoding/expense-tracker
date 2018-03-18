@@ -7,8 +7,7 @@ export const apiHelpers = {
 
 function handleResponse(response) {
   let promise = new Promise ((resolve, reject) => {
-    console.log("in here", response)
-      resolve(response.json());
+    resolve(response.json());
   })
 
   return promise.then((obj) => {
@@ -19,8 +18,6 @@ function handleResponse(response) {
     }
   });
 }
-
-
 
 function getOptions() {
   return {
@@ -50,7 +47,7 @@ function postFormOptions(data) {
     form_data.append(key, data[key]);
   }
 
-  for(var pair of form_data.entries()) {
+  for (var pair of form_data.entries()) {
      console.log(pair[0]+ ', '+ pair[1]); 
   }
 

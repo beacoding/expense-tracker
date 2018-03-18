@@ -27,7 +27,6 @@ const addNewItem = async (req,res,next) => {
     next()
   } catch (err) {
     req.error = err;
-    console.log(err);
     next();
   }
 }
@@ -43,7 +42,6 @@ const updateOne = async (req,res,next) => {
     req.item = item;
     next()
   } catch (err) {
-    console.log(err);
     req.error = err;
     next();
   }
@@ -58,7 +56,6 @@ const updateReceipt = async (req, res, next) => {
     req.item = item;
     next()
   } catch (err) {
-    console.log(err);
     req.error = err;
     next();
   }
