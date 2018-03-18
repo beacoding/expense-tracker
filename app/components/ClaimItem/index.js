@@ -38,7 +38,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
   />
 
   let defaultValue = valueMap[expense_category.toUpperCase()];
-  if (expense_category === "AUTO GAS" && claim_status === "P") {
+  if (expense_category === "MILEAGE" && claim_status === "P") {
     let distance = claimItemsHelpers.amountToDistance(amount, policies["Per Mileage Reimbursement"]);
     return (
     <tr>

@@ -155,7 +155,9 @@ class NewClaimItemForm extends React.Component {
   render () {
     const { handleSubmit, pristine, reset, submitting, expense_type } = this.props;
     console.log(expense_type);
-    if (parseInt(expense_type) === 1) {
+    let amount_label = (parseInt(expense_type) === 9 || parseInt(expense_type) === 10) ? "Amount (CAD) | Max 5000" : "Amount (CAD):";
+    console.log(amount_label);
+    if (parseInt(expense_type) === 12) {
       const renderField = this.renderField;
       return (
         <form  onSubmit={handleSubmit}>
@@ -224,7 +226,7 @@ class NewClaimItemForm extends React.Component {
             component={this.renderExpenseTypeDropdownField.bind(this)}
           />
           <Field
-            label="Amount (CAD):"
+            label={amount_label}
             name="amount"
             component={this.renderAmountField}
             type="number"
@@ -262,7 +264,7 @@ class NewClaimItemForm extends React.Component {
   }
 }
 
-function validate(values) {
+function validate(values, props) {
   // create empty errors object to return
   const errors = {};
 
@@ -281,6 +283,12 @@ function validate(values) {
   }
   if (!values.comment || values.comment.trim().length == 0) {
     errors.comment = "Please provide some context for this item.";
+  }
+
+  console.log(values.expense_type, "adsfjklsd", props.policies["Maximum Per Meal Expense"], values.amount)
+
+  if ((parseInt(values.expense_type) === 9 || parseInt(values.expense_type) === 10) && parseFloat(props.policies["Maximum Per Meal Expense"]) < parseFloat(values.amount)) {
+    errors.amount = "Exceeded the maximum per meal expense";
   }
 
   // if errors is empty, the form is fine to submit
@@ -308,7 +316,8 @@ NewClaimItemForm = connect(
     const mileage = selector(state, 'mileage');
     return {
       expense_type,
-      mileage
+      mileage,
+      validate
     }
   }
 )(NewClaimItemForm);

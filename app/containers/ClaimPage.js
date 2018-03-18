@@ -101,7 +101,7 @@ class ClaimPage extends React.Component {
     const { employee, form, max_policy_limits } = this.props;
     let receipt = (data.no_receipt === true) ? null : data.receipt[0];
 
-    if (parseInt(data.expense_type) === 1) {
+    if (parseInt(data.expense_type) === 12) {
       let distance = isNaN(data.mileage) ? 0 : data.mileage;
       let amount = (distance * max_policy_limits["Per Mileage Reimbursement"]) || 0.00;
       data.amount = amount;
