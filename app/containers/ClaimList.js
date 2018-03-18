@@ -6,6 +6,7 @@ import { claimsActions, policiesActions } from '../actions';
 import { claimItemsActions, approvalLimitsActions } from '../actions';
 import ClaimContainer from './ClaimContainer';
 import NewClaimModal from './NewClaimModal';
+import { Tabs, Tab } from 'react-bootstrap';
 
 class ClaimList extends React.Component {
   constructor(props) {
@@ -93,13 +94,70 @@ class ClaimList extends React.Component {
     const { employee, claimsMap } = this.props;
     return (
       <div className="claim-list">
-        {Object.entries(claimsMap).map((claim_tuple) => {
+        {Object.entries(claimsMap).reverse().map((claim_tuple) => {
           var claim = claim_tuple[1]
-          return <ClaimContainer claim={claim} employee={employee} key={claim.claim_id}/>
+          return <ClaimContainer claim={claim} renderEmptyList={this.renderEmptyListAll} employee={employee} key={claim.claim_id}/>
         })}
       </div>
       )
   }
+
+  renderEmptyListAll() {
+    return (
+      <div className="claim-container">
+        You have not submitted any claims
+      </div>
+    )
+  }
+
+  renderDrafts() {
+    const { employee, claimsMap } = this.props;
+    return (
+      <div className="claim-list">
+        {Object.entries(claimsMap).filter(claim_tuple => {
+          var claim = claim_tuple[1];
+          return claim.status === "P";
+        }).map((claim_tuple) => {
+          var claim = claim_tuple[1]
+          return <ClaimContainer claim={claim} renderEmptyList={this.renderEmptyListAll} employee={employee} key={claim.claim_id}/>
+        })
+      }
+      </div>
+      )
+  }
+  
+  renderSubmitted() {
+    const { employee, claimsMap } = this.props;
+    return (
+      <div className="claim-list">
+        {Object.entries(claimsMap).filter(claim_tuple => {
+          var claim = claim_tuple[1];
+          return claim.status === "S";
+        }).map((claim_tuple) => {
+          var claim = claim_tuple[1]
+          return <ClaimContainer claim={claim} renderEmptyList={this.renderEmptyListAll} employee={employee} key={claim.claim_id}/>
+        })
+      }
+      </div>
+      )
+  }
+
+  renderApproved() {
+    const { employee, claimsMap } = this.props;
+    return (
+      <div className="claim-list">
+        {Object.entries(claimsMap).filter(claim_tuple => {
+          var claim = claim_tuple[1];
+          return claim.status === "A";
+        }).map((claim_tuple) => {
+          var claim = claim_tuple[1]
+          return <ClaimContainer claim={claim} renderEmptyList={this.renderEmptyListAll} employee={employee} key={claim.claim_id}/>
+        })
+      }
+      </div>
+      )
+  }
+
   
   render() {
     const { employee, claimsMap, error, isFetching, totals, form } = this.props;
@@ -128,7 +186,20 @@ class ClaimList extends React.Component {
             <span className="route-inactive">Home</span>  <span className="route-active"> > My Claims</span>
           </div>
         </div>
-        { this.renderEntries() }
+        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+          <Tab eventKey={1} title="Most Recent">
+              { this.renderEntries() }
+          </Tab>
+          <Tab eventKey={2} title="Drafts">
+              { this.renderDrafts() }
+          </Tab>
+          <Tab eventKey={3} title="Submitted">
+              { this.renderSubmitted() }
+          </Tab>
+          <Tab eventKey={4} title="Approved">
+              { this.renderApproved() }
+          </Tab>
+        </Tabs>
       </div>
     )
   }
