@@ -33,6 +33,7 @@ class ClaimPage extends React.Component {
       this.props.dispatch(claimItemsActions.requestAll(claim_id));
       this.props.dispatch(claimsActions.requestOne(claim_id));
       this.props.dispatch(policiesActions.requestExpenseTypes());
+      this.props.dispatch(policiesActions.requestAll())
     }
   }
 
@@ -97,8 +98,14 @@ class ClaimPage extends React.Component {
 
   createClaimItem(data) {
     let claim_id = window.location.pathname.split("/")[2];
-    const { employee, form } = this.props;
+    const { employee, form, max_policy_limits } = this.props;
     let receipt = (data.no_receipt === true) ? null : data.receipt[0];
+
+    if (parseInt(data.expense_type) === 1) {
+      let distance = isNaN(data.mileage) ? 0 : parseInt(data.mileage);
+      let amount = (distance * max_policy_limits["Per Mileage Reimbursement"]).toFixed(2) || 0.00;
+      data.amount = amount;
+    }
     const item = {
       claim_id: parseInt(claim_id),
       description: data.description,
@@ -113,6 +120,7 @@ class ClaimPage extends React.Component {
   }
 
   showNewClaimItemModal(){
+    console.log(this.props.form.NewClaimItemForm, "sdfkjl");
     modal.add( NewClaimItemModal, {
       title: 'Add Claim Item',
       size: 'medium', // large, medium or small,
@@ -121,7 +129,9 @@ class ClaimPage extends React.Component {
       hideCloseButton: false, // (optional) if you don't wanna show the top right close button
       //.. all what you put in here you will get access in the modal props ;)
       onSubmitFunction: this.createClaimItem,
-      expense_types: this.props.expense_types
+      expense_types: this.props.expense_types,
+      policies: this.props.max_policy_limits,
+      currentValues: this.props.form.NewClaimItemForm ? this.props.form.NewClaimItemForm.values : {}
     });
   }
 
@@ -248,6 +258,7 @@ function mapStateToProps(state) {
   const { employee } = authentication;
   const { claimsMap } = claims;
   const { expense_types } = policies;
+  const max_policy_limits = policies.policies;
   return {
     employee,
     claimItems,
@@ -255,7 +266,8 @@ function mapStateToProps(state) {
     claimsMap,
     expense_types,
     error,
-    form
+    form,
+    max_policy_limits
   };
 }
 

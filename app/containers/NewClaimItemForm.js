@@ -1,11 +1,18 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm,formValueSelector } from 'redux-form';
 
 class NewClaimItemForm extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      amount: 0,
+      isGas: false,
+      selectValue: ""
+    }
+
+    this.renderMileage = this.renderMileage.bind(this);
   }
   
   renderField(field) {
@@ -23,6 +30,50 @@ class NewClaimItemForm extends React.Component {
       </div>
     );
   }
+
+  changeAmount(e) {
+    console.log(e.target.value);
+  }
+
+  renderMileage(field) {
+    const { meta: { touched, error } } = field;
+    const className = `form-group ${touched && error ? "has-danger" : ""}`;
+    const { expense_type, mileage, policies } = this.props;
+    let distance = isNaN(mileage) ? 0 : parseInt(mileage);
+    let amount = (distance * policies["Per Mileage Reimbursement"]).toFixed(2) || 0.00;
+
+    return (
+      <div className = {className}>
+        <label>{field.label}</label>
+        {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
+        <input onChange={this.changeAmount.bind(this)} id="mileage" className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} min={field.min} step={field.step} />
+        <div className="text-help">
+          {touched ? error : ""}
+        </div>
+        <div>
+          ${amount}
+        </div>
+      </div>
+    );
+  }
+
+  renderAmountField(field) {
+    const { meta: { touched, error } } = field;
+    const className = `form-group ${touched && error ? "has-danger" : ""}`;
+
+    return (
+      <div className = {className}>
+        <label>{field.label}</label>
+        {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
+        <input id="amount" className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} min={field.min} step={field.step} />
+        <div className="text-help">
+          {touched ? error : ""}
+        </div>
+      </div>
+    );
+  }
+
+
 
   renderFileInput(field) {
     const { input, type, accept, meta: { touched, error, warning } } = field;
@@ -71,17 +122,19 @@ class NewClaimItemForm extends React.Component {
       </div>
     );
   }
+
   
   renderExpenseTypeDropdownField(field) {
     const { meta: {touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
     const { expense_types } = this.props;
+    const { initialValues } = this.props;
+    const selectValue = this.state.selectValue
 
     return (
       <div className = {className}>
       <label>{field.label}</label>
-      {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-      <select className="form-control" {...field.input}>
+      <select className="form-control" {...field.input} >
       <option value="" disabled> Select an expense category. </option>
       {
         expense_types.map((expense_type) => {
@@ -100,54 +153,112 @@ class NewClaimItemForm extends React.Component {
   
   //form for submit new claim initial items
   render () {
-    const { handleSubmit, pristine, reset, submitting, initialValues } = this.props;
-    return (
-      <form initialValues={initialValues}  onSubmit={handleSubmit}>
-        <Field
-          label="Description:"
-          name="description"
-          component={this.renderField}
-          type="text"
-          placeholder="Enter a description for this item."
-        />
-        <Field
-          label="Amount (CAD):"
-          name="amount"
-          component={this.renderField}
-          type="number"
-          min={0}
-          step={0.01}
-        />
-        <Field 
-          label="Upload Receipt"
-          name="receipt" 
-          component={this.renderFileInput} 
-          type="file" 
-          accept="image/*"
-        />
-        <Field
-          label="No Receipt?"
-          name="no_receipt"
-          checked={false}
-          component={this.renderCheckbox}
-        />
-        <Field
-          label="Expense Type:"
-          name="expense_type"
-          component={this.renderExpenseTypeDropdownField.bind(this)}
-        />
-        <Field
-          label="Comments:"
-          name="comment"
-          type="textarea"
-          component={this.renderTextAreaField}
-        />
-        <div className="buttons-row">
-          <button type="submit" className="btn page-button-blue" disabled={pristine || submitting}>Save Claim Item</button>
-          <button type="button" className="btn page-button-red" disabled={pristine || submitting} onClick={reset}>Reset</button>
-        </div>
-      </form>
-    );
+    const { handleSubmit, pristine, reset, submitting, expense_type } = this.props;
+    console.log(expense_type);
+    if (parseInt(expense_type) === 1) {
+      const renderField = this.renderField;
+      return (
+        <form  onSubmit={handleSubmit}>
+          <Field
+            label="Description:"
+            name="description"
+            component={this.renderField}
+            type="text"
+            placeholder="Enter a description for this item."
+          />
+
+          <Field
+            label="Expense Type:"
+            name="expense_type"
+            component={this.renderExpenseTypeDropdownField.bind(this)}
+          />
+          <Field
+            label="Distance (km):"
+            name="mileage"
+            component={this.renderMileage}
+            type="number"
+            min={0}
+            step={0.01}
+            id="mileage"
+          />
+          <Field 
+            label="Upload Receipt"
+            name="receipt" 
+            component={this.renderFileInput} 
+            type="file" 
+            accept="image/*"
+          />
+          <Field
+            label="No Receipt?"
+            name="no_receipt"
+            checked={false}
+            component={this.renderCheckbox}
+          />
+
+          <Field
+            label="Comments:"
+            name="comment"
+            type="textarea"
+            component={this.renderTextAreaField}
+          />
+          <div className="buttons-row">
+            <button type="submit" className="btn page-button-blue" disabled={pristine || submitting}>Save Claim Item</button>
+            <button type="button" className="btn page-button-red" disabled={pristine || submitting} onClick={reset}>Reset</button>
+          </div>
+        </form>
+        )
+    } else {
+      return (
+        <form  onSubmit={handleSubmit}>
+          <Field
+            label="Description:"
+            name="description"
+            component={this.renderField}
+            type="text"
+            placeholder="Enter a description for this item."
+          />
+
+          <Field
+            label="Expense Type:"
+            name="expense_type"
+            component={this.renderExpenseTypeDropdownField.bind(this)}
+          />
+          <Field
+            label="Amount (CAD):"
+            name="amount"
+            component={this.renderAmountField}
+            type="number"
+            min={0}
+            step={0.01}
+            id="amount"
+          />
+          <Field 
+            label="Upload Receipt"
+            name="receipt" 
+            component={this.renderFileInput} 
+            type="file" 
+            accept="image/*"
+          />
+          <Field
+            label="No Receipt?"
+            name="no_receipt"
+            checked={false}
+            component={this.renderCheckbox}
+          />
+
+          <Field
+            label="Comments:"
+            name="comment"
+            type="textarea"
+            component={this.renderTextAreaField}
+          />
+          <div className="buttons-row">
+            <button type="submit" className="btn page-button-blue" disabled={pristine || submitting}>Save Claim Item</button>
+            <button type="button" className="btn page-button-red" disabled={pristine || submitting} onClick={reset}>Reset</button>
+          </div>
+        </form>
+      );
+    }
   }
 }
 
@@ -184,8 +295,22 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
+NewClaimItemForm = reduxForm({
+  form: 'NewClaimItemForm'  // a unique identifier for this form
+})(NewClaimItemForm)
 
-export default reduxForm({
-  validate,
-  form: 'NewClaimItemForm' // a unique identifier for this form
-}, mapStateToProps)(NewClaimItemForm);
+// Decorate with connect to read form values
+const selector = formValueSelector('NewClaimItemForm') // <-- same as form name
+NewClaimItemForm = connect(
+  state => {
+    // can select values individually
+    const expense_type = selector(state, 'expense_type');
+    const mileage = selector(state, 'mileage');
+    return {
+      expense_type,
+      mileage
+    }
+  }
+)(NewClaimItemForm);
+
+export default NewClaimItemForm;

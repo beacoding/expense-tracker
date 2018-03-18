@@ -27,6 +27,7 @@ const addNewItem = async (req,res,next) => {
     next()
   } catch (err) {
     req.error = err;
+    console.log(err);
     next();
   }
 }

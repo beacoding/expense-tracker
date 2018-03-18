@@ -44,7 +44,8 @@ class ClaimItemContainer extends React.Component {
       comment: data.comment,
       expense_type: parseInt(data.expense_type),
       receipt: receipt
-    }   
+    }
+    console.log(item);3
     this.props.dispatch(claimItemsActions.editClaimItem(item, )).then(() => {
       modal.clear();
     });;
