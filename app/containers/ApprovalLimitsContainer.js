@@ -31,6 +31,7 @@ class ApprovalLimitsContainer extends React.Component {
     var value = e.target.value.length > 0 ? e.target.value : null
     var param_to_change = e.target.name;
     this.props.dispatch(approvalLimitsActions.modifyParams(param_to_change, value));
+    this.props.dispatch()
   }
 
   handleAddLimit(data) {
