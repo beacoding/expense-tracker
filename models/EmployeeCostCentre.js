@@ -114,7 +114,7 @@ module.exports = {
         if (params[key].length > 0) {
            switch(key) {
             case "employee_name":
-              whereArray.push("CONCAT(first_name, ' ', last_name) LIKE '" + params[key] + "%'")
+              whereArray.push("(first_name LIKE '" + params[key] + "%' OR last_name LIKE '" + params[key] + "%')");
               break;
             case "employee_id":
               whereArray.push("employee_id = '" + params[key] + "'")
