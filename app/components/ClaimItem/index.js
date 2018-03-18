@@ -31,13 +31,12 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
       src: '/uploads/' + claim_item.image_url,
       alt: claim_item.description + ' Receipt',
       className: 'img',
-      style: { width: '50px', backgroundColor: 'black' }
+      style: { width: '50px'}
     }}
     zoomImage={{
       alt: claim_item.description + 's Receipt',  
       src: '/uploads/' + claim_item.image_url,
       alt: claim_item.description + ' Receipt',
-      style: { backgroundColor: 'black' }
     }}
     defaultStyles={{
       overlay: {
