@@ -11,7 +11,7 @@ function generateT24(claimsMap) {
   var lookupArr = [];
   for (var key in claimsMap) {
     var claim = claimsMap[key];
-    if (claim.account_number) {
+    if (claim.account_number && claim.status == 'A') {
       var lookupEntry = {
         "account_number": "",
         "currency": "CAD",
@@ -43,7 +43,7 @@ function generatePayroll(claimsMap) {
   var entryMap = {};
   for (var key in claimsMap) {
     var claim = claimsMap[key];
-    if (!claim.account_number) {
+    if (!claim.account_number  && claim.status == 'A') {
       var lookupEntry = {
         "employee_name": "",
         "employee_id": "",
@@ -80,21 +80,23 @@ function generateAllEntries(claimsMap) {
   var lookupArr = [];
   for (var key in claimsMap) {
     var claim = claimsMap[key];
-    if (!claim.account_number) {
-      var payrollEntry = [];
-      payrollEntry.push(claim.claimant_first_name + " " + claim.claimant_last_name);
-      payrollEntry.push(claim.claimant_id);
-      payrollEntry.push(claim.total_amount);
-      lookupArr.push(payrollEntry);
-    } else {
-      var t24Entry = [];
-      t24Entry.push(claim.account_number);
-      t24Entry.push("CAD");
-      t24Entry.push(claim.date_created);
-      t24Entry.push(claim.description);
-      t24Entry.push(claim.total_amount);
-      t24Entry.push("51");
-      lookupArr.push(t24Entry);
+    if (claim.status == 'A') {
+      if (!claim.account_number) {
+        var payrollEntry = [];
+        payrollEntry.push(claim.claimant_first_name + " " + claim.claimant_last_name);
+        payrollEntry.push(claim.claimant_id);
+        payrollEntry.push(claim.total_amount);
+        lookupArr.push(payrollEntry);
+      } else {
+          var t24Entry = [];
+          t24Entry.push(claim.account_number);
+          t24Entry.push("CAD");
+          t24Entry.push(claim.date_created);
+          t24Entry.push(claim.description);
+          t24Entry.push(claim.total_amount);
+          t24Entry.push("51");
+          lookupArr.push(t24Entry);
+      }
     }
   }
   var data = lookupArr.join('\r\n').toString().replace(/,/g, '|');
