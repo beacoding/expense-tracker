@@ -61,7 +61,11 @@ router.post('/enable_employee', [authMiddleware.isLoggedIn, employeesMiddleware.
 });
 
 router.post('/update_password', [authMiddleware.isLoggedIn, employeesMiddleware.updatePassword], function(req, res, next) {
-  if (req.error != undefined) {
+  if(req.error == "password error"){
+    res.status(403);
+    res.send({error: req.error});
+  }
+  else if (req.error != undefined) {
     res.status(500);
     res.send({error: req.error});
   } else {

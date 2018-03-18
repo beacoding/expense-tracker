@@ -48,14 +48,14 @@ class PasswordForm extends React.Component {
             name="old_password"
             type="password"
             placeholder={old_password}
-            component={this.renderOldPassword.bind(this)}
+            component={this.renderOldPassword}
         />
         <Field
             label="New Password:"
             name="new_password"
             type="password"
             placeholder="New Password"
-            component={this.renderNewPassword.bind(this)}
+            component={this.renderNewPassword}
         />
         <div className="buttons-row">
           <button type="submit" className="btn page-button-blue" disabled={pristine || submitting}>Submit</button>
