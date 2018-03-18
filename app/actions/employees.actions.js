@@ -145,12 +145,12 @@ function addEmployee(newEmployee) {
   return dispatch => {
     dispatch(request(newEmployee));
     return employeesAPI.addEmployee(newEmployee).then(
-      res => dispatch(success(newEmployee)),
+      res => dispatch(success(newEmployee, res.employees)),
       error => dispatch(failure(error))
     )
   };
   function request(newEmployee) { return { type: employeesConstants.ADD_EMPLOYEE_REQUEST, newEmployee }}
-  function success(newEmployee) { return { type: employeesConstants.ADD_EMPLOYEE_SUCCESS, newEmployee }}
+  function success(newEmployee, employees) { return { type: employeesConstants.ADD_EMPLOYEE_SUCCESS, newEmployee, employees }}
   function failure(error) { return { type: employeesConstants.ADD_EMPLOYEE_FAILURE, error }}
 }
 

@@ -11,7 +11,7 @@ const User = ({ user, handleStatusChange }) => {
     is_active
   } = user;
 
-  var status = is_active === 1 ? "Enabled" : "Disabled";
+  var status = is_active === 1 ? "Active" : "Disabled";
   
   return (
         <tr>
