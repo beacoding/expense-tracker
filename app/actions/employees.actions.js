@@ -50,7 +50,7 @@ function updatePassword(employee) {
   return dispatch => {
     dispatch(request());
     return employeesAPI.updatePassword(employee).then(
-      res => dispatch(success(name)),
+      res => dispatch(success(id)),
       error => dispatch(failure(error))
       )
   }
@@ -78,33 +78,33 @@ function requestEmployees(manager_id) {
 
 function disableEmployee(employee_id, manager_id) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(employee_id));
     return employeesAPI.disableEmployee(employee_id, manager_id).then(
       res => {
-        dispatch(success())
+        dispatch(success(employee_id))
       },
       error => dispatch(failure(error))
     );
   };
   
-  function request() { return { type: employeesConstants.DISABLE_EMPLOYEE_REQUEST }}
-  function success() { return { type: employeesConstants.DISABLE_EMPLOYEE_SUCCESS }}
+  function request(employee_id) { return { type: employeesConstants.DISABLE_EMPLOYEE_REQUEST, employee_id }}
+  function success(employee_id) { return { type: employeesConstants.DISABLE_EMPLOYEE_SUCCESS, employee_id }}
   function failure(error) { return { type: employeesConstants.DISABLE_EMPLOYEE_FAILURE, error }}
 }
 
 function enableEmployee(employee_id) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(employee_id));
     return employeesAPI.enableEmployee(employee_id).then(
       res => {
-        dispatch(success())
+        dispatch(success(employee_id))
       },
       error => dispatch(failure(error))
     );
   };
   
-  function request() { return { type: employeesConstants.ENABLE_EMPLOYEE_REQUEST }}
-  function success() { return { type: employeesConstants.ENABLE_EMPLOYEE_SUCCESS }}
+  function request(employee_id) { return { type: employeesConstants.ENABLE_EMPLOYEE_REQUEST, employee_id }}
+  function success(employee_id) { return { type: employeesConstants.ENABLE_EMPLOYEE_SUCCESS, employee_id }}
   function failure(error) { return { type: employeesConstants.ENABLE_EMPLOYEE_FAILURE, error }}
 }
 
@@ -143,13 +143,13 @@ function requestEmployee(employee_id) {
 
 function addEmployee(newEmployee) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(newEmployee));
     return employeesAPI.addEmployee(newEmployee).then(
       res => dispatch(success(newEmployee)),
       error => dispatch(failure(error))
     )
   };
-  function request() { return { type: employeesConstants.ADD_EMPLOYEE_REQUEST }}
+  function request(newEmployee) { return { type: employeesConstants.ADD_EMPLOYEE_REQUEST, newEmployee }}
   function success(newEmployee) { return { type: employeesConstants.ADD_EMPLOYEE_SUCCESS, newEmployee }}
   function failure(error) { return { type: employeesConstants.ADD_EMPLOYEE_FAILURE, error }}
 }

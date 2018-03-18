@@ -117,7 +117,6 @@ module.exports = {
                               setString + 
                               ` WHERE 
                                 claim_item.id = ?`;
-        console.log(queryString);
         connection.query(queryString, [ id ], (err, rows) => {
           if (err) {
             reject(err);
@@ -148,7 +147,6 @@ module.exports = {
   updateReceipt: function(item, claim_item_id) {
     return new Promise((resolve, reject) => {
       const queryString = `UPDATE claim_item SET claim_item.image_url = ? WHERE claim_item.id = ?`;
-      console.log(item);
       connection.query(queryString, 
         [
         item.image_url,

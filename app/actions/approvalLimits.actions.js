@@ -31,26 +31,25 @@ function findAllCostCentres() {
 
 function addApprovalLimit(params) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(params));
     return approvalLimitsAPI.addApprovalLimit(params).then(
       res => {
         return dispatch(success(params))
       },
       error => {
-        console.log(error, "asdlkfs");
         return dispatch(failure(error))
       }
     );
   };
   
-  function request() { return { type: approvalLimitsConstants.REQUEST_ADD_APPROVAL_LIMIT }}
+  function request(params) { return { type: approvalLimitsConstants.REQUEST_ADD_APPROVAL_LIMIT, params }}
   function success(new_limit) { return { type: approvalLimitsConstants.SUCCESS_ADD_APPROVAL_LIMIT, new_limit }}
   function failure(error) { return { type: approvalLimitsConstants.FAILURE_ADD_APPROVAL_LIMIT, error }}
 }
 
 function updateApprovalLimit(employee_id, cost_centre_id, limit) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(employee_id, cost_centre_id, limit));
     return approvalLimitsAPI.updateApprovalLimit(employee_id, cost_centre_id, limit).then(
       res => {
         let new_limit = {
@@ -67,14 +66,14 @@ function updateApprovalLimit(employee_id, cost_centre_id, limit) {
     );
   };
   
-  function request() { return { type: approvalLimitsConstants.REQUEST_UPDATE_APPROVAL_LIMIT }}
+  function request(employee_id, cost_centre_id, limit) { return { type: approvalLimitsConstants.REQUEST_UPDATE_APPROVAL_LIMIT, employee_id, cost_centre_id, limit }}
   function success(new_limit) { return { type: approvalLimitsConstants.SUCCESS_UPDATE_APPROVAL_LIMIT, new_limit }}
   function failure(error) { return { type: approvalLimitsConstants.FAILURE_UPDATE_APPROVAL_LIMIT, error }}
 }
 
 function revokeApprovalLimit(employee_id, cost_centre_id) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(employee_id, cost_centre_id));
     return approvalLimitsAPI.revokeApprovalLimit(employee_id, cost_centre_id).then(
       res => {
         let revoked_limit = {
@@ -87,7 +86,7 @@ function revokeApprovalLimit(employee_id, cost_centre_id) {
     );
   };
   
-  function request() { return { type: approvalLimitsConstants.REQUEST_REVOKE_APPROVAL_LIMIT }}
+  function request(employee_id, cost_centre_id) { return { type: approvalLimitsConstants.REQUEST_REVOKE_APPROVAL_LIMIT, employee_id, cost_centre_id }}
   function success(revoked_limit) { return { type: approvalLimitsConstants.SUCCESS_REVOKE_APPROVAL_LIMIT, revoked_limit }}
   function failure(error) { return { type: approvalLimitsConstants.FAILURE_REVOKE_APPROVAL_LIMIT, error }}
 }
@@ -139,14 +138,14 @@ function requestByEmployee() {
 
 function requestHasAuthority(cost_centre_id, claim_amount) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(cost_centre_id, claim_amount));
     return approvalLimitsAPI.requestHasAuthority(cost_centre_id, claim_amount).then(
       res => dispatch(success(res.limits)),
       error => dispatch(failure(error))
     );
   };
   
-  function request() { return { type: approvalLimitsConstants.REQUEST_FORWARD_MANAGERS }}
+  function request(cost_centre_id, claim_amount) { return { type: approvalLimitsConstants.REQUEST_FORWARD_MANAGERS, cost_centre_id, claim_amount }}
   function success(managers) { return { type: approvalLimitsConstants.RECEIVE_FORWARD_MANAGERS, managers }}
   function failure(error) { return { type: approvalLimitsConstants.FAILURE_FORWARD_MANAGERS, error }}
 }
