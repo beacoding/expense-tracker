@@ -6,6 +6,7 @@ export const employeesActions = {
   requestAllWithManagers,
   requestEmployees,
   requestEmployee,
+  addEmployee,
   updatePassword,
   enableEmployee,
   disableEmployee,
@@ -54,9 +55,9 @@ function updatePassword(employee) {
       )
   }
   
-  function request() { return { type: employeesConstants.REQUEST_UPDATE_PASSWORD }}
-  function success(id) { return { type: employeesConstants.SUCCESS_UPDATE_PASSWORD, id }}
-  function failure(error) { return { type: employeesConstants.FAILURE_UPDATE_PASSWORD, error }}
+  function request() { return { type: employeesConstants.UPDATE_PASSWORD_REQUEST }}
+  function success(id) { return { type: employeesConstants.UPDATE_PASSWORD_SUCCESS, id }}
+  function failure(error) { return { type: employeesConstants.UPDATE_PASSWORD_FAILURE, error }}
 }
 
 function requestEmployees(manager_id) {
@@ -86,9 +87,9 @@ function disableEmployee(employee_id, manager_id) {
     );
   };
   
-  function request() { return { type: employeesConstants.REQUEST_DISABLE_EMPLOYEE }}
-  function success() { return { type: employeesConstants.SUCCESS_DISABLE_EMPLOYEE }}
-  function failure(error) { return { type: employeesConstants.FAILURE_DISABLE_EMPLOYEE, error }}
+  function request() { return { type: employeesConstants.DISABLE_EMPLOYEE_REQUEST }}
+  function success() { return { type: employeesConstants.DISABLE_EMPLOYEE_SUCCESS }}
+  function failure(error) { return { type: employeesConstants.DISABLE_EMPLOYEE_FAILURE, error }}
 }
 
 function enableEmployee(employee_id) {
@@ -102,15 +103,15 @@ function enableEmployee(employee_id) {
     );
   };
   
-  function request() { return { type: employeesConstants.REQUEST_ENABLE_EMPLOYEE }}
-  function success() { return { type: employeesConstants.SUCCESS_ENABLE_EMPLOYEE }}
-  function failure(error) { return { type: employeesConstants.FAILURE_ENABLE_EMPLOYEE, error }}
+  function request() { return { type: employeesConstants.ENABLE_EMPLOYEE_REQUEST }}
+  function success() { return { type: employeesConstants.ENABLE_EMPLOYEE_SUCCESS }}
+  function failure(error) { return { type: employeesConstants.ENABLE_EMPLOYEE_FAILURE, error }}
 }
 
 function requestWith(params) {
   return dispatch => {
     dispatch(request());
-    approvalLimitsAPI.requestWith(params)
+    employeesAPI.requestWith(params)
     .then(
       res => {
         dispatch(success(res.employees))
@@ -118,9 +119,9 @@ function requestWith(params) {
       error => dispatch(failure(error))
     );
 
-    function request() { return { type: approvalLimitsConstants.REQUEST_WITH }}
-    function success(employees) { return { type: approvalLimitsConstants.RECEIVE_WITH, employees }}
-    function failure(error) { return { type: approvalLimitsConstants.FAILURE_WITH, error }}
+    function request() { return { type: employeesConstants.REQUEST_WITH }}
+    function success(employees) { return { type: employeesConstants.RECEIVE_WITH, employees }}
+    function failure(error) { return { type: employeesConstants.FAILURE_WITH, error }}
   }
 }
 
@@ -138,6 +139,19 @@ function requestEmployee(employee_id) {
   function request() { return { type: employeesConstants.REQUEST_EMPLOYEE }}
   function success(employee) { return { type: employeesConstants.RECEIVE_EMPLOYEE, employee }}
   function failure(error) { return { type: employeesConstants.FAILURE_EMPLOYEE, error }}
+}
+
+function addEmployee(newEmployee) {
+  return dispatch => {
+    dispatch(request());
+    return employeesAPI.addEmployee(newEmployee).then(
+      res => dispatch(success(newEmployee)),
+      error => dispatch(failure(error))
+    )
+  };
+  function request() { return { type: employeesConstants.ADD_EMPLOYEE_REQUEST }}
+  function success(newEmployee) { return { type: employeesConstants.ADD_EMPLOYEE_SUCCESS, newEmployee }}
+  function failure(error) { return { type: employeesConstants.ADD_EMPLOYEE_FAILURE, error }}
 }
 
 function modifyParams(param_to_change, value) {

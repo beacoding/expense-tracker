@@ -8,18 +8,42 @@ const initialState = {
   params: {}
 }
 
-const reports = (state = initialState, action) => {
+const employees = (state = initialState, action) => {
   switch (action.type) {
-    case employeesConstants.REQUEST_UPDATE_PASSWORD:
+    // ADD USER
+    case employeesConstants.ADD_EMPLOYEE_REQUEST:
       return Object.assign({}, state, {
         isFetching: true
       });
-    case employeesConstants.SUCCESS_UPDATE_PASSWORD:
+    case employeesConstants.ADD_EMPLOYEE_SUCCESS:
+      var newEmployee = {};
+      newEmployee["id"] = action.newEmployee.id;
+      newEmployee["employee_name"] = action.newEmployee.first_name + " " + action.newEmployee.last_name;
+      newEmployee["is_active"] = 1;
+      var employeesWithAddition = state.employees;
+      employeesWithAddition.push(newEmployee);
       return Object.assign({}, state, {
-        isFetching: false
+        isFetching: false,
+        employees: employeesWithAddition,
+        error: undefined
       });
-    case employeesConstants.FAILURE_UPDATE_PASSWORD:
+    case employeesConstants.ADD_EMPLOYEE_FAILURE:
       return Object.assign({}, state, {
+        error: action.error
+      });
+    // UPDATE PASSWORD
+    case employeesConstants.UPDATE_PASSWORD_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case employeesConstants.UPDATE_PASSWORD_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: undefined
+      });
+    case employeesConstants.UPDATE_PASSWORD_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
         error: action.error
       });
     case employeesConstants.REQUEST_EMPLOYEES:
@@ -52,11 +76,11 @@ const reports = (state = initialState, action) => {
         isFetching: false,
         error: action.error
       });
-    case employeesConstants.REQUEST_DISABLE_EMPLOYEE:
+    case employeesConstants.DISABLE_EMPLOYEE_REQUEST:
       return Object.assign({}, state, {
         isFetching: true
       });
-    case employeesConstants.SUCCESS_DISABLE_EMPLOYEE:
+    case employeesConstants.DISABLE_EMPLOYEE_SUCCESS:
       var newCurrentEmployee = Object.assign({}, state.current_employee);
       newCurrentEmployee.is_active = 0;
       return Object.assign({}, state, {
@@ -64,16 +88,16 @@ const reports = (state = initialState, action) => {
         current_employee: newCurrentEmployee,
         error: undefined
       });
-    case employeesConstants.FAILURE_DISABLE_EMPLOYEE:
+    case employeesConstants.DISABLE_EMPLOYEE_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
       });
-    case employeesConstants.REQUEST_ENABLE_EMPLOYEE:
+    case employeesConstants.ENABLE_EMPLOYEE_REQUEST:
       return Object.assign({}, state, {
         isFetching: true
       });
-    case employeesConstants.SUCCESS_ENABLE_EMPLOYEE:
+    case employeesConstants.ENABLE_EMPLOYEE_SUCCESS:
       var newCurrentEmployee = Object.assign({}, state.current_employee);
       newCurrentEmployee.is_active = 1;
       return Object.assign({}, state, {
@@ -81,7 +105,7 @@ const reports = (state = initialState, action) => {
         current_employee: newCurrentEmployee,
         error: undefined
       });
-    case employeesConstants.FAILURE_ENABLE_EMPLOYEE:
+    case employeesConstants.ENABLE_EMPLOYEE_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
@@ -149,4 +173,4 @@ const reports = (state = initialState, action) => {
   }
 }
 
-export default reports;
+export default employees;

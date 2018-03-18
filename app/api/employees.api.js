@@ -1,6 +1,7 @@
 import { apiHelpers } from '../helpers'
 
 export const employeesAPI = {
+  addEmployee,
   requestAll,
   requestAllWithManagers,
   requestEmployees,
@@ -10,6 +11,11 @@ export const employeesAPI = {
   updatePassword,
   requestWith
 };
+
+function addEmployee(employee) {
+  return fetch('/employees/create', apiHelpers.postOptions(employee))
+   .then(res => apiHelpers.handleResponse(res));
+}
 
 function requestAll() {
   return fetch(`/employees/all`, apiHelpers.getOptions())
@@ -36,7 +42,6 @@ function requestAll() {
   .then(res => apiHelpers.handleResponse(res));
 }
 
-
 function requestEmployees(manager_id) {
   return fetch(`/employees/with?manager_id=` + manager_id, apiHelpers.getOptions())
   .then(res => apiHelpers.handleResponse(res));
@@ -54,6 +59,6 @@ function updatePassword(employee) {
 
 function requestWith(params) {
   var queryParams = jQuery.param(params);
- return fetch(`/employees/with?` + queryParams, apiHelpers.getOptions())
+  return fetch(`/employees/with?` + queryParams, apiHelpers.getOptions())
   .then(res => apiHelpers.handleResponse(res));
 }

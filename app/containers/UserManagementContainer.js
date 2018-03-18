@@ -3,28 +3,66 @@ import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { employeesActions } from '../actions';
 import UsersList from './UsersList';
+import NewUserModal from './NewUserModal';
+import { Field, reduxForm } from 'redux-form';
+import { modal } from 'react-redux-modal';
 
-class UserMangementContainer extends React.Component {
+
+class UserManagementContainer extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleStatusChange = this.handleStatusChange.bind(this);
     this.handleParamChangeText = this.handleParamChangeText.bind(this);
+    this.handleAddUser = this.handleAddUser.bind(this);
+    this.showNewUserModal = this.showNewUserModal.bind(this);
   }
 
   handleStatusChange(employee_id) {
     this.props.dispatch(employeesActions.requestEmployees(employee_id));
   }
 
-  componentWillReceiveProps(nextprops) {
-    this.props.dispatch(employeesActions.requestWith(nextprops.params))
+  componentDidMount() {
+    this.props.dispatch(employeesActions.requestAll());
   }
 
+  componentWillReceiveProps(nextprops) {
+    // TODO: USER FILTER NOT IMPLEMENTED YET
+    // this.props.dispatch(employeesActions.requestWith(nextprops.params));
+  }
 
   handleParamChangeText(e) {
     var value = e.target.value.length > 0 ? e.target.value : null
     var param_to_change = e.target.name;
     this.props.dispatch(employeesActions.modifyParams(param_to_change, value));
+  }
+
+  handleAddUser(data) {
+    const { employee, form } = this.props;
+    const newUser = {
+      id: data.id,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: data.email,
+      password: data.password,
+      manager_id: form.NewUserForm.values.manager_id.value,
+      is_admin: (data.is_admin === true),      
+    }
+    this.props.dispatch(employeesActions.addEmployee(newUser)).then(() => {
+      modal.clear();
+    });;
+  }
+
+  showNewUserModal(){
+    modal.add(NewUserModal, {
+      title: 'Create New User',
+      size: 'medium', // large, medium or small,
+      closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
+      hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,
+      hideCloseButton: false, // (optional) if you don't wanna show the top right close button
+      //.. all what you put in here you will get access in the modal props ;)
+      onSubmitFunction: this.handleAddUser,
+      employees: this.props.users
+    });
   }
 
   renderSearchByEmployeeOrManager() {
@@ -44,38 +82,46 @@ class UserMangementContainer extends React.Component {
     )
   }
 
+  renderButtons() {
+    return (
+      <div className="padded-buttons-row">
+        <button className="page-button" onClick={this.showNewUserModal}> New User </button>
+      </div>
+    )
+  }
+
   render() {
     const { employee, users } = this.props;
     return (
       <div>
-      <div className="page-header">
-        <div className="page-title">
-         User Management
+        <div className="page-header">
+          <div className="page-title">
+          User Management
+          </div>
+          <div className="page-route">
+            <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > User Management </span>
+          </div>
         </div>
-        <div className="page-route">
-          <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > User Management </span>
-        </div>
-      </div>
-      {this.renderSearchByEmployeeOrManager()}
-      <div className="claimlist-container">
+        {this.renderSearchByEmployeeOrManager()}
+        {this.renderButtons()}
         <UsersList handleStatusChange={this.handleStatusChange}/>
-      </div>
       </div>
     )
   }
 }
 
-
-
 function mapStateToProps(state) {
-  const { authentication } = state;
+  const { authentication, form, employees } = state;
   const { employee } = authentication;
-  return{
-    employee
+  const users = employees.employees;
+  return {
+    employee,
+    users,
+    form
   };
 }
 
-export default withRouter(connect(mapStateToProps)(UserMangementContainer))
+export default withRouter(connect(mapStateToProps)(UserManagementContainer))
 
 // User Management
 

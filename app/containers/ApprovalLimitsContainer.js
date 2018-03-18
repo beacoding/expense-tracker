@@ -45,7 +45,7 @@ class ApprovalLimitsContainer extends React.Component {
 
   showNewApprovalLimitModal(){
     modal.add(NewApprovalLimitModal, {
-      title: 'Add Approval Limit',
+      title: 'Assign Approval Authority',
       size: 'medium', // large, medium or small,
       closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
       hideTitleBar: false ,// (optional) Switch to true if do not want the default title bar and close button,
@@ -74,12 +74,12 @@ class ApprovalLimitsContainer extends React.Component {
     )
   }
 
-  renderReportsButtons() {
+  renderButtons() {
     return (
       <div className="padded-buttons-row">
-        <button className="page-button" onClick={this.showNewApprovalLimitModal}> Add New Limit </button>
+        <button className="page-button" onClick={this.showNewApprovalLimitModal}> New Approval Authority </button>
       </div>
-      )
+    )
   }
 
   renderApprovalLimits() {
@@ -88,14 +88,14 @@ class ApprovalLimitsContainer extends React.Component {
       <div>
         <div className="page-header">
           <div className="page-title">
-           Approval Limits
+           Approval Authorities
           </div>
           <div className="page-route">
-            <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > Approval Limits</span>
+            <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > Approval Authorities</span>
           </div>
         </div>
         { this.renderSearchByEmployeeOrCostCentre() }
-        { this.renderReportsButtons() }
+        { this.renderButtons() }
         <ApprovalLimitsList />
       </div>
     )

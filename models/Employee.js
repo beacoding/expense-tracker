@@ -99,6 +99,7 @@ module.exports = {
     });
   },
 
+  // returns all users along with their manager's name
   findAllWithManagers: function(id) {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT
@@ -121,6 +122,7 @@ module.exports = {
     });
   },
 
+  // return all employees under a given manager
   findAllWithManagerID: function(manager_id) {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT
@@ -142,9 +144,81 @@ module.exports = {
     }); 
   },
 
-  addOne: function(id) {
+  findAllWithParams: function(params) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to add one employee
+      var whereArray = []
+      for (key in params) {
+        if (params[key].length > 0) {
+          switch(key) {
+            case "employee_id":
+              whereArray.push("employee_id = '" + params[key] + "'")
+              break;
+            case "employee_name":
+              whereArray.push("(first_name LIKE '" + params[key] + "%' OR last_name LIKE '" + params[key] + "%')");
+              break;
+            case "manager_id":
+              whereArray.push("manager.id = '" + params[key] + "'")
+              break;
+            case "manager_name":
+              whereArray.push("(manager.first_name LIKE '" + params[key] + "%' OR manager.last_name LIKE '" + params[key] + "%')");
+              break;
+            default:
+              break;
+          }
+        }
+      }
+
+      var whereString = whereArray.length > 0 ? " AND " + whereArray.join(" AND ") : "";
+      var queryString = `SELECT
+                          CONCAT(e.first_name, ' ', e.last_name) as employee_name,
+                          e.is_active,
+                          e.id
+                        FROM
+                          employee e,
+                          manager m,
+                        WHERE
+                          e.manager_id = m.id` + whereString + ";"
+
+      connection.query(queryString, [], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
+  addOne: function(employee) {
+    return new Promise((resolve, reject) => {
+      const queryString = 
+                          `INSERT INTO employee
+                            (id,
+                            first_name,
+                            last_name,
+                            email,
+                            password,
+                            manager_id,
+                            is_admin)
+                           VALUES
+                            (?, ?, ?, ?, ?, ?, ?)`;
+      connection.query(queryString, 
+      [
+        employee.id,
+        employee.first_name,
+        employee.last_name,
+        employee.email,
+        employee.password,
+        employee.manager_id,
+        employee.is_admin,
+      ]
+      , (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
     }); 
   },
 

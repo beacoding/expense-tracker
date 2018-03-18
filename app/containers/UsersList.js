@@ -47,8 +47,7 @@ class UsersList extends React.Component {
       )
   }
 
-  render() {
-    
+  render() { 
     return (
       <div className="claim-list">
         <div className="claim-container">
@@ -74,7 +73,7 @@ class UsersList extends React.Component {
 function mapStateToProps(state) {
   const { authentication, policies, employees } = state;
   const { employee } = authentication;
-  const users = employees.employees_with_managers;
+  const users = employees.employees;
   const employeesOfManagerMap = employees.employeesOfManagerMap
   return {
     employee,

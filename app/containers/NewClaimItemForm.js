@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { Field, reduxForm,formValueSelector } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 
 class NewClaimItemForm extends React.Component {
   constructor(props) {
@@ -72,8 +72,6 @@ class NewClaimItemForm extends React.Component {
       </div>
     );
   }
-
-
 
   renderFileInput(field) {
     const { input, type, accept, meta: { touched, error, warning } } = field;
@@ -154,9 +152,7 @@ class NewClaimItemForm extends React.Component {
   //form for submit new claim initial items
   render () {
     const { handleSubmit, pristine, reset, submitting, expense_type } = this.props;
-    console.log(expense_type);
     let amount_label = (parseInt(expense_type) === 9 || parseInt(expense_type) === 10) ? "Amount (CAD) | Max 5000" : "Amount (CAD):";
-    console.log(amount_label);
     if (parseInt(expense_type) === 12) {
       const renderField = this.renderField;
       return (
@@ -168,7 +164,6 @@ class NewClaimItemForm extends React.Component {
             type="text"
             placeholder="Enter a description for this item."
           />
-
           <Field
             label="Expense Type:"
             name="expense_type"
@@ -196,7 +191,6 @@ class NewClaimItemForm extends React.Component {
             checked={false}
             component={this.renderCheckbox}
           />
-
           <Field
             label="Comments:"
             name="comment"
@@ -219,7 +213,6 @@ class NewClaimItemForm extends React.Component {
             type="text"
             placeholder="Enter a description for this item."
           />
-
           <Field
             label="Expense Type:"
             name="expense_type"
@@ -284,11 +277,8 @@ function validate(values, props) {
   if (!values.comment || values.comment.trim().length == 0) {
     errors.comment = "Please provide some context for this item.";
   }
-
-  console.log(values.expense_type, "adsfjklsd", props.policies["Maximum Per Meal Expense"], values.amount)
-
   if ((parseInt(values.expense_type) === 9 || parseInt(values.expense_type) === 10) && parseFloat(props.policies["Maximum Per Meal Expense"]) < parseFloat(values.amount)) {
-    errors.amount = "Exceeded the maximum per meal expense";
+    errors.amount = "Exceeded the maximum per meal expense.";
   }
 
   // if errors is empty, the form is fine to submit
@@ -297,7 +287,6 @@ function validate(values, props) {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log(ownProps.currentValues, "jlqeklr")
   return {
     initialValues: ownProps.currentValues
   }
