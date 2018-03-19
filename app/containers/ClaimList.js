@@ -253,10 +253,10 @@ class ClaimList extends React.Component {
           <Tab eventKey={2} title="Drafts">
               { this.renderDrafts() }
           </Tab>
-          <Tab eventKey={3} title="Pending Approval">
+          <Tab eventKey={3} title="Under Review">
               { this.renderSubmitted() }
           </Tab>
-          <Tab eventKey={4} title="Finished Approval">
+          <Tab eventKey={4} title="Processed">
               { this.renderApproved() }
           </Tab>
         </Tabs>
