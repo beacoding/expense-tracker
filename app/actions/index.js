@@ -5,3 +5,4 @@ export * from './approvalLimits.actions';
 export * from './reports.actions';
 export * from './employees.actions';
 export * from './policies.actions';
+export * from './email.actions';

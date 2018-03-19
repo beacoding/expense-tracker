@@ -17,6 +17,7 @@ var policies = require('./routes/policies');
 var approvalLimits = require('./routes/approvalLimits');
 var userManagement = require('./routes/userManagement');
 var reports = require('./routes/reports');
+var email = require('./routes/email');
 var multer  = require('multer')
 var upload = multer({ dest: './uploads/' })
 
@@ -55,13 +56,14 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 require('./routes/index.js')(app, passport)
 app.use('/employees', employees);
-app.use('/claims', claims)
+app.use('/claims', claims);
 app.use('/claim_items', claimItems);
 app.use('/approval_limits', approvalLimits);
 app.use('/user_management', userManagement);
 app.use('/approvals', claims);
 app.use('/reports', reports);
-app.use('/policies', policies)
+app.use('/policies', policies);
+app.use('/email', email);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

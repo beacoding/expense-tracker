@@ -2,11 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { modal } from 'react-redux-modal';
+import {claimItemsActions, emailActions, policiesActions} from '../actions';
 import classNames from 'classnames';
 import { claimItemsActions, policiesActions } from '../actions';
 import { claimsActions } from '../actions';
 import ClaimItemContainer from './ClaimItemContainer';
 import NewClaimItemModal from './NewClaimItemModal';
+import ModalContainer from './ModalContainer'
+import {emailAPI} from "../api";
 import ModalContainer from './ModalContainer';
 import { claimsHelpers } from '../helpers';
 import {toastr} from 'react-redux-toastr';
@@ -51,6 +54,14 @@ class ClaimPage extends React.Component {
   
   confirmSubmit() {
     let claim_id = window.location.pathname.split("/")[2];
+    this.props.dispatch(emailActions.requestEmail(this.props.employee.id, this.props.employee.manager_id)).then((res) => {
+      console.log("hello1");
+      console.log(this.props.employee);
+      console.log(res);
+      emailAPI.sendClaimeeSubmittedEmail(res.claimee_email[0], res.approver_email[0]);
+      emailAPI.sendApproverEmail(res.claimee_email[0], res.approver_email[0]);
+
+    });
     this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then(() => {
       modal.clear();
       this.returnToClaimsList();
