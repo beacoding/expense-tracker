@@ -1,14 +1,11 @@
-var Email = require('../models/Email');
+var Employee = require('../models/Employee');
 
-const findEmail = async (req,res,next) => {
-  let claimee_email;
-  let approver_email;
+const findApproverUser = async (req,res,next) => {
+  let approver;
   try {
-    const { claimee_id, approver_id } = req.body;
-    claimee_email = await Email.findEmail(claimee_id);
-    approver_email = await Email.findEmail(approver_id);
-    req.claimee_email = claimee_email;
-    req.approver_email = approver_email;
+    const { new_approver_id } = req.body;
+    approver = await Employee.findOne(new_approver_id);
+    req.approver = approver[0];
     next()
   } catch (err) {
     req.error = err;
@@ -17,5 +14,5 @@ const findEmail = async (req,res,next) => {
 }
 
 module.exports = {
-  findEmail: findEmail
+  findApproverUser: findApproverUser
 };

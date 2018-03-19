@@ -1,19 +1,33 @@
-import {emailConstants} from "../constants";
-import {emailAPI} from "../api";
+import { emailConstants } from "../constants";
+import { emailAPI } from "../api";
 
 export const emailActions = {
-  requestEmail,
+  sendClaimantEmail,
+  sendApproverEmail
 };
 
-function requestEmail(claimee_id, approver_id) {
+function sendClaimantEmail(claim, action) {
   return dispatch => {
     dispatch(request());
-    return emailAPI.requestEmail(claimee_id, approver_id).then(
-      res => dispatch(success(res.claimee_email, res.approver_email)),
+    return emailAPI.sendClaimantEmail(claim, action).then(
+      res => dispatch(success(claim, action)),
       error => dispatch(failure(error))
     )
   };
-  function request() { return { type: emailConstants.REQUEST_EMAIL }}
-  function success(claimee_email, approver_email) { return { type: emailConstants.RECEIVE_EMAIL, claimee_email, approver_email }}
-  function failure(error) { return { type: emailConstants.FAILURE_EMAIL, error }}
+  function request() { return { type: emailConstants.SEND_EMAIL_REQUEST }}
+  function success(claim, action) { return { type: emailConstants.SEND_EMAIL_SUCCESS, claim, action }}
+  function failure(error) { return { type: emailConstants.SEND_EMAIL_FAILURE, error }}
+}
+
+function sendApproverEmail(claim, approver_id, action) {
+  return dispatch => {
+    dispatch(request());
+    return emailAPI.sendApproverEmail(claim, approver_id, action).then(
+      res => dispatch(success(claim, approver_id, action)),
+      error => dispatch(failure(error))
+    )
+  };
+  function request() { return { type: emailConstants.SEND_EMAIL_REQUEST }}
+  function success(claim, approver_id, action) { return { type: emailConstants.SEND_EMAIL_SUCCESS, claim, approver_id, action }}
+  function failure(error) { return { type: emailConstants.SEND_EMAIL_FAILURE, error }}
 }

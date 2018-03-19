@@ -1,13 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import {claimsActions, claimItemsActions, approvalLimitsActions, emailActions} from '../actions';
+import { claimsActions, claimItemsActions, approvalLimitsActions, emailActions } from '../actions';
 import { claimsHelpers } from '../helpers';
 import { Link } from 'react-router-dom';
 import { modal } from 'react-redux-modal'
 import PendingClaim from '../components/PendingClaim'
 import ModalContainer from './ModalContainer'
-import {emailAPI} from "../api";
+import { emailAPI } from "../api";
 
 class PendingClaimContainer extends React.Component {
   constructor(props) {
@@ -28,34 +28,25 @@ class PendingClaimContainer extends React.Component {
   }
   
   confirmApprove() {
-    emailAPI.sendClaimeeApprovedEmail(this.props.claim.claimee_email, this.props.claim.approver_email);
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "A", this.claim_notes)).then(() => {
+      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "A"))
       this.props.dispatch(claimsActions.requestPendingApprovals());
       modal.clear();
     });
   }
   
   confirmDecline() {
-    emailAPI.sendClaimeeDeclinedEmail(this.props.claim.claimee_email, this.props.claim.approver_email);
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "D", this.claim_notes)).then(() => {
+      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "D"))
       this.props.dispatch(claimsActions.requestPendingApprovals());
       modal.clear();
     });
   }
 
   forwardClaim() {
-    this.props.dispatch(emailActions.requestEmail(this.props.employee.id, this.forward_manager_id)).then((res) => {
-      console.log("hello1");
-      // emailAPI.sendClaimeeSubmittedEmail(res.claimee_email[0], res.approver_email[0]);
-      // emailAPI.sendApproverEmail(res.claimee_email[0], res.approver_email[0]);
-      console.log(this.props.claim);
-      console.log(this.props.claim.claimee_email);
-      emailAPI.sendClaimeeForwardedEmail(this.props.claim.claimee_email, res.approver_email[0]);
-      // send to forwarded manager
-      emailAPI.sendNewApproverEmail(this.props.claim.claimee_email, res.approver_email[0]);
-    });
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.forward_manager_id, "F", this.claim_notes)).then(() => {
-
+      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "F"));
+      this.props.dispatch(emailActions.sendApproverEmail(this.props.claim, this.forward_manager_id, "F"));
       this.props.dispatch(claimsActions.requestPendingApprovals());
       modal.clear();
     });
