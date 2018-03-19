@@ -49,8 +49,8 @@ class ClaimList extends React.Component {
     const claim = {
       claimant_id: employee.id,
       approver_id: employee.manager_id,
-      company_id: parseInt(form.NewClaimForm.values.company_id),
-      cost_centre_id: parseInt(form.NewClaimForm.values.cost_centre_id),
+      company_id: parseInt(form.NewClaimForm.values.company_id.value),
+      cost_centre_id: parseInt(form.NewClaimForm.values.cost_centre_id.value),
       description: form.NewClaimForm.values.description,
       account_number: form.NewClaimForm.values.account_number,
       status: 'P',

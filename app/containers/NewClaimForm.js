@@ -2,10 +2,19 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import Select from 'react-virtualized-select';
+import createFilterOptions from 'react-select-fast-filter-options';
+import 'react-select/dist/react-select.css';
+import 'react-virtualized/styles.css'
+import 'react-virtualized-select/styles.css'
 
 class NewClaimForm extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selectedCompany: '',
+      selectedCostCentre: ''
+    }
   }
   
   renderField(field) {
@@ -39,57 +48,71 @@ class NewClaimForm extends React.Component {
       </div>
     );
   }
-  
+
+  handleSelectCompany(company) {
+    this.setState({ selectedCompany: company });
+  }
+
   renderCompanyDropdownField(field) {
-    const { meta: {touched, error }} = field;
-    const className = `form-group ${touched && error ? "has-danger" : ""}`;
-    const { companies } = this.props;
-    
-    return (
+    const { meta: {visited, error }} = field;
+    const className = `form-group ${visited && error ? "has-danger" : ""}`;
+    const options = this.props.companies.map((company) => {
+      return {value: company.id, label: company.name}
+    })
+    const filterOptions = createFilterOptions({ options });
+    const { selectedCompany } = this.state;
+    const value = selectedCompany && selectedCompany.value;
+
+    return (  
       <div className = {className}>
         <label>{field.label}</label>
-        {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-        <select className="form-control" {...field.input}>
-          <option value="" disabled> Select a company. </option>
-          {
-            companies.map((company) => {
-              let company_id = company.id;
-              let company_name = company.name;
-              return <option value={company_id} key={company_id}>{company_name}</option>
-            })
-          }
-        </select>
+        <Select
+          value={value}
+          options={options}
+          filterOptions={filterOptions}
+          onChange={this.handleSelectCompany.bind(this)}
+          {...field.input}
+          onBlur={() => {}}
+        />
         <div className="text-help">
-          {touched ? error : ""}
+          {visited ? error : ""}
         </div>
       </div>
-    );
+   );
   }
   
-  renderCostCenterDropdownField(field) {
-    const { meta: {touched, error }} = field;
-    const className = `form-group ${touched && error ? "has-danger" : ""}`;
-    const { cost_centres } = this.props;
-    
-    return (
+  handleSelectCostCentre(cost_centre) {
+    this.setState({ selectedCostCentre: cost_centre });
+  }
+
+  renderCostCentreDropdownField(field) {
+    const { meta: {visited, error }} = field;
+    const className = `form-group ${visited && error ? "has-danger" : ""}`;
+    const options = this.props.cost_centres.map((cost_centre) => {
+      return {value: cost_centre.id, label: cost_centre.id}
+    })
+    const filterOptions = createFilterOptions({ options });
+    const { selectedCostCentre } = this.state;
+    const value = selectedCostCentre && selectedCostCentre.value;
+
+    return (  
       <div className = {className}>
         <label>{field.label}</label>
-        {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-        <select className="form-control" {...field.input}>
-          <option value="" disabled> Select a cost center. </option>
-          {
-            cost_centres.map((cost_centre) => {
-              let cost_centre_id = cost_centre.id
-              return <option value={cost_centre_id} key={cost_centre_id}>{cost_centre_id}</option>
-            })
-          }
-        </select>
+        <Select
+          value={value}
+          options={options}
+          filterOptions={filterOptions}
+          onChange={this.handleSelectCostCentre.bind(this)}
+          {...field.input}
+          onBlur={() => {}}
+        />
         <div className="text-help">
-          {touched ? error : ""}
+          {visited ? error : ""}
         </div>
       </div>
-    );
+   );
   }
+
   // form for submit new claim initial items
   render () {
     const { handleSubmit, pristine, reset, submitting } = this.props;
@@ -123,7 +146,7 @@ class NewClaimForm extends React.Component {
         <Field
           label="Cost Center:"
           name="cost_centre_id"
-          component={this.renderCostCenterDropdownField.bind(this)}
+          component={this.renderCostCentreDropdownField.bind(this)}
         />
         <div className="buttons-row">
           <button type="submit" className="btn page-button-blue" disabled={pristine || submitting}>Save Claim</button>
@@ -145,10 +168,10 @@ function validate(values) {
   if (!values.description || values.description.trim().length == 0) {
     errors.description = "Please provide a description for your claim.";
   }
-  if (!values.company_id) {
+  if (!values.company_id || values.company_id === null) {
     errors.company_id = "Please select a company.";
   }
-  if (!values.cost_centre_id) {
+  if (!values.cost_centre_id || values.company_id === null) {
     errors.cost_centre_id = "Please select a cost center.";
   }
 

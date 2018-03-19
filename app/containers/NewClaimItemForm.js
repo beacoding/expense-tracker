@@ -121,7 +121,6 @@ class NewClaimItemForm extends React.Component {
     );
   }
 
-  
   renderExpenseTypeDropdownField(field) {
     const { meta: {touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;

@@ -1,3 +1,5 @@
+require('formdata-polyfill')
+
 export const apiHelpers = {
   handleResponse,
   getOptions,
