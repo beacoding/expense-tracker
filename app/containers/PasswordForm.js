@@ -47,7 +47,7 @@ class PasswordForm extends React.Component {
             label="Old Password:"
             name="old_password"
             type="password"
-            placeholder={old_password}
+            placeholder="Old Password"
             component={this.renderOldPassword}
         />
         <Field

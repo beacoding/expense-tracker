@@ -2,17 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { modal } from 'react-redux-modal';
-import {claimItemsActions, emailActions, policiesActions} from '../actions';
+import { claimsActions, claimItemsActions, emailActions, policiesActions } from '../actions';
 import classNames from 'classnames';
-import { claimItemsActions, policiesActions } from '../actions';
-import { claimsActions } from '../actions';
 import ClaimItemContainer from './ClaimItemContainer';
 import NewClaimItemModal from './NewClaimItemModal';
 import ModalContainer from './ModalContainer'
-import {emailAPI} from "../api";
-import ModalContainer from './ModalContainer';
+import { emailAPI } from "../api";
 import { claimsHelpers } from '../helpers';
-import {toastr} from 'react-redux-toastr';
+import { toastr } from 'react-redux-toastr';
 
 class ClaimPage extends React.Component {
   constructor(props) {
