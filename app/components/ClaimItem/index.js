@@ -8,9 +8,9 @@ import { claimItemsHelpers } from '../../helpers';
 const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
   const {
     claim_item_id,
-    description, 
+    description,
     amount,
-    comment, 
+    comment,
     expense_category,
     image_url,
   } = claim_item;

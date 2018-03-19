@@ -2,10 +2,12 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { modal } from 'react-redux-modal';
-import { claimsActions, policiesActions } from '../actions';
+import {claimsActions, policiesActions} from '../actions';
 import { claimItemsActions, approvalLimitsActions } from '../actions';
+import { emailActions } from "../actions";
 import ClaimContainer from './ClaimContainer';
 import NewClaimModal from './NewClaimModal';
+import {emailAPI} from "../api";
 import { Tabs, Tab } from 'react-bootstrap';
 
 class ClaimList extends React.Component {
@@ -46,6 +48,8 @@ class ClaimList extends React.Component {
 
   createClaim() {
     const { employee, form, claims, claimsMap } = this.props;
+    const claimee_email = this.props.claimee_email;
+    const approver_email = this.props.approver_email;
     const claim = {
       claimant_id: employee.id,
       approver_id: employee.manager_id,
@@ -55,6 +59,14 @@ class ClaimList extends React.Component {
       account_number: form.NewClaimForm.values.account_number,
       status: 'P',
     }
+    this.props.dispatch(emailActions.requestEmail(claim.claimee_id, claim.approver_id)).then((res) => {
+      console.log("hello1");
+      console.log(res);
+      emailAPI.sendClaimeeCreatedEmail(res.claimee_email[0], res.approver_email[0]);
+      // emailAPI.sendNewApproverEmail(res.claimee_email[0], res.approver_email[0]);
+
+    });
+
     this.props.dispatch(claimsActions.addClaim(claim)).then((res) => {
       modal.clear();
       window.location= '/claims/'+ res.claimId;
@@ -120,7 +132,7 @@ class ClaimList extends React.Component {
   renderEmptyDrafts() {
     return (
       <div className="claim-container">
-        You currently do not have any drafts 
+        You currently do not have any drafts
       </div>
       )
   }
@@ -162,7 +174,7 @@ class ClaimList extends React.Component {
         )
     }
   }
-  
+
   renderSubmitted() {
     const { employee, claimsMap } = this.props;
     let claims = Object.entries(claimsMap).filter(claim_tuple => {
@@ -206,7 +218,7 @@ class ClaimList extends React.Component {
     }
   }
 
-  
+
   render() {
     const { employee, claimsMap, error, isFetching, totals, form } = this.props;
     
@@ -259,6 +271,7 @@ function mapStateToProps(state) {
   const { claimsMap, error, isFetching } = claims;
   const { cost_centres, companies, expense_types } = policies;
 
+
   return {
       employee,
       claimsMap,
@@ -267,7 +280,7 @@ function mapStateToProps(state) {
       cost_centres,
       companies,
       expense_types,
-      form
+      form,
   };
 }
 export default withRouter(connect(mapStateToProps)(ClaimList))
