@@ -51,15 +51,9 @@ class ClaimPage extends React.Component {
   
   confirmSubmit() {
     let claim_id = window.location.pathname.split("/")[2];
-    this.props.dispatch(emailActions.requestEmail(this.props.employee.id, this.props.employee.manager_id)).then((res) => {
-      console.log("hello1");
-      console.log(this.props.employee);
-      console.log(res);
-      emailAPI.sendClaimeeSubmittedEmail(res.claimee_email[0], res.approver_email[0]);
-      emailAPI.sendApproverEmail(res.claimee_email[0], res.approver_email[0]);
-
-    });
     this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then(() => {
+      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claimsMap[claim_id], "S"))
+      this.props.dispatch(emailActions.sendApproverEmail(this.props.claimsMap[claim_id], this.props.employee.manager_id, "S"))
       modal.clear();
       this.returnToClaimsList();
     });

@@ -2,12 +2,10 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { modal } from 'react-redux-modal';
-import {claimsActions, policiesActions} from '../actions';
-import { claimItemsActions, approvalLimitsActions } from '../actions';
-import { emailActions } from "../actions";
+import { claimsActions, policiesActions, claimItemsActions, approvalLimitsActions, emailActions } from '../actions';
 import ClaimContainer from './ClaimContainer';
 import NewClaimModal from './NewClaimModal';
-import {emailAPI} from "../api";
+import { emailAPI } from "../api";
 import { Tabs, Tab } from 'react-bootstrap';
 
 class ClaimList extends React.Component {
@@ -48,7 +46,7 @@ class ClaimList extends React.Component {
 
   createClaim() {
     const { employee, form, claims, claimsMap } = this.props;
-    const claimee_email = this.props.claimee_email;
+    const claimant_email = this.props.claimant_email;
     const approver_email = this.props.approver_email;
     const claim = {
       claimant_id: employee.id,
@@ -59,13 +57,6 @@ class ClaimList extends React.Component {
       account_number: form.NewClaimForm.values.account_number,
       status: 'P',
     }
-    this.props.dispatch(emailActions.requestEmail(claim.claimee_id, claim.approver_id)).then((res) => {
-      console.log("hello1");
-      console.log(res);
-      emailAPI.sendClaimeeCreatedEmail(res.claimee_email[0], res.approver_email[0]);
-      // emailAPI.sendNewApproverEmail(res.claimee_email[0], res.approver_email[0]);
-
-    });
 
     this.props.dispatch(claimsActions.addClaim(claim)).then((res) => {
       modal.clear();
@@ -124,7 +115,7 @@ class ClaimList extends React.Component {
   renderEmptyListAll() {
     return (
       <div className="claim-container">
-        You have not submitted any claims and do not have any drafts
+        You have not submitted any claims and do not have any drafts.
       </div>
     )
   }
@@ -132,7 +123,7 @@ class ClaimList extends React.Component {
   renderEmptyDrafts() {
     return (
       <div className="claim-container">
-        You currently do not have any drafts
+        You currently do not have any drafts.
       </div>
       )
   }
@@ -140,7 +131,7 @@ class ClaimList extends React.Component {
   renderEmptySubmitted() {
     return (
       <div className="claim-container">
-        You have not submitted any claims
+        You have not yet submitted any claims.
       </div>
       )
   }
@@ -148,7 +139,7 @@ class ClaimList extends React.Component {
   renderEmptyApproved() {
     return (
       <div className="claim-container">
-        None of your claims have been approved or declined
+        You do not have any processed claims at this time.
       </div>
       )
   }

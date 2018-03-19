@@ -14,9 +14,9 @@ module.exports = {
                           e.first_name,
                           e.last_name
                         FROM
-                          employee e,
-                          employee manager
-                        WHERE e.id = ? AND e.manager_id = manager.id`;
+                          employee e
+                        LEFT JOIN employee manager ON manager.id = e.manager_id
+                        WHERE e.id = ?`;
       connection.query(queryString, [id], (err, rows) => {
         if (err) {
           reject(err);
