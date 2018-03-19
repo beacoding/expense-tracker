@@ -128,34 +128,32 @@ class ManageUserContainer extends React.Component {
                 <Panel.Title componentClass="h3">{user.employee_name}</Panel.Title>
               </Panel.Heading>
               <Panel.Body>
-
-              <strong>Info</strong>
-              <table className="table table-user-information">
-                      <tbody>
-                        <tr>
-                          <td>Employee ID:</td>
-                          <td>{user.id}</td>
-                        </tr>
-                        <tr>
-                          <td>First Name:</td>
-                          <td>{user.first_name}</td>
-                        </tr>
-                        <tr>
-                          <td>Last Name:</td>
-                          <td>{user.last_name}</td>
-                        </tr>
-                        <tr>
-                          <td>Manager:</td>
-                          <td>{user.manager_name}</td>
-                        </tr>
-                        <tr>
-                          <td>Email:</td>
-                          <td>{user.email}</td>
-                        </tr>   
-                      </tbody>
-                    </table>
+                <strong>Info</strong>
+                <table className="table table-user-information">
+                  <tbody>
+                    <tr>
+                      <td>Employee ID:</td>
+                      <td>{user.id}</td>
+                    </tr>
+                    <tr>
+                      <td>First Name:</td>
+                      <td>{user.first_name}</td>
+                    </tr>
+                    <tr>
+                      <td>Last Name:</td>
+                      <td>{user.last_name}</td>
+                    </tr>
+                    <tr>
+                      <td>Manager:</td>
+                      <td>{user.manager_name}</td>
+                    </tr>
+                    <tr>
+                      <td>Email:</td>
+                      <td>{user.email}</td>
+                    </tr>   
+                  </tbody>
+                </table>
                 <br/>
-
                 {user.is_active == 1 ? this.renderActionsEnabled() : this.renderActionsDisabled()}
               </Panel.Body>
             </Panel>
