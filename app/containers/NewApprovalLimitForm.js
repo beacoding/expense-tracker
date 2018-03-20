@@ -12,7 +12,8 @@ class NewApprovalLimitForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: '',
+      selectedManager: '',
+      selectedCostCentre: ''
     }
   }
   
@@ -32,8 +33,8 @@ class NewApprovalLimitForm extends React.Component {
     );
   }
 
-  handleSelectName(selectedOption) {
-    this.setState({ selectedOption });
+  handleSelectName(manager) {
+    this.setState({ selectedManager: manager });
   }
   
   renderTextAreaField(field) {
@@ -43,8 +44,8 @@ class NewApprovalLimitForm extends React.Component {
       return {value: employee.id, label: employee.employee_name}
     })
     const filterOptions = createFilterOptions({ options });
-    const { selectedOption } = this.state;
-    const value = selectedOption && selectedOption.value;
+    const { selectedManager } = this.state;
+    const value = selectedManager && selectedManager.value;
 
     return (  
       <div className = {className}>
@@ -61,29 +62,33 @@ class NewApprovalLimitForm extends React.Component {
    );
   }
 
+  handleSelectCostCentre(cost_centre) {
+    this.setState({ selectedCostCentre: cost_centre });
+  }
+
   renderCostCenterDropdownField(field) {
     const { meta: {touched, error }} = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
-    const {cost_centres} = this.props
+    const options = this.props.cost_centres.map((cost_centre) => {
+      return {value: cost_centre.id, label: cost_centre.id}
+    })
+    const filterOptions = createFilterOptions({ options });
+    const { selectedCostCentre } = this.state;
+    const value = selectedCostCentre && selectedCostCentre.value;
 
-    return (
+    return (  
       <div className = {className}>
         <label>{field.label}</label>
-        {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-        <select className="form-control" {...field.input}>
-          <option value="" disabled> Select a cost center. </option>
-          {
-            cost_centres.map((cost_centre) => {
-              let cost_centre_id = cost_centre.id
-              return <option value={cost_centre_id} key={cost_centre_id}>{cost_centre_id}</option>
-            })
-          }
-        </select>
-        <div className="text-help">
-          {touched ? error : ""}
-        </div>
+        <Select
+          value={value}
+          options={options}
+          filterOptions={filterOptions}
+          onChange={this.handleSelectCostCentre.bind(this)}
+          {...field.input}
+          onBlur={() => {}}
+        />
       </div>
-    );
+   );
   }
   
   // form for submit new claim initial items
