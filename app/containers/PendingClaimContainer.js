@@ -8,7 +8,6 @@ import { modal } from 'react-redux-modal'
 import PendingClaim from '../components/PendingClaim'
 import ModalContainer from './ModalContainer'
 import {toastr} from 'react-redux-toastr';
-import {toastrHelpers} from '../helpers';
 
 class PendingClaimContainer extends React.Component {
   constructor(props) {
