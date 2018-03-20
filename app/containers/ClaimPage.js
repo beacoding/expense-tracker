@@ -55,17 +55,9 @@ class ClaimPage extends React.Component {
       this.props.dispatch(emailActions.sendClaimantEmail(this.props.claimsMap[claim_id], "S"))
       this.props.dispatch(emailActions.sendApproverEmail(this.props.claimsMap[claim_id], this.props.employee.manager_id, "S"))
       modal.clear();
-      this.returnToClaimsList().then(()=> {
-          // if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
-          //   toastr.removeByType("error");
-          //   toastr.success('Your claim has been submitted', 'Please await manager action')
-          // } else {
-          //   toastr.removeByType("error");
-          //   toastr.error('Your claim has not been submitted', 'Please try again', toastrHelpers.getErrorOptions())
-          // }
-        }
-      );
-
+      this.returnToClaimsList();
+      toastr.removeByType("error")
+      toastr.success("Claim Submitted", "Your claim has been submitted, please wait for approval!")
     });
   }
 
@@ -90,6 +82,8 @@ class ClaimPage extends React.Component {
     this.props.dispatch(claimsActions.deleteClaim(claim_id)).then(() => {
       modal.clear();
       window.location = '/claims/';
+      toastr.removeByType("error")
+      toastr.error("Claim deleted", "You have deleted the claim")
     });
   }
 
@@ -136,6 +130,8 @@ class ClaimPage extends React.Component {
         toastr.error('Claim item has failed to add', 'Please try again', toastrHelpers.getErrorOptions())
       }
       modal.clear();
+      toastr.removeByType("error")
+      toastr.success("Item added")
     });;
   }
 
@@ -212,7 +208,7 @@ class ClaimPage extends React.Component {
             <button className="page-button" style={{float: 'left'}} onClick={this.returnToClaimsList}>Back</button>
           </div>
         </div>
-        <div className="claim-container">
+        <div className="item-container">
           { claimantView && <div className="progress-meter">
             <div className="track" >
               <span className="progress" style={{width: ((stepCompletionIndex / 3) * 100) + "%"}}></span>
@@ -232,8 +228,11 @@ class ClaimPage extends React.Component {
               </li>
             </ol>
           </div> }
-          { (status == 'P') && <button className="page-button" onClick={this.showNewClaimItemModal}> New Item</button> }
-          <table className="table table-striped">
+          </div>
+          <div className="item-table">
+           { (status == 'P') && <button className="page-button" onClick={this.showNewClaimItemModal}> New Item</button> }
+            
+          <table className="table table-striped" cellSpacing="20px">
             <thead>
               <tr>
                 <th scope="col">Description</th>
@@ -241,7 +240,6 @@ class ClaimPage extends React.Component {
                 <th scope="col">Expense Category</th>
                 <th scope="col">Receipt</th>
                 <th scope="col">Comments</th>
-                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>

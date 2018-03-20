@@ -50,7 +50,7 @@ function updatePassword(employee) {
   return dispatch => {
     dispatch(request(employee));
     return employeesAPI.updatePassword(employee).then(
-      res => dispatch(success(employee)),
+      res => dispatch(success()),
       error => dispatch(failure(error))
       )
   }

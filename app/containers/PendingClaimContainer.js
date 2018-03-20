@@ -7,8 +7,7 @@ import { Link } from 'react-router-dom';
 import { modal } from 'react-redux-modal'
 import PendingClaim from '../components/PendingClaim'
 import ModalContainer from './ModalContainer'
-import { emailAPI } from "../api";
-import {toastr} from "react-redux-toastr";
+import {toastr} from 'react-redux-toastr';
 
 class PendingClaimContainer extends React.Component {
   constructor(props) {
@@ -30,52 +29,47 @@ class PendingClaimContainer extends React.Component {
   
   confirmApprove() {
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "A", this.claim_notes)).then((res) => {
-      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "A"));
-      this.props.dispatch(claimsActions.requestPendingApprovals());
-      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
-        toastr.removeByType("error");
-        toastr.success('You have approved this claim', this.props.claim.claimant_first_name + this.props.claim.claimant_last_name
-          + ' will be notified')
-      } else {
-        toastr.removeByType("error");
-        toastr.error('This claim has not been approved', 'Please try again', toastrHelpers.getErrorOptions())
-      }
-      modal.clear();
+      
+      if(res.type == "UPDATE_CLAIM_STATUS_SUCCESS"){
+        this.props.dispatch(claimsActions.requestPendingApprovals());
+        modal.clear();
+        toastr.removeByType("error")
+        toastr.success("Claim Approved", "You have approved the claim, claimant will be notified")
+       }
+       else{
+         toastr.removeByType("error")
+         toastr.error("Claim was not approved", "Oops! Something went wrong", toastrHelpers.getErrorOptions())
+       }
     });
   }
   
   confirmDecline() {
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "D", this.claim_notes)).then((res) => {
-      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "D"));
-      this.props.dispatch(claimsActions.requestPendingApprovals());
-      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
-        toastr.removeByType("error");
-        .claim);
-        toastr.success('You have declined this claim', this.props.claim.claimant_first_name + this.props.claim.claimant_last_name +
-          ' will be notified')
-      } else {
-        toastr.removeByType("error");
-        toastr.error('This claim has not been declined', 'Please try again', toastrHelpers.getErrorOptions())
-      }
-      modal.clear();
+      if(res.type == "UPDATE_CLAIM_STATUS_SUCCESS"){
+        this.props.dispatch(claimsActions.requestPendingApprovals());
+        modal.clear();
+        toastr.removeByType("error")
+        toastr.warning("Claim Declined", "You have declined the claim, claimant will be notified")
+       }
+       else{
+         toastr.removeByType("error")
+         toastr.error("Claim was not declined", "Oops! Something went wrong", toastrHelpers.getErrorOptions())
+       }
     });
   }
 
   forwardClaim() {
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.forward_manager_id, "F", this.claim_notes)).then((res) => {
-      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "F"));
-      this.props.dispatch(emailActions.sendApproverEmail(this.props.claim, this.forward_manager_id, "F"));
-      this.props.dispatch(claimsActions.requestPendingApprovals());
-      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
-        toastr.removeByType("error");
-        .claim);
-        toastr.success('You have forwarded this claim', this.props.claim.claimant_first_name + this.props.claim.claimant_last_name +
-        ' and the new manager will be notified')
-      } else {
-        toastr.removeByType("error");
-        toastr.error('This claim has not been forwarded', 'Please try again', toastrHelpers.getErrorOptions())
-      }
-      modal.clear();
+      if(res.type == "UPDATE_CLAIM_STATUS_SUCCESS"){
+        this.props.dispatch(claimsActions.requestPendingApprovals());
+        modal.clear();
+        toastr.removeByType("error")
+        toastr.confirm("Claim Forwaded", "You have forwaded the claim to " + this.forward_manager_id)
+       }
+       else{
+         toastr.removeByType("error")
+         toastr.error("Claim was not forwaded", "Oops! Something went wrong", toastrHelpers.getErrorOptions())
+       }
     });
   }
 
