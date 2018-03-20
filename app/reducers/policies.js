@@ -78,11 +78,11 @@ const policies = (state = initialState, action) => {
       });
 
     // REVOKE APPROVAL LIMIT
-    case approvalLimitsConstants.REQUEST_REVOKE_APPROVAL_LIMIT:
+    case approvalLimitsConstants.REVOKE_APPROVAL_LIMIT_REQUEST:
       return Object.assign({}, state, {
         isFetching: true
       });
-    case approvalLimitsConstants.SUCCESS_REVOKE_APPROVAL_LIMIT:
+    case approvalLimitsConstants.REVOKE_APPROVAL_LIMIT_SUCCESS:
       newLimitsMap = Object.assign({}, state.limitsMap);
       delete newLimitsMap[action.revoked_limit.cost_centre_id][action.revoked_limit.employee_id];
       return Object.assign({}, state, {
@@ -90,7 +90,7 @@ const policies = (state = initialState, action) => {
         limitsMap: newLimitsMap,
         error: undefined
       });
-    case approvalLimitsConstants.FAILURE_REVOKE_APPROVAL_LIMIT:
+    case approvalLimitsConstants.REVOKE_APPROVAL_LIMIT_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
@@ -172,7 +172,7 @@ const policies = (state = initialState, action) => {
     // REQUEST UPDATE POLICIES
     case policiesConstants.UPDATE_POLICIES_REQUEST:
       return state
-    case policiesConstants.POLICIES_REQUEST_SUCCESS:
+    case policiesConstants.UPDATE_POLICIES_SUCCESS:
       let newPolicies = Object.assign({}, state.policies)
       newPolicies[action.name] = action.value 
       return Object.assign({}, state, {
@@ -180,7 +180,7 @@ const policies = (state = initialState, action) => {
         policies: newPolicies,
         error: undefined
       });
-    case policiesConstants.POLICIES_REQUEST_FAILURE:
+    case policiesConstants.UPDATE_POLICIES_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error

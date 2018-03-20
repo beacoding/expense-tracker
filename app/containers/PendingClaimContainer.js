@@ -29,47 +29,47 @@ class PendingClaimContainer extends React.Component {
   
   confirmApprove() {
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "A", this.claim_notes)).then((res) => {
-      
-      if(res.type == "UPDATE_CLAIM_STATUS_SUCCESS"){
-        this.props.dispatch(claimsActions.requestPendingApprovals());
+      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "A"));
+      this.props.dispatch(claimsActions.requestPendingApprovals());
+      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
         modal.clear();
-        toastr.removeByType("error")
-        toastr.success("Claim Approved", "You have approved the claim, claimant will be notified")
-       }
-       else{
-         toastr.removeByType("error")
-         toastr.error("Claim was not approved", "Oops! Something went wrong", toastrHelpers.getErrorOptions())
-       }
+        toastr.removeByType("error");
+        toastr.success('Claim Approved', this.props.claim.claimant_first_name + ' ' + this.props.claim.claimant_last_name + ' will be notified.')
+      } else {
+        toastr.removeByType("error");
+        toastr.error('Error Approving Claim', 'Please try again.', toastrHelpers.getErrorOptions())
+      }
     });
   }
   
   confirmDecline() {
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "D", this.claim_notes)).then((res) => {
-      if(res.type == "UPDATE_CLAIM_STATUS_SUCCESS"){
-        this.props.dispatch(claimsActions.requestPendingApprovals());
+      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "D"));
+      this.props.dispatch(claimsActions.requestPendingApprovals());
+      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
         modal.clear();
-        toastr.removeByType("error")
-        toastr.warning("Claim Declined", "You have declined the claim, claimant will be notified")
-       }
-       else{
-         toastr.removeByType("error")
-         toastr.error("Claim was not declined", "Oops! Something went wrong", toastrHelpers.getErrorOptions())
-       }
+        toastr.removeByType("error");
+        toastr.warning('Claim Declined', this.props.claim.claimant_first_name + ' ' + this.props.claim.claimant_last_name + ' will be notified.')
+      } else {
+        toastr.removeByType("error");
+        toastr.error('Error Declining Claim', 'Please try again.', toastrHelpers.getErrorOptions())
+      }
     });
   }
 
   forwardClaim() {
     this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.forward_manager_id, "F", this.claim_notes)).then((res) => {
-      if(res.type == "UPDATE_CLAIM_STATUS_SUCCESS"){
-        this.props.dispatch(claimsActions.requestPendingApprovals());
+      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "F"));
+      this.props.dispatch(emailActions.sendApproverEmail(this.props.claim, this.forward_manager_id, "F"));
+      this.props.dispatch(claimsActions.requestPendingApprovals());
+      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
         modal.clear();
-        toastr.removeByType("error")
-        toastr.confirm("Claim Forwaded", "You have forwaded the claim to " + this.forward_manager_id)
-       }
-       else{
-         toastr.removeByType("error")
-         toastr.error("Claim was not forwaded", "Oops! Something went wrong", toastrHelpers.getErrorOptions())
-       }
+        toastr.removeByType("error");
+        toastr.confirm('Claim Forwarded', this.props.claim.claimant_first_name + ' ' + this.props.claim.claimant_last_name + ' and the selected manager will be notified.')
+      } else {
+        toastr.removeByType("error");
+        toastr.error('Error Forwarding Claim', 'Please try again.', toastrHelpers.getErrorOptions())
+      }
     });
   }
 

@@ -24,8 +24,12 @@ function addClaim(claim) {
   return dispatch => {
     dispatch(request(claim));
     return claimsAPI.addClaim(claim).then(
-      res => dispatch(success(res.claim.insertId, claim)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(res.claim.insertId, claim))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     )
   };
   function request(claim) { return { type: claimsConstants.ADD_CLAIM_REQUEST, claim }}
@@ -37,8 +41,12 @@ function deleteClaim(claim_id) {
   return dispatch => {
     dispatch(request(claim_id));
     return claimsAPI.deleteClaim(claim_id).then(
-      res => dispatch(success(res.claim.insertId)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(res.claim.insertId))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     )
   };
   function request(claim_id) { return { type: claimsConstants.DELETE_CLAIM_REQUEST, claim_id }}
@@ -50,8 +58,12 @@ function updateStatus(claim_id, approver_id, status, notes) {
   return dispatch => {
     dispatch(request(claim_id, approver_id, status, notes));
     return claimsAPI.updateStatus(claim_id, approver_id, status, notes).then(
-      res => dispatch(success(res.claim)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(res.claim))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   function request(claim_id, approver_id, status, notes) { return { type: claimsConstants.UPDATE_CLAIM_STATUS_REQUEST, claim_id, approver_id, status, notes }}
@@ -63,8 +75,12 @@ function requestAll() {
   return dispatch => {
     dispatch(request());
     return claimsAPI.requestAll().then(
-      res => dispatch(success(res.claims)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(res.claims))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -79,9 +95,11 @@ function requestWith(params) {
     claimsAPI.requestWith(params)
     .then(
       res => {
-        dispatch(success(res.claims))
+        return dispatch(success(res.claims))
       },
-      error => dispatch(failure(error))
+      error => {
+        return dispatch(failure(error))
+      }
     );
 
     function request() { return { type: claimsConstants.REQUEST_CLAIMS }}
@@ -94,8 +112,12 @@ function requestOne(claim_id) {
   return dispatch => {
     dispatch(request(claim_id));
     return claimsAPI.requestOne(claim_id).then(
-      res => dispatch(success(res.claim)),
-      error => dispatch(failure(error))
+      res => { 
+        return dispatch(success(res.claim))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -108,8 +130,12 @@ function requestPendingApprovals() {
   return dispatch => {
     dispatch(request());
     return claimsAPI.requestPendingApprovals().then(
-      res => dispatch(success(res.claims)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(res.claims))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -122,8 +148,12 @@ function requestProcessedApprovals() {
   return dispatch => {
     dispatch(request());
     return claimsAPI.requestProcessedApprovals().then(
-      res => dispatch(success(res.claims)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(res.claims))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   

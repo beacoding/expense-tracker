@@ -27,10 +27,10 @@ class ClaimItemContainer extends React.Component {
     this.props.dispatch(claimItemsActions.deleteClaimItem(claim_id, claim_item.claim_item_id)).then((res) => {
         if (res.type === "DELETE_CLAIM_ITEM_SUCCESS") {
           toastr.removeByType("error");
-          toastr.success('Claim item has been successfully deleted');
+          toastr.success('Claim Item Deleted', 'Claim Item has been successfully deleted.');
         } else {
           toastr.removeByType("error");
-          toastr.error('Claim item has failed to delete', 'Please try again', toastrHelpers.getErrorOptions())
+          toastr.error('Error Deleting Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
         }
       modal.clear();
     });
@@ -57,14 +57,13 @@ class ClaimItemContainer extends React.Component {
       receipt: receipt
     }
     this.props.dispatch(claimItemsActions.editClaimItem(item)).then((res) => {
-      // if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
-      //   toastr.removeByType("error");
-      //   return;
-      //   toastr.success('Claim item has been successfully edited');
-      // } else {
-      //   toastr.removeByType("error");
-      //   toastr.error('Claim item has failed to edit', 'Please try again', toastrHelpers.getErrorOptions())
-      // }
+      if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
+        toastr.removeByType("error");
+        toastr.success('Claim Item Edited', 'Claim Item has been successfully edited.');
+      } else {
+        toastr.removeByType("error");
+        toastr.error('Error Editing Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
+      }
       modal.clear();
     });;
   }

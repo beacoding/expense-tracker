@@ -52,11 +52,10 @@ class UserManagementContainer extends React.Component {
     this.props.dispatch(employeesActions.addEmployee(newUser)).then((res) => {
       if (res.type === "ADD_EMPLOYEE_SUCCESS") {
         toastr.removeByType("error");
-      
-        toastr.success(data.first_name + ' ' + data.last_name  + ' has been successfully added');
+        toastr.success('Employee Added', data.first_name + ' ' + data.last_name  + ' has been successfully added');
       } else {
         toastr.removeByType("error");
-        toastr.error(data.first_name + ' ' + data.last_name  + ' has been not added', 'Please try again', toastrHelpers.getErrorOptions())
+        toastr.error('Error Adding Employee', 'User: ' + data.first_name + ' ' + data.last_name  + ' was not added.', toastrHelpers.getErrorOptions())
       }
       modal.clear();
     });;

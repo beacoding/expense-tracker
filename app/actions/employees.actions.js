@@ -19,9 +19,11 @@ function requestAll() {
     dispatch(request());
     return employeesAPI.requestAll().then(
       res => {
-        dispatch(success(res.employees))
+        return dispatch(success(res.employees))
       },
-      error => dispatch(failure(error))
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -35,9 +37,11 @@ function requestAllWithManagers() {
     dispatch(request());
     return employeesAPI.requestAllWithManagers().then(
       res => {
-        dispatch(success(res.employees))
+        return dispatch(success(res.employees))
       },
-      error => dispatch(failure(error))
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -50,9 +54,13 @@ function updatePassword(employee) {
   return dispatch => {
     dispatch(request(employee));
     return employeesAPI.updatePassword(employee).then(
-      res => dispatch(success()),
-      error => dispatch(failure(error))
-      )
+      res => {
+        return dispatch(success(employee))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
+    )
   }
   
   function request(employee) { return { type: employeesConstants.UPDATE_PASSWORD_REQUEST, employee }}
@@ -65,9 +73,11 @@ function requestEmployees(manager_id) {
     dispatch(request(manager_id));
     return employeesAPI.requestEmployees(manager_id).then(
       res => {
-        dispatch(success(res.employees))
+        return dispatch(success(res.employees))
       },
-      error => dispatch(failure(error))
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -81,9 +91,11 @@ function disableEmployee(employee_id, manager_id) {
     dispatch(request(employee_id));
     return employeesAPI.disableEmployee(employee_id, manager_id).then(
       res => {
-        dispatch(success(employee_id))
+        return dispatch(success(employee_id))
       },
-      error => dispatch(failure(error))
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -97,9 +109,11 @@ function enableEmployee(employee_id) {
     dispatch(request(employee_id));
     return employeesAPI.enableEmployee(employee_id).then(
       res => {
-        dispatch(success(employee_id))
+        return dispatch(success(employee_id))
       },
-      error => dispatch(failure(error))
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -111,12 +125,13 @@ function enableEmployee(employee_id) {
 function requestWith(params) {
   return dispatch => {
     dispatch(request());
-    employeesAPI.requestWith(params)
-    .then(
+    employeesAPI.requestWith(params).then(
       res => {
-        dispatch(success(res.employees))
+        return dispatch(success(res.employees))
       },
-      error => dispatch(failure(error))
+      error => {
+        return dispatch(failure(error))
+      }
     );
 
     function request() { return { type: employeesConstants.REQUEST_WITH }}
@@ -130,9 +145,11 @@ function requestEmployee(employee_id) {
     dispatch(request(employee_id));
     return employeesAPI.requestEmployee(employee_id).then(
       res => {
-        dispatch(success(res.employee))
+        return dispatch(success(res.employee))
       },
-      error => dispatch(failure(error))
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -145,8 +162,12 @@ function addEmployee(newEmployee) {
   return dispatch => {
     dispatch(request(newEmployee));
     return employeesAPI.addEmployee(newEmployee).then(
-      res => dispatch(success(newEmployee, res.employees)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(newEmployee, res.employees))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     )
   };
   function request(newEmployee) { return { type: employeesConstants.ADD_EMPLOYEE_REQUEST, newEmployee }}

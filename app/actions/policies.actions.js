@@ -12,8 +12,12 @@ function requestAll() {
   return dispatch => {
     dispatch(request());
     return policiesAPI.requestAll().then(
-      res => dispatch(success(res.policies)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(res.policies))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -26,8 +30,12 @@ function requestCompanies() {
   return dispatch => {
     dispatch(request());
     return policiesAPI.requestCompanies().then(
-      res => dispatch(success(res.companies)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(res.companies))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -40,8 +48,12 @@ function requestExpenseTypes() {
   return dispatch => {
     dispatch(request());
     return policiesAPI.requestExpenseTypes().then(
-      res => dispatch(success(res.expense_types)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(res.expense_types))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   
@@ -54,12 +66,16 @@ function updateValue(name, value) {
   return dispatch => {
     dispatch(request(name, value));
     return policiesAPI.updateValue(name, value).then(
-      res => dispatch(success(name, value)),
-      error => dispatch(failure(error))
-      )
+      res => {
+        return dispatch(success(name, value))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
+    )
   }
   
   function request(name, value) { return { type: policiesConstants.UPDATE_POLICIES_REQUEST, name, value }}
-  function success(name, value) { return { type: policiesConstants.POLICIES_REQUEST_SUCCESS, name, value }}
-  function failure(error) { return { type: policiesConstants.POLICIES_REQUEST_FAILURE, error }}
+  function success(name, value) { return { type: policiesConstants.UPDATE_POLICIES_SUCCESS, name, value }}
+  function failure(error) { return { type: policiesConstants.UPDATE_POLICIES_FAILURE, error }}
 }

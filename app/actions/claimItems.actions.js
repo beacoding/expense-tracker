@@ -14,8 +14,12 @@ function addClaimItem(item) {
   return dispatch => {
     dispatch(request(item));
     return claimItemsAPI.addClaimItem(item).then(
-      res => dispatch(success(res.claimItem, item.claim_id)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(res.claimItem, item.claim_id))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     )
   };
   function request(item) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_REQUEST, item }}
@@ -61,7 +65,9 @@ function deleteClaimItem(claim_id, claim_item_id) {
   return dispatch => {
     dispatch(request(claim_id, claim_item_id));
     return claimItemsAPI.deleteClaimItem(claim_item_id).then(
-      res => dispatch(success(claim_id, claim_item_id)),
+      res => {
+        return dispatch(success(claim_id, claim_item_id))
+      },
       error => {
         return dispatch(failure(error))
       }
@@ -76,8 +82,12 @@ function requestAll(claim_id) {
   return dispatch => {
     dispatch(request(claim_id));
     return claimItemsAPI.requestAll(claim_id).then(
-      res => dispatch(success(res.claimItems, claim_id)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(res.claimItems, claim_id))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     );
   };
   

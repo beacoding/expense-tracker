@@ -51,13 +51,18 @@ class ClaimPage extends React.Component {
   
   confirmSubmit() {
     let claim_id = window.location.pathname.split("/")[2];
-    this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then(() => {
-      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claimsMap[claim_id], "S"))
-      this.props.dispatch(emailActions.sendApproverEmail(this.props.claimsMap[claim_id], this.props.employee.manager_id, "S"))
-      modal.clear();
-      this.returnToClaimsList();
-      toastr.removeByType("error")
-      toastr.success("Claim Submitted", "Your claim has been submitted, please wait for approval!")
+    this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then((res) => {
+      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
+        toastr.removeByType("error");
+        toastr.success('Claim Submitted', 'Your claim has been submitted to your manager for review.')
+        this.props.dispatch(emailActions.sendClaimantEmail(this.props.claimsMap[claim_id], "S"))
+        this.props.dispatch(emailActions.sendApproverEmail(this.props.claimsMap[claim_id], this.props.employee.manager_id, "S"))
+        modal.clear();
+        this.returnToClaimsList()
+      } else {
+        toastr.removeByType("error");
+        toastr.error('Error Submitting Claim', 'Please try again.', toastrHelpers.getErrorOptions())
+      }
     });
   }
 
@@ -124,10 +129,10 @@ class ClaimPage extends React.Component {
     this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
       if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Claim item has been successfully added');
+        toastr.success('Claim Item Added', 'Claim Item has been successfully added.');
       } else {
         toastr.removeByType("error");
-        toastr.error('Claim item has failed to add', 'Please try again', toastrHelpers.getErrorOptions())
+        toastr.error('Error Adding Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
       }
       modal.clear();
       toastr.removeByType("error")

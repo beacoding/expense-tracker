@@ -16,13 +16,12 @@ class PoliciesContainer extends React.Component {
   handleEditLimit(name, data) {
     let new_value = parseFloat(data["new_policy_value"]);
     this.props.dispatch(policiesActions.updateValue(name, new_value)).then((res) => {
-      if (res.type === "SUCCESS_UPDATE_POLICIES") {
+      if (res.type === "UPDATE_POLICIES_SUCCESS") {
         toastr.removeByType("error");
-  
-        toastr.success('Policy has been successfully updated');
+        toastr.success('Policy Updated', 'Policy has been successfully updated.');
       } else {
         toastr.removeByType("error");
-        toastr.error('Policy was not updated', 'Please try again', toastrHelpers.getErrorOptions())
+        toastr.error('Error Updating Policy', 'Please try again.', toastrHelpers.getErrorOptions())
       }
     });
   }
