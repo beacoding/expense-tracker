@@ -99,7 +99,7 @@ class ReportsContainer extends React.Component {
           </div>
           <div className="reports-search"><label>or Approver:</label></div>        
           <div className="form-group reports-search">
-            <input type="text" className="form-control" name="manager_name" id="reports-search-manager" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
+            <input type="text" className="form-control" name="approver_name" id="reports-search-manager" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
           </div>
         </div>
       </div>
