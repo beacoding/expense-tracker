@@ -8,6 +8,8 @@ import {modal} from 'react-redux-modal';
 import UserManagementPasswordChangeModal from './UserManagementPasswordChangeModal';
 import UserManagementDeleteModal from './UserManagementDeleteModal';
 import UserManagementEnableModal from './UserManagementEnableModal';
+import {toastr} from 'react-redux-toastr';
+import {toastrHelpers} from '../helpers';
 
 class ManageUserContainer extends React.Component {
   constructor(props) {
@@ -68,6 +70,8 @@ class ManageUserContainer extends React.Component {
     const user = this.props.user;
     this.props.dispatch(employeesActions.disableEmployee(user.id, user.manager_id)).then(() => {
       modal.clear();
+      toastr.removeByType("error")
+      toastr.warning("User disabled", user.first_name +" has been disabled")
     });
   }
 
@@ -75,6 +79,8 @@ class ManageUserContainer extends React.Component {
     const user = this.props.user;
     this.props.dispatch(employeesActions.enableEmployee(user.id)).then(() => {
       modal.clear();
+      toastr.removeByType("error")
+      toastr.success("User enabled", user.first_name +" has been enabled")
     });
   }
 
@@ -86,8 +92,16 @@ class ManageUserContainer extends React.Component {
       password: form.ResetPasswordForm.values.new_password
     }
 
-    this.props.dispatch(employeesActions.updatePassword(newpassword)).then(() => {
-      modal.clear();
+    this.props.dispatch(employeesActions.updatePassword(newpassword)).then((res) => {
+      if(res.type == "UPDATE_PASSWORD_SUCCESS"){
+        modal.clear();
+        toastr.removeByType("error")
+        toastr.success('Password changed', 'Password changed for ' + employee.first_name)
+       }
+       else{
+         toastr.removeByType("error")
+         toastr.error("Password does not match", "You've entered incorrect old password", toastrHelpers.getErrorOptions())
+       }
     });
   }
 

@@ -26,6 +26,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
   let consts = {zoomStyle: 'opacity: 0.1;background-color: black;'}
 
   let receipt = (claim_item.image_url) === null ? "No Receipt" : 
+ 
   <ImageZoom
     image={{
       src: '/uploads/' + claim_item.image_url,
@@ -74,23 +75,30 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
   } else if (claim_status === 'P') {
     return (
       <tr>
-        <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item_id)} propName='description' /> <i className="ion-edit"></i> </td>
-        <td>$<RIEInput value={amount.toFixed(2) || "Enter Amount Here"} change={handleEditItem.bind(this, "amount", claim_item_id)} propName='amount' />  <i className="ion-edit"></i></td>
-        <td>      
-          <select value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item_id)}>
-            <option value="" disabled> Select an expense category. </option>
-            {
-              expense_types.map((expense_type) => {
-                let expense_type_id = expense_type.id;
-                let expense_type_category = expense_type.category
-                return <option value={expense_type_id} key={expense_type_id}>{expense_type_category}</option>
-              })
-            }
-          </select>
-        </td>
-        <td>{receipt} <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></td>
-        <td><RIEInput value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
-        <td><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i></td>
+
+          <td> <div className="table-cell"><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item_id)} propName='description' /> <i className="ion-edit"></i></div></td>
+
+          <td> <div className="table-cell">$<RIEInput value={amount.toFixed(2) || "Enter Amount Here"} change={handleEditItem.bind(this, "amount", claim_item_id)} propName='amount' />  <i className="ion-edit"></i></div></td>
+
+          <td> <div className="table-cell">      
+            <select value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item_id)}>
+              <option value="" disabled> Select an expense category. </option>
+              {
+                expense_types.map((expense_type) => {
+                  let expense_type_id = expense_type.id;
+                  let expense_type_category = expense_type.category
+                  return <option value={expense_type_id} key={expense_type_id}>{expense_type_category}</option>
+                })
+              }
+            </select>
+            </div>
+          </td>
+
+        <td> <div className="table-cell">{receipt} <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></div></td>
+  
+        <td> <div className="table-cell"><RIEInput value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label></div> </td>
+        <td> <div className="table-cell"><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i> </div></td>
+     
       </tr>
     )
   } else {
@@ -101,7 +109,6 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
         <td>{expense_category}</td>
         <td>{receipt}</td>
         <td>{comment}</td>
-        <td></td>
       </tr>
     )
   }

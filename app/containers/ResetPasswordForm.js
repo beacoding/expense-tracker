@@ -34,7 +34,7 @@ class ResetPasswordForm extends React.Component {
             name="new_password"
             type="password"
             placeholder="New Password"
-            component={this.renderNewPassword.bind(this)}
+            component={this.renderNewPassword}
         />
         <div className="buttons-row">
           <button type="submit" className="btn page-button-blue" disabled={pristine || submitting}>Submit</button>

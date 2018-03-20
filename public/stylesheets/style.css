@@ -112,9 +112,41 @@ PROFILE PAGE STYLE
 END OF PROFILE PAGE
 ----------------------------------------------------- */
 .item-table{
-  display:table;
-  table-layout: fixed;
+  background-color: rgb(255, 255, 255);
+  margin: 25px;
+  padding: 30px;
+  border-radius: 3px;
+  box-shadow: 2px 2px #e6e4e4;
+  position: relative;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+ 
 }
+
+.item-container{
+  background-color: rgb(255, 255, 255);
+  margin: 10px;
+  padding: 30px;
+  border-radius: 3px;
+  box-shadow: 2px 2px #e6e4e4;
+  position: relative;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  height: 10%;
+}
+.item-table-middle{
+  display:table-row;
+  width:20%;
+}
+.table-cell{
+  width:20%;
+  overflow-wrap: break-word;
+  white-space: nowrap;
+}
+
+
 
 /* ---------------------------------------------------
 SIDEBAR STYLE
@@ -133,6 +165,7 @@ SIDEBAR STYLE
   user-select: none;
   -webkit-user-select: none;
 }
+
 
 #sidebar.active {
   min-width: 80px;

@@ -5,6 +5,8 @@ import {Panel} from 'react-bootstrap';
 import ProfileModal from './ProfileModal';
 import {modal} from 'react-redux-modal';
 import { employeesActions } from '../actions';
+import {toastr} from 'react-redux-toastr';
+import {toastrHelpers} from '../helpers';
 class Profile extends React.Component {
 
   constructor(props) {
@@ -33,8 +35,14 @@ class Profile extends React.Component {
       password: form.PasswordForm.values.new_password
     }
     this.props.dispatch(employeesActions.updatePassword(newpassword)).then((res) => {
-      if(res.type == "SUCCESS_UPDATE_PASSWORD"){
+      if(res.type == "UPDATE_PASSWORD_SUCCESS"){
         modal.clear();
+        toastr.removeByType("error")
+        toastr.success('Password changed', 'Password changed for ' + employee.first_name)
+       }
+       else{
+         toastr.removeByType("error")
+         toastr.error("Password does not match", "You've entered incorrect old password", toastrHelpers.getErrorOptions())
        }
     });;
   }

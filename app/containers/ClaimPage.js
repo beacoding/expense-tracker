@@ -10,6 +10,7 @@ import NewClaimItemModal from './NewClaimItemModal';
 import ModalContainer from './ModalContainer';
 import { claimsHelpers } from '../helpers';
 import {toastr} from 'react-redux-toastr';
+import {toastrHelpers} from '../helpers';
 
 class ClaimPage extends React.Component {
   constructor(props) {
@@ -54,6 +55,8 @@ class ClaimPage extends React.Component {
     this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then(() => {
       modal.clear();
       this.returnToClaimsList();
+      toastr.removeByType("error")
+      toastr.success("Claim Submitted", "Your claim has been submitted, please wait for approval!")
     });
   }
 
@@ -78,6 +81,8 @@ class ClaimPage extends React.Component {
     this.props.dispatch(claimsActions.deleteClaim(claim_id)).then(() => {
       modal.clear();
       window.location = '/claims/';
+      toastr.removeByType("error")
+      toastr.error("Claim deleted", "You have deleted the claim")
     });
   }
 
@@ -117,6 +122,8 @@ class ClaimPage extends React.Component {
     }   
     this.props.dispatch(claimItemsActions.addClaimItem(item)).then(() => {
       modal.clear();
+      toastr.removeByType("error")
+      toastr.success("Item added")
     });;
   }
 
@@ -193,7 +200,7 @@ class ClaimPage extends React.Component {
             <button className="page-button" style={{float: 'left'}} onClick={this.returnToClaimsList}>Back</button>
           </div>
         </div>
-        <div className="claim-container">
+        <div className="item-container">
           { claimantView && <div className="progress-meter">
             <div className="track" >
               <span className="progress" style={{width: ((stepCompletionIndex / 3) * 100) + "%"}}></span>
@@ -213,8 +220,11 @@ class ClaimPage extends React.Component {
               </li>
             </ol>
           </div> }
-          { (status == 'P') && <button className="page-button" onClick={this.showNewClaimItemModal}> New Item</button> }
-          <table className="table table-striped">
+          </div>
+          <div className="item-table">
+           { (status == 'P') && <button className="page-button" onClick={this.showNewClaimItemModal}> New Item</button> }
+            
+          <table className="table table-striped" cellSpacing="20px">
             <thead>
               <tr>
                 <th scope="col">Description</th>
@@ -222,7 +232,6 @@ class ClaimPage extends React.Component {
                 <th scope="col">Expense Category</th>
                 <th scope="col">Receipt</th>
                 <th scope="col">Comments</th>
-                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>

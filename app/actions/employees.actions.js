@@ -50,13 +50,13 @@ function updatePassword(employee) {
   return dispatch => {
     dispatch(request());
     return employeesAPI.updatePassword(employee).then(
-      res => dispatch(success(id)),
+      res => dispatch(success()),
       error => dispatch(failure(error))
       )
   }
   
   function request() { return { type: employeesConstants.UPDATE_PASSWORD_REQUEST }}
-  function success(id) { return { type: employeesConstants.UPDATE_PASSWORD_SUCCESS, id }}
+  function success() { return { type: employeesConstants.UPDATE_PASSWORD_SUCCESS }}
   function failure(error) { return { type: employeesConstants.UPDATE_PASSWORD_FAILURE, error }}
 }
 
