@@ -93,14 +93,13 @@ class ManageUserContainer extends React.Component {
     }
 
     this.props.dispatch(employeesActions.updatePassword(newpassword)).then((res) => {
-      if(res.type == "UPDATE_PASSWORD_SUCCESS"){
+      if (res.type == "UPDATE_PASSWORD_SUCCESS") {
         modal.clear();
         toastr.removeByType("error")
-        toastr.success('Password changed', 'Password changed for ' + employee.first_name)
-       }
-       else{
+        toastr.success('Password Changed', 'Password changed for ' + employee.first_name + '.')
+       } else {
          toastr.removeByType("error")
-         toastr.error("Password does not match", "You've entered incorrect old password", toastrHelpers.getErrorOptions())
+         toastr.error("Error Changing Password", "Please try again.", toastrHelpers.getErrorOptions())
        }
     });
   }

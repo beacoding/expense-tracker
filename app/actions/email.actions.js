@@ -10,8 +10,12 @@ function sendClaimantEmail(claim, action) {
   return dispatch => {
     dispatch(request());
     return emailAPI.sendClaimantEmail(claim, action).then(
-      res => dispatch(success(claim, action)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(claim, action))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     )
   };
   function request() { return { type: emailConstants.SEND_EMAIL_REQUEST }}
@@ -23,8 +27,12 @@ function sendApproverEmail(claim, approver_id, action) {
   return dispatch => {
     dispatch(request());
     return emailAPI.sendApproverEmail(claim, approver_id, action).then(
-      res => dispatch(success(claim, approver_id, action)),
-      error => dispatch(failure(error))
+      res => {
+        return dispatch(success(claim, approver_id, action))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
     )
   };
   function request() { return { type: emailConstants.SEND_EMAIL_REQUEST }}

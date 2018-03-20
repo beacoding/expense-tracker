@@ -46,10 +46,10 @@ class ApprovalLimitsContainer extends React.Component {
     this.props.dispatch(approvalLimitsActions.addApprovalLimit(approvalLimit)).then((res) => {
       if (res.type === "ADD_APPROVAL_LIMIT_SUCCESS") {
         toastr.removeByType("error")
-        toastr.success('Added New Limit', 'Added a new approval limit for ' + employee_name)
+        toastr.success('Approval Authority Added', 'Added a new approval limit for ' + employee_name + '.')
       } else {
         toastr.removeByType("error");
-        toastr.error('Duplicate Entry', employee_name +  'is already associated with the cost centre ' + cost_centre_id, toastrHelpers.getErrorOptions())
+        toastr.error('Duplicate Entry', employee_name +  ' is already associated with the cost centre ' + cost_centre_id +'.', toastrHelpers.getErrorOptions())
       }
       modal.clear();
     });;

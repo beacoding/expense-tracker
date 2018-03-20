@@ -92,9 +92,9 @@ function revokeApprovalLimit(employee_id, cost_centre_id) {
     );
   };
 
-  function request(employee_id, cost_centre_id) { return { type: approvalLimitsConstants.REQUEST_REVOKE_APPROVAL_LIMIT, employee_id, cost_centre_id }}
-  function success(revoked_limit) { return { type: approvalLimitsConstants.SUCCESS_REVOKE_APPROVAL_LIMIT, revoked_limit }}
-  function failure(error) { return { type: approvalLimitsConstants.FAILURE_REVOKE_APPROVAL_LIMIT, error }}
+  function request(employee_id, cost_centre_id) { return { type: approvalLimitsConstants.REVOKE_APPROVAL_LIMIT_REQUEST, employee_id, cost_centre_id }}
+  function success(revoked_limit) { return { type: approvalLimitsConstants.REVOKE_APPROVAL_LIMIT_SUCCESS, revoked_limit }}
+  function failure(error) { return { type: approvalLimitsConstants.REVOKE_APPROVAL_LIMIT_FAILURE, error }}
 }
 
 function requestWith(params) {

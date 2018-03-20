@@ -61,13 +61,10 @@ class ClaimList extends React.Component {
     }
 
     this.props.dispatch(claimsActions.addClaim(claim)).then((res) => {
-      //   if (res.type === "ADD_CLAIM_SUCCESS") {
-      //   toastr.removeByType("error");
-      //   toastr.success('Created New Claim', 'Please add claim items')
-      // } else {
-      //     toastr.removeByType("error");
-      //     toastr.error('Create New Claim Failed', 'Please try again', toastrHelpers.getErrorOptions())
-      //   }
+      if (res.type === "ADD_CLAIM_FAILURE") {
+        toastr.removeByType("error");
+        toastr.error('Error Creating Claim', 'Please try again.', toastrHelpers.getErrorOptions())
+      }
       modal.clear();
       window.location= '/claims/'+ res.claimId;
     });
