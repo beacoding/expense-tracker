@@ -11,7 +11,7 @@ const claimItems = (state = initialState, action) => {
   
   switch (action.type) {
     // ADD CLAIM ITEM
-    case claimItemsConstants.ADD_CLAIM_ITEM:
+    case claimItemsConstants.ADD_CLAIM_ITEM_REQUEST:
       return Object.assign({}, state, {
         isFetching: true
       });
@@ -22,20 +22,17 @@ const claimItems = (state = initialState, action) => {
       if (newClaimItemsMap[claim_id] === undefined) {
         newClaimItemsMap[claim_id] = {}
       } 
-
       newClaimItemsMap[claim_id][newItem.claim_item_id] = newItem
       return Object.assign({}, state, {
         isFetching: false,
         claimItemsMap: newClaimItemsMap,
         error: undefined
       });
-    case claimItemsConstants.EDIT_CLAIM_ITEM_FAILURE:
-      return Object.assign({}, state, {
-        isFetching: true,
-        error: action.error
-      });
+    case claimItemsConstants.ADD_CLAIM_ITEM_FAILURE:
+      return state;
+
     // EDIT CLAIM ITEM
-    case claimItemsConstants.EDIT_CLAIM_ITEM:
+    case claimItemsConstants.EDIT_CLAIM_ITEM_REQUEST:
       return Object.assign({}, state, {
         isFetching: true
       });
@@ -47,8 +44,12 @@ const claimItems = (state = initialState, action) => {
         claimItemsMap: newClaimItemsMap,
         error: undefined
       });
-    case claimItemsConstants.ADD_CLAIM_ITEM_FAILURE:
-      return state
+    case claimItemsConstants.EDIT_CLAIM_ITEM_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: true,
+        error: action.error
+      });
+      
     // REMOVE CLAIM ITEM
     case claimItemsConstants.DELETE_CLAIM_ITEM_REQUEST:
       return state;

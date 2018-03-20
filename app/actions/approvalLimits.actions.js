@@ -42,9 +42,9 @@ function addApprovalLimit(params) {
     );
   };
   
-  function request(params) { return { type: approvalLimitsConstants.REQUEST_ADD_APPROVAL_LIMIT, params }}
-  function success(new_limit) { return { type: approvalLimitsConstants.SUCCESS_ADD_APPROVAL_LIMIT, new_limit }}
-  function failure(error) { return { type: approvalLimitsConstants.FAILURE_ADD_APPROVAL_LIMIT, error }}
+  function request(params) { return { type: approvalLimitsConstants.ADD_APPROVAL_LIMIT_REQUEST, params }}
+  function success(new_limit) { return { type: approvalLimitsConstants.ADD_APPROVAL_LIMIT_SUCCESS, new_limit }}
+  function failure(error) { return { type: approvalLimitsConstants.ADD_APPROVAL_LIMIT_FAILURE, error }}
 }
 
 function updateApprovalLimit(employee_id, cost_centre_id, limit) {
@@ -66,9 +66,9 @@ function updateApprovalLimit(employee_id, cost_centre_id, limit) {
     );
   };
   
-  function request(employee_id, cost_centre_id, limit) { return { type: approvalLimitsConstants.REQUEST_UPDATE_APPROVAL_LIMIT, employee_id, cost_centre_id, limit }}
-  function success(new_limit) { return { type: approvalLimitsConstants.SUCCESS_UPDATE_APPROVAL_LIMIT, new_limit }}
-  function failure(error) { return { type: approvalLimitsConstants.FAILURE_UPDATE_APPROVAL_LIMIT, error }}
+  function request(employee_id, cost_centre_id, limit) { return { type: approvalLimitsConstants.UPDATE_APPROVAL_LIMIT_REQUEST, employee_id, cost_centre_id, limit }}
+  function success(new_limit) { return { type: approvalLimitsConstants.UPDATE_APPROVAL_LIMIT_SUCCESS, new_limit }}
+  function failure(error) { return { type: approvalLimitsConstants.UPDATE_APPROVAL_LIMIT_FAILURE, error }}
 }
 
 function revokeApprovalLimit(employee_id, cost_centre_id) {

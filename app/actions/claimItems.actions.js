@@ -18,7 +18,7 @@ function addClaimItem(item) {
       error => dispatch(failure(error))
     )
   };
-  function request(item) { return { type: claimItemsConstants.ADD_CLAIM_ITEM, item }}
+  function request(item) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_REQUEST, item }}
   function success(newClaimItem, claimId) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_SUCCESS, newClaimItem, claimId }}
   function failure(error) { return { type: claimItemsConstants.ADD_CLAIM_ITEM_FAILURE, error }}
 }
@@ -35,7 +35,7 @@ function editClaimItem(item, claim_id, claim_item_id) {
       }
     )
   };
-  function request(item, claim_id, claim_item_id) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM, item, claim_id, claim_item_id }}
+  function request(item, claim_id, claim_item_id) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM_REQUEST, item, claim_id, claim_item_id }}
   function success(newClaimItem, id, claimId) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM_SUCCESS, newClaimItem, claimId, id }}
   function failure(error) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM_FAILURE, error }}
 }
@@ -52,7 +52,7 @@ function editReceipt(item, claim_id, claim_item_id) {
       }
     )
   };
-  function request(item, claim_id, claim_item_id) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM, item, claim_id, claim_item_id }}
+  function request(item, claim_id, claim_item_id) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM_REQUEST, item, claim_id, claim_item_id }}
   function success(newClaimItem, id, claimId) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM_SUCCESS, newClaimItem, claimId, id }}
   function failure(error) { return { type: claimItemsConstants.EDIT_CLAIM_ITEM_FAILURE, error }}
 }

@@ -44,7 +44,7 @@ class ApprovalLimitsContainer extends React.Component {
       cost_centre_id: cost_centre_id,
     }
     this.props.dispatch(approvalLimitsActions.addApprovalLimit(approvalLimit)).then((res) => {
-      if (res.type === "SUCCESS_ADD_APPROVAL_LIMIT") {
+      if (res.type === "ADD_APPROVAL_LIMIT_SUCCESS") {
         toastr.removeByType("error")
         toastr.success('Added New Limit', 'Added a new approval limit for ' + employee_name)
       } else {

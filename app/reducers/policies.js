@@ -34,12 +34,12 @@ const policies = (state = initialState, action) => {
       });
     
     // ADD APPROVAL LIMIT
-    case approvalLimitsConstants.REQUEST_ADD_APPROVAL_LIMIT:
+    case approvalLimitsConstants.ADD_APPROVAL_LIMIT_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
         errorAddApprovalLimit: undefined
       });
-    case approvalLimitsConstants.SUCCESS_ADD_APPROVAL_LIMIT:
+    case approvalLimitsConstants.ADD_APPROVAL_LIMIT_SUCCESS:
       newLimitsMap = Object.assign({}, state.limitsMap);
       if (newLimitsMap[action.new_limit.cost_centre_id] === undefined) {
         newLimitsMap[action.new_limit.cost_centre_id] = {};
@@ -50,16 +50,16 @@ const policies = (state = initialState, action) => {
         limitsMap: newLimitsMap,
         errorAddApprovalLimit: undefined
       });
-    case approvalLimitsConstants.FAILURE_ADD_APPROVAL_LIMIT:
+    case approvalLimitsConstants.ADD_APPROVAL_LIMIT_FAILURE:
       return Object.assign({}, state, {
         errorAddApprovalLimit: action.error
       });
     // UPDATE APPROVAL LIMIT
-    case approvalLimitsConstants.REQUEST_UPDATE_APPROVAL_LIMIT:
+    case approvalLimitsConstants.UPDATE_APPROVAL_LIMIT_REQUEST:
       return Object.assign({}, state, {
         isFetching: true
       });
-    case approvalLimitsConstants.SUCCESS_UPDATE_APPROVAL_LIMIT:
+    case approvalLimitsConstants.UPDATE_APPROVAL_LIMIT_SUCCESS:
       newLimitsMap = Object.assign({}, state.limitsMap);
       if (action.new_limit.approval_limit === null) {
         newLimitsMap[action.new_limit.cost_centre_id][action.new_limit.employee_id].approval_limit = null;
@@ -71,7 +71,7 @@ const policies = (state = initialState, action) => {
         limitsMap: newLimitsMap,
         error: undefined
       });
-    case approvalLimitsConstants.FAILURE_UPDATE_APPROVAL_LIMIT:
+    case approvalLimitsConstants.UPDATE_APPROVAL_LIMIT_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
@@ -170,9 +170,9 @@ const policies = (state = initialState, action) => {
       });
 
     // REQUEST UPDATE POLICIES
-    case policiesConstants.REQUEST_UPDATE_POLICIES:
+    case policiesConstants.UPDATE_POLICIES_REQUEST:
       return state
-    case policiesConstants.SUCCESS_UPDATE_POLICIES:
+    case policiesConstants.POLICIES_REQUEST_SUCCESS:
       let newPolicies = Object.assign({}, state.policies)
       newPolicies[action.name] = action.value 
       return Object.assign({}, state, {
@@ -180,7 +180,7 @@ const policies = (state = initialState, action) => {
         policies: newPolicies,
         error: undefined
       });
-    case policiesConstants.FAILURE_UPDATE_POLICIES:
+    case policiesConstants.POLICIES_REQUEST_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
