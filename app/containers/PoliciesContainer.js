@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { policiesActions } from '../actions';
 import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek'
+import {toastr} from "react-redux-toastr";
+import {toastrHelpers} from "../helpers";
 
 class PoliciesContainer extends React.Component {
   componentDidMount() {
@@ -13,7 +15,16 @@ class PoliciesContainer extends React.Component {
 
   handleEditLimit(name, data) {
     let new_value = parseFloat(data["new_policy_value"]);
-    this.props.dispatch(policiesActions.updateValue(name, new_value));
+    this.props.dispatch(policiesActions.updateValue(name, new_value)).then((res) => {
+      if (res.type === "SUCCESS_UPDATE_POLICIES") {
+        toastr.removeByType("error");
+        .claim);
+        toastr.success('Policy has been successfully updated');
+      } else {
+        toastr.removeByType("error");
+        toastr.error('Policy was not updated', 'Please try again', toastrHelpers.getErrorOptions())
+      }
+    });
   }
 
   isLimitInputAcceptable(limitInput) {

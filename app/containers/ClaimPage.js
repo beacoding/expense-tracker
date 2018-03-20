@@ -2,15 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { modal } from 'react-redux-modal';
+import { claimsActions, claimItemsActions, emailActions, policiesActions } from '../actions';
 import classNames from 'classnames';
-import { claimItemsActions, policiesActions } from '../actions';
-import { claimsActions } from '../actions';
 import ClaimItemContainer from './ClaimItemContainer';
 import NewClaimItemModal from './NewClaimItemModal';
-import ModalContainer from './ModalContainer';
-import { claimsHelpers } from '../helpers';
-import {toastr} from 'react-redux-toastr';
-import {toastrHelpers} from '../helpers';
+import ModalContainer from './ModalContainer'
+import { emailAPI } from "../api";
+import {claimsHelpers, toastrHelpers} from '../helpers';
+import { toastr } from 'react-redux-toastr';
 
 class ClaimPage extends React.Component {
   constructor(props) {
@@ -53,6 +52,8 @@ class ClaimPage extends React.Component {
   confirmSubmit() {
     let claim_id = window.location.pathname.split("/")[2];
     this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then(() => {
+      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claimsMap[claim_id], "S"))
+      this.props.dispatch(emailActions.sendApproverEmail(this.props.claimsMap[claim_id], this.props.employee.manager_id, "S"))
       modal.clear();
       this.returnToClaimsList();
       toastr.removeByType("error")
@@ -120,7 +121,14 @@ class ClaimPage extends React.Component {
       expense_type: parseInt(data.expense_type),
       receipt: receipt
     }   
-    this.props.dispatch(claimItemsActions.addClaimItem(item)).then(() => {
+    this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
+      if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
+        toastr.removeByType("error");
+        toastr.success('Claim item has been successfully added');
+      } else {
+        toastr.removeByType("error");
+        toastr.error('Claim item has failed to add', 'Please try again', toastrHelpers.getErrorOptions())
+      }
       modal.clear();
       toastr.removeByType("error")
       toastr.success("Item added")

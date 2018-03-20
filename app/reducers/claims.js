@@ -24,6 +24,8 @@ const claims = (state = initialState, action) => {
       action.claim.claimant_last_name = '';
       action.claim.approver_first_name = 'Processing...';
       action.claim.approver_last_name = '';
+      action.claim.manager_first_name = 'Processing...';
+      action.claim.manager_last_name = '';
       action.claim.company_name = 'Processing...';
       action.claim.date_created = Date.now();
       newClaimsMap = Object.assign({}, state.claimsMap);

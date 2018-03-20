@@ -1,10 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { employeesActions } from '../actions';
+import {claimItemsActions, employeesActions} from '../actions';
 import {Panel} from 'react-bootstrap';
 import UsersList from './UsersList';
-import {modal} from 'react-redux-modal';
+import { modal } from 'react-redux-modal';
 import UserManagementPasswordChangeModal from './UserManagementPasswordChangeModal';
 import UserManagementDeleteModal from './UserManagementDeleteModal';
 import UserManagementEnableModal from './UserManagementEnableModal';

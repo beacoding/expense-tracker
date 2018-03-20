@@ -6,17 +6,17 @@ module.exports = {
       //TODO queryString to find one employee
       var queryString = `SELECT
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
-                          CONCAT(manager.first_name, ' ', manager.last_name) as manager_name,
+                          CONCAT(m.first_name, ' ', m.last_name) as manager_name,
                           e.is_active,
                           e.id,
-                          manager.id as manager_id,
+                          m.id as manager_id,
                           e.email,
                           e.first_name,
                           e.last_name
                         FROM
-                          employee e,
-                          employee manager
-                        WHERE e.id = ? AND e.manager_id = manager.id`;
+                          employee e
+                        LEFT JOIN employee m ON m.id = e.manager_id
+                        WHERE e.id = ?`;
       connection.query(queryString, [id], (err, rows) => {
         if (err) {
           reject(err);
@@ -99,19 +99,17 @@ module.exports = {
     });
   },
 
-  // returns all users along with their manager's name
+  // returns all users along with their manager's name, if they have a manager
   findAllWithManagers: function(id) {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT
-                          CONCAT(manager.first_name, ' ', manager.last_name) as manager_name,
+                          CONCAT(m.first_name, ' ', m.last_name) as manager_name,
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
                           e.is_active,
                           e.id
                         FROM
-                          employee e,
-                          employee manager
-                        WHERE
-                          e.manager_id = manager.id`;
+                          employee e
+                        LEFT JOIN employee m ON m.id = e.manager_id`;
       connection.query(queryString, [], (err, rows) => {
         if (err) {
           reject(err);
@@ -130,9 +128,9 @@ module.exports = {
                           e.id
                         FROM
                           employee e,
-                          employee manager
+                          employee m
                         WHERE
-                          e.manager_id = manager.id AND
+                          e.manager_id = m.id AND
                           manager.id = ?`;
       connection.query(queryString, [manager_id], (err, rows) => {
         if (err) {
@@ -151,16 +149,16 @@ module.exports = {
         if (params[key].length > 0) {
           switch(key) {
             case "employee_id":
-              whereArray.push("employee_id = '" + params[key] + "'")
+              whereArray.push("id = '" + params[key] + "'")
               break;
             case "employee_name":
-              whereArray.push("(first_name LIKE '" + params[key] + "%' OR last_name LIKE '" + params[key] + "%')");
+              whereArray.push("(e.first_name LIKE '" + params[key] + "%' OR e.last_name LIKE '" + params[key] + "%')");
               break;
             case "manager_id":
-              whereArray.push("manager.id = '" + params[key] + "'")
+              whereArray.push("m.id = '" + params[key] + "'")
               break;
             case "manager_name":
-              whereArray.push("(manager.first_name LIKE '" + params[key] + "%' OR manager.last_name LIKE '" + params[key] + "%')");
+              whereArray.push("(m.first_name LIKE '" + params[key] + "%' OR m.last_name LIKE '" + params[key] + "%')");
               break;
             default:
               break;
@@ -168,16 +166,15 @@ module.exports = {
         }
       }
 
-      var whereString = whereArray.length > 0 ? " AND " + whereArray.join(" AND ") : "";
+      var whereString = whereArray.length > 0 ? " WHERE " + whereArray.join(" AND ") : "";
       var queryString = `SELECT
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
+                          CONCAT(m.first_name, ' ', m.last_name) as manager_name,
                           e.is_active,
                           e.id
                         FROM
-                          employee e,
-                          manager m,
-                        WHERE
-                          e.manager_id = m.id` + whereString + ";"
+                          employee e
+                        LEFT JOIN employee m ON m.id = e.manager_id` + whereString + ";"
 
       connection.query(queryString, [], (err, rows) => {
         if (err) {

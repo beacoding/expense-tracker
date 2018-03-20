@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import  PasswordForm  from './PasswordForm';
 
 
-class ProfileModal extends React.Component {
+class ChangePasswordModal extends React.Component {
   constructor(props) {
   super(props);
   }
@@ -15,15 +15,12 @@ class ProfileModal extends React.Component {
   }
 
   render() {
-
     return (
       <div>
-        
-          <PasswordForm old_password = {this.props.old_password} onSubmit={this.props.onSubmitFunction}/>
+        <PasswordForm old_password = {this.props.old_password} onSubmit={this.props.onSubmitFunction}/>
       </div>
     );
    }
-
   }
   
- export default (ProfileModal);
+ export default (ChangePasswordModal);

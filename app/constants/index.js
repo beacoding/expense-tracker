@@ -5,3 +5,4 @@ export * from './approvalLimits.constants';
 export * from './reports.constants';
 export * from './employees.constants';
 export * from './policies.constants';
+export * from './email.constants';

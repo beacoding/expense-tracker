@@ -12,8 +12,8 @@ module.exports = function(passport) {
   
   passport.deserializeUser(function(id, done) {
     connection.query(`SELECT u.id, u.first_name, u.last_name, u.email, u.password, u.manager_id, u.is_admin, u.is_active, CONCAT(m.first_name, ' ', m.last_name) as manager_name 
-                        FROM employee u, employee m
-                        WHERE u.manager_id = m.id AND u.id = ?`, [id], function(err, rows){
+                        FROM employee u LEFT JOIN employee m ON m.id = u.manager_id
+                        WHERE u.id = ?`, [id], function(err, rows){
       done(err, rows[0]);
     });
   });
@@ -29,7 +29,7 @@ module.exports = function(passport) {
     function(req, email, password, done) { // callback with email and password from our form
       connection.query(`SELECT u.id, u.first_name, u.last_name, u.email, u.password, u.manager_id, u.is_admin, u.is_active, CONCAT(m.first_name, ' ', m.last_name) as manager_name 
                           FROM employee u, employee m
-                          WHERE u.manager_id = m.id AND u.email = ?`, [email], function(err, rows){
+                          WHERE u.manager_id = m.id AND u.email = ? AND u.is_active = 1`, [email], function(err, rows){
         if (err)
         return done(err);
         if (!rows.length) {

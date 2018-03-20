@@ -35,14 +35,10 @@ class NewUserForm extends React.Component {
   handleSelectName(selectedManager) {
     this.setState({ selectedManager });
   }
-
-  handleBlur() {
-    // do nothing...
-  }
   
   renderManagerSelectField(field) {
-    const { meta: {touched, error }} = field;
-    const className = `form-group ${touched && error ? "has-danger" : ""}`;
+    const { meta: {visited, error }} = field;
+    const className = `form-group ${visited && error ? "has-danger" : ""}`;
     const options = this.props.employees.map((employee) => {
       return {value: employee.id, label: employee.employee_name}
     })
@@ -61,18 +57,21 @@ class NewUserForm extends React.Component {
           {...field.input}
           onBlur={() => {}}
           />
+          <div className="text-help">
+            {visited ? error : ""}
+          </div>
       </div>
    );
   }
 
   renderCheckbox(field) {
     const { meta: { touched, error } } = field;
-    const className = `${touched && error ? "has-danger" : ""}`;
+    const className = `form-group ${touched && error ? "has-danger" : ""}`;
 
     return (
       <div className={className}>
         <div>
-          <label>{field.label} <input type="checkbox" style={{marginLeft: 5 + 'px'}} {...field.input} /></label>
+          <label>{field.label} <input type="checkbox" style={{width: 12 + 'px', marginLeft: 5 + 'px'}} {...field.input} /></label>
         </div>
         <div className="text-help">
           {touched ? error : ""}
@@ -158,6 +157,36 @@ class NewUserForm extends React.Component {
   }
 }
 
+function validate(values) {
+  // create empty errors object to return
+  const errors = {};
+
+  // validate the inputs from 'values'
+  if (!values.id) {
+    errors.id = "Please enter this user's unique employee ID.";
+  }
+  if (!values.first_name || values.first_name.trim().length == 0) {
+    errors.first_name = "Please enter the user's first name.";
+  }
+  if (!values.last_name || values.last_name.trim().length == 0) {
+    errors.last_name = "Please enter the user's last name.";
+  }
+  if (!values.email || values.email.trim().length == 0 || (values.email && !/\S+@\S+\.\S+/.test(values.email))) {
+    errors.email = "Please enter this user's unique email address.";
+  }
+  if (!values.password || values.password.trim().length == 0) {
+    errors.password = "Please provide a password for this user.";
+  }
+  if (!values.manager_id || values.manager_id === null) {
+    errors.manager_id = "Please assign a manager to this user.";
+  }
+
+  // if errors is empty, the form is fine to submit
+  // if errors has any properties, redux form assumes form is invalid
+  return errors;
+}
+
 export default reduxForm({
+  validate,
   form: 'NewUserForm' // a unique identifier for this form
 })(NewUserForm);

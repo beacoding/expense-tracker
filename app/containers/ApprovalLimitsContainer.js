@@ -31,6 +31,7 @@ class ApprovalLimitsContainer extends React.Component {
     var value = e.target.value.length > 0 ? e.target.value : null
     var param_to_change = e.target.name;
     this.props.dispatch(approvalLimitsActions.modifyParams(param_to_change, value));
+    this.props.dispatch()
   }
 
   handleAddLimit(data) {
@@ -43,7 +44,7 @@ class ApprovalLimitsContainer extends React.Component {
       cost_centre_id: cost_centre_id,
     }
     this.props.dispatch(approvalLimitsActions.addApprovalLimit(approvalLimit)).then((res) => {
-      if (res.type === "SUCCESS_ADD_APPROVAL_LIMIT") {
+      if (res.type === "ADD_APPROVAL_LIMIT_SUCCESS") {
         toastr.removeByType("error")
         toastr.success('Added New Limit', 'Added a new approval limit for ' + employee_name)
       } else {
@@ -74,7 +75,7 @@ class ApprovalLimitsContainer extends React.Component {
         <div className="approval-limits-filter-row">
           <div className="approval-limits-search"><label>Filter by Employee:</label></div>
           <div className="form-group approval-limits-search">
-            <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="Employee Name" onChange={this.handleParamChangeText}/>
+            <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
           </div>
           <div className="approval-limits-search"><label>or Cost Centre:</label></div>
           <div className="form-group approval-limits-search">

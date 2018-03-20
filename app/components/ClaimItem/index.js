@@ -8,9 +8,9 @@ import { claimItemsHelpers } from '../../helpers';
 const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
   const {
     claim_item_id,
-    description, 
+    description,
     amount,
-    comment, 
+    comment,
     expense_category,
     image_url,
   } = claim_item;
@@ -35,7 +35,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
       style: { width: '50px'}
     }}
     zoomImage={{
-      alt: claim_item.description + 's Receipt',  
+      alt: claim_item.description + 's Receipt',
       src: '/uploads/' + claim_item.image_url,
       alt: claim_item.description + ' Receipt',
     }}
@@ -47,15 +47,15 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
     {...consts}
   />
 
+
   let defaultValue = valueMap[expense_category.toUpperCase()];
   if (expense_category === "MILEAGE" && claim_status === "P") {
     let distance = claimItemsHelpers.amountToDistance(amount, policies["Per Mileage Reimbursement"]);
     return (
- 
       <tr>
         <td><RIEInput className="item-container" value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item_id)} propName='description' /> <i className="ion-edit"></i> </td>
         <td><RIEInput value={distance.toFixed(2) || "Enter Distance Here"} change={handleEditMileage.bind(this, "mileage", claim_item_id)} propName='mileage' /> miles  <i className="ion-edit"></i><div id={"distance-amount-" + claim_item_id}>${amount.toFixed(2)}</div></td>
-        <td>      
+        <td>
           <select value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item_id)}>
             <option value="" disabled> Select an expense category. </option>
             {
@@ -67,38 +67,31 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
             }
           </select>
         </td>
-        <td>{receipt} <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></td>
-        <td><RIEInput value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
+        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload"></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></label></span></td>
+        <td><RIETextArea value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
         <td><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i></td>
       </tr>
       )
   } else if (claim_status === 'P') {
     return (
       <tr>
-
-          <td> <div className="table-cell"><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item_id)} propName='description' /> <i className="ion-edit"></i></div></td>
-
-          <td> <div className="table-cell">$<RIEInput value={amount.toFixed(2) || "Enter Amount Here"} change={handleEditItem.bind(this, "amount", claim_item_id)} propName='amount' />  <i className="ion-edit"></i></div></td>
-
-          <td> <div className="table-cell">      
-            <select value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item_id)}>
-              <option value="" disabled> Select an expense category. </option>
-              {
-                expense_types.map((expense_type) => {
-                  let expense_type_id = expense_type.id;
-                  let expense_type_category = expense_type.category
-                  return <option value={expense_type_id} key={expense_type_id}>{expense_type_category}</option>
-                })
-              }
-            </select>
-            </div>
-          </td>
-
-        <td> <div className="table-cell">{receipt} <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></div></td>
-  
-        <td> <div className="table-cell"><RIEInput value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label></div> </td>
-        <td> <div className="table-cell"><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i> </div></td>
-     
+        <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item_id)} propName='description' /> <i className="ion-edit"></i> </td>
+        <td>$<RIEInput value={amount.toFixed(2) || "Enter Amount Here"} change={handleEditItem.bind(this, "amount", claim_item_id)} propName='amount' />  <i className="ion-edit"></i></td>
+        <td>
+          <select value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item_id)}>
+            <option value="" disabled> Select an expense category. </option>
+            {
+              expense_types.map((expense_type) => {
+                let expense_type_id = expense_type.id;
+                let expense_type_category = expense_type.category
+                return <option value={expense_type_id} key={expense_type_id}>{expense_type_category}</option>
+              })
+            }
+          </select>
+        </td>
+        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload"></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></label></span></td>
+        <td><RIETextArea value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
+        <td><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i></td>
       </tr>
     )
   } else {

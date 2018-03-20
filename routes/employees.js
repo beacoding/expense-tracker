@@ -22,7 +22,16 @@ router.get('/all_with_managers', [authMiddleware.isLoggedIn, employeesMiddleware
   }
 });
 
-router.get('/with', [authMiddleware.isLoggedIn, employeesMiddleware.findAllWithManagerID], function(req, res, next) {
+router.get('/with_manager', [authMiddleware.isLoggedIn, employeesMiddleware.findAllWithManagerID], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({employee: req.user, employees: req.employees});
+  }
+});
+
+router.get('/with', [authMiddleware.isLoggedIn, employeesMiddleware.findAllWithParams], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);
     res.send({error: req.error});
@@ -68,11 +77,10 @@ router.post('/enable_employee', [authMiddleware.isLoggedIn, employeesMiddleware.
 });
 
 router.post('/update_password', [authMiddleware.isLoggedIn, employeesMiddleware.updatePassword], function(req, res, next) {
-  if(req.error == "password error"){
+  if (req.error == "Current password does not match.") {
     res.status(403);
     res.send({error: req.error});
-  }
-  else if (req.error != undefined) {
+  } else if (req.error != undefined) {
     res.status(500);
     res.send({error: req.error});
   } else {

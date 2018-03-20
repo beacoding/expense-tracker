@@ -30,6 +30,7 @@ const employees = (state = initialState, action) => {
       });
     case employeesConstants.ADD_EMPLOYEE_FAILURE:
       return Object.assign({}, state, {
+        isFetching: false,
         error: action.error
       });
     // UPDATE PASSWORD
@@ -162,6 +163,7 @@ const employees = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetching: false,
         employeesOfManagerMap: newMap,
+        employees_with_managers: action.employees,
         error: undefined
       });
     case employeesConstants.FAILURE_WITH:

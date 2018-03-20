@@ -2,11 +2,13 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { modal } from 'react-redux-modal';
-import { claimsActions, policiesActions } from '../actions';
-import { claimItemsActions, approvalLimitsActions } from '../actions';
+import { claimsActions, policiesActions, claimItemsActions, approvalLimitsActions, emailActions } from '../actions';
 import ClaimContainer from './ClaimContainer';
 import NewClaimModal from './NewClaimModal';
+import { emailAPI } from "../api";
 import { Tabs, Tab } from 'react-bootstrap';
+import {toastr} from "react-redux-toastr";
+import {toastrHelpers} from "../helpers";
 
 class ClaimList extends React.Component {
   constructor(props) {
@@ -46,6 +48,8 @@ class ClaimList extends React.Component {
 
   createClaim() {
     const { employee, form, claims, claimsMap } = this.props;
+    const claimant_email = this.props.claimant_email;
+    const approver_email = this.props.approver_email;
     const claim = {
       claimant_id: employee.id,
       approver_id: employee.manager_id,
@@ -55,7 +59,15 @@ class ClaimList extends React.Component {
       account_number: form.NewClaimForm.values.account_number,
       status: 'P',
     }
+
     this.props.dispatch(claimsActions.addClaim(claim)).then((res) => {
+      //   if (res.type === "ADD_CLAIM_SUCCESS") {
+      //   toastr.removeByType("error");
+      //   toastr.success('Created New Claim', 'Please add claim items')
+      // } else {
+      //     toastr.removeByType("error");
+      //     toastr.error('Create New Claim Failed', 'Please try again', toastrHelpers.getErrorOptions())
+      //   }
       modal.clear();
       window.location= '/claims/'+ res.claimId;
     });
@@ -112,7 +124,7 @@ class ClaimList extends React.Component {
   renderEmptyListAll() {
     return (
       <div className="claim-container">
-        You have not submitted any claims and do not have any drafts
+        You have not submitted any claims and do not have any drafts.
       </div>
     )
   }
@@ -120,7 +132,7 @@ class ClaimList extends React.Component {
   renderEmptyDrafts() {
     return (
       <div className="claim-container">
-        You currently do not have any drafts 
+        You currently do not have any drafts.
       </div>
       )
   }
@@ -128,7 +140,7 @@ class ClaimList extends React.Component {
   renderEmptySubmitted() {
     return (
       <div className="claim-container">
-        You have not submitted any claims
+        You have not yet submitted any claims.
       </div>
       )
   }
@@ -136,7 +148,7 @@ class ClaimList extends React.Component {
   renderEmptyApproved() {
     return (
       <div className="claim-container">
-        None of your claims have been approved or declined
+        You do not have any processed claims at this time.
       </div>
       )
   }
@@ -162,7 +174,7 @@ class ClaimList extends React.Component {
         )
     }
   }
-  
+
   renderSubmitted() {
     const { employee, claimsMap } = this.props;
     let claims = Object.entries(claimsMap).filter(claim_tuple => {
@@ -206,7 +218,7 @@ class ClaimList extends React.Component {
     }
   }
 
-  
+
   render() {
     const { employee, claimsMap, error, isFetching, totals, form } = this.props;
     
@@ -241,10 +253,10 @@ class ClaimList extends React.Component {
           <Tab eventKey={2} title="Drafts">
               { this.renderDrafts() }
           </Tab>
-          <Tab eventKey={3} title="Pending Approval">
+          <Tab eventKey={3} title="Under Review">
               { this.renderSubmitted() }
           </Tab>
-          <Tab eventKey={4} title="Finished Approval">
+          <Tab eventKey={4} title="Processed">
               { this.renderApproved() }
           </Tab>
         </Tabs>
@@ -259,6 +271,7 @@ function mapStateToProps(state) {
   const { claimsMap, error, isFetching } = claims;
   const { cost_centres, companies, expense_types } = policies;
 
+
   return {
       employee,
       claimsMap,
@@ -267,7 +280,7 @@ function mapStateToProps(state) {
       cost_centres,
       companies,
       expense_types,
-      form
+      form,
   };
 }
 export default withRouter(connect(mapStateToProps)(ClaimList))

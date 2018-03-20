@@ -6,7 +6,8 @@ import { claimItemsActions } from '../actions';
 import ClaimItem from '../components/ClaimItem'
 import ModalContainer from './ModalContainer'
 import NewClaimItemModal from './NewClaimItemModal'
-import { claimItemsHelpers } from '../helpers';
+import {claimItemsHelpers, toastrHelpers} from '../helpers';
+import {toastr} from "react-redux-toastr";
 
 class ClaimItemContainer extends React.Component {
   constructor(props) {
@@ -23,7 +24,14 @@ class ClaimItemContainer extends React.Component {
 
   confirmDeleteItem() {
     const { claim_id, claim_item } = this.props;
-    this.props.dispatch(claimItemsActions.deleteClaimItem(claim_id, claim_item.claim_item_id)).then(() => {
+    this.props.dispatch(claimItemsActions.deleteClaimItem(claim_id, claim_item.claim_item_id)).then((res) => {
+        if (res.type === "DELETE_CLAIM_ITEM_SUCCESS") {
+          toastr.removeByType("error");
+          toastr.success('Claim item has been successfully deleted');
+        } else {
+          toastr.removeByType("error");
+          toastr.error('Claim item has failed to delete', 'Please try again', toastrHelpers.getErrorOptions())
+        }
       modal.clear();
     });
   }
@@ -48,7 +56,15 @@ class ClaimItemContainer extends React.Component {
       expense_type: parseInt(data.expense_type),
       receipt: receipt
     }
-    this.props.dispatch(claimItemsActions.editClaimItem(item)).then(() => {
+    this.props.dispatch(claimItemsActions.editClaimItem(item)).then((res) => {
+      // if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
+      //   toastr.removeByType("error");
+      //   return;
+      //   toastr.success('Claim item has been successfully edited');
+      // } else {
+      //   toastr.removeByType("error");
+      //   toastr.error('Claim item has failed to edit', 'Please try again', toastrHelpers.getErrorOptions())
+      // }
       modal.clear();
     });;
   }

@@ -5,3 +5,4 @@ export * from './approvalLimits.api';
 export * from './reports.api';
 export * from './employees.api';
 export * from './policies.api';
+export * from './email.api';

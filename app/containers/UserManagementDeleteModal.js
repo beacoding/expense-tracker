@@ -15,7 +15,6 @@ class UserManagementDeleteModal extends React.Component {
   }
 
   render() {
-
     return (
       <div>
         <p>Are you sure you want to disable <strong>{this.props.user.employee_name}'s</strong> account?</p>

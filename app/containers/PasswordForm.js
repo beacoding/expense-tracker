@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-// import { Form, FormGroup, Col, Button, FormControl } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 class PasswordForm extends React.Component {
     constructor(props) {
@@ -47,7 +46,7 @@ class PasswordForm extends React.Component {
             label="Old Password:"
             name="old_password"
             type="password"
-            placeholder={old_password}
+            placeholder="Old Password"
             component={this.renderOldPassword}
         />
         <Field
@@ -65,54 +64,7 @@ class PasswordForm extends React.Component {
     }
 }
 
-// function validate(values, old_pw) {
-//     // create empty errors object to return
-//     const errors = {};
- 
-  
-//     // validate the inputs from 'values'
-//     if(values.old_password != old_pw.old_password){
-//         errors.wrong_password = "Incorrect password"
-//     }
-//     if(!values.new_password){
-//         errors.no_password = "Please enter a new password"
-//     }
-  
-//     // if errors is empty, the form is fine to submit
-//     // if errors has any properties, redux form assumes form is invalid
-//     return errors;
-//   }
 export default reduxForm({
     // validate,
     form: 'PasswordForm' // a unique identifier for this form
   })(PasswordForm);
-
-
-
-
-//  <Form horizontal>
-//         <FormGroup controlId="formHorizontalEmail"
-//                    validationState={this.getValidationState()}>
-//             <Col componentClass='form' sm={2}>
-//             Old Password
-//             </Col>
-//             <Col sm={10}>
-//             <FormControl type="password" placeholder={old_password} />
-//             </Col>
-//         </FormGroup>
-
-//         <FormGroup controlId="formHorizontalPassword">
-//             <Col componentClass='form' sm={2}>
-//             New Password
-//             </Col>
-//             <Col sm={10}>
-//             <FormControl type="password" placeholder="New assword" />
-//             </Col>
-//         </FormGroup>
-
-//         <FormGroup>
-//             <Col smOffset={2} sm={10}>
-//             <Button type="submit">OK</Button>
-//             </Col>
-//         </FormGroup>
-//     </Form>

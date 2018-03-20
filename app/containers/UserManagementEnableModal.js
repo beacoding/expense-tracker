@@ -15,7 +15,6 @@ class UserManagementEnableModal extends React.Component {
   }
 
   render() {
-
     return (
       <div>
         <p>Are you sure you want to enable <strong>{this.props.user.employee_name}'s</strong> account?</p>

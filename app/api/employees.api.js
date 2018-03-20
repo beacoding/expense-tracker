@@ -43,7 +43,7 @@ function requestAll() {
 }
 
 function requestEmployees(manager_id) {
-  return fetch(`/employees/with?manager_id=` + manager_id, apiHelpers.getOptions())
+  return fetch(`/employees/with_manager?manager_id=` + manager_id, apiHelpers.getOptions())
   .then(apiHelpers.handleResponse);
 }
 

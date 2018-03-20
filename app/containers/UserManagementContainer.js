@@ -20,16 +20,16 @@ class UserManagementContainer extends React.Component {
   }
 
   handleStatusChange(employee_id) {
+    // loads employees to allow for disabling
     this.props.dispatch(employeesActions.requestEmployees(employee_id));
   }
 
   componentDidMount() {
-    this.props.dispatch(employeesActions.requestAll());
+    this.props.dispatch(employeesActions.requestAll())
   }
 
   componentWillReceiveProps(nextprops) {
-    // TODO: USER FILTER NOT IMPLEMENTED YET
-    // this.props.dispatch(employeesActions.requestWith(nextprops.params));
+    this.props.dispatch(employeesActions.requestWith(nextprops.params));
   }
 
   handleParamChangeText(e) {
@@ -50,14 +50,15 @@ class UserManagementContainer extends React.Component {
       is_admin: (data.is_admin === true),      
     }
     this.props.dispatch(employeesActions.addEmployee(newUser)).then((res) => {
-      if(res.type == "ADD_EMPLOYEE_SUCCESS"){
-        modal.clear();
-        toastr.removeByType("error")
-        toastr.success("User added", newUser.first_name +" has been added!")
-    } else{
-      toastr.removeByType("error")
-      toastr.error("Failed to create user", "User information invalid, Please double check ID", toastrHelpers.getErrorOptions())
-    }
+      if (res.type === "ADD_EMPLOYEE_SUCCESS") {
+        toastr.removeByType("error");
+        .claim);
+        toastr.success(data.first_name + ' ' + data.last_name  + ' has been successfully added');
+      } else {
+        toastr.removeByType("error");
+        toastr.error(data.first_name + ' ' + data.last_name  + ' has been not added', 'Please try again', toastrHelpers.getErrorOptions())
+      }
+      modal.clear();
     });;
   }
 
@@ -107,6 +108,7 @@ class UserManagementContainer extends React.Component {
           <div className="page-title">
           User Management
           </div>
+          
           <div className="page-route">
             <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > User Management </span>
           </div>
@@ -123,10 +125,12 @@ function mapStateToProps(state) {
   const { authentication, form, employees } = state;
   const { employee } = authentication;
   const users = employees.employees;
+  const params = employees.params;
   return {
     employee,
     users,
-    form
+    form,
+    params
   };
 }
 

@@ -1,22 +1,23 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {Panel} from 'react-bootstrap';
-import ProfileModal from './ProfileModal';
-import {modal} from 'react-redux-modal';
+import { Panel } from 'react-bootstrap';
+import ChangePasswordModal from './ChangePasswordModal';
+import { modal } from 'react-redux-modal';
 import { employeesActions } from '../actions';
 import {toastr} from 'react-redux-toastr';
 import {toastrHelpers} from '../helpers';
 class Profile extends React.Component {
 
+class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.showProfileModal = this.showProfileModal.bind(this);
+    this.showChangePasswordModal = this.showChangePasswordModal.bind(this);
     this.changePassword = this.changePassword.bind(this);
   }
 
-  showProfileModal(){
-    modal.add(ProfileModal, {
+  showChangePasswordModal() {
+    modal.add(ChangePasswordModal, {
     title: 'Change Password',
     size: 'medium', // large, medium or small,
     closeOnOutsideClick: false ,// (optional) Switch to true if you want to close the modal by clicking outside of it,
@@ -26,11 +27,12 @@ class Profile extends React.Component {
     old_password: this.props.employee.password
     });
   }
-  changePassword(){
-    const{form, employee} = this.props;
-    const newpassword = {
+
+  changePassword() {
+    const { form, employee } = this.props;
+    const newPassword = {
       id: employee.id,
-      employeepass: employee.password,
+      curr_password: employee.password,
       old_password: form.PasswordForm.values.old_password,
       password: form.PasswordForm.values.new_password
     }
@@ -46,10 +48,10 @@ class Profile extends React.Component {
        }
     });;
   }
+
   render() {
     const { employee } = this.props;
     return (
-     
       <div className="claimlist-container">
         <div className="page-header">
           <div className="page-title">
@@ -66,34 +68,34 @@ class Profile extends React.Component {
               <Panel.Title componentClass="h3">{employee.first_name} {employee.last_name}</Panel.Title>
             </Panel.Heading>
             <Panel.Body>
-            <table className="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>Employee ID:</td>
-                        <td>{employee.id}</td>
-                      </tr>
-                      <tr>
-                        <td>First Name:</td>
-                        <td>{employee.first_name}</td>
-                      </tr>
-                      <tr>
-                        <td>Last Name:</td>
-                        <td>{employee.last_name}</td>
-                      </tr>
-                      <tr>
-                        <td>Manager:</td>
-                        <td>{employee.manager_name}</td>
-                      </tr>
-                      <tr>
-                        <td>Email:</td>
-                        <td>{employee.email}</td>
-                      </tr>   
-                      <tr>
-                        <td>Password:</td>
-                        <td><button className="profile-button" onClick={this.showProfileModal}> Change</button></td>
-                      </tr>
-                    </tbody>
-                  </table>
+              <table className="table table-user-information">
+                <tbody>
+                  <tr>
+                    <td>Employee ID:</td>
+                    <td>{employee.id}</td>
+                  </tr>
+                  <tr>
+                    <td>First Name:</td>
+                    <td>{employee.first_name}</td>
+                  </tr>
+                  <tr>
+                    <td>Last Name:</td>
+                    <td>{employee.last_name}</td>
+                  </tr>
+                  <tr>
+                    <td>Manager:</td>
+                    <td>{employee.manager_name}</td>
+                  </tr>
+                  <tr>
+                    <td>Email:</td>
+                    <td>{employee.email}</td>
+                  </tr>   
+                  <tr>
+                    <td>Password:</td>
+                    <td><button className="profile-button" onClick={this.showChangePasswordModal}> Change</button></td>
+                  </tr>
+                </tbody>
+              </table>
             </Panel.Body>
           </Panel>
         </div> 
