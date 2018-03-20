@@ -18,16 +18,15 @@ class UserManagementContainer extends React.Component {
   }
 
   handleStatusChange(employee_id) {
+    // loads employees to allow for disabling
     this.props.dispatch(employeesActions.requestEmployees(employee_id));
   }
 
   componentDidMount() {
     this.props.dispatch(employeesActions.requestAll())
   }
-  
 
   componentWillReceiveProps(nextprops) {
-    // TODO: USER FILTER NOT IMPLEMENTED YET
     this.props.dispatch(employeesActions.requestWith(nextprops.params));
   }
 
@@ -120,6 +119,7 @@ function mapStateToProps(state) {
   return {
     employee,
     users,
+    form,
     params
   };
 }

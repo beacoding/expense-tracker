@@ -19,10 +19,10 @@ function getStatusText(status) {
       status = "Declined";
       break;
     case "S":
-      status = "Manager Review";
+      status = "Under Manager Review";
       break;
     case "F":
-      status = "Forwarded";
+      status = "Forwarded for Review";
       break;
     default:
       status = "Not Yet Submitted";

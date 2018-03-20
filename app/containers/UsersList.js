@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { employeesActions } from '../actions';
 import User from '../components/User';
-import UsersOfManager from '../components/UsersOfManager';
 
 class UsersList extends React.Component {
   constructor(props) {
@@ -16,7 +15,6 @@ class UsersList extends React.Component {
 
   renderEntries() {
     const { employee, users } = this.props;
-    console.log(users);
     return (
       <tbody>
       {Object.entries(users).map((user, i) => {
@@ -27,25 +25,11 @@ class UsersList extends React.Component {
       )
   }
 
-  renderEmployeesOfManager(manager_id) {
-    const { employeesOfManagerMap } = this.props
-    let users = employeesofManagerMap !== undefined ? employeesOfManagerMap[manager_id] : null;
-
-    return (
-      <tbody>
-      {Object.entries(users).map((user, i) => {
-        var user_entry = user[1]
-        return <UsersOfManager user={user_entry} key={user_entry.id} handleStatusChange={this.props.handleStatusChange} />
-      })}
-      </tbody>
-      )
-  }
-
   renderClickedStatusChange(employee_id) {
     return (
       <tbody>
       </tbody>
-      )
+    )
   }
 
   render() { 
@@ -78,8 +62,7 @@ function mapStateToProps(state) {
   const employeesOfManagerMap = employees.employeesOfManagerMap
   return {
     employee,
-    users,
-    employeesOfManagerMap
+    users
   };
 }
 

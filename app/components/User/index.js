@@ -13,11 +13,13 @@ const User = ({ user, handleStatusChange }) => {
 
   var status = is_active === 1 ? "Active" : "Disabled";
   
+  var manager_name_text = user.manager_name ? user.manager_name : "N/A";
+  
   return (
         <tr>
           <td>{id}</td>
           <td>{employee_name}</td>
-          <td>{manager_name}</td>
+          <td>{manager_name_text}</td>
           <td>{status}</td>
           <td name="user"> <NavLink to={"/admin/users/"+ id}> <i className="ion-edit"></i></NavLink></td>
         </tr>

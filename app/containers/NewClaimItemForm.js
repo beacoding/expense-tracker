@@ -81,7 +81,7 @@ class NewClaimItemForm extends React.Component {
     return (
       <div className={className}>
         <div>
-          <label>{field.label} <input className="form-control" {...input} type={type} accept={accept}/> </label>
+          <label>{field.label} <input className="form-control" style={{display: 'block'}} {...input} type={type} accept={accept}/> </label>
         </div>
       </div>
     );
@@ -94,7 +94,7 @@ class NewClaimItemForm extends React.Component {
     return (
       <div className={className}>
         <div>
-          <label>{field.label} <input type="checkbox" style={{marginLeft: 5 + 'px'}} {...field.input} /></label>
+          <label>{field.label} <input type="checkbox" style={{width: 12 + 'px', marginLeft: 5 + 'px'}} {...field.input} /></label>
         </div>
         <i className="ion-android-alert"> Only check this box if you do not have a receipt.</i>
         <div className="text-help">
@@ -150,8 +150,8 @@ class NewClaimItemForm extends React.Component {
   
   //form for submit new claim initial items
   render () {
-    const { handleSubmit, pristine, reset, submitting, expense_type } = this.props;
-    let amount_label = (parseInt(expense_type) === 9 || parseInt(expense_type) === 10) ? "Amount (CAD) | Max 5000" : "Amount (CAD):";
+    const { handleSubmit, pristine, reset, submitting, expense_type, policies } = this.props;
+    let amount_label = (parseInt(expense_type) === 9 || parseInt(expense_type) === 10) ? "Amount (CAD) | Maximum Allowable: $" + policies["Maximum Per Diem Amount"] : "Amount (CAD):";
     if (parseInt(expense_type) === 12) {
       const renderField = this.renderField;
       return (
@@ -286,7 +286,9 @@ function validate(values, props) {
 }
 
 function mapStateToProps(state, ownProps) {
+  const { policies } = state;
   return {
+    policies,
     initialValues: ownProps.currentValues
   }
 }
