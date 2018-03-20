@@ -1,13 +1,14 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { claimsActions, claimItemsActions, approvalLimitsActions, emailActions } from '../actions';
-import { claimsHelpers } from '../helpers';
+import {claimsActions, claimItemsActions, approvalLimitsActions, emailActions, employeesActions} from '../actions';
+import {claimsHelpers, toastrHelpers} from '../helpers';
 import { Link } from 'react-router-dom';
 import { modal } from 'react-redux-modal'
 import PendingClaim from '../components/PendingClaim'
 import ModalContainer from './ModalContainer'
 import { emailAPI } from "../api";
+import {toastr} from "react-redux-toastr";
 
 class PendingClaimContainer extends React.Component {
   constructor(props) {
@@ -28,26 +29,52 @@ class PendingClaimContainer extends React.Component {
   }
   
   confirmApprove() {
-    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "A", this.claim_notes)).then(() => {
-      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "A"))
+    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "A", this.claim_notes)).then((res) => {
+      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "A"));
       this.props.dispatch(claimsActions.requestPendingApprovals());
+      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
+        toastr.removeByType("error");
+        toastr.success('You have approved this claim', this.props.claim.claimant_first_name + this.props.claim.claimant_last_name
+          + ' will be notified')
+      } else {
+        toastr.removeByType("error");
+        toastr.error('This claim has not been approved', 'Please try again', toastrHelpers.getErrorOptions())
+      }
       modal.clear();
     });
   }
   
   confirmDecline() {
-    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "D", this.claim_notes)).then(() => {
-      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "D"))
+    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.props.employee.id, "D", this.claim_notes)).then((res) => {
+      this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "D"));
       this.props.dispatch(claimsActions.requestPendingApprovals());
+      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
+        toastr.removeByType("error");
+        .claim);
+        toastr.success('You have declined this claim', this.props.claim.claimant_first_name + this.props.claim.claimant_last_name +
+          ' will be notified')
+      } else {
+        toastr.removeByType("error");
+        toastr.error('This claim has not been declined', 'Please try again', toastrHelpers.getErrorOptions())
+      }
       modal.clear();
     });
   }
 
   forwardClaim() {
-    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.forward_manager_id, "F", this.claim_notes)).then(() => {
+    this.props.dispatch(claimsActions.updateStatus(this.props.claim.claim_id, this.forward_manager_id, "F", this.claim_notes)).then((res) => {
       this.props.dispatch(emailActions.sendClaimantEmail(this.props.claim, "F"));
       this.props.dispatch(emailActions.sendApproverEmail(this.props.claim, this.forward_manager_id, "F"));
       this.props.dispatch(claimsActions.requestPendingApprovals());
+      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
+        toastr.removeByType("error");
+        .claim);
+        toastr.success('You have forwarded this claim', this.props.claim.claimant_first_name + this.props.claim.claimant_last_name +
+        ' and the new manager will be notified')
+      } else {
+        toastr.removeByType("error");
+        toastr.error('This claim has not been forwarded', 'Please try again', toastrHelpers.getErrorOptions())
+      }
       modal.clear();
     });
   }

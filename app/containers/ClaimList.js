@@ -7,6 +7,8 @@ import ClaimContainer from './ClaimContainer';
 import NewClaimModal from './NewClaimModal';
 import { emailAPI } from "../api";
 import { Tabs, Tab } from 'react-bootstrap';
+import {toastr} from "react-redux-toastr";
+import {toastrHelpers} from "../helpers";
 
 class ClaimList extends React.Component {
   constructor(props) {
@@ -59,6 +61,13 @@ class ClaimList extends React.Component {
     }
 
     this.props.dispatch(claimsActions.addClaim(claim)).then((res) => {
+      //   if (res.type === "ADD_CLAIM_SUCCESS") {
+      //   toastr.removeByType("error");
+      //   toastr.success('Created New Claim', 'Please add claim items')
+      // } else {
+      //     toastr.removeByType("error");
+      //     toastr.error('Create New Claim Failed', 'Please try again', toastrHelpers.getErrorOptions())
+      //   }
       modal.clear();
       window.location= '/claims/'+ res.claimId;
     });

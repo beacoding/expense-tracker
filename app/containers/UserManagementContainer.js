@@ -6,6 +6,8 @@ import UsersList from './UsersList';
 import NewUserModal from './NewUserModal';
 import { Field, reduxForm } from 'redux-form';
 import { modal } from 'react-redux-modal';
+import {toastr} from "react-redux-toastr";
+import {toastrHelpers} from "../helpers";
 
 
 class UserManagementContainer extends React.Component {
@@ -47,7 +49,15 @@ class UserManagementContainer extends React.Component {
       manager_id: form.NewUserForm.values.manager_id.value,
       is_admin: (data.is_admin === true),      
     }
-    this.props.dispatch(employeesActions.addEmployee(newUser)).then(() => {
+    this.props.dispatch(employeesActions.addEmployee(newUser)).then((res) => {
+      if (res.type === "ADD_EMPLOYEE_SUCCESS") {
+        toastr.removeByType("error");
+        .claim);
+        toastr.success(data.first_name + ' ' + data.last_name  + ' has been successfully added');
+      } else {
+        toastr.removeByType("error");
+        toastr.error(data.first_name + ' ' + data.last_name  + ' has been not added', 'Please try again', toastrHelpers.getErrorOptions())
+      }
       modal.clear();
     });;
   }

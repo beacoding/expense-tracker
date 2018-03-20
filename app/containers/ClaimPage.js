@@ -8,7 +8,7 @@ import ClaimItemContainer from './ClaimItemContainer';
 import NewClaimItemModal from './NewClaimItemModal';
 import ModalContainer from './ModalContainer'
 import { emailAPI } from "../api";
-import { claimsHelpers } from '../helpers';
+import {claimsHelpers, toastrHelpers} from '../helpers';
 import { toastr } from 'react-redux-toastr';
 
 class ClaimPage extends React.Component {
@@ -55,7 +55,17 @@ class ClaimPage extends React.Component {
       this.props.dispatch(emailActions.sendClaimantEmail(this.props.claimsMap[claim_id], "S"))
       this.props.dispatch(emailActions.sendApproverEmail(this.props.claimsMap[claim_id], this.props.employee.manager_id, "S"))
       modal.clear();
-      this.returnToClaimsList();
+      this.returnToClaimsList().then(()=> {
+          // if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
+          //   toastr.removeByType("error");
+          //   toastr.success('Your claim has been submitted', 'Please await manager action')
+          // } else {
+          //   toastr.removeByType("error");
+          //   toastr.error('Your claim has not been submitted', 'Please try again', toastrHelpers.getErrorOptions())
+          // }
+        }
+      );
+
     });
   }
 
@@ -117,7 +127,14 @@ class ClaimPage extends React.Component {
       expense_type: parseInt(data.expense_type),
       receipt: receipt
     }   
-    this.props.dispatch(claimItemsActions.addClaimItem(item)).then(() => {
+    this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
+      if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
+        toastr.removeByType("error");
+        toastr.success('Claim item has been successfully added');
+      } else {
+        toastr.removeByType("error");
+        toastr.error('Claim item has failed to add', 'Please try again', toastrHelpers.getErrorOptions())
+      }
       modal.clear();
     });;
   }
