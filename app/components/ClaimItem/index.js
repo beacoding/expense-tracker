@@ -50,10 +50,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
   let defaultValue = valueMap[expense_category.toUpperCase()];
   if (expense_category === "MILEAGE" && claim_status === "P") {
     let distance = claimItemsHelpers.amountToDistance(amount, policies["Per Mileage Reimbursement"]);
-
-
     return (
-
       <tr>
         <td><RIEInput className="item-container" value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item_id)} propName='description' /> <i className="ion-edit"></i> </td>
         <td><RIEInput value={distance.toFixed(2) || "Enter Distance Here"} change={handleEditMileage.bind(this, "mileage", claim_item_id)} propName='mileage' /> miles  <i className="ion-edit"></i><div id={"distance-amount-" + claim_item_id}>${amount.toFixed(2)}</div></td>
@@ -69,7 +66,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
             }
           </select>
         </td>
-        <td> {receipt} <span><label className="fileContainer"> <i className="ion-ios-upload-outline"></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></label></span></td>
+        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload"></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></label></span></td>
         <td><RIETextArea value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
         <td><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i></td>
       </tr>
@@ -91,7 +88,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
             }
           </select>
         </td>
-        <td> {receipt} <span><label className="fileContainer"> <i className="ion-ios-upload-outline"></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></label></span></td>
+        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload"></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></label></span></td>
         <td><RIETextArea value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
         <td><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i></td>
       </tr>

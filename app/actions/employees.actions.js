@@ -62,7 +62,7 @@ function updatePassword(employee) {
 
 function requestEmployees(manager_id) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(manager_id));
     return employeesAPI.requestEmployees(manager_id).then(
       res => {
         dispatch(success(res.employees))
@@ -71,7 +71,7 @@ function requestEmployees(manager_id) {
     );
   };
   
-  function request() { return { type: employeesConstants.REQUEST_EMPLOYEES_OF_MANAGER }}
+  function request(manager_id) { return { type: employeesConstants.REQUEST_EMPLOYEES_OF_MANAGER, manager_id }}
   function success(employees) { return { type: employeesConstants.RECEIVE_EMPLOYEES_OF_MANAGER, employees, manager_id }}
   function failure(error) { return { type: employeesConstants.FAILURE_EMPLOYEES_OF_MANAGER, error }}
 }
@@ -127,7 +127,7 @@ function requestWith(params) {
 
 function requestEmployee(employee_id) {
   return dispatch => {
-    dispatch(request());
+    dispatch(request(employee_id));
     return employeesAPI.requestEmployee(employee_id).then(
       res => {
         dispatch(success(res.employee))
@@ -136,7 +136,7 @@ function requestEmployee(employee_id) {
     );
   };
   
-  function request() { return { type: employeesConstants.REQUEST_EMPLOYEE }}
+  function request(employee_id) { return { type: employeesConstants.REQUEST_EMPLOYEE, employee_id }}
   function success(employee) { return { type: employeesConstants.RECEIVE_EMPLOYEE, employee }}
   function failure(error) { return { type: employeesConstants.FAILURE_EMPLOYEE, error }}
 }

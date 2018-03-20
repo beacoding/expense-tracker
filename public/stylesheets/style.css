@@ -993,25 +993,26 @@ input:focus, text-area:focus {
 }
 
 .fileContainer {
-    overflow: hidden;
-    position: relative;
+  overflow: hidden;
+  position: relative;
 }
 
 .fileContainer [type=file] {
-    display: block;
-    font-size: 999px;
-    filter: alpha(opacity=0);
-    min-height: 100%;
-    min-width: 100%;
-    opacity: 0;
-    right: 0;
-    top: 0;
-    position: absolute;
-    cursor: pointer;
+  display: block;
+  font-size: 999px;
+  filter: alpha(opacity=0);
+  min-height: 100%;
+  min-width: 100%;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  position: absolute;
+  cursor: pointer;
 }
 
 .fileContainer {
-    border-radius: .5em;
-    border-color: #fc8c1e;
-    border-width: 1px;
+  padding: 3px;
+  border-radius: .5em;
+  border-color: #fc8c1e;
+  border-width: 1px;
 }
