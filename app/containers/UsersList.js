@@ -16,6 +16,7 @@ class UsersList extends React.Component {
 
   renderEntries() {
     const { employee, users } = this.props;
+    console.log(users);
     return (
       <tbody>
       {Object.entries(users).map((user, i) => {

@@ -43,6 +43,7 @@ const findAllWithParams = async (req, res, next) => {
     req.employees = employees;
     next()
   } catch (err) {
+    console.log(err);
     req.error = err;
     next();
   }
@@ -121,5 +122,6 @@ module.exports = {
   updatePassword: updatePassword,
   addOne: addOne,
   enableOne: enableOne,
-  disableOne: disableOne
+  disableOne: disableOne, 
+  findAllWithParams: findAllWithParams
 }

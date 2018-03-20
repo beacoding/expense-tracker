@@ -22,12 +22,13 @@ class UserManagementContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(employeesActions.requestAll());
+    this.props.dispatch(employeesActions.requestAll())
   }
+  
 
   componentWillReceiveProps(nextprops) {
     // TODO: USER FILTER NOT IMPLEMENTED YET
-    // this.props.dispatch(employeesActions.requestWith(nextprops.params));
+    this.props.dispatch(employeesActions.requestWith(nextprops.params));
   }
 
   handleParamChangeText(e) {
@@ -98,6 +99,7 @@ class UserManagementContainer extends React.Component {
           <div className="page-title">
           User Management
           </div>
+          
           <div className="page-route">
             <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > User Management </span>
           </div>
@@ -114,10 +116,11 @@ function mapStateToProps(state) {
   const { authentication, form, employees } = state;
   const { employee } = authentication;
   const users = employees.employees;
+  const params = employees.params;
   return {
     employee,
     users,
-    form
+    params
   };
 }
 

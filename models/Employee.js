@@ -154,7 +154,7 @@ module.exports = {
               whereArray.push("employee_id = '" + params[key] + "'")
               break;
             case "employee_name":
-              whereArray.push("(first_name LIKE '" + params[key] + "%' OR last_name LIKE '" + params[key] + "%')");
+              whereArray.push("(e.first_name LIKE '" + params[key] + "%' OR e.last_name LIKE '" + params[key] + "%')");
               break;
             case "manager_id":
               whereArray.push("manager.id = '" + params[key] + "'")
@@ -175,7 +175,7 @@ module.exports = {
                           e.id
                         FROM
                           employee e,
-                          manager m,
+                          employee m
                         WHERE
                           e.manager_id = m.id` + whereString + ";"
 
