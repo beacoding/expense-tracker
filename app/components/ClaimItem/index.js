@@ -46,9 +46,12 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
     {...consts}
   />
 
+
   let defaultValue = valueMap[expense_category.toUpperCase()];
   if (expense_category === "MILEAGE" && claim_status === "P") {
     let distance = claimItemsHelpers.amountToDistance(amount, policies["Per Mileage Reimbursement"]);
+
+
     return (
 
       <tr>
@@ -67,7 +70,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
           </select>
         </td>
         <td>{receipt} <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></td>
-        <td><RIEInput value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
+        <td><RIETextArea value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
         <td><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i></td>
       </tr>
       )
@@ -88,8 +91,8 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
             }
           </select>
         </td>
-        <td>{receipt} <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></td>
-        <td><RIEInput value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
+        <td> {receipt} <span><label className="fileContainer"> <i className="ion-ios-upload-outline"></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item_id)}/></label></span></td>
+        <td><RIETextArea value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item_id)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
         <td><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i></td>
       </tr>
     )

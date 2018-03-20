@@ -961,4 +961,57 @@ input:focus {outline: none; }
   border-color: #0067C6;
 }
 
+input[type="file"] {
+    display: none;
+}
 
+input {
+  width: calc(100% - 30px);
+  min-height: 30px;
+  padding-left: 5px;
+  padding-right: 5px;
+  letter-spacing: .5px;
+  border: 0;
+  border-bottom: 2px solid #f0f0f0;
+  background-color: none;
+
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+input:focus, text-area:focus {
+    outline: none;
+    border-color: #fc8c1e;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background-color: none;
+}
+
+.fileContainer {
+    overflow: hidden;
+    position: relative;
+}
+
+.fileContainer [type=file] {
+    display: block;
+    font-size: 999px;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    right: 0;
+    top: 0;
+    position: absolute;
+    cursor: pointer;
+}
+
+.fileContainer {
+    border-radius: .5em;
+    border-color: #fc8c1e;
+    border-width: 1px;
+}
