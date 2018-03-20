@@ -31,13 +31,12 @@ class ApprovalLimitsContainer extends React.Component {
     var value = e.target.value.length > 0 ? e.target.value : null
     var param_to_change = e.target.name;
     this.props.dispatch(approvalLimitsActions.modifyParams(param_to_change, value));
-    this.props.dispatch()
   }
 
   handleAddLimit(data) {
     const { employee, form } = this.props;
     const employee_name = form.NewApprovalLimitForm.values.employee.label;
-    const cost_centre_id = parseInt(form.NewApprovalLimitForm.values.cost_centre_id);
+    const cost_centre_id = parseInt(form.NewApprovalLimitForm.values.cost_centre_id.value);
     const approvalLimit  = {
       employee_id: form.NewApprovalLimitForm.values.employee.value,
       approval_limit: parseFloat(data.amount),
