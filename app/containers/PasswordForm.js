@@ -2,13 +2,16 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+
+const required = value => value ? undefined : "Field Required"
+
 class PasswordForm extends React.Component {
     constructor(props) {
       super(props);
       const old__pw = this.props;
     }
     renderNewPassword(field){
-        const { meta: { touched, error }} = field;
+        const { meta: { touched, error, warning }} = field;
         const className = `form-group ${touched && error ? "has-danger" : ""}`;
         
         return (
@@ -17,13 +20,13 @@ class PasswordForm extends React.Component {
             {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
             <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} max={field.max} maxLength={field.maxLength} />
             <div className="text-help">
-              {touched ? error : ""}
+            {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
             </div>
           </div>
         );
     }
     renderOldPassword(field) {
-        const { meta: { touched, error }} = field;
+        const { meta: { touched, error ,warning}} = field;
         const className = `form-group ${touched && error ? "has-danger" : ""}`;
         
         return (
@@ -32,7 +35,7 @@ class PasswordForm extends React.Component {
             {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
             <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} max={field.max} maxLength={field.maxLength} />
             <div className="text-help">
-              {touched ? error : ""}
+            {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
             </div>
           </div>
         );
@@ -47,6 +50,8 @@ class PasswordForm extends React.Component {
             name="old_password"
             type="password"
             placeholder="Old Password"
+            validate={[required]}
+            warn={required}
             component={this.renderOldPassword}
         />
         <Field
@@ -54,6 +59,8 @@ class PasswordForm extends React.Component {
             name="new_password"
             type="password"
             placeholder="New Password"
+            validate={[required]}
+            warn={required}
             component={this.renderNewPassword}
         />
         <div className="buttons-row">

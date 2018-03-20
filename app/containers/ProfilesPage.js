@@ -31,7 +31,6 @@ class Profile extends React.Component {
     const { form, employee } = this.props;
     const newPassword = {
       id: employee.id,
-      curr_password: employee.password,
       old_password: form.PasswordForm.values.old_password,
       password: form.PasswordForm.values.new_password
     }
