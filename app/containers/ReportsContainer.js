@@ -95,11 +95,11 @@ class ReportsContainer extends React.Component {
         <div className="reports-filter-row">
           <div className="reports-search"><label>Filter by Claimant:</label></div>
           <div className="form-group reports-search">
-            <input type="text" className="form-control" name="employee_name" id="reports-search-employee" placeholder="Employee Name" onChange={this.handleParamChangeText}/>
+            <input type="text" className="form-control" name="employee_name" id="reports-search-employee" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
           </div>
           <div className="reports-search"><label>or Approver:</label></div>        
           <div className="form-group reports-search">
-            <input type="text" className="form-control" name="manager_name" id="reports-search-manager" placeholder="Approver Name" onChange={this.handleParamChangeText}/>
+            <input type="text" className="form-control" name="manager_name" id="reports-search-manager" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
           </div>
         </div>
       </div>

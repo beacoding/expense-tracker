@@ -75,7 +75,7 @@ class ApprovalLimitsContainer extends React.Component {
         <div className="approval-limits-filter-row">
           <div className="approval-limits-search"><label>Filter by Employee:</label></div>
           <div className="form-group approval-limits-search">
-            <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="Employee Name" onChange={this.handleParamChangeText}/>
+            <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
           </div>
           <div className="approval-limits-search"><label>or Cost Centre:</label></div>
           <div className="form-group approval-limits-search">
