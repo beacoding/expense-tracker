@@ -26,17 +26,17 @@ class Profile extends React.Component {
   }
 
   changePassword() {
-    const{form, employee} = this.props;
-    const newpassword = {
+    const { form, employee } = this.props;
+    const newPassword = {
       id: employee.id,
-      employeepass: employee.password,
+      curr_password: employee.password,
       old_password: form.PasswordForm.values.old_password,
       password: form.PasswordForm.values.new_password
     }
-    this.props.dispatch(employeesActions.updatePassword(newpassword)).then((res) => {
-      if(res.type == "SUCCESS_UPDATE_PASSWORD"){
+    this.props.dispatch(employeesActions.updatePassword(newPassword)).then((res) => {
+      if (res.type == "UPDATE_PASSWORD_SUCCESS") {
         modal.clear();
-       }
+      }
     });;
   }
 

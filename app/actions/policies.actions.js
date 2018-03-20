@@ -59,7 +59,7 @@ function updateValue(name, value) {
       )
   }
   
-  function request(name, value) { return { type: policiesConstants.REQUEST_UPDATE_POLICIES, name, value }}
-  function success(name, value) { return { type: policiesConstants.SUCCESS_UPDATE_POLICIES, name, value }}
-  function failure(error) { return { type: policiesConstants.FAILURE_UPDATE_POLICIES, error }}
+  function request(name, value) { return { type: policiesConstants.UPDATE_POLICIES_REQUEST, name, value }}
+  function success(name, value) { return { type: policiesConstants.POLICIES_REQUEST_SUCCESS, name, value }}
+  function failure(error) { return { type: policiesConstants.POLICIES_REQUEST_FAILURE, error }}
 }
