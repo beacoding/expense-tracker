@@ -140,15 +140,14 @@ class ReportsContainer extends React.Component {
             <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > Files and Reports</span>
           </div>
         </div>
-        <div className="reports-filter-container no-select">
-          {/* {this.renderSearchByManagerOrEmployeeID()} */}
-          <div className="item-container">
+        <div className="reports-filter-container">
           {this.renderSearchByManagerOrEmployeeName()}
+          {/* {this.renderSearchByManagerOrEmployeeID()} */}
           {this.renderDateRange()}
           {this.renderCheckBoxes()}
+        </div>
+        <div>
           {this.renderClaimList()}
-          </div>
-          
         </div>
         
       </div>

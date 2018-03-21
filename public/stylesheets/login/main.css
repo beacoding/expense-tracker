@@ -224,6 +224,19 @@ iframe {
   cursor: default;
 }
 
+.login100-text {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: lighter; 
+  color: #636c6e;
+  line-height: 1.2;
+  text-align: center;
+  display: block;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
 /*---------------------------------------------*/
 .wrap-input100 {
   position: relative;
