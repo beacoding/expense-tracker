@@ -20,6 +20,7 @@ class ClaimItemContainer extends React.Component {
     this.handleEditReceipt = this.handleEditReceipt.bind(this);
     this.handleChangeDistance = this.handleChangeDistance.bind(this);
     this.handleEditMileage = this.handleEditMileage.bind(this);
+    this.isNumberAcceptable = this.isNumberAcceptable.bind(this);
   }
 
   confirmDeleteItem() {
@@ -79,6 +80,12 @@ class ClaimItemContainer extends React.Component {
   //   });
   // }
 
+
+  isNumberAcceptable(value) {
+    var floatRegex = /^[0-9]*\.?[0-9]+/;
+    return floatRegex.test(value);
+  }
+
   handleEditItem(key, claim_item_id, item) {
     let claim_id = parseInt(window.location.pathname.split("/")[2]);
     this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item_id));
@@ -127,7 +134,18 @@ class ClaimItemContainer extends React.Component {
   render() {
     const { claim_item, claim_status, employee } = this.props;
     return (
-      <ClaimItem handleEditMileage={this.handleEditMileage} policies={this.props.policies} handleEditReceipt={this.handleEditReceipt} handleChangeExpenseCategory={this.handleChangeExpenseCategory} employee={employee} claim_item={claim_item} claim_status={claim_status} expense_types={this.props.expense_types} handleDeleteItem={this.handleDeleteItem} handleEditItem={this.handleEditItem} handleChangeDistance={this.handleChangeDistance}/>
+      <ClaimItem handleEditMileage={this.handleEditMileage} 
+                  policies={this.props.policies}
+                  handleEditReceipt={this.handleEditReceipt}
+                  handleChangeExpenseCategory={this.handleChangeExpenseCategory}
+                  isNumberAcceptable={this.isNumberAcceptable}
+                  employee={employee}
+                  claim_item={claim_item}
+                  claim_status={claim_status}
+                  expense_types={this.props.expense_types}
+                  handleDeleteItem={this.handleDeleteItem}
+                  handleEditItem={this.handleEditItem}
+                  handleChangeDistance={this.handleChangeDistance}/>
     )
   }
 }

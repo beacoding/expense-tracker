@@ -98,13 +98,13 @@ module.exports = {
               setArray.push("claim_item.amount = '" + parseFloat(params[key]) + "'");
               break;
             case "description":
-              setArray.push("claim_item.description = '" + params[key] + "'");
+              setArray.push(`claim_item.description = "` + params[key] + `"`);
               break;
             case "expense_type":
               setArray.push("claim_item.expense_type = '" + parseInt(params[key]) + "'");
               break;
             case "comment":
-              setArray.push("claim_item.comment = '" + params[key] + "'");
+              setArray.push(`claim_item.comment = "` + params[key] + `"`);
               break;
             default:
               break;
