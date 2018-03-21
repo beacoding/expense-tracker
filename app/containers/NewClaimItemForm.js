@@ -151,7 +151,7 @@ class NewClaimItemForm extends React.Component {
   //form for submit new claim initial items
   render () {
     const { handleSubmit, pristine, reset, submitting, expense_type, policies } = this.props;
-    let amount_label = (parseInt(expense_type) === 9 || parseInt(expense_type) === 10) ? "Amount (CAD) | Maximum Allowable: $" + policies["Maximum Per Diem Amount"] : "Amount (CAD):";
+    let amount_label = (parseInt(expense_type) === 9 || parseInt(expense_type) === 10) ? "Amount (CAD) | Maximum Allowable: $" + policies["Maximum Per Meal Expense"] : "Amount (CAD):";
     if (parseInt(expense_type) === 12) {
       const renderField = this.renderField;
       return (
