@@ -89,7 +89,7 @@ class NewUserForm extends React.Component {
       <div className = {className}>
         <label>{field.label}</label>
         {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-        <input id="id" className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} min={field.min} step={field.step} />
+        <input id="id" className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} min={field.min} max={field.max} step={field.step} />
         <div className="text-help">
           {touched ? error : ""}
         </div>
@@ -108,6 +108,7 @@ class NewUserForm extends React.Component {
             type="number"
             min={0}
             step={1}
+            max={9999999999}
           />
         <Field
           label="First Name:"

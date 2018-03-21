@@ -166,6 +166,7 @@ function addEmployee(newEmployee) {
         return dispatch(success(newEmployee, res.employees))
       },
       error => {
+        console.log(error);
         return dispatch(failure(error))
       }
     )

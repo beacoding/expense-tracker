@@ -1,9 +1,10 @@
 var connection = require('../config/connect');
 
 module.exports = {
-  findOne: function(id) {
+  findOne: function(key) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to find one employee
+      var id = key;
+      var email = key;
       var queryString = `SELECT
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
                           CONCAT(m.first_name, ' ', m.last_name) as manager_name,
@@ -16,8 +17,8 @@ module.exports = {
                         FROM
                           employee e
                         LEFT JOIN employee m ON m.id = e.manager_id
-                        WHERE e.id = ?`;
-      connection.query(queryString, [id], (err, rows) => {
+                        WHERE e.id = ? OR e.email = ?`;
+      connection.query(queryString, [id, email], (err, rows) => {
         if (err) {
           reject(err);
         } else {
