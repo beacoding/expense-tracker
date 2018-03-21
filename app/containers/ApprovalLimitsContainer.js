@@ -80,6 +80,10 @@ class ApprovalLimitsContainer extends React.Component {
           <div className="form-group approval-limits-search">
             <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="Cost Centre #" onChange={this.handleParamChangeText}/>
           </div>
+          <div className="approval-limits-button">
+            { this.renderButtons() }
+          </div>
+         
         </div>
       </div>
     )
@@ -106,7 +110,7 @@ class ApprovalLimitsContainer extends React.Component {
           </div>
         </div>
         { this.renderSearchByEmployeeOrCostCentre() }
-        { this.renderButtons() }
+       
         <ApprovalLimitsList />
       </div>
     )

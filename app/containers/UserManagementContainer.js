@@ -93,6 +93,9 @@ class UserManagementContainer extends React.Component {
           <div className="form-group approval-limits-search">
             <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="Manager Name" onChange={this.handleParamChangeText}/>
           </div>
+          <div className="approval-limits-button">
+          {this.renderButtons()}
+          </div>
         </div>
       </div>
     )
@@ -119,8 +122,7 @@ class UserManagementContainer extends React.Component {
             <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > User Management </span>
           </div>
         </div>
-        {this.renderSearchByEmployeeOrManager()}
-        {this.renderButtons()}
+          {this.renderSearchByEmployeeOrManager()}        
         <UsersList handleStatusChange={this.handleStatusChange}/>
       </div>
     )
