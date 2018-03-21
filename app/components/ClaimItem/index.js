@@ -5,7 +5,7 @@ import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 
 import ImageZoom from 'react-medium-image-zoom';
 import { claimItemsHelpers } from '../../helpers';
 
-const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
+const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, isNumberAcceptable, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
   const {
     claim_item_id,
     description,
@@ -53,10 +53,10 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
     let distance = claimItemsHelpers.amountToDistance(amount, policies["Per Mileage Reimbursement"]);
     return (
       <tr>
-        <td><RIEInput className="item-container" value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item_id)} propName='description' /> <i className="ion-edit"></i> </td>
-        <td><RIEInput value={distance.toFixed(2) || "Enter Distance Here"} change={handleEditMileage.bind(this, "mileage", claim_item_id)} propName='mileage' /> miles  <i className="ion-edit"></i><div id={"distance-amount-" + claim_item_id}>${amount.toFixed(2)}</div></td>
+        <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item_id)} propName='description' /> <i className="ion-edit"></i> </td>
+        <td><div id={"distance-amount-" + claim_item_id}>${amount.toFixed(2)}</div> <br></br> <RIENumber value={distance.toFixed(2) || "Enter Distance Here"} validate={isNumberAcceptable.bind(this)} change={handleEditMileage.bind(this, "mileage", claim_item_id)} propName='mileage' /> KM <i className="ion-edit"></i></td>
         <td>
-          <select value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item_id)}>
+          <select className="claim-item-expense-type-select" value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item_id)}>
             <option value="" disabled> Select an expense category. </option>
             {
               expense_types.map((expense_type) => {
@@ -76,9 +76,9 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
     return (
       <tr>
         <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item_id)} propName='description' /> <i className="ion-edit"></i> </td>
-        <td>$<RIEInput value={amount.toFixed(2) || "Enter Amount Here"} change={handleEditItem.bind(this, "amount", claim_item_id)} propName='amount' />  <i className="ion-edit"></i></td>
+        <td>$<RIENumber value={amount.toFixed(2) || "Enter Amount Here"} validate={isNumberAcceptable.bind(this)} change={handleEditItem.bind(this, "amount", claim_item_id)} propName='amount' />  <i className="ion-edit"></i></td>
         <td>
-          <select value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item_id)}>
+          <select className="claim-item-expense-type-select" value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item_id)}>
             <option value="" disabled> Select an expense category. </option>
             {
               expense_types.map((expense_type) => {

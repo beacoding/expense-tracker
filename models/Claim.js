@@ -58,8 +58,8 @@ module.exports = {
             case "employee_id":
               whereArray.push("claimant.id = '" + params[key] + "'")
               break;
-            case "manager_id":
-              whereArray.push("manager.id = '" + params[key] + "'")
+            case "approver_id":
+              whereArray.push("approver.id = '" + params[key] + "'")
               break;
             case "employee_name":
               whereArray.push("(claimant.first_name LIKE '" + params[key] + "%' OR claimant.last_name LIKE '" + params[key] + "%')");
@@ -67,11 +67,11 @@ module.exports = {
             case "employee_email":
               whereArray.push("claimant.email LIKE '%" + params[key] + "%'");
               break;
-            case "manager_name":
-              whereArray.push("(manager.first_name LIKE '" + params[key] + "%' OR manager.last_name LIKE '" + params[key] + "%')");
+            case "approver_name":
+              whereArray.push("(approver.first_name LIKE '" + params[key] + "%' OR approver.last_name LIKE '" + params[key] + "%')");
               break;
-            case "manager_email":
-              whereArray.push("claimant.email LIKE '" + params[key] + "%'");
+            case "approver_email":
+              whereArray.push("approver.email LIKE '" + params[key] + "%'");
               break;
             case "submitted":
               orArray.push("claim.status = " + "'S'")
@@ -144,17 +144,15 @@ module.exports = {
                             manager.first_name as manager_first_name,
                             manager.last_name as manager_last_name,
                             manager.email as manager_email
-                           FROM
+                          FROM
                             claim, 
-                            employee claimant, 
+                            employee claimant
+                          LEFT JOIN employee manager ON manager.id = claimant.manager_id,
                             employee approver,
-                            employee manager,
                             company
-                           WHERE 
+                          WHERE 
                             claimant.id = claim.claimant_id AND 
                             approver.id = claim.approver_id AND
-                            claimant.manager_id = manager.id AND
-                            approver.id = ? AND
                             claim.company_id = company.id` + whereString + ";"
       connection.query(queryString, [employee.id], (err, rows) => {
         if (err) {

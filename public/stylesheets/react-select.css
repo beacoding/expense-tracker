@@ -143,6 +143,8 @@
   vertical-align: middle;
 }
 .Select-input > input {
+  min-height: 0px;
+  overflow: initial;
   width: 100%;
   background: none transparent;
   border: 0 none;

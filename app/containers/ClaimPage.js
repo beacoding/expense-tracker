@@ -136,7 +136,6 @@ class ClaimPage extends React.Component {
       }
       modal.clear();
       toastr.removeByType("error")
-      toastr.success("Item added")
     });;
   }
 

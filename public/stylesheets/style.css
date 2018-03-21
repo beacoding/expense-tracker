@@ -889,6 +889,14 @@ input:focus {outline: none; }
   position: absolute;
 }
 
+
+.claim-item-expense-type-select {
+  width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 /* CLAIM PAGE PROGRESS BAR STYLES */
 
 /**
