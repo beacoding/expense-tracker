@@ -72,7 +72,7 @@ class ReportsClaimList extends React.Component {
     const { employee, claimsMap } = this.props;
 
     return (
-      <div className="claim-list">
+      <div className="filter-item-container">
         {Object.entries(claimsMap).map((claim_tuple) => {
           var claim = claim_tuple[1];
           return <ReportsClaimContainer claim={claim} employee={employee} key={claim.claim_id}/>

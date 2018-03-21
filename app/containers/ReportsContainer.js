@@ -142,11 +142,15 @@ class ReportsContainer extends React.Component {
         </div>
         <div className="reports-filter-container no-select">
           {/* {this.renderSearchByManagerOrEmployeeID()} */}
+          <div className="item-container">
           {this.renderSearchByManagerOrEmployeeName()}
           {this.renderDateRange()}
           {this.renderCheckBoxes()}
+          {this.renderClaimList()}
+          </div>
+          
         </div>
-        {this.renderClaimList()}
+        
       </div>
       )
   }
