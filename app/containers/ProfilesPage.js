@@ -9,6 +9,7 @@ import {toastr} from 'react-redux-toastr';
 import {toastrHelpers} from '../helpers';
 class Profile extends React.Component {
 
+  
   constructor(props) {
     super(props);
     this.showChangePasswordModal = this.showChangePasswordModal.bind(this);

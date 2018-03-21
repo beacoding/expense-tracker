@@ -80,7 +80,19 @@ const findOne = async (req, res, next) => {
 }
 
 const addOne = async (req, res, next) => {
+  let email_exist;
+  let id_exist;
   try {
+    email_exist = await Employee.findOne(req.body.email);
+    id_exist = await Employee.findOne(req.body.id);
+    if (id_exist[0]) {
+      req.error = "Error: ID Exists";
+      next()
+    }
+    if (email_exist[0]) {
+      req.error = "Error: Email Exists"
+      next()
+    }
     let info = await Employee.addOne(req.body);
     let employees = await Employee.findAllWithManagers();
     req.employees = employees;
