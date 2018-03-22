@@ -50,21 +50,20 @@ class UserManagementContainer extends React.Component {
       is_admin: (data.is_admin === true),      
     }
     this.props.dispatch(employeesActions.addEmployee(newUser)).then((res) => {  
-      debugger;
       if (res.type === "ADD_EMPLOYEE_SUCCESS") {
         toastr.removeByType("error");
         toastr.success('Employee Added', data.first_name + ' ' + data.last_name  + ' has been successfully added');
-      } else if (res.error.error.sqlMessage.indexOf("Out of range") >= 0) {
-        toastr.removeByType("error");
-        toastr.error('Error Adding Employee', "ID cannot be longer than 11 digits.", toastrHelpers.getErrorOptions())
+        modal.clear();
       } else if (res.error != null) {
         toastr.removeByType("error");
         toastr.error(res.error.error, "Could not add " + data.first_name + ' ' + data.last_name + ".");
+      } else if (res.error.error.sqlMessage && res.error.error.sqlMessage.indexOf("Out of range") >= 0) {
+        toastr.removeByType("error");
+        toastr.error('Error Adding Employee', "ID cannot be longer than 11 digits.", toastrHelpers.getErrorOptions())
       } else {
         toastr.removeByType("error");
         toastr.error('Error Adding Employee', res.error.error, toastrHelpers.getErrorOptions())
       }      
-      modal.clear();
     });;
   }
 
