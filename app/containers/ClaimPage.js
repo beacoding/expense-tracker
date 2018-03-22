@@ -51,19 +51,28 @@ class ClaimPage extends React.Component {
   
   confirmSubmit() {
     let claim_id = window.location.pathname.split("/")[2];
-    this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then((res) => {
-      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
-        toastr.removeByType("error");
-        toastr.success('Claim Submitted', 'Your claim has been submitted to your manager for review.')
-        this.props.dispatch(emailActions.sendClaimantEmail(this.props.claimsMap[claim_id], "S"))
-        this.props.dispatch(emailActions.sendApproverEmail(this.props.claimsMap[claim_id], this.props.employee.manager_id, "S"))
-        modal.clear();
-        this.returnToClaimsList()
-      } else {
-        toastr.removeByType("error");
-        toastr.error('Error Submitting Claim', 'Please try again.', toastrHelpers.getErrorOptions())
-      }
-    });
+    let claim = this.props.claimsMap[claim_id];
+    const claimItemsObj = this.props.claimItems.claimItemsMap[claim_id] || {};
+    claimsHelpers.calculateTotal(claim, claimItemsObj)
+    if (claim.total_amount > this.props.max_policy_limits["Maximum Per Diem Amount"]) {
+      toastr.removeByType("error");
+      toastr.error('Policy Violation', 'Claim exceeds maximum per diem amount of $' + this.props.max_policy_limits["Maximum Per Diem Amount"] + '.', toastrHelpers.getErrorOptions());
+      return;
+    } else {
+      this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then((res) => {
+        if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
+          toastr.removeByType("error");
+          toastr.success('Claim Submitted', 'Your claim has been submitted to your manager for review.');
+          this.props.dispatch(emailActions.sendClaimantEmail(this.props.claimsMap[claim_id], "S"));
+          this.props.dispatch(emailActions.sendApproverEmail(this.props.claimsMap[claim_id], this.props.employee.manager_id, "S"));
+          modal.clear();
+          this.returnToClaimsList()
+        } else {
+          toastr.removeByType("error");
+          toastr.error('Error Submitting Claim', 'Please try again.', toastrHelpers.getErrorOptions());
+        }
+      });
+    }
   }
 
   handleSubmit() {
