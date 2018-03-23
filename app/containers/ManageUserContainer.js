@@ -158,7 +158,7 @@ class ManageUserContainer extends React.Component {
                     </tr>
                     <tr>
                       <td>Manager:</td>
-                      <td>{user.manager_name}</td>
+                      <td>{user.manager_name ? user.manager_name: "N/A"}</td>
                     </tr>
                     <tr>
                       <td>Email:</td>

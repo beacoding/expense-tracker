@@ -82,7 +82,7 @@ class Profile extends React.Component {
                   </tr>
                   <tr>
                     <td>Manager:</td>
-                    <td>{employee.manager_name}</td>
+                    <td>{employee.manager_name ? employee.manager_name: "N/A"}</td>
                   </tr>
                   <tr>
                     <td>Email:</td>
