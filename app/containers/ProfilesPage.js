@@ -39,10 +39,10 @@ class Profile extends React.Component {
       if (res.type == "UPDATE_PASSWORD_SUCCESS") {
         modal.clear();
         toastr.removeByType("error")
-        toastr.success('Password Changed', 'Password changed for ' + employee.first_name + '.')
+        toastr.success('Password Changed', 'Your password has been changed.')
        } else {
          toastr.removeByType("error")
-         toastr.error("Error Changing Password", "You've entered incorrect old password.", toastrHelpers.getErrorOptions())
+         toastr.error("Error Changing Password", "Please double check your current password.", toastrHelpers.getErrorOptions())
        }
     });;
   }
@@ -82,7 +82,7 @@ class Profile extends React.Component {
                   </tr>
                   <tr>
                     <td>Manager:</td>
-                    <td>{employee.manager_name}</td>
+                    <td>{employee.manager_name ? employee.manager_name: "N/A"}</td>
                   </tr>
                   <tr>
                     <td>Email:</td>

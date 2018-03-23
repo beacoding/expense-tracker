@@ -65,7 +65,6 @@ router.post('/send_claimant_email', [authMiddleware.isLoggedIn], function(req, r
       if (error) {
         res.status(500);
         res.send({error: req.error});
-        console.log(error);
       } else {
         // email sent successfully
         res.status(200);
@@ -123,9 +122,7 @@ router.post('/send_approver_email', [authMiddleware.isLoggedIn, emailMiddleware.
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         res.status(500);
-        res.send({error: req.error});
-        console.log(error);
-        
+        res.send({error: req.error});        
       } else {
         // email sent successfully
         res.status(200);

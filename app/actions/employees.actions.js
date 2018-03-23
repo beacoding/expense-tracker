@@ -8,6 +8,7 @@ export const employeesActions = {
   requestEmployee,
   addEmployee,
   updatePassword,
+  resetPassword,  
   enableEmployee,
   disableEmployee,
   modifyParams,
@@ -66,6 +67,24 @@ function updatePassword(employee) {
   function request(employee) { return { type: employeesConstants.UPDATE_PASSWORD_REQUEST, employee }}
   function success(employee) { return { type: employeesConstants.UPDATE_PASSWORD_SUCCESS, employee }}
   function failure(error) { return { type: employeesConstants.UPDATE_PASSWORD_FAILURE, error }}
+}
+
+function resetPassword(employee) {
+  return dispatch => {
+    dispatch(request(employee));
+    return employeesAPI.resetPassword(employee).then(
+      res => {
+        return dispatch(success(employee))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
+    )
+  }
+  
+  function request(employee) { return { type: employeesConstants.RESET_PASSWORD_REQUEST, employee }}
+  function success(employee) { return { type: employeesConstants.RESET_PASSWORD_SUCCESS, employee }}
+  function failure(error) { return { type: employeesConstants.RESET_PASSWORD_FAILURE, error }}
 }
 
 function requestEmployees(manager_id) {
@@ -166,7 +185,6 @@ function addEmployee(newEmployee) {
         return dispatch(success(newEmployee, res.employees))
       },
       error => {
-        console.log(error);
         return dispatch(failure(error))
       }
     )
