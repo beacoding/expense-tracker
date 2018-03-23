@@ -50,7 +50,7 @@ router.get('/with_employee', [authMiddleware.isLoggedIn, employeesMiddleware.fin
 });
 
 router.post('/create', [authMiddleware.isLoggedIn, employeesMiddleware.addOne], function(req, res, next) {
-  if(req.error == "Error: ID Exists" || req.error == "Error: Email Exists") {
+  if (req.error == "Error: ID Exists" || req.error == "Error: Email Exists" || req.error == "Error: Manager is Disabled") {
     res.status(403);
     res.send({error: req.error})
   } else if (req.error != undefined) {

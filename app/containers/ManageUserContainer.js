@@ -71,7 +71,7 @@ class ManageUserContainer extends React.Component {
     this.props.dispatch(employeesActions.disableEmployee(user.id, user.manager_id)).then(() => {
       modal.clear();
       toastr.removeByType("error")
-      toastr.warning("User disabled", user.first_name +" has been disabled")
+      toastr.warning("User Disabled", user.first_name + "'s account has been disabled.")
     });
   }
 
@@ -80,7 +80,7 @@ class ManageUserContainer extends React.Component {
     this.props.dispatch(employeesActions.enableEmployee(user.id)).then(() => {
       modal.clear();
       toastr.removeByType("error")
-      toastr.success("User enabled", user.first_name +" has been enabled")
+      toastr.success("User Enabled", user.first_name + "'s account has been enabled.")
     });
   }
 
