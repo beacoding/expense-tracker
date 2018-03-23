@@ -90,21 +90,28 @@ const findOne = async (req, res, next) => {
 const addOne = async (req, res, next) => {
   let email_exist;
   let id_exist;
+  let manager;
   try {
     email_exist = await Employee.findOne(req.body.email);
     id_exist = await Employee.findOne(req.body.id);
+    manager = await Employee.findOne(req.body.manager_id);    
     if (id_exist[0]) {
       req.error = "Error: ID Exists";
-      next()
+      next();
     }
     if (email_exist[0]) {
       req.error = "Error: Email Exists"
-      next()
+      next();
     }
-    let info = await Employee.addOne(req.body);
-    let employees = await Employee.findAllWithManagers();
-    req.employees = employees;
-    next()
+    if (!manager[0].is_active) {
+      req.error = "Error: Manager is Disabled"
+      next();
+    } else {
+      let info = await Employee.addOne(req.body);
+      let employees = await Employee.findAllWithManagers();
+      req.employees = employees;
+      next();
+    }
   } catch (err) {
     req.error = err;
     next();
