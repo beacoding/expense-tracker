@@ -28,6 +28,22 @@ module.exports = {
     });
   },
 
+  findOneWithPassword: function(id) {
+    return new Promise((resolve, reject) => {
+      var queryString = `SELECT *
+                        FROM
+                          employee e
+                        WHERE e.id = ?`;
+      connection.query(queryString, [id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
   transferEmployeesToManagerWithManagerID: function(employee_id, manager_id) {
     return new Promise((resolve, reject) => {
       //TODO queryString to find one employee
@@ -234,12 +250,6 @@ module.exports = {
           resolve(rows);
         }
       });
-    }); 
-  },
-
-  deleteOne: function(id) {
-    return new Promise((resolve, reject) => {
-      //TODO queryString to delete one employee
     }); 
   }
 }

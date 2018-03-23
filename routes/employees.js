@@ -87,7 +87,16 @@ router.post('/update_password', [authMiddleware.isLoggedIn, employeesMiddleware.
     res.status(500);
     res.send({error: req.error});
   } else {
-    res.send({password: req.password});
+    res.send({});
+  }
+});
+
+router.post('/reset_password', [authMiddleware.isLoggedIn, employeesMiddleware.resetPassword], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({});
   }
 });
 
@@ -100,7 +109,5 @@ router.get('/*', function(req, res) {
     res.render('index.ejs', {title: "Homepage", message: req.flash('loginMessage') });
   }
 });
-
-
 
 module.exports = router;

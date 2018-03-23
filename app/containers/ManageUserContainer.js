@@ -87,19 +87,19 @@ class ManageUserContainer extends React.Component {
   resetPassword(){
     const{form, user} = this.props;
     let employee_id = window.location.pathname.split("/")[3];
-    const newpassword = {
+    const newPassword = {
       id: parseInt(employee_id),
       password: form.ResetPasswordForm.values.new_password
     }
 
-    this.props.dispatch(employeesActions.updatePassword(newpassword)).then((res) => {
-      if (res.type == "UPDATE_PASSWORD_SUCCESS") {
+    this.props.dispatch(employeesActions.resetPassword(newPassword)).then((res) => {
+      if (res.type == "RESET_PASSWORD_SUCCESS") {
         modal.clear();
         toastr.removeByType("error")
-        toastr.success('Password Changed', 'Password changed for ' + employee.first_name + '.')
+        toastr.success('Password Successfully Reset', 'Password for ' + user.first_name + ' has been changed.')
        } else {
          toastr.removeByType("error")
-         toastr.error("Error Changing Password", "Please try again.", toastrHelpers.getErrorOptions())
+         toastr.error("Error Resetting Password", "Please try again.", toastrHelpers.getErrorOptions())
        }
     });
   }
