@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { RIEInput, RIETextArea, RIENumber } from 'riek';
 import ImageZoom from 'react-medium-image-zoom';
 import { claimItemsHelpers } from '../../helpers';
+import './style.css';
 import FileBase64 from 'react-file-base64';
 
 const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, isNumberAcceptable, validateMealExpense, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
