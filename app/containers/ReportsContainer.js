@@ -99,7 +99,7 @@ class ReportsContainer extends React.Component {
           </div>
           <div className="reports-search"><label>or Approver:</label></div>        
           <div className="form-group reports-search">
-            <input type="text" className="form-control" name="manager_name" id="reports-search-manager" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
+            <input type="text" className="form-control" name="approver_name" id="reports-search-manager" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
           </div>
         </div>
       </div>
@@ -140,15 +140,14 @@ class ReportsContainer extends React.Component {
             <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > Files and Reports</span>
           </div>
         </div>
-        <div className="reports-filter-container no-select">
-          {/* {this.renderSearchByManagerOrEmployeeID()} */}
-          <div className="item-container">
+        <div className="reports-filter-container">
           {this.renderSearchByManagerOrEmployeeName()}
+          {/* {this.renderSearchByManagerOrEmployeeID()} */}
           {this.renderDateRange()}
           {this.renderCheckBoxes()}
+        </div>
+        <div>
           {this.renderClaimList()}
-          </div>
-          
         </div>
         
       </div>

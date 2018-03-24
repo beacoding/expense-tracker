@@ -50,7 +50,7 @@ router.get('/with_employee', [authMiddleware.isLoggedIn, employeesMiddleware.fin
 });
 
 router.post('/create', [authMiddleware.isLoggedIn, employeesMiddleware.addOne], function(req, res, next) {
-  if(req.error == "Error: ID Exists" || req.error == "Error: Email Exists") {
+  if (req.error == "Error: ID Exists" || req.error == "Error: Email Exists" || req.error == "Error: Manager is Disabled") {
     res.status(403);
     res.send({error: req.error})
   } else if (req.error != undefined) {
@@ -87,7 +87,16 @@ router.post('/update_password', [authMiddleware.isLoggedIn, employeesMiddleware.
     res.status(500);
     res.send({error: req.error});
   } else {
-    res.send({password: req.password});
+    res.send({});
+  }
+});
+
+router.post('/reset_password', [authMiddleware.isLoggedIn, employeesMiddleware.resetPassword], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({});
   }
 });
 
@@ -100,7 +109,5 @@ router.get('/*', function(req, res) {
     res.render('index.ejs', {title: "Homepage", message: req.flash('loginMessage') });
   }
 });
-
-
 
 module.exports = router;

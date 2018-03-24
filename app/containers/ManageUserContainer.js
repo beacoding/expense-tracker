@@ -71,7 +71,7 @@ class ManageUserContainer extends React.Component {
     this.props.dispatch(employeesActions.disableEmployee(user.id, user.manager_id)).then(() => {
       modal.clear();
       toastr.removeByType("error")
-      toastr.warning("User disabled", user.first_name +" has been disabled")
+      toastr.warning("User Disabled", user.first_name + "'s account has been disabled.")
     });
   }
 
@@ -80,26 +80,26 @@ class ManageUserContainer extends React.Component {
     this.props.dispatch(employeesActions.enableEmployee(user.id)).then(() => {
       modal.clear();
       toastr.removeByType("error")
-      toastr.success("User enabled", user.first_name +" has been enabled")
+      toastr.success("User Enabled", user.first_name + "'s account has been enabled.")
     });
   }
 
   resetPassword(){
     const{form, user} = this.props;
     let employee_id = window.location.pathname.split("/")[3];
-    const newpassword = {
+    const newPassword = {
       id: parseInt(employee_id),
       password: form.ResetPasswordForm.values.new_password
     }
 
-    this.props.dispatch(employeesActions.updatePassword(newpassword)).then((res) => {
-      if (res.type == "UPDATE_PASSWORD_SUCCESS") {
+    this.props.dispatch(employeesActions.resetPassword(newPassword)).then((res) => {
+      if (res.type == "RESET_PASSWORD_SUCCESS") {
         modal.clear();
         toastr.removeByType("error")
-        toastr.success('Password Changed', 'Password changed for ' + employee.first_name + '.')
+        toastr.success('Password Successfully Reset', 'Password for ' + user.first_name + ' has been changed.')
        } else {
          toastr.removeByType("error")
-         toastr.error("Error Changing Password", "Please try again.", toastrHelpers.getErrorOptions())
+         toastr.error("Error Resetting Password", "Please try again.", toastrHelpers.getErrorOptions())
        }
     });
   }
@@ -158,7 +158,7 @@ class ManageUserContainer extends React.Component {
                     </tr>
                     <tr>
                       <td>Manager:</td>
-                      <td>{user.manager_name}</td>
+                      <td>{user.manager_name ? user.manager_name: "N/A"}</td>
                     </tr>
                     <tr>
                       <td>Email:</td>

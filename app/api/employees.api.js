@@ -9,6 +9,7 @@ export const employeesAPI = {
   disableEmployee,
   enableEmployee,
   updatePassword,
+  resetPassword,  
   requestWith
 };
 
@@ -54,6 +55,11 @@ function requestEmployee(employee_id) {
 
 function updatePassword(employee) {
   return fetch(`/employees/update_password`, apiHelpers.postOptions(employee))
+  .then(apiHelpers.handleResponse);
+}
+
+function resetPassword(employee) {
+  return fetch(`/employees/reset_password`, apiHelpers.postOptions(employee))
   .then(apiHelpers.handleResponse);
 }
 

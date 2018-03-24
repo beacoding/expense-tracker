@@ -9,6 +9,8 @@ export const claimItemsAPI = {
 };
 
 function addClaimItem(item) {
+  console.log("addClaimItem API");
+  console.log(item);
   return fetch(`/claim_items/add_item`, apiHelpers.postFormOptions(item))
   .then(apiHelpers.handleResponse);
 }

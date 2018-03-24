@@ -8,7 +8,7 @@ import ClaimItemContainer from './ClaimItemContainer';
 import NewClaimItemModal from './NewClaimItemModal';
 import ModalContainer from './ModalContainer'
 import { emailAPI } from "../api";
-import {claimsHelpers, toastrHelpers} from '../helpers';
+import {claimItemsHelpers, claimsHelpers, toastrHelpers} from '../helpers';
 import { toastr } from 'react-redux-toastr';
 
 class ClaimPage extends React.Component {
@@ -51,19 +51,28 @@ class ClaimPage extends React.Component {
   
   confirmSubmit() {
     let claim_id = window.location.pathname.split("/")[2];
-    this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then((res) => {
-      if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
-        toastr.removeByType("error");
-        toastr.success('Claim Submitted', 'Your claim has been submitted to your manager for review.')
-        this.props.dispatch(emailActions.sendClaimantEmail(this.props.claimsMap[claim_id], "S"))
-        this.props.dispatch(emailActions.sendApproverEmail(this.props.claimsMap[claim_id], this.props.employee.manager_id, "S"))
-        modal.clear();
-        this.returnToClaimsList()
-      } else {
-        toastr.removeByType("error");
-        toastr.error('Error Submitting Claim', 'Please try again.', toastrHelpers.getErrorOptions())
-      }
-    });
+    let claim = this.props.claimsMap[claim_id];
+    const claimItemsObj = this.props.claimItems.claimItemsMap[claim_id] || {};
+    claimsHelpers.calculateTotal(claim, claimItemsObj)
+    if (claim.total_amount > this.props.max_policy_limits["Maximum Per Diem Amount"]) {
+      toastr.removeByType("error");
+      toastr.error('Policy Violation', 'Claim exceeds maximum per diem amount of $' + this.props.max_policy_limits["Maximum Per Diem Amount"] + '.', toastrHelpers.getErrorOptions());
+      return;
+    } else {
+      this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then((res) => {
+        if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
+          toastr.removeByType("error");
+          toastr.success('Claim Submitted', 'Your claim has been submitted to your manager for review.');
+          this.props.dispatch(emailActions.sendClaimantEmail(this.props.claimsMap[claim_id], "S"));
+          this.props.dispatch(emailActions.sendApproverEmail(this.props.claimsMap[claim_id], this.props.employee.manager_id, "S"));
+          modal.clear();
+          this.returnToClaimsList()
+        } else {
+          toastr.removeByType("error");
+          toastr.error('Error Submitting Claim', 'Please try again.', toastrHelpers.getErrorOptions());
+        }
+      });
+    }
   }
 
   handleSubmit() {
@@ -111,33 +120,49 @@ class ClaimPage extends React.Component {
   createClaimItem(data) {
     let claim_id = window.location.pathname.split("/")[2];
     const { employee, form, max_policy_limits } = this.props;
-    let receipt = (data.no_receipt === true) ? null : data.receipt[0];
+    // let receipt = (data.no_receipt === true) ? null : data.receipt[0];
 
-    if (parseInt(data.expense_type) === 12) {
-      let distance = isNaN(data.mileage) ? 0 : data.mileage;
-      let amount = (distance * max_policy_limits["Per Mileage Reimbursement"]) || 0.00;
-      data.amount = amount;
+    let receipt;
+    if (data.no_receipt === true){
+      receipt = null;
     }
-    const item = {
-      claim_id: parseInt(claim_id),
-      description: data.description,
-      amount: data.amount,
-      comment: data.comment,
-      expense_type: parseInt(data.expense_type),
-      receipt: receipt
-    }   
-    this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
-      if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
-        toastr.removeByType("error");
-        toastr.success('Claim Item Added', 'Claim Item has been successfully added.');
-      } else {
-        toastr.removeByType("error");
-        toastr.error('Error Adding Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
+    else {
+      receipt = data.receipt[0];
+    }
+    claimItemsHelpers.encodeFile(receipt).then(function(result) {
+      console.log("this is result of encodeFile");
+      console.log(result);
+      let receipt = (data.no_receipt === true) ? null : result;
+      if (parseInt(data.expense_type) === 12) {
+        let distance = isNaN(data.mileage) ? 0 : data.mileage;
+        let amount = (distance * max_policy_limits["Per Mileage Reimbursement"]) || 0.00;
+        data.amount = amount;
       }
-      modal.clear();
-      toastr.removeByType("error")
-      toastr.success("Item added")
-    });;
+      const item = {
+        claim_id: parseInt(claim_id),
+        description: data.description,
+        amount: data.amount,
+        comment: data.comment,
+        expense_type: parseInt(data.expense_type),
+        receipt: receipt
+      };
+      this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
+        console.log("this is receipt");
+        console.log(item);
+        console.log(item.receipt);
+        if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
+          toastr.removeByType("error");
+          toastr.success('Claim Item Added', 'Claim Item has been successfully added.');
+        } else {
+          toastr.removeByType("error");
+          toastr.error('Error Adding Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
+        }
+        modal.clear();
+        toastr.removeByType("error");
+        toastr.success("Item added");
+      });
+    }.bind(this));
+
   }
 
   showNewClaimItemModal(){

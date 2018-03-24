@@ -43,7 +43,6 @@ const findAllWithParams = async (req, res, next) => {
     req.employees = employees;
     next()
   } catch (err) {
-    console.log(err);
     req.error = err;
     next();
   }
@@ -52,15 +51,24 @@ const findAllWithParams = async (req, res, next) => {
 const updatePassword = async (req, res, next) => {
   let password;
   try {
-    employee = await Employee.findOne(req.body.id);
-    if (req.body.old_password != employee.password) {
+    employee = await Employee.findOneWithPassword(req.body.id);
+    if (req.body.old_password != employee[0].password) {
       req.error = "Current password does not match.";
-      next()
+      next();
     } else {
       password = await Employee.updatePassword(req.body);
-      req.password = password;
-      next()
+      next();
     }
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
+const resetPassword = async (req, res, next) => {
+  try {
+    let info = await Employee.updatePassword(req.body);
+    next();
   } catch (err) {
     req.error = err;
     next();
@@ -82,21 +90,28 @@ const findOne = async (req, res, next) => {
 const addOne = async (req, res, next) => {
   let email_exist;
   let id_exist;
+  let manager;
   try {
     email_exist = await Employee.findOne(req.body.email);
     id_exist = await Employee.findOne(req.body.id);
+    manager = await Employee.findOne(req.body.manager_id);    
     if (id_exist[0]) {
       req.error = "Error: ID Exists";
-      next()
+      next();
     }
     if (email_exist[0]) {
       req.error = "Error: Email Exists"
-      next()
+      next();
     }
-    let info = await Employee.addOne(req.body);
-    let employees = await Employee.findAllWithManagers();
-    req.employees = employees;
-    next()
+    if (!manager[0].is_active) {
+      req.error = "Error: Manager is Disabled"
+      next();
+    } else {
+      let info = await Employee.addOne(req.body);
+      let employees = await Employee.findAllWithManagers();
+      req.employees = employees;
+      next();
+    }
   } catch (err) {
     req.error = err;
     next();
@@ -132,6 +147,7 @@ module.exports = {
   findOne: findOne,
   findAllWithManagerID: findAllWithManagerID,
   updatePassword: updatePassword,
+  resetPassword: resetPassword,  
   addOne: addOne,
   enableOne: enableOne,
   disableOne: disableOne, 

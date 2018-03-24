@@ -50,21 +50,20 @@ class UserManagementContainer extends React.Component {
       is_admin: (data.is_admin === true),      
     }
     this.props.dispatch(employeesActions.addEmployee(newUser)).then((res) => {  
-      debugger;
       if (res.type === "ADD_EMPLOYEE_SUCCESS") {
         toastr.removeByType("error");
         toastr.success('Employee Added', data.first_name + ' ' + data.last_name  + ' has been successfully added');
-      } else if (res.error.error.sqlMessage.indexOf("Out of range") >= 0) {
-        toastr.removeByType("error");
-        toastr.error('Error Adding Employee', "ID cannot be longer than 11 digits.", toastrHelpers.getErrorOptions())
+        modal.clear();
       } else if (res.error != null) {
         toastr.removeByType("error");
         toastr.error(res.error.error, "Could not add " + data.first_name + ' ' + data.last_name + ".");
+      } else if (res.error.error.sqlMessage && res.error.error.sqlMessage.indexOf("Out of range") >= 0) {
+        toastr.removeByType("error");
+        toastr.error('Error Adding Employee', "ID cannot be longer than 11 digits.", toastrHelpers.getErrorOptions())
       } else {
         toastr.removeByType("error");
         toastr.error('Error Adding Employee', res.error.error, toastrHelpers.getErrorOptions())
       }      
-      modal.clear();
     });;
   }
 
@@ -87,11 +86,11 @@ class UserManagementContainer extends React.Component {
         <div className="approval-limits-filter-row">
           <div className="approval-limits-search"><label>Filter by Employee:</label></div>
           <div className="form-group approval-limits-search">
-            <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="Employee Name" onChange={this.handleParamChangeText}/>
+            <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
           </div>
           <div className="approval-limits-search"><label>or Employee's Manager:</label></div>
           <div className="form-group approval-limits-search">
-            <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="Manager Name" onChange={this.handleParamChangeText}/>
+            <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
           </div>
           <div className="approval-limits-button">
           {this.renderButtons()}
