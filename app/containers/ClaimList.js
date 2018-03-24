@@ -7,8 +7,8 @@ import ClaimContainer from './ClaimContainer';
 import NewClaimModal from './NewClaimModal';
 import { emailAPI } from "../api";
 import { Tabs, Tab } from 'react-bootstrap';
-import {toastr} from "react-redux-toastr";
-import {toastrHelpers} from "../helpers";
+import { toastr } from "react-redux-toastr";
+import { toastrHelpers } from "../helpers";
 
 class ClaimList extends React.Component {
   constructor(props) {
@@ -226,10 +226,6 @@ class ClaimList extends React.Component {
     if (isFetching && claimsMap == undefined) {
       return this.renderFetching();
     }
-    
-    // if (!isFetching && (claimsMap == undefined || Object.keys(claimsMap)[0] == undefined)) {
-    //   return this.renderEmptyList();
-    // }
     
     return (
       <div className="claimlist-container">

@@ -18,7 +18,7 @@ class UserManagementPasswordChangeModal extends React.Component {
 
     return (
       <div>
-          <ResetPasswordForm onSubmit={this.props.onSubmitFunction}/>
+        <ResetPasswordForm onSubmit={this.props.onSubmitFunction}/>
       </div>
     );
    }

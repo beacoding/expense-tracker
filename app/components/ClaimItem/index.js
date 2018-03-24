@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.css';
-import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek';
+import { RIEInput, RIETextArea, RIENumber } from 'riek';
 import ImageZoom from 'react-medium-image-zoom';
 import { claimItemsHelpers } from '../../helpers';
+import './style.css';
 
 const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, isNumberAcceptable, validateMealExpense, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
   const {
@@ -67,9 +67,9 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
             }
           </select>
         </td>
-        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload"></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item)}/></label></span></td>
+        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload" style={{fontSize: 18 + 'pt', verticalAlign: 'middle'}}></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item)}/></label></span></td>
         <td><RIETextArea value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
-        <td><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i></td>
+        <td><i className="ion-close-circled pointer" style={{fontSize: 18 + 'px'}} onClick={handleDeleteItem}></i></td>
       </tr>
       )
   } else if (claim_status === 'P') {
@@ -89,9 +89,9 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
             }
           </select>
         </td>
-        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload"></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item)}/></label></span></td>
+        <td> {receipt} <span><label className="fileContainer"> <i className="ion-upload" style={{fontSize: 18 + 'pt', verticalAlign: 'middle'}}></i> <input name="myFile" type="file" onChange={handleEditReceipt.bind(this, claim_item)}/></label></span></td>
         <td><RIETextArea value={comment || "Enter Comment Here"} change={handleEditItem.bind(this, "comment", claim_item)} propName='comment' /> <label htmlFor="comment"><i className="ion-edit"></i></label> </td>
-        <td><i className="ion-close-circled pointer" onClick={handleDeleteItem}></i></td>
+        <td><i className="ion-close-circled pointer" style={{fontSize: 18 + 'px'}} onClick={handleDeleteItem}></i></td>
       </tr>
     )
   } else {

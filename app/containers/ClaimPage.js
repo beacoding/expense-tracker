@@ -8,7 +8,7 @@ import ClaimItemContainer from './ClaimItemContainer';
 import NewClaimItemModal from './NewClaimItemModal';
 import ModalContainer from './ModalContainer'
 import { emailAPI } from "../api";
-import {claimsHelpers, toastrHelpers} from '../helpers';
+import { claimsHelpers, toastrHelpers } from '../helpers';
 import { toastr } from 'react-redux-toastr';
 
 class ClaimPage extends React.Component {
@@ -253,6 +253,7 @@ class ClaimPage extends React.Component {
                 <th scope="col">Expense Category</th>
                 <th scope="col">Receipt</th>
                 <th scope="col">Comments</th>
+                { (status == 'P') && <th scope="col"></th> }
               </tr>
             </thead>
             <tbody>

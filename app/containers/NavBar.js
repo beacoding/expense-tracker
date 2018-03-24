@@ -19,13 +19,13 @@ class NavBar extends React.Component {
 
     if (employee.is_admin === 1) {
       return (
-          <div>
-          <li><NavLink activeClassName="active" to="/admin/reports"><i className="ion-clipboard"></i>Files and Reports</NavLink></li>            
-          <li><NavLink activeClassName="active" to="/admin/users"><i className="ion-person-stalker"></i>User Management</NavLink></li>
-          <li><NavLink activeClassName="active" to="/admin/limits"><i className="ion-android-options"></i>Approval Authorities</NavLink></li>
-          <li><NavLink activeClassName="active" to="/admin/policies"><i className="ion-android-clipboard"></i>Policies</NavLink></li>
-          </div>
-        )
+        <div>
+        <li><NavLink activeClassName="active" to="/admin/reports"><i className="ion-clipboard"></i>Files and Reports</NavLink></li>            
+        <li><NavLink activeClassName="active" to="/admin/users"><i className="ion-person-stalker"></i>User Management</NavLink></li>
+        <li><NavLink activeClassName="active" to="/admin/limits"><i className="ion-android-options"></i>Approval Authorities</NavLink></li>
+        <li><NavLink activeClassName="active" to="/admin/policies"><i className="ion-android-clipboard"></i>Policies</NavLink></li>
+        </div>
+      )
     }
   }
 

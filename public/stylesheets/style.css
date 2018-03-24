@@ -59,6 +59,10 @@ a, a:hover, a:focus {
 i, span {
   display: inline-block;
 }
+
+td {
+  vertical-align: middle !important;
+}
 /* ---------------------------------------------------
 PROFILE PAGE STYLE
 ----------------------------------------------------- */

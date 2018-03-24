@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.css';
 import PendingClaimContainer from '../../containers/PendingClaimContainer';
 
 const Approvals = ({ props, renderEmptyList, renderError }) => {

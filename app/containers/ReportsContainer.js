@@ -15,7 +15,9 @@ class ReportsContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextprops) {
-    this.props.dispatch(claimsActions.requestWith(nextprops.params))
+    if (this.props.params !== nextprops.params) {
+      this.props.dispatch(claimsActions.requestWith(nextprops.params))
+    }
   }
 
   handleParamChangeChecked(e) {

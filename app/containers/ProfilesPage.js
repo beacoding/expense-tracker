@@ -5,8 +5,8 @@ import { Panel } from 'react-bootstrap';
 import ChangePasswordModal from './ChangePasswordModal';
 import { modal } from 'react-redux-modal';
 import { employeesActions } from '../actions';
-import {toastr} from 'react-redux-toastr';
-import {toastrHelpers} from '../helpers';
+import { toastr } from 'react-redux-toastr';
+import { toastrHelpers } from '../helpers';
 class Profile extends React.Component {
 
   
