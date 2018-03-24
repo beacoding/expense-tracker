@@ -6,8 +6,8 @@ import { claimItemsActions } from '../actions';
 import ClaimItem from '../components/ClaimItem'
 import ModalContainer from './ModalContainer'
 import NewClaimItemModal from './NewClaimItemModal'
-import {claimItemsHelpers, toastrHelpers} from '../helpers';
-import {toastr} from "react-redux-toastr";
+import { claimItemsHelpers, toastrHelpers } from '../helpers';
+import { toastr } from "react-redux-toastr";
 
 class ClaimItemContainer extends React.Component {
   constructor(props) {

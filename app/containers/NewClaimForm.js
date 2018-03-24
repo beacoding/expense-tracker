@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import Select from 'react-virtualized-select';
 import createFilterOptions from 'react-select-fast-filter-options';
-import 'react-select/dist/react-select.css';
-import 'react-virtualized/styles.css'
-import 'react-virtualized-select/styles.css'
 
 class NewClaimForm extends React.Component {
   constructor(props) {

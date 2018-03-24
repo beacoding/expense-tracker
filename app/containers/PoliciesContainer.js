@@ -2,9 +2,9 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { policiesActions } from '../actions';
-import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek'
-import {toastr} from "react-redux-toastr";
-import {toastrHelpers} from "../helpers";
+import { RIEInput, RIETextArea, RIENumber } from 'riek'
+import { toastr } from "react-redux-toastr";
+import { toastrHelpers } from "../helpers";
 
 class PoliciesContainer extends React.Component {
   componentDidMount() {

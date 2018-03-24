@@ -4,8 +4,6 @@ import ClaimPage from '../../containers/ClaimPage';
 import { Link } from 'react-router-dom';
 import { claimsHelpers } from  '../../helpers';
 
-import './style.css';
-
 const ReportsClaim = ({ employee, claim, routedFrom }) => {
   const { id, first_name, last_name, email } = employee
   const {
@@ -64,10 +62,10 @@ ReportsClaim.propTypes = {
     claim_id: PropTypes.number.isRequired,
     claimant_first_name: PropTypes.string.isRequired,
     claimant_last_name: PropTypes.string.isRequired,
-    approver_first_name: PropTypes.string.isRequired,
-    approver_last_name: PropTypes.string.isRequired,
-    manager_first_name: PropTypes.string.isRequired,
-    manager_last_name: PropTypes.string.isRequired,
+    approver_first_name: PropTypes.string,
+    approver_last_name: PropTypes.string,
+    manager_first_name: PropTypes.string,
+    manager_last_name: PropTypes.string,
     company_name: PropTypes.string.isRequired,
     cost_centre_id: PropTypes.number.isRequired,
     description: PropTypes.string,

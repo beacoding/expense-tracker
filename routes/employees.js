@@ -49,7 +49,7 @@ router.get('/with_employee', [authMiddleware.isLoggedIn, employeesMiddleware.fin
   }
 });
 
-router.post('/create', [authMiddleware.isLoggedIn, employeesMiddleware.addOne], function(req, res, next) {
+router.post('/create', [authMiddleware.isLoggedIn, authMiddleware.isAdmin, employeesMiddleware.addOne], function(req, res, next) {
   if (req.error == "Error: ID Exists" || req.error == "Error: Email Exists" || req.error == "Error: Manager is Disabled") {
     res.status(403);
     res.send({error: req.error})
@@ -61,21 +61,42 @@ router.post('/create', [authMiddleware.isLoggedIn, employeesMiddleware.addOne], 
   }
 });
 
-router.post('/disable_employee', [authMiddleware.isLoggedIn, employeesMiddleware.disableOne], function(req, res, next) {
+router.post('/disable_employee', [authMiddleware.isLoggedIn, authMiddleware.isAdmin, employeesMiddleware.disableOne], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);
     res.send({error: req.error});
   } else {
-    res.send({});
+    res.send({employees: req.employees});
   }
 });
 
-router.post('/enable_employee', [authMiddleware.isLoggedIn, employeesMiddleware.enableOne], function(req, res, next) {
+router.post('/enable_employee', [authMiddleware.isLoggedIn, authMiddleware.isAdmin, employeesMiddleware.enableOne], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);
     res.send({error: req.error});
   } else {
-    res.send({});
+    res.send({employees: req.employees});
+  }
+});
+
+router.post('/assign_manager', [authMiddleware.isLoggedIn, authMiddleware.isAdmin, employeesMiddleware.assignManager], function(req, res, next) {
+  if (req.error == "Error: Manager is Disabled") {
+    res.status(403);
+    res.send({error: req.error});
+  } else if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({employees: req.employees});
+  }
+});
+
+router.post('/toggle_admin', [authMiddleware.isLoggedIn, authMiddleware.isAdmin, employeesMiddleware.toggleAdmin], function(req, res, next) {
+  if (req.error != undefined) {
+    res.status(500);
+    res.send({error: req.error});
+  } else {
+    res.send({employees: req.employees});
   }
 });
 
@@ -91,7 +112,7 @@ router.post('/update_password', [authMiddleware.isLoggedIn, employeesMiddleware.
   }
 });
 
-router.post('/reset_password', [authMiddleware.isLoggedIn, employeesMiddleware.resetPassword], function(req, res, next) {
+router.post('/reset_password', [authMiddleware.isLoggedIn, authMiddleware.isAdmin, employeesMiddleware.resetPassword], function(req, res, next) {
   if (req.error != undefined) {
     res.status(500);
     res.send({error: req.error});

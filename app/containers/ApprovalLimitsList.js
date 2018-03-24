@@ -5,8 +5,8 @@ import { modal } from 'react-redux-modal';
 import { approvalLimitsActions } from '../actions';
 import ApprovalLimit from '../components/ApprovalLimit';
 import ModalContainer from './ModalContainer'
-import {toastr} from 'react-redux-toastr';
-import {toastrHelpers} from '../helpers';
+import { toastr } from 'react-redux-toastr';
+import { toastrHelpers } from '../helpers';
 
 class ApprovalLimitsList extends React.Component {
   constructor(props) {
@@ -72,38 +72,51 @@ class ApprovalLimitsList extends React.Component {
       )
   }
 
-  render() {
-    const { errorAddApprovalLimit } = this.props;
+  renderEmptyList() {
+    return (
+      <div className="claim-container">
+        No approval authorities were found.
+      </div>
+    )
+  }
 
-      return (
-        <div className="claim-list">
-          <div className="claim-container">
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Employee </th>
-                  <th scope="col">Cost Centre ID</th>
-                  <th scope="col">Approval Limit</th>
-                  <th></th>
-                </tr>
-              </thead>
-              { this.renderEntries() }
-            </table>
-          </div>
+  render() {
+    const { limitsMap, isFetching, errorAddApprovalLimit } = this.props;
+
+    if (Object.entries(limitsMap).length < 1) {
+      return this.renderEmptyList();
+    }
+
+    return (
+      <div className="claim-list">
+        <div className="claim-container">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Employee </th>
+                <th scope="col">Cost Centre ID</th>
+                <th scope="col">Approval Limit</th>
+                <th></th>
+              </tr>
+            </thead>
+            { this.renderEntries() }
+          </table>
         </div>
-        )
+      </div>
+    )
   }
 }
 
 function mapStateToProps(state) {
   const { authentication, policies } = state;
   const { employee } = authentication;
-  const { limitsMap, managerOptions, errorAddApprovalLimit } = policies;
+  const { limitsMap, managerOptions, errorAddApprovalLimit, isFetching } = policies;
   return {
     employee,
     limitsMap,
     managerOptions,
-    errorAddApprovalLimit
+    errorAddApprovalLimit,
+    isFetching
   };
 }
 export default withRouter(connect(mapStateToProps)(ApprovalLimitsList))

@@ -16,7 +16,6 @@ import ApprovalLimitsContainer from './containers/ApprovalLimitsContainer';
 import UserManagementContainer from './containers/UserManagementContainer';
 import PoliciesContainer from './containers/PoliciesContainer';
 import ReportsContainer from './containers/ReportsContainer';
-import ManageUserContainer from './containers/ManageUserContainer';
 import Profile from './containers/ProfilesPage';
 import reducer from './reducers';
 import ReduxToastr from 'react-redux-toastr'
@@ -59,7 +58,6 @@ render(
               <Route exact path="/admin/reports" component={ReportsContainer}/>
               <Route path="/admin/reports/:claim_id" component={ClaimPage}/> 
               <Route path="/admin/limits" component={ApprovalLimitsContainer}/> 
-              <Route path="/admin/users/:user_id" component={ManageUserContainer}/> 
               <Route path="/admin/users" component={UserManagementContainer}/> 
               <Route path="/admin/policies" component={PoliciesContainer}/> 
               <Route path="/profile" component={Profile}/> 

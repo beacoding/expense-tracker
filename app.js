@@ -24,8 +24,8 @@ var upload = multer({ dest: './uploads/' })
 var app = express();
 
 // disable client-side caching (because IE...)
-var nocache = require('nocache')
-app.use(nocache())
+// var nocache = require('nocache')
+// app.use(nocache())
 
 // passport
 require('./config/passport')(passport); // pass passport for configuration

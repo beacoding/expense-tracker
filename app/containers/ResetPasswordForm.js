@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-// import { Form, FormGroup, Col, Button, FormControl } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 
 class ResetPasswordForm extends React.Component {

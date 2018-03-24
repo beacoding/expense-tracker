@@ -122,7 +122,9 @@ const policies = (state = initialState, action) => {
 
     // REQUEST COMPANIES FROM DB
     case policiesConstants.REQUEST_COMPANIES:
-      return state
+      return Object.assign({}, state, {
+        isFetching: true
+      });
     case policiesConstants.RECEIVE_COMPANIES:
       return Object.assign({}, state, {
         isFetching: false,
@@ -137,7 +139,9 @@ const policies = (state = initialState, action) => {
 
     // REQUEST EXPENSE TYPES FROM DB
     case policiesConstants.REQUEST_EXPENSE_TYPES:
-      return state
+      return Object.assign({}, state, {
+        isFetching: true
+      });
     case policiesConstants.RECEIVE_EXPENSE_TYPES:
       return Object.assign({}, state, {
         isFetching: false,
@@ -152,7 +156,9 @@ const policies = (state = initialState, action) => {
 
     // REQUEST POLICIES
     case policiesConstants.REQUEST_POLICIES:
-      return state
+      return Object.assign({}, state, {
+        isFetching: true
+      });
     case policiesConstants.RECEIVE_POLICIES:
       let policies = {}
       action.policies.forEach((policy) => {
@@ -171,7 +177,9 @@ const policies = (state = initialState, action) => {
 
     // REQUEST UPDATE POLICIES
     case policiesConstants.UPDATE_POLICIES_REQUEST:
-      return state
+      return Object.assign({}, state, {
+        isFetching: true
+      });
     case policiesConstants.UPDATE_POLICIES_SUCCESS:
       let newPolicies = Object.assign({}, state.policies)
       newPolicies[action.name] = action.value 

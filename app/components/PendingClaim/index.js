@@ -4,8 +4,6 @@ import ClaimPage from '../../containers/ClaimPage';
 import { Link } from 'react-router-dom';
 import { claimsHelpers } from  '../../helpers';
 
-import './style.css';
-
 const PendingClaim = ({ employee, claim, handleAction, hasApprovalAuthority, hasSufficientApprovalLimit }) => {
   const { id, first_name, last_name, email } = employee
   const {
