@@ -76,7 +76,7 @@ CREATE TABLE claim_item (
   amount DECIMAL(10,2) NOT NULL,
   comment VARCHAR(255) NOT NULL,
   expense_type INT NOT NULL,
-  image_url LONGTEXT,
+  image_url BLOB,
   PRIMARY KEY (id),
   FOREIGN KEY (claim_id) REFERENCES claim(id) ON DELETE CASCADE,
   FOREIGN KEY (expense_type) REFERENCES expense_type(id),
