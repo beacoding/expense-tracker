@@ -18,10 +18,10 @@ const addNewItem = async (req,res,next) => {
   let items;
   // add item locally
 
-  console.log("addNewItem");
-  console.log(req.body);
-  console.log(req.body.receipt);
-  console.log(req.body.image_url);
+  // console.log("addNewItem");
+  // console.log(req.body);
+  // console.log(req.body.receipt);
+  // console.log(req.body.image_url);
   try {
     // console.log("begining of my logs");
     // // console.log(req.body);
@@ -29,8 +29,7 @@ const addNewItem = async (req,res,next) => {
     // console.log(req.files);
     // console.log(req.files[0]);
     // console.log(req.files[0]["filename"]);
-    // req.body.image_url = req.body.receipt ? req.body.receipt : null;
-    req.body.image_url = req.files[0]
+    req.body.image_url = req.body.receipt ? req.body.receipt : null;
     // req.body.image_url = req.body.receipt;
     items = await ClaimItem.addOne(req.body);
     var claim_item_id = items.insertId;
@@ -62,9 +61,9 @@ const updateOne = async (req,res,next) => {
 
 const updateReceipt = async (req, res, next) => {
   // add item locally
-  console.log(req);
-  console.log(req.body);
-  console.log(req.files)
+  // console.log(req);
+  // console.log(req.body);
+  // console.log(req.files);
   try {
     // req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
     req.body.image_url = req.body.receipt ? req.body.receipt : null;

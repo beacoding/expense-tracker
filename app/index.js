@@ -28,7 +28,7 @@ export const store = createStore(
   reducer,
   applyMiddleware(
       thunkMiddleware,
-      loggerMiddleware
+      // loggerMiddleware
   )
 );
 
