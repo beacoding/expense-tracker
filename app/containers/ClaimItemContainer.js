@@ -125,9 +125,13 @@ class ClaimItemContainer extends React.Component {
     let claim_id = window.location.pathname.split("/")[2];
     let item = {};
     item.receipt = e.target.files[0];
+    console.log("handle edit receipt");
+    console.log(item.receipt);
+    console.log(claim_item);
     claimItemsHelpers.encodeFile(item.receipt).then(function(result) {
+      console.log(result);
       item.receipt = result;
-      this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item.claim_item_id)).then((res) => {
+      this.props.dispatch(claimItemsActions.editReceipt(item, claim_id, claim_item.claim_item_id)).then((res) => {
         if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
           toastr.removeByType("error");
           toastr.success('Claim Item Updated', 'Claim Item has been successfully modified.');

@@ -8,8 +8,6 @@ export const apiHelpers = {
 };
 
 function handleResponse(response) {
-  console.log("handleResponse");
-  console.log(response);
   let promise = new Promise ((resolve, reject) => {
     resolve(response.json());
   })
