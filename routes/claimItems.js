@@ -26,6 +26,8 @@ router.get('/', [authMiddleware.isLoggedIn, claimItemsMiddleware.findAllWithClai
 });
 
 router.post('/add_item', authMiddleware.isLoggedIn, upload, claimItemsMiddleware.addNewItem, function(req, res, next) {
+  console.log("addnewItem ROUTER");
+  console.log(req.body);
   if (req.error !== undefined) {
     res.status(500);
     res.send({error: req.error});

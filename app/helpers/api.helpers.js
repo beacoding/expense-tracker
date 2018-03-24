@@ -8,6 +8,8 @@ export const apiHelpers = {
 };
 
 function handleResponse(response) {
+  console.log("handleResponse");
+  console.log(response);
   let promise = new Promise ((resolve, reject) => {
     resolve(response.json());
   })
@@ -43,9 +45,12 @@ function postOptions(data) {
 }
 
 function postFormOptions(data) {
+  console.log("postFormOptions");
+  console.log(data);
   var form_data = new FormData();
 
   for (var key in data) {
+    console.log(key);
     form_data.append(key, data[key]);
   }
 
