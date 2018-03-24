@@ -108,7 +108,7 @@ class ClaimItemContainer extends React.Component {
 
   handleChangeExpenseCategory(claim_item, e) {
     let claim_id = window.location.pathname.split("/")[2];
-    let item = {}
+    let item = {};
     item.expense_type = e.target.value;
     this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item.claim_item_id)).then((res) => {
       if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
@@ -125,21 +125,24 @@ class ClaimItemContainer extends React.Component {
     let claim_id = window.location.pathname.split("/")[2];
     let item = {};
     item.receipt = e.target.files[0];
-    this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item.claim_item_id)).then((res) => {
-      if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
-        toastr.removeByType("error");
-        toastr.success('Claim Item Updated', 'Claim Item has been successfully modified.');
-      } else {
-        toastr.removeByType("error");
-        toastr.error('Error Updating Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
-      }
-    });
+    claimItemsHelpers.encodeFile(item.receipt).then(function(result) {
+      item.receipt = result;
+      this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item.claim_item_id)).then((res) => {
+        if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
+          toastr.removeByType("error");
+          toastr.success('Claim Item Updated', 'Claim Item has been successfully modified.');
+        } else {
+          toastr.removeByType("error");
+          toastr.error('Error Updating Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
+        }
+      });
+    }.bind(this));
   }
 
   render() {
     const { claim_item, claim_status, employee } = this.props;
     return (
-      <ClaimItem handleEditMileage={this.handleEditMileage} 
+      <ClaimItem handleEditMileage={this.handleEditMileage}
                   policies={this.props.policies}
                   handleEditReceipt={this.handleEditReceipt}
                   handleChangeExpenseCategory={this.handleChangeExpenseCategory}

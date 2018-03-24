@@ -120,8 +120,6 @@ class ClaimPage extends React.Component {
   createClaimItem(data) {
     let claim_id = window.location.pathname.split("/")[2];
     const { employee, form, max_policy_limits } = this.props;
-    // let receipt = (data.no_receipt === true) ? null : data.receipt[0];
-
     let receipt;
     if (data.no_receipt === true){
       receipt = null;
@@ -148,8 +146,7 @@ class ClaimPage extends React.Component {
       };
       this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
         console.log("this is receipt");
-        console.log(item);
-        console.log(item.receipt);
+        console.log(receipt);
         if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
           toastr.removeByType("error");
           toastr.success('Claim Item Added', 'Claim Item has been successfully added.');
@@ -159,7 +156,6 @@ class ClaimPage extends React.Component {
         }
         modal.clear();
         toastr.removeByType("error");
-        toastr.success("Item added");
       });
     }.bind(this));
 

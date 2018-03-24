@@ -44,12 +44,12 @@ function encodeFile(fileToUpload) {
     let reader = new FileReader();
     reader.readAsDataURL(fileToUpload);
     reader.onload = function () {
-      const mimeType = base64MimeType(reader.result);
-      const b64String = base64String(reader.result);
-      const blob = b64toBlob(b64String, mimeType);
+      // const mimeType = base64MimeType(reader.result);
+      // const b64String = base64String(reader.result);
+      // const blob = b64toBlob(b64String, mimeType);
       // const blobURL = URL.createObjectURL(blob);
-      resolve(blob);
-      // resolve(reader.result);
+      // resolve(blobURL);
+      resolve(reader.result);
     };
     reader.onerror = function (error) {
       console.log('Error: ', error);

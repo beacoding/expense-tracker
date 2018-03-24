@@ -29,8 +29,7 @@ const addNewItem = async (req,res,next) => {
     // console.log(req.files);
     // console.log(req.files[0]);
     // console.log(req.files[0]["filename"]);
-    // req.body.image_url = req.body.receipt ? req.body.receipt : null;
-    req.body.image_url = req.files[0]
+    req.body.image_url = req.body.receipt ? req.body.receipt : null;
     // req.body.image_url = req.body.receipt;
     items = await ClaimItem.addOne(req.body);
     var claim_item_id = items.insertId;

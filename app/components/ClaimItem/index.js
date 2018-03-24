@@ -4,6 +4,7 @@ import './style.css';
 import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek';
 import ImageZoom from 'react-medium-image-zoom';
 import { claimItemsHelpers } from '../../helpers';
+import FileBase64 from 'react-file-base64';
 
 const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, isNumberAcceptable, validateMealExpense, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
   const {
@@ -24,19 +25,25 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
   });
 
   let consts = {zoomStyle: 'opacity: 0.1;background-color: black;'}
+  //
+  // const img = document.createElement('img');
+  // img.src = claim_item.image_url;
+  console.log("HELLO");
+  console.log(claim_item.image_url);
+  console.log("this is null" + null);
+  console.log(claim_item.image_url == null);
+  let receipt = (claim_item.image_url) === "null" ? "No Receipt" :
 
-  let receipt = (claim_item.image_url) === null ? "No Receipt" : 
- 
   <ImageZoom
     image={{
-      src: '/uploads/' + claim_item.image_url,
+      src: claim_item.image_url,
       alt: claim_item.description + ' Receipt',
       className: 'img',
       style: { width: '50px'}
     }}
     zoomImage={{
       alt: claim_item.description + 's Receipt',
-      src: '/uploads/' + claim_item.image_url,
+      src: claim_item.image_url,
       alt: claim_item.description + ' Receipt',
     }}
     defaultStyles={{
@@ -45,7 +52,9 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
       }
     }}
     {...consts}
-  />
+  />;
+
+  console.log(receipt);
 
 
   let defaultValue = valueMap[expense_category.toUpperCase()];
