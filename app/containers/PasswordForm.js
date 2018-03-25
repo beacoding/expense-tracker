@@ -10,7 +10,7 @@ class PasswordForm extends React.Component {
       super(props);
       const old__pw = this.props;
     }
-    renderNewPassword(field){
+    renderNewPassword(field) {
         const { meta: { touched, error, warning }} = field;
         const className = `form-group ${touched && error ? "has-danger" : ""}`;
         
