@@ -12,7 +12,8 @@ var storage = multer.diskStorage({
     })
   }
 })
-var upload = multer({ storage: storage }).any()
+var upload = multer({ storage: storage,
+                      limits: {fieldSize: 25*1024*1024}}).any();
 var ClaimItem = require('../models/ClaimItem')
 var authMiddleware = require('../middleware/auth.middleware');
 var claimItemsMiddleware = require('../middleware/claimItems.middleware');

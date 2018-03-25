@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { RIEInput, RIETextArea, RIENumber } from 'riek';
 import ImageZoom from 'react-medium-image-zoom';
 import { claimItemsHelpers } from '../../helpers';
-import './style.css';
+import FileBase64 from 'react-file-base64';
 
 const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, isNumberAcceptable, validateMealExpense, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
   const {
@@ -24,19 +24,19 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
   });
 
   let consts = {zoomStyle: 'opacity: 0.1;background-color: black;'}
+  //
+  let receipt = (claim_item.image_url) === "null" ? "No Receipt" :
 
-  let receipt = (claim_item.image_url) === null ? "No Receipt" : 
- 
   <ImageZoom
     image={{
-      src: '/uploads/' + claim_item.image_url,
+      src: claim_item.image_url,
       alt: claim_item.description + ' Receipt',
       className: 'img',
       style: { width: '50px'}
     }}
     zoomImage={{
       alt: claim_item.description + 's Receipt',
-      src: '/uploads/' + claim_item.image_url,
+      src: claim_item.image_url,
       alt: claim_item.description + ' Receipt',
     }}
     defaultStyles={{
@@ -45,8 +45,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
       }
     }}
     {...consts}
-  />
-
+  />;
 
   let defaultValue = valueMap[expense_category.toUpperCase()];
   if (expense_category === "MILEAGE" && claim_status === "P") {

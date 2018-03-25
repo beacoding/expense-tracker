@@ -8,7 +8,7 @@ import ClaimItemContainer from './ClaimItemContainer';
 import NewClaimItemModal from './NewClaimItemModal';
 import ModalContainer from './ModalContainer'
 import { emailAPI } from "../api";
-import { claimsHelpers, toastrHelpers } from '../helpers';
+import {claimItemsHelpers, claimsHelpers, toastrHelpers} from '../helpers';
 import { toastr } from 'react-redux-toastr';
 
 class ClaimPage extends React.Component {
@@ -120,32 +120,45 @@ class ClaimPage extends React.Component {
   createClaimItem(data) {
     let claim_id = window.location.pathname.split("/")[2];
     const { employee, form, max_policy_limits } = this.props;
-    let receipt = (data.no_receipt === true) ? null : data.receipt[0];
-
-    if (parseInt(data.expense_type) === 12) {
-      let distance = isNaN(data.mileage) ? 0 : data.mileage;
-      let amount = (distance * max_policy_limits["Per Mileage Reimbursement"]) || 0.00;
-      data.amount = amount;
+    let receipt;
+    if (data.no_receipt === true){
+      receipt = null;
     }
-    const item = {
-      claim_id: parseInt(claim_id),
-      description: data.description,
-      amount: data.amount,
-      comment: data.comment,
-      expense_type: parseInt(data.expense_type),
-      receipt: receipt
-    }   
-    this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
-      if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
-        toastr.removeByType("error");
-        toastr.success('Claim Item Added', 'Claim Item has been successfully added.');
-      } else {
-        toastr.removeByType("error");
-        toastr.error('Error Adding Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
+    else {
+      receipt = data.receipt[0];
+    }
+    claimItemsHelpers.encodeFile(receipt).then(function(result) {
+      console.log("this is result of encodeFile");
+      console.log(result);
+      let receipt = (data.no_receipt === true) ? null : result;
+      if (parseInt(data.expense_type) === 12) {
+        let distance = isNaN(data.mileage) ? 0 : data.mileage;
+        let amount = (distance * max_policy_limits["Per Mileage Reimbursement"]) || 0.00;
+        data.amount = amount;
       }
-      modal.clear();
-      toastr.removeByType("error")
-    });;
+      const item = {
+        claim_id: parseInt(claim_id),
+        description: data.description,
+        amount: data.amount,
+        comment: data.comment,
+        expense_type: parseInt(data.expense_type),
+        receipt: receipt
+      };
+      this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
+        console.log("this is receipt");
+        console.log(receipt);
+        if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
+          toastr.removeByType("error");
+          toastr.success('Claim Item Added', 'Claim Item has been successfully added.');
+        } else {
+          toastr.removeByType("error");
+          toastr.error('Error Adding Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
+        }
+        modal.clear();
+        toastr.removeByType("error");
+      });
+    }.bind(this));
+
   }
 
   showNewClaimItemModal(){

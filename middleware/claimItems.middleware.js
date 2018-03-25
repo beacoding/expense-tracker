@@ -17,9 +17,9 @@ const findAllWithClaim = async (req,res,next) => {
 const addNewItem = async (req,res,next) => {
   let items;
   // add item locally
-
   try {
-    req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
+    req.body.image_url = req.body.receipt ? req.body.receipt : null;
+    // req.body.image_url = req.body.receipt;
     items = await ClaimItem.addOne(req.body);
     var claim_item_id = items.insertId;
     var item = await ClaimItem.findOne(claim_item_id);
@@ -34,9 +34,10 @@ const addNewItem = async (req,res,next) => {
 const updateOne = async (req,res,next) => {
   // add item locally
   try {
-    if (req.body.image_url) {
-      req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
-    }
+    // if (req.body.image_url) {
+    //   req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
+    // }
+    req.body.image_url = req.body.receipt ? req.body.receipt : null;
     await ClaimItem.updateOne(req.body.item, req.body.id);
     var item = await ClaimItem.findOne(req.body.id);
     req.item = item;
@@ -49,8 +50,12 @@ const updateOne = async (req,res,next) => {
 
 const updateReceipt = async (req, res, next) => {
   // add item locally
+  // console.log(req);
+  // console.log(req.body);
+  // console.log(req.files);
   try {
-    req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
+    // req.body['image_url'] = req.files[0] ? req.files[0]["filename"] : null;
+    req.body.image_url = req.body.receipt ? req.body.receipt : null;
     await ClaimItem.updateReceipt(req.body, req.body.id);
     var item = await ClaimItem.findOne(req.body.id);
     req.item = item;
