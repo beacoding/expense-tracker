@@ -66,7 +66,7 @@ class ClaimList extends React.Component {
         toastr.error('Error Creating Claim', 'Please try again.', toastrHelpers.getErrorOptions())
       }
       modal.clear();
-      window.location= '/claims/'+ res.claimId;
+      window.location = '/claims/'+ res.claimId;
     });
   }
   

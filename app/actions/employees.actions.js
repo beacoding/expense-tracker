@@ -14,7 +14,8 @@ export const employeesActions = {
   disableEmployee,
   toggleAdmin,
   modifyParams,
-  requestWith
+  requestWith,
+  clearAll
 };
 
 function requestAll() {
@@ -234,4 +235,10 @@ function addEmployee(newEmployee) {
 
 function modifyParams(param_to_change, value) {
   return { type: employeesConstants.MODIFY_PARAMS, param_to_change, value };
+}
+
+function clearAll() {
+  return dispatch => {
+    dispatch({ type: employeesConstants.CLEAR_EMPLOYEES });
+  }
 }

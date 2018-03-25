@@ -1,6 +1,7 @@
 import { employeesConstants } from '../constants';
 
 const initialState = {
+  isFetching: false,
   employees: [],
   employees_with_managers: [],
   employeesOfManagerMap: {},
@@ -193,6 +194,15 @@ const employees = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
+      });
+    case employeesConstants.CLEAR_EMPLOYEES:
+      return Object.assign({}, state, {
+        isFetching: false,
+        employees: [],
+        employees_with_managers: [],
+        employeesOfManagerMap: {},
+        current_employee: null,
+        params: {}
       });
     default:
       return state;

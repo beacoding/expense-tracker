@@ -2,10 +2,10 @@ import { authConstants } from '../constants';
 import { authAPI } from '../api'
 
 export const authActions = {
-    logout
+  logout
 };
 
 function logout() {
-    authAPI.logout();
-    return { type: authConstants.LOGOUT };
+  authAPI.logout();
+  return { type: authConstants.LOGOUT };
 }

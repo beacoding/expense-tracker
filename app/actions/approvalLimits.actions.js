@@ -10,7 +10,8 @@ export const approvalLimitsActions = {
   requestHasAuthority,
   modifyParams,
   findAllCostCentres,
-  requestWith
+  requestWith,
+  clearAll
 };
 
 function findAllCostCentres() {
@@ -172,4 +173,10 @@ function requestHasAuthority(cost_centre_id, claim_amount) {
 
 function modifyParams(param_to_change, value) {
   return { type: approvalLimitsConstants.MODIFY_PARAMS, param_to_change, value };
+}
+
+function clearAll() {
+  return dispatch => {
+    dispatch({ type: approvalLimitsConstants.CLEAR_LIMITS });
+  }
 }

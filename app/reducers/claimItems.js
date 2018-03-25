@@ -96,8 +96,6 @@ const claimItems = (state = initialState, action) => {
         claimItemsMap: {},
         error: undefined
       });
-
-
     default:
       return state;
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { authActions } from '../actions';
+import { authActions, approvalLimitsActions, claimItemsActions, claimsActions, employeesActions, policiesActions } from '../actions';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -11,6 +11,10 @@ class NavBar extends React.Component {
   }
 
   logout() {
+    this.props.dispatch(approvalLimitsActions.clearAll());
+    this.props.dispatch(claimItemsActions.clearAll());
+    this.props.dispatch(claimsActions.clearAll());
+    this.props.dispatch(policiesActions.clearAll());    
     this.props.dispatch(authActions.logout());
   }
 
@@ -31,26 +35,40 @@ class NavBar extends React.Component {
 
   render() {
     const { employee } = this.props;
-    return (
-      <div>
-        <div className="logo">
-          <img src="/assets/img/logo.png"/>
+
+    if (employee) {
+      return (
+        <div>
+          <div className="logo">
+            <img src="/assets/img/logo.png"/>
+          </div>
+          <div className="welcome-user">
+            <h4>Welcome,</h4>
+            <h4>
+              {employee.first_name + " " + employee.last_name + "!"}
+            </h4>
+          </div>
+          <ul className="list-unstyled components" >
+            <li><NavLink activeClassName="active" to="/claims"><i className="ion-android-list"></i>My Claims</NavLink></li>
+            <li><NavLink activeClassName="active" to="/approvals"><i className="ion-android-checkmark-circle"></i>Approvals</NavLink></li>
+            {this.renderAdmin()}
+            <li><NavLink activeClassName="active" to="/profile"><i className="ion-gear-a"></i>Profile</NavLink></li>
+            <li style={{cursor: "pointer"}} onClick={this.logout}><a><i className="ion-power"></i>Log out</a></li>
+          </ul>
         </div>
-        <div className="welcome-user">
-          <h4>Welcome,</h4>
-          <h4>
-            {employee.first_name + " " + employee.last_name + "!"}
-          </h4>
+      )
+    } else {
+      return (
+        <div>
+          <div className="logo">
+            <img src="/assets/img/logo.png"/>
+          </div>
+          <div className="welcome-user">
+            <h4>Good bye!</h4>
+          </div>
         </div>
-        <ul className="list-unstyled components" >
-          <li><NavLink activeClassName="active" to="/claims"><i className="ion-android-list"></i>My Claims</NavLink></li>
-          <li><NavLink activeClassName="active" to="/approvals"><i className="ion-android-checkmark-circle"></i>Approvals</NavLink></li>
-          {this.renderAdmin()}
-          <li><NavLink activeClassName="active" to="/profile"><i className="ion-gear-a"></i>Profile</NavLink></li>
-          <li style={{cursor: "pointer"}} onClick={this.logout}><a><i className="ion-power"></i>Log out</a></li>
-        </ul>
-      </div>
-    )
+      )
+    }
   }
 }
 

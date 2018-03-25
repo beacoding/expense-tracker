@@ -20,7 +20,6 @@ import Profile from './containers/ProfilesPage';
 import reducer from './reducers';
 import ReduxToastr from 'react-redux-toastr'
 
-
 const loggerMiddleware = createLogger();
 
 export const store = createStore(
@@ -30,15 +29,6 @@ export const store = createStore(
       loggerMiddleware
   )
 );
-
-<div className="wrapper">
-  <nav id="sidebar">
-    <NavBar />
-  </nav>
-  <div id="content">
-    <ApprovalPage/>
-  </div>
-</div>
 
 render(  
   <Provider store={store}>

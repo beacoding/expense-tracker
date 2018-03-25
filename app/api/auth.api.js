@@ -1,8 +1,7 @@
 export const authAPI = {
-    logout
+  logout
 };
 
 function logout() {
-  localStorage.removeItem('user');
   window.location = "/logout"
 }

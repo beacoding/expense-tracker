@@ -65,7 +65,7 @@ class ReportsContainer extends React.Component {
         <div className="form-check">
           <label className="form-check-label no-select" htmlFor="reports-pending-check">
             <input defaultChecked={true} className="form-check-input" style={{width: 12 + 'px'}} type="checkbox" value="pending" id="reports-pending-check" onChange={this.handleParamChangeChecked}/>
-            Pending
+            Under Review
           </label>
         </div>
         <div className="form-check">

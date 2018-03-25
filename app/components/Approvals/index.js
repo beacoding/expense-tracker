@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PendingClaimContainer from '../../containers/PendingClaimContainer';
 
 const Approvals = ({ props, renderEmptyList, renderError }) => {
-  const {claimsMap, policies, error, isFetching, employee, reloadData } = props;
+  const {claimsMap, policies, error, isFetching, employee } = props;
 
   if (error !== undefined) {
     return renderError(error);
