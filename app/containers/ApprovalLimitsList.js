@@ -72,6 +72,18 @@ class ApprovalLimitsList extends React.Component {
       )
   }
 
+  renderFetching() {
+    return (
+      <div className="claim-list">
+        <div className="claim-container">
+            <div className="loader">
+              <div className="spinner"></div>
+            </div>
+        </div>
+      </div>    
+    )
+  }
+
   renderEmptyList() {
     return (
       <div className="claim-container">
@@ -82,6 +94,10 @@ class ApprovalLimitsList extends React.Component {
 
   render() {
     const { limitsMap, isFetching, errorAddApprovalLimit } = this.props;
+
+    if (isFetching) {
+      return this.renderFetching();
+    }
 
     if (Object.entries(limitsMap).length < 1) {
       return this.renderEmptyList();

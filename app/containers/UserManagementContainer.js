@@ -29,7 +29,7 @@ class UserManagementContainer extends React.Component {
     this.showPasswordResetModal = this.showPasswordResetModal.bind(this)
   }
   
-  componentDidMount() {
+  componentWillMount() {
     this.props.dispatch(employeesActions.requestAll())
   }
   
@@ -39,6 +39,47 @@ class UserManagementContainer extends React.Component {
     }
   }
   
+  render() {
+    const { employee } = this.props;
+    return (
+      <div>
+        <div className="page-header">
+          <div className="page-title">
+          User Management
+          </div>
+          
+          <div className="page-route">
+            <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > User Management </span>
+          </div>
+        </div>
+        <div className="approval-limits-filter-container">
+          <div className="approval-limits-filter-row">
+            <div className="approval-limits-search"><label>Filter by Employee:</label></div>
+            <div className="form-group approval-limits-search">
+              <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
+            </div>
+            <div className="approval-limits-search"><label>or Employee's Manager:</label></div>
+            <div className="form-group approval-limits-search">
+              <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
+            </div>
+            <div className="approval-limits-button">
+              <div className="padded-buttons-row">
+                <button className="page-button" onClick={this.showNewUserModal}> New User </button>
+              </div>
+            </div>
+          </div>
+        </div>       
+        <UsersList
+          handleManagerChange={this.handleManagerChange}
+          handleToggleAdmin={this.handleToggleAdmin}
+          showEnableUserModal={this.showEnableUserModal}
+          showDisableUserModal={this.showDisableUserModal}
+          showPasswordResetModal={this.showPasswordResetModal}
+          />
+      </div>
+    )
+  }
+
   handleToggleAdmin(user) {
     modal.add(ModalContainer, {
       title: 'Toggle Privileges',
@@ -83,7 +124,7 @@ class UserManagementContainer extends React.Component {
       }      
     });
   }
-  
+
   handleParamChangeText(e) {
     var value = e.target.value.length > 0 ? e.target.value : null
     var param_to_change = e.target.name;
@@ -175,7 +216,6 @@ class UserManagementContainer extends React.Component {
       affirmativeText: 'Yes',
       negativeText: 'No'
     });
-
   }
 
   resetPassword(user) {
@@ -190,10 +230,10 @@ class UserManagementContainer extends React.Component {
         modal.clear();
         toastr.removeByType("error")
         toastr.success('Password Successfully Reset', 'Password for ' + user.employee_name + ' has been changed.')
-       } else {
-         toastr.removeByType("error")
-         toastr.error("Error Resetting Password", "Please try again.", toastrHelpers.getErrorOptions())
-       }
+      } else {
+        toastr.removeByType("error")
+        toastr.error("Error Resetting Password", "Please try again.", toastrHelpers.getErrorOptions())
+      }
     });
   }
 
@@ -206,59 +246,6 @@ class UserManagementContainer extends React.Component {
     hideCloseButton: false, // (optional) if you don't wanna show the top right close button
     onSubmitFunction: this.resetPassword.bind(this, user)
     });
-  }
-
-  renderSearchByEmployeeOrManager() {
-    return (
-      <div className="approval-limits-filter-container">
-        <div className="approval-limits-filter-row">
-          <div className="approval-limits-search"><label>Filter by Employee:</label></div>
-          <div className="form-group approval-limits-search">
-            <input type="text" className="form-control" name="employee_name" id="reports-search-manager" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
-          </div>
-          <div className="approval-limits-search"><label>or Employee's Manager:</label></div>
-          <div className="form-group approval-limits-search">
-            <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="First or Last Name" onChange={this.handleParamChangeText}/>
-          </div>
-          <div className="approval-limits-button">
-          {this.renderButtons()}
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  renderButtons() {
-    return (
-      <div className="padded-buttons-row">
-        <button className="page-button" onClick={this.showNewUserModal}> New User </button>
-      </div>
-    )
-  }
-
-  render() {
-    const { employee } = this.props;
-    return (
-      <div>
-        <div className="page-header">
-          <div className="page-title">
-          User Management
-          </div>
-          
-          <div className="page-route">
-            <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > User Management </span>
-          </div>
-        </div>
-          {this.renderSearchByEmployeeOrManager()}        
-        <UsersList
-          handleManagerChange={this.handleManagerChange}
-          handleToggleAdmin={this.handleToggleAdmin}
-          showEnableUserModal={this.showEnableUserModal}
-          showDisableUserModal={this.showDisableUserModal}
-          showPasswordResetModal={this.showPasswordResetModal}
-        />
-      </div>
-    )
   }
 }
 

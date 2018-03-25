@@ -65,7 +65,11 @@ class ReportsClaimList extends React.Component {
   }
   
   renderFetching() {
-    return <div className="loader"></div>
+    return (
+      <div className="loader">
+        <div className="spinner"></div>
+      </div>
+    )
   }
 
   renderEntries() {
@@ -99,7 +103,7 @@ class ReportsClaimList extends React.Component {
       return this.renderError(error);
     }
     
-    if (isFetching && claimsMap == undefined) {
+    if (isFetching) {
       return this.renderFetching();
     }
     

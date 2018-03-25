@@ -45,18 +45,56 @@ class ApprovalPage extends React.Component {
   }
 
   renderFetching() {
-    return <div className="loader"></div>
+    return (
+      <div>
+        <div className="claimlist-container">
+          <div className="page-header">
+            <div className="page-title">
+              Approvals
+            </div>
+            <div className="page-route">
+              <span className="route-inactive">Home</span>  <span className="route-active"> > Approvals</span>
+              <button className="page-button-blue" onClick={this.props.reloadData}> Refresh</button>  
+            </div>
+          </div>
+          <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+            <Tab eventKey={1} title="Pending Approvals">
+              <div className="claim-list">
+                <div className="claim-container">
+                    <div className="loader">
+                      <div className="spinner"></div>
+                    </div>
+                </div>
+              </div>
+            </Tab>
+            <Tab eventKey={2} title="Processed">
+              <div className="claim-list">
+                <div className="claim-container">
+                    <div className="loader">
+                      <div className="spinner"></div>
+                    </div>
+                </div>
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
+      </div>
+    )
   }
 
   render() {
     const { employee, claimsMap, policies, error, isFetching, reloadData } = this.props;
+
+    if (isFetching) {
+      return this.renderFetching();
+    }
 
     return (
       <div>
         <div className="claimlist-container">
           <div className="page-header">
             <div className="page-title">
-             Approvals
+              Approvals
             </div>
             <div className="page-route">
               <span className="route-inactive">Home</span>  <span className="route-active"> > Approvals</span>
