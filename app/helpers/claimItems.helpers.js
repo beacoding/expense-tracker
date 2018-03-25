@@ -12,8 +12,8 @@ function amountToDistance(amount, pricePerMile) {
   return amount / pricePerMile;
 }
 
-function encodeFileToB64(fileToUpload){
-  if (fileToUpload === null){
+function encodeFileToB64(fileToUpload) {
+  if (fileToUpload === null) {
     return new Promise((resolve) => {
       resolve();
     });

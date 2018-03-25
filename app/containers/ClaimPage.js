@@ -121,7 +121,7 @@ class ClaimPage extends React.Component {
     let claim_id = window.location.pathname.split("/")[2];
     const { employee, form, max_policy_limits } = this.props;
     let receipt;
-    if (data.no_receipt === true){
+    if (data.no_receipt === true) {
       receipt = null;
     }
     else {
@@ -157,7 +157,7 @@ class ClaimPage extends React.Component {
 
   }
 
-  showNewClaimItemModal(){
+  showNewClaimItemModal() {
     modal.add( NewClaimItemModal, {
       title: 'Add Claim Item',
       size: 'medium', // large, medium or small,
@@ -262,6 +262,7 @@ class ClaimPage extends React.Component {
                 <th scope="col">Expense Category</th>
                 <th scope="col">Receipt</th>
                 <th scope="col">Comments</th>
+                { (status == 'P') && <th scope="col"></th> }
               </tr>
             </thead>
             <tbody>

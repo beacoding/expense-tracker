@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ClaimPage from '../../containers/ClaimPage';
 import { Link } from 'react-router-dom';
-import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek'
+import { RIEInput, RIETextArea, RIENumber } from 'riek'
 
 const ApprovalLimit = ({ employee, limit_entry, handleEditLimit, handleDeleteLimit }) => {
   let {
@@ -38,7 +38,7 @@ const ApprovalLimit = ({ employee, limit_entry, handleEditLimit, handleDeleteLim
       <td>{manager_name}</td>
       <td>{cost_centre_id}</td>
       <td>{dollar_sign}<RIEInput value={approval_limit} change={handleEditLimit.bind(this, employee_id, cost_centre_id)} propName='new_approval_limit' validate={isLimitInputAcceptable} />  <i className="ion-edit"></i></td>
-      <td><i className="ion-close-circled pointer" onClick={handleDeleteLimit.bind(this, employee_id, cost_centre_id)}></i></td>
+      <td><i className="ion-close-circled pointer" style={{fontSize: 18 + 'px'}} onClick={handleDeleteLimit.bind(this, employee_id, cost_centre_id)}></i></td>
     </tr>
   );
 }

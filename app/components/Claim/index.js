@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ClaimPage from '../../containers/ClaimPage';
 import { Link } from 'react-router-dom';
 import { claimsHelpers } from  '../../helpers';
-import './style.css';
 
 const Claim = ({ employee, claim, handleAction, handleDelete }) => {
   const { id, first_name, last_name, email } = employee

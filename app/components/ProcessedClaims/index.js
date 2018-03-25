@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.css';
 import ReportsClaimContainer from '../../containers/ReportsClaimContainer';
-
 
 const ProcessedClaims = ({ props, renderEmptyList, renderError }) => {
   const { employee, approvedClaims, policies, error, isFetching } = props;

@@ -1,3 +1,3 @@
 export const authConstants = {
-    LOGOUT: 'EMPLOYEE_LOGOUT'
+    LOGOUT: 'USER_LOGOUT'
 };

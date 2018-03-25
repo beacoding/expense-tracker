@@ -1,6 +1,7 @@
 import { employeesConstants } from '../constants';
 
 const initialState = {
+  isFetching: false,
   employees: [],
   employees_with_managers: [],
   employeesOfManagerMap: {},
@@ -83,11 +84,9 @@ const employees = (state = initialState, action) => {
         isFetching: true
       });
     case employeesConstants.DISABLE_EMPLOYEE_SUCCESS:
-      var newCurrentEmployee = Object.assign({}, state.current_employee);
-      newCurrentEmployee.is_active = 0;
       return Object.assign({}, state, {
         isFetching: false,
-        current_employee: newCurrentEmployee,
+        employees_with_managers: action.employees,
         error: undefined
       });
     case employeesConstants.DISABLE_EMPLOYEE_FAILURE:
@@ -100,14 +99,42 @@ const employees = (state = initialState, action) => {
         isFetching: true
       });
     case employeesConstants.ENABLE_EMPLOYEE_SUCCESS:
-      var newCurrentEmployee = Object.assign({}, state.current_employee);
-      newCurrentEmployee.is_active = 1;
       return Object.assign({}, state, {
         isFetching: false,
-        current_employee: newCurrentEmployee,
+        employees_with_managers: action.employees,
         error: undefined
       });
     case employeesConstants.ENABLE_EMPLOYEE_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      });
+    case employeesConstants.TOGGLE_ADMIN_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case employeesConstants.TOGGLE_ADMIN_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        employees_with_managers: action.employees,
+        error: undefined
+      });
+    case employeesConstants.TOGGLE_ADMIN_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      });
+    case employeesConstants.ASSIGN_MANAGER_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case employeesConstants.ASSIGN_MANAGER_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        employees_with_managers: action.employees,
+        error: undefined
+      });
+    case employeesConstants.ASSIGN_MANAGER_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
@@ -158,11 +185,8 @@ const employees = (state = initialState, action) => {
         isFetching: true
       });
     case employeesConstants.RECEIVE_WITH:
-      var newMap = Object.assign({}, state.employeesOfManagerMap);
-      newMap[action.manager_id] = action.employees
       return Object.assign({}, state, {
         isFetching: false,
-        employeesOfManagerMap: newMap,
         employees_with_managers: action.employees,
         error: undefined
       });
@@ -170,6 +194,15 @@ const employees = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
+      });
+    case employeesConstants.CLEAR_EMPLOYEES:
+      return Object.assign({}, state, {
+        isFetching: false,
+        employees: [],
+        employees_with_managers: [],
+        employeesOfManagerMap: {},
+        current_employee: null,
+        params: {}
       });
     default:
       return state;

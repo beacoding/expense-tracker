@@ -7,8 +7,8 @@ import ApprovalLimitsList from './ApprovalLimitsList';
 import NewApprovalLimitModal from './NewApprovalLimitModal';
 import { Field, reduxForm } from 'redux-form';
 import { modal } from 'react-redux-modal';
-import {toastr} from 'react-redux-toastr';
-import {toastrHelpers} from '../helpers';
+import { toastr } from 'react-redux-toastr';
+import { toastrHelpers } from '../helpers';
 
 class ApprovalLimitsContainer extends React.Component {
   constructor(props) {
@@ -24,7 +24,9 @@ class ApprovalLimitsContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextprops) {
-    this.props.dispatch(approvalLimitsActions.requestWith(nextprops.params))
+    if (this.props.params !== nextprops.params) {
+      this.props.dispatch(approvalLimitsActions.requestWith(nextprops.params))
+    }
   }
 
   handleParamChangeText(e) {
@@ -54,7 +56,7 @@ class ApprovalLimitsContainer extends React.Component {
     });;
   }
 
-  showNewApprovalLimitModal(){
+  showNewApprovalLimitModal() {
     modal.add(NewApprovalLimitModal, {
       title: 'Assign Approval Authority',
       size: 'medium', // large, medium or small,

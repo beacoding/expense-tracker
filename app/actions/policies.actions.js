@@ -1,11 +1,12 @@
-import { policiesConstants } from '../constants';
+import { policiesConstants, approvalLimitsConstants } from '../constants';
 import { policiesAPI } from '../api';
 
 export const policiesActions = {
   requestAll,
   requestCompanies,
   requestExpenseTypes,
-  updateValue
+  updateValue,
+  clearAll
 }
 
 function requestAll() {
@@ -78,4 +79,11 @@ function updateValue(name, value) {
   function request(name, value) { return { type: policiesConstants.UPDATE_POLICIES_REQUEST, name, value }}
   function success(name, value) { return { type: policiesConstants.UPDATE_POLICIES_SUCCESS, name, value }}
   function failure(error) { return { type: policiesConstants.UPDATE_POLICIES_FAILURE, error }}
+}
+
+
+function clearAll() {
+  return dispatch => {
+    dispatch({ type: policiesConstants.CLEAR_POLICIES });
+  }
 }

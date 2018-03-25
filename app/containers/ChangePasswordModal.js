@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Modal } from 'react-bootstrap'
 import { Field, reduxForm } from 'redux-form';
-import  PasswordForm  from './PasswordForm';
+import PasswordForm from './PasswordForm';
 
 
 class ChangePasswordModal extends React.Component {

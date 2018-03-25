@@ -6,6 +6,7 @@ const initialState = employeeUnparsed ? { loggedIn: true, employee: JSON.parse(e
 const authentication = (state = initialState, action) => {
   switch (action.type) {
     case authConstants.LOGOUT:
+      return {};
     default:
       return state;
   }

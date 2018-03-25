@@ -4,6 +4,14 @@ var reactdomserver = require('react-dom/server');
 module.exports = function(app, passport) {
   app.get('/', function(req, res) {
     if (req.isAuthenticated()) {
+      res.redirect('/claims');
+    } else {
+      res.render('index.ejs', {title: "Homepage", message: req.flash('loginMessage') });
+    }
+  });
+
+  app.get('/claims', function(req, res) {
+    if (req.isAuthenticated()) {
       res.render('authenticated.ejs', {
         user : req.user,
         claims: req.claims
@@ -28,8 +36,10 @@ module.exports = function(app, passport) {
     });
 
   app.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
+    req.session.destroy(() => {
+      res.clearCookie('connect.sid');
+      res.redirect('/');
+    });
   });
 
   // CATCH PAGE REFRESHES FROM ADMIN PAGES
