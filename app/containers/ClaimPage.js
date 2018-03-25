@@ -161,7 +161,7 @@ class ClaimPage extends React.Component {
 
   }
 
-  showNewClaimItemModal(){
+  showNewClaimItemModal() {
     modal.add( NewClaimItemModal, {
       title: 'Add Claim Item',
       size: 'medium', // large, medium or small,
@@ -181,7 +181,15 @@ class ClaimPage extends React.Component {
   }
 
   renderFetching() {
-    return <div className="loader"></div>
+    return (
+      <div className="claim-list">
+        <div className="claim-container">
+            <div className="loader">
+              <div className="spinner"></div>
+            </div>
+        </div>
+      </div>  
+    )
   }
 
   render() {

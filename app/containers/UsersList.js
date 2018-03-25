@@ -9,12 +9,12 @@ class UsersList extends React.Component {
     super(props);
   }
     
-  componentDidMount() {
+  componentWillMount() {
     this.props.dispatch(employeesActions.requestAllWithManagers());
   }
 
   renderEntries() {
-    const { employee, users } = this.props;
+    const { users } = this.props;
     return (
       <tbody>
       {Object.entries(users).map((user, i) => {
@@ -43,7 +43,15 @@ class UsersList extends React.Component {
   }
 
   renderFetching() {
-    return <div className="loader"></div>
+    return (
+      <div className="claim-list">
+        <div className="claim-container">
+            <div className="loader">
+              <div className="spinner"></div>
+            </div>
+        </div>
+      </div>    
+    )
   }
 
   render() { 
@@ -53,7 +61,7 @@ class UsersList extends React.Component {
       return this.renderFetching();
     }
 
-    if (users.length < 1) {
+    if (!isFetching && users.length < 1) {
       return this.renderEmptyList();
     }
     

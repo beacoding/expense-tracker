@@ -40,6 +40,28 @@ class PoliciesContainer extends React.Component {
     })
   }
 
+  renderFetching() {
+    return (
+      <div>
+        <div className="page-header">
+          <div className="page-title">
+           Policies
+          </div>
+          <div className="page-route">
+            <span className="route-inactive">Home > Admin</span>  <span className="route-active"> > Policies </span>
+          </div>
+        </div>
+        <div className="claim-list">
+          <div className="claim-container">
+            <div className="loader">
+              <div className="spinner"></div>
+            </div>
+          </div>
+        </div>   
+      </div>
+    )
+  }
+
   renderEntries() {
     const { policies } = this.props.policies
     return ( 
@@ -53,12 +75,16 @@ class PoliciesContainer extends React.Component {
             </tr>)
         })}
         </tbody>
-
       )
   }
 
   render() {
-    const { employee } = this.props;
+    const { employee, isFetching } = this.props;
+
+    if (isFetching) {
+      return this.renderFetching();
+    }
+
     return (
       <div>
         <div className="page-header">
@@ -81,7 +107,7 @@ class PoliciesContainer extends React.Component {
                 { this.renderEntries() }
             </table>
           </div>
-        </div>   
+        </div>
       </div>
     )
   }
@@ -90,9 +116,11 @@ class PoliciesContainer extends React.Component {
 function mapStateToProps(state) {
     const { authentication, policies } = state;
     const { employee } = authentication;
+    const { isFetching } = policies;
     return {
       employee,
-      policies
+      policies,
+      isFetching
     };
 }
 

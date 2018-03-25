@@ -56,7 +56,7 @@ User.propTypes = {
     manager_id: PropTypes.number,    
     manager_name: PropTypes.string,
     is_active: PropTypes.number.isRequired,
-    is_admin: PropTypes.number    
+    is_admin: PropTypes.number.isRequired
   }).isRequired
 }
 

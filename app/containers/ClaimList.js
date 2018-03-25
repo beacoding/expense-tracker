@@ -98,7 +98,58 @@ class ClaimList extends React.Component {
   }
   
   renderFetching() {
-    return <div className="loader"></div>
+    return (
+      <div className="claimlist-container">
+        <div className="page-header">
+          <div className="page-title">
+            My Claims
+          </div>
+          <button className="page-button-blue" onClick={this.reloadData}> Refresh</button>  
+          <button className="page-button" onClick={this.showNewClaimModal}> New Claim</button>  
+          <div className="page-route">
+            <span className="route-inactive">Home</span>  <span className="route-active"> > My Claims</span>
+          </div>
+        </div>
+        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+          <Tab eventKey={1} title="Most Recent">
+            <div className="claim-list">
+              <div className="claim-container">
+                <div className="loader">
+                  <div className="spinner"></div>
+                </div>
+              </div>
+            </div>
+          </Tab>
+          <Tab eventKey={2} title="Drafts">
+            <div className="claim-list">
+              <div className="claim-container">
+                <div className="loader">
+                  <div className="spinner"></div>
+                </div>
+              </div>
+            </div>
+          </Tab>
+          <Tab eventKey={3} title="Under Review">
+            <div className="claim-list">
+              <div className="claim-container">
+                <div className="loader">
+                  <div className="spinner"></div>
+                </div>
+              </div>
+            </div>
+          </Tab>
+          <Tab eventKey={4} title="Processed">
+            <div className="claim-list">
+              <div className="claim-container">
+                <div className="loader">
+                  <div className="spinner"></div>
+                </div>
+              </div>
+            </div>
+          </Tab>
+        </Tabs>
+      </div>
+    )
   }
 
   renderEntries() {
@@ -223,7 +274,7 @@ class ClaimList extends React.Component {
       return this.renderError(error);
     }
     
-    if (isFetching && claimsMap == undefined) {
+    if (isFetching) {
       return this.renderFetching();
     }
     
