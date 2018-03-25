@@ -1,3 +1,45 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Coast Capital Expense Tracker</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/fontawesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,400,400italic,500,500italic,700,700italic,900,900italic&subset=latin,latin-ext,cyrillic,cyrillic-ext,greek-ext,greek,vietnamese">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"> <!-- load custom styles -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/ionicons.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/react-select.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/react-virtualized-select.css">
+    <link rel="stylesheet" type="text/css" href="https://diegoddox.github.io/react-redux-toastr/7.1/react-redux-toastr.min.css">
+  </head>
+  <body>
+    <div class="App">
+      <div class="wrapper">
+        <nav id="sidebar">
+          <div class="logo">
+            <img src="/assets/img/logo.png"/>
+          </div>
+        </nav>
+        <div id="content">
+          <div class="claimlist-container">
+            <div class="claim-list">
+              <div class="claim-container">
+                <h1>Oops! <%= error.status %> Error</h1>
+                <h2>Page Not Found</h2>
+                <br/>
+                <p>The page you are looking for does not exist, or some other error has occurred.</p>
+                <br/>
+                <div class="buttons-row">
+                  <a href="/"><button class="page-button-blue" style="float: left">Back to Home</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

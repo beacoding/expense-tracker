@@ -8,9 +8,9 @@ import employees from './employees';
 import email from './email';
 import { reducer as reduxFormReducer } from 'redux-form';
 import { reducer as modalReducer } from 'react-redux-modal';
-import {reducer as toastrReducer} from 'react-redux-toastr'
+import { reducer as toastrReducer } from 'react-redux-toastr'
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   authentication,
   claimItems,
   claims,
@@ -23,5 +23,12 @@ const rootReducer = combineReducers({
   form: reduxFormReducer,
   modals: modalReducer
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === 'USER_LOGOUT') {
+    state = undefined;
+  }
+  return appReducer(state, action);
+}
 
 export default rootReducer;

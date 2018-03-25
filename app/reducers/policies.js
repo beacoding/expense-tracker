@@ -249,6 +249,32 @@ const policies = (state = initialState, action) => {
         params: newParams
       });
 
+    case approvalLimitsConstants.CLEAR_LIMITS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        limitsMap: {},
+        managerOptions: [],
+        error: undefined,
+        errorAddApprovalLimit: undefined,
+        params: {},
+        cost_centres: [],
+        companies: [],
+        expense_types: [],
+        policies: {}
+      });
+    case policiesConstants.CLEAR_POLICIES:
+      return Object.assign({}, state, {
+        isFetching: false,
+        limitsMap: {},
+        managerOptions: [],
+        error: undefined,
+        errorAddApprovalLimit: undefined,
+        params: {},
+        cost_centres: [],
+        companies: [],
+        expense_types: [],
+        policies: {}
+      });
     // DEFAULT
     default:
       return state;
