@@ -40,7 +40,6 @@ render(
           </nav>
           <div id="content">
             <Switch>
-              <Route exact path="/" component={ClaimList} />
               <Route exact path="/claims" component={ClaimList}/>
               <Route path="/claims/:claim_id/" component={ClaimPage}/>
               <Route exact path="/approvals" component={ApprovalPage}/>
