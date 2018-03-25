@@ -15,8 +15,8 @@ function amountToDistance(amount, pricePerMile) {
   return amount / pricePerMile;
 }
 
-function encodeFileToB64(fileToUpload){
-  if (fileToUpload === null){
+function encodeFileToB64(fileToUpload) {
+  if (fileToUpload === null) {
     return new Promise((resolve) => {
       resolve();
     });
@@ -31,7 +31,7 @@ function encodeFileToB64(fileToUpload){
   }
 
 function encodeFile(fileToUpload) {
-  if (fileToUpload === null){
+  if (fileToUpload === null) {
     return new Promise((resolve) => {
       resolve();
     });
@@ -71,7 +71,7 @@ function base64MimeType(encoded) {
   return result;
 }
 
-function base64String(encoded){
+function base64String(encoded) {
   let result = encoded.split(",");
   return result[1];
 

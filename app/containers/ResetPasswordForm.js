@@ -8,7 +8,7 @@ class ResetPasswordForm extends React.Component {
       super(props);
     }
     
-    renderNewPassword(field){
+    renderNewPassword(field) {
         const { meta: { touched, error }} = field;
         const className = `form-group ${touched && error ? "has-danger" : ""}`;
         

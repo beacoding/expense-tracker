@@ -56,7 +56,7 @@ class ApprovalLimitsContainer extends React.Component {
     });;
   }
 
-  showNewApprovalLimitModal(){
+  showNewApprovalLimitModal() {
     modal.add(NewApprovalLimitModal, {
       title: 'Assign Approval Authority',
       size: 'medium', // large, medium or small,
