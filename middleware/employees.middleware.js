@@ -94,7 +94,7 @@ const addOne = async (req, res, next) => {
   try {
     email_exist = await Employee.findOne(req.body.email);
     id_exist = await Employee.findOne(req.body.id);
-    manager = await Employee.findOne(req.body.manager_id);    
+    manager = await Employee.findOne(req.body.manager_id);
     if (id_exist[0]) {
       req.error = "Error: ID Exists";
       next();
@@ -118,11 +118,46 @@ const addOne = async (req, res, next) => {
   }
 }
 
+const assignManager = async (req, res, next) => {
+  try {
+    const { employee_id, manager_id } = req.body;
+    if (manager_id) {
+      let manager = await Employee.findOne(manager_id);
+      if (!manager[0].is_active) {
+        req.error = "Error: Manager is Disabled"
+        next();
+      }
+    }
+    let info = await Employee.assignManagerById(employee_id, manager_id);
+    let employees = await Employee.findAllWithManagers();
+    req.employees = employees;
+    next();
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
+const toggleAdmin = async (req, res, next) => {
+  try {
+    const { employee_id} = req.body;
+    let info = await Employee.toggleAdmin(employee_id);
+    let employees = await Employee.findAllWithManagers();
+    req.employees = employees;
+    next()
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
 const disableOne = async (req, res, next) => {
   try {
     const { employee_id, manager_id} = req.body;
-    let info = await Employee.disableOne(employee_id);
-    await Employee.transferEmployeesToManagerWithManagerID(employee_id, manager_id);
+    let transferInfo = await Employee.transferBetweenManagersById(employee_id, manager_id);
+    let disableInfo = await Employee.disableOne(employee_id);
+    let employees = await Employee.findAllWithManagers();
+    req.employees = employees;
     next()
   } catch (err) {
     req.error = err;
@@ -134,6 +169,8 @@ const enableOne = async (req, res, next) => {
   try {
     const { employee_id } = req.body;
     let info = await Employee.enableOne(employee_id);
+    let employees = await Employee.findAllWithManagers();
+    req.employees = employees;
     next()
   } catch (err) {
     req.error = err;
@@ -147,9 +184,11 @@ module.exports = {
   findOne: findOne,
   findAllWithManagerID: findAllWithManagerID,
   updatePassword: updatePassword,
-  resetPassword: resetPassword,  
+  resetPassword: resetPassword,
   addOne: addOne,
   enableOne: enableOne,
-  disableOne: disableOne, 
+  disableOne: disableOne,
+  toggleAdmin: toggleAdmin,
+  assignManager: assignManager,
   findAllWithParams: findAllWithParams
 }

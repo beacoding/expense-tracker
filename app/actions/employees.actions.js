@@ -8,11 +8,14 @@ export const employeesActions = {
   requestEmployee,
   addEmployee,
   updatePassword,
-  resetPassword,  
+  resetPassword,
+  assignManager,
   enableEmployee,
   disableEmployee,
+  toggleAdmin,
   modifyParams,
-  requestWith
+  requestWith,
+  clearAll
 };
 
 function requestAll() {
@@ -110,7 +113,7 @@ function disableEmployee(employee_id, manager_id) {
     dispatch(request(employee_id));
     return employeesAPI.disableEmployee(employee_id, manager_id).then(
       res => {
-        return dispatch(success(employee_id))
+        return dispatch(success(employee_id, res.employees))
       },
       error => {
         return dispatch(failure(error))
@@ -119,7 +122,7 @@ function disableEmployee(employee_id, manager_id) {
   };
   
   function request(employee_id) { return { type: employeesConstants.DISABLE_EMPLOYEE_REQUEST, employee_id }}
-  function success(employee_id) { return { type: employeesConstants.DISABLE_EMPLOYEE_SUCCESS, employee_id }}
+  function success(employee_id, employees) { return { type: employeesConstants.DISABLE_EMPLOYEE_SUCCESS, employee_id, employees }}
   function failure(error) { return { type: employeesConstants.DISABLE_EMPLOYEE_FAILURE, error }}
 }
 
@@ -128,7 +131,7 @@ function enableEmployee(employee_id) {
     dispatch(request(employee_id));
     return employeesAPI.enableEmployee(employee_id).then(
       res => {
-        return dispatch(success(employee_id))
+        return dispatch(success(employee_id, res.employees))
       },
       error => {
         return dispatch(failure(error))
@@ -137,8 +140,44 @@ function enableEmployee(employee_id) {
   };
   
   function request(employee_id) { return { type: employeesConstants.ENABLE_EMPLOYEE_REQUEST, employee_id }}
-  function success(employee_id) { return { type: employeesConstants.ENABLE_EMPLOYEE_SUCCESS, employee_id }}
+  function success(employee_id, employees) { return { type: employeesConstants.ENABLE_EMPLOYEE_SUCCESS, employee_id, employees }}
   function failure(error) { return { type: employeesConstants.ENABLE_EMPLOYEE_FAILURE, error }}
+}
+
+function toggleAdmin(employee_id) {
+  return dispatch => {
+    dispatch(request(employee_id));
+    return employeesAPI.toggleAdmin(employee_id).then(
+      res => {
+        return dispatch(success(employee_id, res.employees))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
+    );
+  };
+  
+  function request(employee_id) { return { type: employeesConstants.TOGGLE_ADMIN_REQUEST, employee_id }}
+  function success(employee_id, employees) { return { type: employeesConstants.TOGGLE_ADMIN_SUCCESS, employee_id, employees }}
+  function failure(error) { return { type: employeesConstants.TOGGLE_ADMIN_FAILURE, error }}
+}
+
+function assignManager(employee_id, manager_id) {
+  return dispatch => {
+    dispatch(request(employee_id, manager_id));
+    return employeesAPI.assignManager(employee_id, manager_id).then(
+      res => {
+        return dispatch(success(employee_id, manager_id, res.employees))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
+    );
+  };
+  
+  function request(employee_id, manager_id) { return { type: employeesConstants.ASSIGN_MANAGER_REQUEST, employee_id, manager_id }}
+  function success(employee_id, manager_id, employees) { return { type: employeesConstants.ASSIGN_MANAGER_SUCCESS, employee_id, manager_id, employees }}
+  function failure(error) { return { type: employeesConstants.ASSIGN_MANAGER_FAILURE, error }}
 }
 
 function requestWith(params) {
@@ -196,4 +235,10 @@ function addEmployee(newEmployee) {
 
 function modifyParams(param_to_change, value) {
   return { type: employeesConstants.MODIFY_PARAMS, param_to_change, value };
+}
+
+function clearAll() {
+  return dispatch => {
+    dispatch({ type: employeesConstants.CLEAR_EMPLOYEES });
+  }
 }

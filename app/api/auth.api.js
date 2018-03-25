@@ -1,5 +1,7 @@
+import { apiHelpers } from '../helpers'
+
 export const authAPI = {
-    logout
+  logout
 };
 
 function logout() {

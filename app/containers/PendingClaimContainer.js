@@ -1,13 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import {claimsActions, claimItemsActions, approvalLimitsActions, emailActions, employeesActions} from '../actions';
-import {claimsHelpers, toastrHelpers} from '../helpers';
+import { claimsActions, claimItemsActions, approvalLimitsActions, emailActions, employeesActions } from '../actions';
+import { claimsHelpers, toastrHelpers } from '../helpers';
 import { Link } from 'react-router-dom';
 import { modal } from 'react-redux-modal'
 import PendingClaim from '../components/PendingClaim'
 import ModalContainer from './ModalContainer'
-import {toastr} from 'react-redux-toastr';
+import { toastr } from 'react-redux-toastr';
 
 class PendingClaimContainer extends React.Component {
   constructor(props) {

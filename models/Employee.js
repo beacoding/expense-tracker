@@ -8,9 +8,9 @@ module.exports = {
       var queryString = `SELECT
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
                           CONCAT(m.first_name, ' ', m.last_name) as manager_name,
-                          e.is_active,
                           e.id,
                           m.id as manager_id,
+                          e.is_active,
                           e.email,
                           e.first_name,
                           e.last_name
@@ -44,15 +44,48 @@ module.exports = {
     });
   },
 
-  transferEmployeesToManagerWithManagerID: function(employee_id, manager_id) {
+  assignManagerById: function(employee_id, manager_id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to find one employee
+      var queryString = `UPDATE employee
+                          SET
+                            manager_id = ?
+                          WHERE 
+                            id = ?`;
+      connection.query(queryString, [manager_id, employee_id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
+  toggleAdmin: function(employee_id) {
+    return new Promise((resolve, reject) => {
+      var queryString = `UPDATE employee
+                          SET
+                            is_admin = !is_admin
+                          WHERE 
+                            id = ?`;
+      connection.query(queryString, [employee_id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
+  transferBetweenManagersById: function(old_manager_id, new_manager_id) {
+    return new Promise((resolve, reject) => {
       var queryString = `UPDATE employee
                           SET
                             manager_id = ?
                           WHERE 
                             manager_id = ?`;
-      connection.query(queryString, [manager_id, employee_id], (err, rows) => {
+      connection.query(queryString, [new_manager_id, old_manager_id], (err, rows) => {
         if (err) {
           reject(err);
         } else {
@@ -122,8 +155,10 @@ module.exports = {
       var queryString = `SELECT
                           CONCAT(m.first_name, ' ', m.last_name) as manager_name,
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
+                          e.id as id,
+                          m.id as manager_id,
                           e.is_active,
-                          e.id
+                          e.is_admin
                         FROM
                           employee e
                         LEFT JOIN employee m ON m.id = e.manager_id`;
@@ -187,8 +222,10 @@ module.exports = {
       var queryString = `SELECT
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
                           CONCAT(m.first_name, ' ', m.last_name) as manager_name,
+                          e.id as id,
+                          m.id as manager_id,
                           e.is_active,
-                          e.id
+                          e.is_admin
                         FROM
                           employee e
                         LEFT JOIN employee m ON m.id = e.manager_id` + whereString + ";"

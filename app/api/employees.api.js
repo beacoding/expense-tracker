@@ -8,6 +8,8 @@ export const employeesAPI = {
   requestEmployee,
   disableEmployee,
   enableEmployee,
+  assignManager,
+  toggleAdmin,
   updatePassword,
   resetPassword,  
   requestWith
@@ -30,6 +32,16 @@ function disableEmployee(employee_id, manager_id) {
 
 function enableEmployee(employee_id) {
   return fetch(`/employees/enable_employee`, apiHelpers.postOptions({employee_id: employee_id}))
+  .then(apiHelpers.handleResponse);
+}
+
+function assignManager(employee_id, manager_id) {
+  return fetch(`/employees/assign_manager`, apiHelpers.postOptions({employee_id: employee_id, manager_id: manager_id}))
+  .then(apiHelpers.handleResponse);
+}
+
+function toggleAdmin(employee_id) {
+  return fetch(`/employees/toggle_admin`, apiHelpers.postOptions({employee_id: employee_id}))
   .then(apiHelpers.handleResponse);
 }
 

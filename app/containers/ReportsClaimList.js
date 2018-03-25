@@ -36,8 +36,8 @@ class ReportsClaimList extends React.Component {
     const tranformAcronym = {
       "A": "Approved",
       "D": "Declined",
-      "F": "Forwarded",
-      "S": "Pending Review",
+      "F": "Under Review (Forwarded)",
+      "S": "Under Review",
       "P": "Draft"
     }
 

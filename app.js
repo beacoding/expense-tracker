@@ -24,6 +24,7 @@ var upload = multer({ dest: './uploads/' })
 var app = express();
 
 // disable client-side caching (because IE...)
+// MUST NOT BE REMOVED (apparently) W/O EXTENSIVE TESTING
 var nocache = require('nocache')
 app.use(nocache())
 

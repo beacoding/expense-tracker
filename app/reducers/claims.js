@@ -166,7 +166,9 @@ const claims = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetching: false,
         claimsMap: {},
-        error: undefined
+        error: undefined,
+        currentClaim: {},
+        approvedClaims: {}
       });
     default:
       return state;

@@ -266,6 +266,7 @@ class ClaimPage extends React.Component {
                 <th scope="col">Expense Category</th>
                 <th scope="col">Receipt</th>
                 <th scope="col">Comments</th>
+                { (status == 'P') && <th scope="col"></th> }
               </tr>
             </thead>
             <tbody>
