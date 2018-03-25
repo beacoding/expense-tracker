@@ -26,7 +26,7 @@ const Claim = ({ employee, claim, handleAction, handleDelete }) => {
   } = claim;
 
   return (
-    <div className="claim-container">
+    <div className="claim-container" id={`${claim_id}`}>
       <div className="claim-description"><Link to={`/claims/${claim_id}`}>{description}</Link></div>
       <div><small className="claim-date">{claimsHelpers.toDateString(date_created)}</small></div>
       <table className="table">
