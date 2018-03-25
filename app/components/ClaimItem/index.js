@@ -26,12 +26,6 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
 
   let consts = {zoomStyle: 'opacity: 0.1;background-color: black;'}
   //
-  // const img = document.createElement('img');
-  // img.src = claim_item.image_url;
-  console.log("HELLO");
-  console.log(claim_item.image_url);
-  console.log("this is null" + null);
-  console.log(claim_item.image_url == null);
   let receipt = (claim_item.image_url) === "null" ? "No Receipt" :
 
   <ImageZoom
@@ -53,9 +47,6 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
     }}
     {...consts}
   />;
-
-  console.log(receipt);
-
 
   let defaultValue = valueMap[expense_category.toUpperCase()];
   if (expense_category === "MILEAGE" && claim_status === "P") {

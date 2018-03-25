@@ -16,8 +16,6 @@ function amountToDistance(amount, pricePerMile) {
 }
 
 function encodeFileToB64(fileToUpload){
-  console.log("file to upload");
-  console.log(fileToUpload);
   if (fileToUpload === null){
     return new Promise((resolve) => {
       resolve();
@@ -27,8 +25,6 @@ function encodeFileToB64(fileToUpload){
     let reader = new FileReader();
     reader.readAsDataURL(fileToUpload);
     reader.onload= function() {
-      console.log("encodeFileToBS64");
-      console.log(reader.result);
       resolve(reader.result);
     }
     })
@@ -48,7 +44,7 @@ function encodeFile(fileToUpload) {
       // const b64String = base64String(reader.result);   /// uncomment this to return blob
       // const blob = b64toBlob(b64String, mimeType);     /// uncomment this to return blob
       // resole(blob)                                     /// uncomment this to return blob
-      // const blobURL = URL.createObjectURL(blob); 
+      // const blobURL = URL.createObjectURL(blob);
       // resolve(blobURL);
       resolve(reader.result);
     };
@@ -71,16 +67,12 @@ function base64MimeType(encoded) {
   if (mime && mime.length) {
     result = mime[1];
   }
-  console.log("this is mime");
-  console.log(mime);
 
   return result;
 }
 
 function base64String(encoded){
   let result = encoded.split(",");
-  console.log("this is b64 string");
-  console.log(result);
   return result[1];
 
 }
