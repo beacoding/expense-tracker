@@ -127,9 +127,7 @@ class ClaimPage extends React.Component {
     else {
       receipt = data.receipt[0];
     }
-    claimItemsHelpers.encodeFile(receipt).then(function(result) {
-      console.log("this is result of encodeFile");
-      console.log(result);
+    claimItemsHelpers.encodeFileToB64(receipt).then(function(result) {
       let receipt = (data.no_receipt === true) ? null : result;
       if (parseInt(data.expense_type) === 12) {
         let distance = isNaN(data.mileage) ? 0 : data.mileage;
@@ -145,8 +143,6 @@ class ClaimPage extends React.Component {
         receipt: receipt
       };
       this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
-        console.log("this is receipt");
-        console.log(receipt);
         if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
           toastr.removeByType("error");
           toastr.success('Claim Item Added', 'Claim Item has been successfully added.');

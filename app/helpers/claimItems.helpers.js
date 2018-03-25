@@ -16,8 +16,6 @@ function amountToDistance(amount, pricePerMile) {
 }
 
 function encodeFileToB64(fileToUpload){
-  console.log("file to upload");
-  console.log(fileToUpload);
   if (fileToUpload === null){
     return new Promise((resolve) => {
       resolve();
@@ -27,8 +25,6 @@ function encodeFileToB64(fileToUpload){
     let reader = new FileReader();
     reader.readAsDataURL(fileToUpload);
     reader.onload= function() {
-      console.log("encodeFileToBS64");
-      console.log(reader.result);
       resolve(reader.result);
     }
     })
