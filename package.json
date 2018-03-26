@@ -7,12 +7,11 @@
     "dev-react": "webpack -d --watch",
     "build": "webpack --config ./webpack.config.prod.js",
     "create-db": "mysql -u root -p < db/init.sql &&  mysql -u root -p cc_expense_claims_system < db/data.sql",
-    "test": "mocha --exit"
+    "test": "mocha --compilers js:babel-core/register --require babel-polyfill ./test/*"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.0.0-beta.42",
     "axios": "^0.17.1",
-    "babel-core": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
@@ -32,7 +31,6 @@
     "formdata-polyfill": "^3.0.9",
     "isomorphic-fetch": "^2.2.1",
     "json2csv": "^4.0.0",
-    "mocha": "^5.0.0",
     "morgan": "^1.9.0",
     "multer": "^1.3.0",
     "mysql": "^2.15.0",
@@ -71,12 +69,17 @@
     "toastr": "^2.1.4"
   },
   "devDependencies": {
-    "babel-loader": "^6.2.5",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^6.4.1",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.27.3",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-cssmin": "^1.0.2",
+    "mocha": "^5.0.5",
     "nodemon": "^1.11.0",
     "react-scripts": "^1.0.2",
     "riek": "^1.1.0",
