@@ -228,12 +228,12 @@ class UserManagementContainer extends React.Component {
     this.props.dispatch(employeesActions.resetPassword(newPassword)).then((res) => {
       if (res.type == "RESET_PASSWORD_SUCCESS") {
         modal.clear();
-        toastr.removeByType("error")
+        toastr.removeByType("error");
         toastr.success('Password Successfully Reset', 'Password for ' + user.employee_name + ' has been changed.')
-      } else {
-        toastr.removeByType("error")
-        toastr.error("Error Resetting Password", "Please try again.", toastrHelpers.getErrorOptions())
-      }
+       } else {
+         toastr.removeByType("error");
+         toastr.error("Error Resetting Password", "Please try again.", toastrHelpers.getErrorOptions())
+       }
     });
   }
 
