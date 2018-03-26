@@ -27,7 +27,7 @@ class ApprovalLimitsList extends React.Component {
     this.props.dispatch(approvalLimitsActions.revokeApprovalLimit(employee_id, cost_centre_id)).then((res) => {
       if (res.type === "REVOKE_APPROVAL_LIMIT_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Approval Authority Revoked', 'Approval Authority has been successfully revoked.');
+        toastr.success('Approval Authority Revoked', 'Approval authority has been successfully revoked.');
       } else {
         toastr.removeByType("error");
         toastr.error('Error Revoking Approval Authority', 'Please try again.', toastrHelpers.getErrorOptions())

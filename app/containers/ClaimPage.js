@@ -97,7 +97,7 @@ class ClaimPage extends React.Component {
       modal.clear();
       window.location = '/claims/';
       toastr.removeByType("error")
-      toastr.error("Claim deleted", "You have deleted the claim")
+      toastr.error("Claim Deleted", "You have deleted the claim")
     });
   }
 
@@ -118,7 +118,7 @@ class ClaimPage extends React.Component {
   }
 
   createClaimItem(data) {
-    return new Promise((resolve) => {
+    let promise = new Promise((resolve, reject) => {
       let claim_id = window.location.pathname.split("/")[2];
       const {employee, form, max_policy_limits} = this.props;
       let receipt;
@@ -127,37 +127,44 @@ class ClaimPage extends React.Component {
       }
       else {
         receipt = data.receipt[0];
-      }
-      claimItemsHelpers.encodeFileToB64(receipt).then(function (result) {
-        let receipt = (data.no_receipt === true) ? null : result;
-        if (parseInt(data.expense_type) === 12) {
-          let distance = isNaN(data.mileage) ? 0 : data.mileage;
-          let amount = (distance * max_policy_limits["Per Mileage Reimbursement"]) || 0.00;
-          data.amount = amount;
-        }
-        const item = {
-          claim_id: parseInt(claim_id),
-          description: data.description,
-          amount: data.amount,
-          comment: data.comment,
-          expense_type: parseInt(data.expense_type),
-          receipt: receipt
-        };
-        this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
-          if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
-            toastr.removeByType("error");
-            toastr.success('Claim Item Added', 'Claim Item has been successfully added.');
-          } else {
-            toastr.removeByType("error");
-            toastr.error('Error Adding Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
-          }
-          modal.clear();
+        if (receipt.size > 2097152){
           toastr.removeByType("error");
-          resolve()
-        });
-      }.bind(this));
+          toastr.error('Error Adding Claim Item', 'Receipt file too big. Please choose a smaller size (less than 2MB)', toastrHelpers.getErrorOptions())
+          reject('File was too big');
+          promise.catch(error => console.log(error));
+        }
+      }
+        claimItemsHelpers.encodeFileToB64(receipt).then(function (result) {
+          let receipt = (data.no_receipt === true) ? null : result;
+          if (parseInt(data.expense_type) === 12) {
+            let distance = isNaN(data.mileage) ? 0 : data.mileage;
+            let amount = (distance * max_policy_limits["Per Mileage Reimbursement"]) || 0.00;
+            data.amount = amount;
+          }
+          const item = {
+            claim_id: parseInt(claim_id),
+            description: data.description,
+            amount: data.amount,
+            comment: data.comment,
+            expense_type: parseInt(data.expense_type),
+            receipt: receipt
+          };
+          this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
+            if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
+              toastr.removeByType("error");
+              toastr.success('Claim Item Added', 'Claim item has been successfully added.');
+            } else {
+              toastr.removeByType("error");
+              toastr.error('Error Adding Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
+            }
+            modal.clear();
+            toastr.removeByType("error");
+            resolve()
+          });
+        }.bind(this));
+    });
 
-    })
+    promise.catch( error =>  console.log(error) )
 
   }
 
