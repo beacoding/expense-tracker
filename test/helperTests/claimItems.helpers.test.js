@@ -1,11 +1,6 @@
-/**
- * Created by minnieliu on 2018-03-24.
- */
-
 import {claimItemsHelpers} from '../../app/helpers/claimItems.helpers'
 var assert = require('chai').assert;
 var chaiHttp = require('chai-http');
-
 
 describe('Testing distance to amount', function(){
     it('should correctly calculate distance amount', function(){
