@@ -51,8 +51,8 @@ class NewClaimForm extends React.Component {
   }
 
   renderCompanyDropdownField(field) {
-    const { meta: {visited, error }} = field;
-    const className = `form-group ${visited && error ? "has-danger" : ""}`;
+    const { meta: {touched, error }} = field;
+    const className = `form-group ${touched && error ? "has-danger" : ""}`;
     const options = this.props.companies.map((company) => {
       return {value: company.id, label: company.name}
     })
@@ -72,7 +72,7 @@ class NewClaimForm extends React.Component {
           onBlur={() => {}}
         />
         <div className="text-help">
-          {visited ? error : ""}
+          {touched ? error : ""}
         </div>
       </div>
    );
@@ -83,8 +83,8 @@ class NewClaimForm extends React.Component {
   }
 
   renderCostCentreDropdownField(field) {
-    const { meta: {visited, error }} = field;
-    const className = `form-group ${visited && error ? "has-danger" : ""}`;
+    const { meta: {touched, error }} = field;
+    const className = `form-group ${touched && error ? "has-danger" : ""}`;
     const options = this.props.cost_centres.map((cost_centre) => {
       return {value: cost_centre.id, label: cost_centre.id}
     })
@@ -104,7 +104,7 @@ class NewClaimForm extends React.Component {
           onBlur={() => {}}
         />
         <div className="text-help">
-          {visited ? error : ""}
+          {touched ? error : ""}
         </div>
       </div>
    );
