@@ -19,8 +19,8 @@ class ApprovalLimitsContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(approvalLimitsActions.findAllCostCentres())
     this.props.dispatch(employeesActions.requestAll())
+    this.props.dispatch(approvalLimitsActions.findAllCostCentres())
   }
 
   componentWillReceiveProps(nextprops) {
@@ -40,6 +40,7 @@ class ApprovalLimitsContainer extends React.Component {
     const employee_name = form.NewApprovalLimitForm.values.employee.label;
     const cost_centre_id = parseInt(form.NewApprovalLimitForm.values.cost_centre_id.value);
     const approvalLimit  = {
+      manager_name: employee_name,
       employee_id: form.NewApprovalLimitForm.values.employee.value,
       approval_limit: parseFloat(data.amount),
       cost_centre_id: cost_centre_id,
@@ -48,11 +49,11 @@ class ApprovalLimitsContainer extends React.Component {
       if (res.type === "ADD_APPROVAL_LIMIT_SUCCESS") {
         toastr.removeByType("error")
         toastr.success('Approval Authority Added', 'Added a new approval limit for ' + employee_name + '.')
+        modal.clear();
       } else {
         toastr.removeByType("error");
-        toastr.error('Duplicate Entry', employee_name +  ' is already associated with the cost centre ' + cost_centre_id +'.', toastrHelpers.getErrorOptions())
+        toastr.error('Duplicate Entry', employee_name +  ' has already been assigned an approval limit for cost centre ' + cost_centre_id + '.', toastrHelpers.getErrorOptions())
       }
-      modal.clear();
     });;
   }
 
@@ -83,26 +84,18 @@ class ApprovalLimitsContainer extends React.Component {
             <input type="text" className="form-control" name="cost_centre_id" id="reports-search-employee" placeholder="Cost Centre #" onChange={this.handleParamChangeText}/>
           </div>
           <div className="approval-limits-button">
-            { this.renderButtons() }
+            <div className="padded-buttons-row">
+              <button className="page-button" onClick={this.showNewApprovalLimitModal}> New Approval Authority </button>
+            </div>
           </div>
-         
         </div>
       </div>
     )
   }
 
-  renderButtons() {
+  render() {
     return (
-      <div className="padded-buttons-row">
-        <button className="page-button" onClick={this.showNewApprovalLimitModal}> New Approval Authority </button>
-      </div>
-    )
-  }
-
-  renderApprovalLimits() {
-    const { employee, limitsMap } = this.props;
-    return (
-      <div>
+      <div className="claimlist-container">
         <div className="page-header">
           <div className="page-title">
            Approval Authorities
@@ -112,16 +105,7 @@ class ApprovalLimitsContainer extends React.Component {
           </div>
         </div>
         { this.renderSearchByEmployeeOrCostCentre() }
-       
         <ApprovalLimitsList />
-      </div>
-    )
-  }
-
-  render() {
-    return (
-      <div className="claimlist-container">
-         { this.renderApprovalLimits() }
       </div>
       )
   }

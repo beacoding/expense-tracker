@@ -315,12 +315,6 @@ module.exports = {
     });
   },
 
-  findOne: function(id) {
-    return new Promise((resolve, reject) => {
-      //TODO queryString to fetch all employee claims with id
-    });
-  },
-
   addOne: function(claim) {
     return new Promise((resolve, reject) => {
       const queryString = 
@@ -355,6 +349,37 @@ module.exports = {
         }
       });
     }); 
+  },
+
+  transferClaimsToNextManager: function(old_manager_id, new_manager_id) {
+    return new Promise((resolve, reject) => {
+      var queryString = `UPDATE claim
+                          SET
+                            approver_id = ?,
+                            date_modified = NOW()
+                          WHERE 
+                            approver_id = ? AND status = 'S' OR status = 'F'`;
+      connection.query(queryString, [new_manager_id, old_manager_id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+  },
+
+  deleteClaimDraftsOnDisablingUser: function(employee_id) {
+    return new Promise((resolve, reject) => {
+      var queryString = `DELETE FROM claim WHERE status = 'P' AND claimant_id = ?`;
+      connection.query(queryString, [employee_id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
   },
 
   updateOne: function(claim) {

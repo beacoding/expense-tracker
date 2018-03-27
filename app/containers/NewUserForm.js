@@ -105,7 +105,6 @@ class NewUserForm extends React.Component {
             type="number"
             min={0}
             step={1}
-            max={9999999999}
           />
         <Field
           label="First Name:"
@@ -160,8 +159,8 @@ function validate(values) {
   const errors = {};
 
   // validate the inputs from 'values'
-  if (!values.id) {
-    errors.id = "Please enter this user's unique employee ID.";
+  if (!values.id || (values.id && !/^[0-9]{1,10}$/.test(values.id))) {
+    errors.id = "Please enter this user's unique employee ID (up to 11 digits).";
   }
   if (!values.first_name || values.first_name.trim().length == 0) {
     errors.first_name = "Please enter the user's first name.";

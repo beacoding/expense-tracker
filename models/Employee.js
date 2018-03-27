@@ -97,7 +97,6 @@ module.exports = {
 
   disableOne: function(id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to find one employee
       var queryString = `UPDATE employee
                           SET
                             is_active = 0
@@ -115,7 +114,6 @@ module.exports = {
 
   enableOne: function(id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to find one employee
       var queryString = `UPDATE employee
                           SET
                             is_active = 1

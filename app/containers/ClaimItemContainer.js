@@ -122,17 +122,15 @@ class ClaimItemContainer extends React.Component {
   }
 
   handleEditReceipt(claim_item, e) {
-    let promise = new Promise ((resolve, reject) =>{
+    let promise = new Promise ((resolve, reject) => {
       let claim_id = window.location.pathname.split("/")[2];
-
       let item = {};
       item.receipt = e.target.files[0];
-      if (item.receipt.size > 2097152){
+      if (item.receipt.size > 2097152) {
         toastr.removeByType("error");
-        toastr.error('Error Updating Receipt', 'Receipt file too big. Please choose a smaller size (less than 2MB)', toastrHelpers.getErrorOptions())
+        toastr.error('Error Updating Receipt', 'Receipt file exceeds the maximum file size of 2MB. Please select a smaller file.', toastrHelpers.getErrorOptions())
         reject('File was too big');
-      }
-      else {
+      } else {
         claimItemsHelpers.encodeFileToB64(item.receipt).then(function (result) {
           item.receipt = result;
           this.props.dispatch(claimItemsActions.editReceipt(item, claim_id, claim_item.claim_item_id)).then((res) => {
