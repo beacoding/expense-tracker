@@ -40,5 +40,5 @@ function calculateTotal(claim, claimItems) {
       currentTotal += amount;
     });
   }
-  claim["total_amount"] = currentTotal.toFixed(2);
+  claim["total_amount"] = currentTotal.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 }

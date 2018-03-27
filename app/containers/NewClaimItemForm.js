@@ -40,7 +40,7 @@ class NewClaimItemForm extends React.Component {
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
     const { expense_type, mileage, policies } = this.props;
     let distance = isNaN(mileage) ? 0 : parseInt(mileage);
-    let amount = (distance * policies["Per Mileage Reimbursement"]).toFixed(2) || 0.00;
+    let amount = (distance * policies["Per Mileage Reimbursement"]).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') || 0.00;
 
     return (
       <div className = {className}>

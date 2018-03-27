@@ -54,7 +54,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
     return (
       <tr>
         <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item)} propName='description' /> <i className="ion-edit"></i> </td>
-        <td><div id={"distance-amount-" + claim_item_id}>${amount.toFixed(2)}</div> <br></br> <RIENumber value={distance.toFixed(2) || "Enter Distance Here"} validate={isNumberAcceptable.bind(this)} change={handleEditMileage.bind(this, "mileage", claim_item)} propName='mileage' /> KM <i className="ion-edit"></i></td>
+        <td><div id={"distance-amount-" + claim_item_id}>${amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</div> <br></br> <RIENumber value={distance.toFixed(2) || "Enter Distance Here"} validate={isNumberAcceptable.bind(this)} change={handleEditMileage.bind(this, "mileage", claim_item)} propName='mileage' /> KM <i className="ion-edit"></i></td>
         <td>
           <select className="claim-item-expense-type-select" value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item)}>
             <option value="" disabled> Select an expense category. </option>
@@ -76,7 +76,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
     return (
       <tr>
         <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item)} propName='description' /> <i className="ion-edit"></i> </td>
-        <td>$<RIENumber value={amount.toFixed(2) || "Enter Amount Here"} validate={isNumberAcceptable.bind(this), validateMealExpense.bind(this, policies["Maximum Per Meal Expense"])} change={handleEditItem.bind(this, "amount", claim_item)} propName='amount' />  <i className="ion-edit"></i></td>
+        <td>$<RIENumber value={amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') || "Enter Amount Here"} validate={isNumberAcceptable.bind(this), validateMealExpense.bind(this, policies["Maximum Per Meal Expense"])} change={handleEditItem.bind(this, "amount", claim_item)} propName='amount' />  <i className="ion-edit"></i></td>
         <td>
           <select className="claim-item-expense-type-select" value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item)}>
             <option value="" disabled> Select an expense category. </option>
@@ -98,7 +98,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
     return (
       <tr>
         <td>{description}</td>
-        <td>${amount.toFixed(2)}</td>
+        <td>${amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</td>
         <td>{expense_category}</td>
         <td>{receipt}</td>
         <td>{comment}</td>

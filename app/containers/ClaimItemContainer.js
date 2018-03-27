@@ -27,7 +27,7 @@ class ClaimItemContainer extends React.Component {
     this.props.dispatch(claimItemsActions.deleteClaimItem(claim_id, claim_item.claim_item_id)).then((res) => {
       if (res.type === "DELETE_CLAIM_ITEM_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Claim Item Deleted', 'Claim Item has been successfully deleted.');
+        toastr.success('Claim Item Deleted', 'Claim item has been successfully deleted.');
       } else {
         toastr.removeByType("error");
         toastr.error('Error Deleting Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
@@ -64,7 +64,7 @@ class ClaimItemContainer extends React.Component {
     this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item.claim_item_id)).then((res) => {
       if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Claim Item Updated', 'Claim Item has been successfully modified.');
+        toastr.success('Claim Item Updated', 'Claim item has been successfully modified.');
       } else {
         toastr.removeByType("error");
         toastr.error('Error Updating Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
@@ -79,7 +79,7 @@ class ClaimItemContainer extends React.Component {
     this.props.dispatch(claimItemsActions.editClaimItem(claimItem, claim_id, claim_item.claim_item_id)).then((res) => {
       if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Claim Item Updated', 'Claim Item has been successfully modified.');
+        toastr.success('Claim Item Updated', 'Claim item has been successfully modified.');
       } else {
         toastr.removeByType("error");
         toastr.error('Error Updating Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
@@ -113,7 +113,7 @@ class ClaimItemContainer extends React.Component {
     this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item.claim_item_id)).then((res) => {
       if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Claim Item Updated', 'Claim Item has been successfully modified.');
+        toastr.success('Claim Item Updated', 'Claim item has been successfully modified.');
       } else {
         toastr.removeByType("error");
         toastr.error('Error Updating Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
@@ -122,21 +122,31 @@ class ClaimItemContainer extends React.Component {
   }
 
   handleEditReceipt(claim_item, e) {
-    let claim_id = window.location.pathname.split("/")[2];
-    let item = {};
-    item.receipt = e.target.files[0];
-    claimItemsHelpers.encodeFileToB64(item.receipt).then(function(result) {
-      item.receipt = result;
-      this.props.dispatch(claimItemsActions.editReceipt(item, claim_id, claim_item.claim_item_id)).then((res) => {
-        if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
-          toastr.removeByType("error");
-          toastr.success('Claim Item Updated', 'Claim Item has been successfully modified.');
-        } else {
-          toastr.removeByType("error");
-          toastr.error('Error Updating Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
-        }
-      });
-    }.bind(this));
+    let promise = new Promise ((resolve, reject) => {
+      let claim_id = window.location.pathname.split("/")[2];
+      let item = {};
+      item.receipt = e.target.files[0];
+      if (item.receipt.size > 2097152) {
+        toastr.removeByType("error");
+        toastr.error('Error Updating Receipt', 'Receipt file exceeds the maximum file size of 2MB. Please select a smaller file.', toastrHelpers.getErrorOptions())
+        reject('File was too big');
+      } else {
+        claimItemsHelpers.encodeFileToB64(item.receipt).then(function (result) {
+          item.receipt = result;
+          this.props.dispatch(claimItemsActions.editReceipt(item, claim_id, claim_item.claim_item_id)).then((res) => {
+            if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
+              toastr.removeByType("error");
+              toastr.success('Claim Item Updated', 'Claim item has been successfully modified.');
+              resolve();
+            } else {
+              toastr.removeByType("error");
+              toastr.error('Error Updating Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
+            }
+          });
+        }.bind(this))
+      }
+    });
+    promise.catch( error =>  console.log(error) )
   }
 
   render() {

@@ -52,6 +52,7 @@ const policies = (state = initialState, action) => {
       });
     case approvalLimitsConstants.ADD_APPROVAL_LIMIT_FAILURE:
       return Object.assign({}, state, {
+        isFetching: false,
         errorAddApprovalLimit: action.error
       });
     // UPDATE APPROVAL LIMIT

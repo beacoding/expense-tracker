@@ -1,4 +1,5 @@
 var Employee = require('../models/Employee');
+var Claim = require('../models/Claim');
 
 const findAll = async (req, res, next) => {
   let employees;
@@ -141,10 +142,15 @@ const assignManager = async (req, res, next) => {
 const toggleAdmin = async (req, res, next) => {
   try {
     const { employee_id} = req.body;
-    let info = await Employee.toggleAdmin(employee_id);
-    let employees = await Employee.findAllWithManagers();
-    req.employees = employees;
-    next()
+    if (req.user.id == employee_id) {
+      req.error = "Error: Cannot Toggle Self"
+      next();
+    } else {
+      let info = await Employee.toggleAdmin(employee_id);
+      let employees = await Employee.findAllWithManagers();
+      req.employees = employees;
+      next()
+    }
   } catch (err) {
     req.error = err;
     next();
@@ -154,6 +160,8 @@ const toggleAdmin = async (req, res, next) => {
 const disableOne = async (req, res, next) => {
   try {
     const { employee_id, manager_id} = req.body;
+    let declineInfo = await Claim.deleteClaimDraftsOnDisablingUser(employee_id);
+    let transferClaimsInfo = await Claim.transferClaimsToNextManager(employee_id, manager_id);    
     let transferInfo = await Employee.transferBetweenManagersById(employee_id, manager_id);
     let disableInfo = await Employee.disableOne(employee_id);
     let employees = await Employee.findAllWithManagers();

@@ -12,8 +12,9 @@ var storage = multer.diskStorage({
     })
   }
 })
-var maxsize = { fieldSize: 25 * 1024 * 1024}
-var upload = multer({ storage: storage, limits: maxsize}).any()
+var maxFieldSize = {fieldSize: 25 * 1024 * 1024};
+var maxFileSize = {fileSize: 2*1024*1024};
+var upload = multer({ storage: storage, limits: {fieldSize: 25*1024*1024, fileSize:2*1024*1024}}).any();
 var ClaimItem = require('../models/ClaimItem')
 var authMiddleware = require('../middleware/auth.middleware');
 var claimItemsMiddleware = require('../middleware/claimItems.middleware');

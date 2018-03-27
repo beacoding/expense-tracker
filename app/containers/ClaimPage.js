@@ -97,7 +97,7 @@ class ClaimPage extends React.Component {
       modal.clear();
       window.location = '/claims/';
       toastr.removeByType("error")
-      toastr.error("Claim deleted", "You have deleted the claim")
+      toastr.error("Claim Deleted", "You have deleted the claim")
     });
   }
 
@@ -118,15 +118,20 @@ class ClaimPage extends React.Component {
   }
 
   createClaimItem(data) {
-    return new Promise((resolve) => {
+    let promise = new Promise((resolve, reject) => {
       let claim_id = window.location.pathname.split("/")[2];
       const {employee, form, max_policy_limits} = this.props;
       let receipt;
       if (data.no_receipt === true) {
         receipt = null;
-      }
-      else {
+      } else {
         receipt = data.receipt[0];
+        if (receipt.size > 2097152) {
+          toastr.removeByType("error");
+          toastr.error('Error Adding Claim Item', 'Receipt file exceeds the maximum file size of 2MB. Please select a smaller file.', toastrHelpers.getErrorOptions())
+          reject('File was too big');
+          promise.catch(error => console.log(error));
+        }
       }
       claimItemsHelpers.encodeFileToB64(receipt).then(function (result) {
         let receipt = (data.no_receipt === true) ? null : result;
@@ -146,7 +151,7 @@ class ClaimPage extends React.Component {
         this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
           if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
             toastr.removeByType("error");
-            toastr.success('Claim Item Added', 'Claim Item has been successfully added.');
+            toastr.success('Claim Item Added', 'Claim item has been successfully added.');
           } else {
             toastr.removeByType("error");
             toastr.error('Error Adding Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
@@ -156,9 +161,8 @@ class ClaimPage extends React.Component {
           resolve()
         });
       }.bind(this));
-
-    })
-
+    });
+    promise.catch( error =>  console.log(error) )
   }
 
   showNewClaimItemModal() {

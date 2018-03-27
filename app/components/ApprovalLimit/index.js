@@ -15,7 +15,7 @@ const ApprovalLimit = ({ employee, limit_entry, handleEditLimit, handleDeleteLim
   let dollar_sign = '';
 
   if (approval_limit !== null) {
-    approval_limit = approval_limit.toFixed(2);
+    approval_limit = approval_limit.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
     dollar_sign = "$";
   } else {
     approval_limit = "No Limit";
@@ -45,7 +45,7 @@ const ApprovalLimit = ({ employee, limit_entry, handleEditLimit, handleDeleteLim
 
 ApprovalLimit.propTypes = {
   limit_entry: PropTypes.shape({
-    manager_name: PropTypes.string.isRequired,
+    manager_name: PropTypes.string,
     employee_id: PropTypes.number.isRequired,
     cost_centre_id: PropTypes.number.isRequired,
     approval_limit: PropTypes.number,

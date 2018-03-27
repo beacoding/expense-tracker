@@ -90,7 +90,6 @@ module.exports = {
   
   updateOne: function(params, id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to update one claimItem
       var setArray = [];
       for (key in params) {
           switch(key) {
