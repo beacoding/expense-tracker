@@ -8,21 +8,19 @@ class UsersList extends React.Component {
   constructor(props) {
     super(props);
   }
-    
-  componentWillMount() {
-    this.props.dispatch(employeesActions.requestAllWithManagers());
-  }
 
   renderEntries() {
-    const { users } = this.props;
+    const { users, employee } = this.props;
     return (
       <tbody>
       {Object.entries(users).map((user, i) => {
         var user_entry = user[1]
+        var isSelf = (employee.id == user_entry.id);
         return <User
                   key={user_entry.id}
                   user={user_entry}
                   users={users}
+                  isSelf={isSelf}
                   handleManagerChange={this.props.handleManagerChange}
                   handleToggleAdmin={this.props.handleToggleAdmin}
                   handleEnableUser={this.props.showEnableUserModal}
@@ -55,13 +53,13 @@ class UsersList extends React.Component {
   }
 
   render() { 
-    const { users, isFetching } = this.props;
+    const { users, userStubs, isFetching } = this.props;
 
     if (isFetching) {
       return this.renderFetching();
     }
 
-    if (!isFetching && users.length < 1) {
+    if (!isFetching && (userStubs.length < 1 && users.length < 1)) {
       return this.renderEmptyList();
     }
     
@@ -91,11 +89,13 @@ class UsersList extends React.Component {
 function mapStateToProps(state) {
   const { authentication, policies, employees } = state;
   const { employee } = authentication;
+  const userStubs = employees.employees;
   const users = employees.employees_with_managers;
   const employeesOfManagerMap = employees.employeesOfManagerMap;
   const isFetching = employees.isFetching;
   return {
     employee,
+    userStubs,
     users,
     isFetching
   };

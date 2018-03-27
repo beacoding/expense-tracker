@@ -30,7 +30,8 @@ class UserManagementContainer extends React.Component {
   }
   
   componentWillMount() {
-    this.props.dispatch(employeesActions.requestAll())
+    this.props.dispatch(employeesActions.requestAll());
+    this.props.dispatch(employeesActions.requestAllWithManagers());
   }
   
   componentWillReceiveProps(nextprops) {
@@ -90,9 +91,15 @@ class UserManagementContainer extends React.Component {
       hideCloseButton: true,
       affirmativeAction: () => {
         this.props.dispatch(employeesActions.toggleAdmin(user.id)).then((res) => {
-          modal.clear();
-          toastr.removeByType("error")
-          toastr.success("Privileges Toggled", `System Administrator privileges for ` + user.employee_name + ` have been toggled.`)
+          if (res.type == "TOGGLE_ADMIN_SUCCESS") {
+            modal.clear();
+            toastr.removeByType("error")
+            toastr.success("Privileges Toggled", `System Administrator privileges for ` + user.employee_name + ` have been toggled.`)
+          } else {
+            modal.clear();
+            toastr.removeByType("error")
+            toastr.error("Error: Cannot Toggle Self", `This action is not allowed.`)
+          }
         });
       },
       affirmativeText: 'Yes',
@@ -208,7 +215,8 @@ class UserManagementContainer extends React.Component {
       title: 'Disable User',
       bodyHtml: `
         <p>Are you sure you want to disable <strong>` + user.employee_name + `'s</strong> account?</p>
-        <p>All the employees under this manager will be moved to their supervisor <strong>` + user.manager_name + `.</strong></p>          
+        <p>All of their claim drafts will be deleted and any claims pending their review will be forwarded to <strong>` + user.manager_name + `</strong>.</p>
+        <p>Also, all employees reporting to this manager will now report to <strong>` + user.manager_name + `</strong>.</p>          
       `,
       size: 'medium',
       hideCloseButton: true,
@@ -231,8 +239,8 @@ class UserManagementContainer extends React.Component {
         toastr.removeByType("error");
         toastr.success('Password Successfully Reset', 'Password for ' + user.employee_name + ' has been changed.')
        } else {
-         toastr.removeByType("error");
-         toastr.error("Error Resetting Password", "Please try again.", toastrHelpers.getErrorOptions())
+        toastr.removeByType("error");
+        toastr.error("Error Resetting Password", "Please try again.", toastrHelpers.getErrorOptions())
        }
     });
   }

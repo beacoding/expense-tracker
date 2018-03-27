@@ -4,7 +4,7 @@ import { withRouter, NavLink } from 'react-router-dom';
 import Select from 'react-virtualized-select';
 import createFilterOptions from 'react-select-fast-filter-options';
 
-const User = ({ user, users, handleManagerChange, handleToggleAdmin, handleEnableUser, handleDisableUser, handlePasswordReset }) => {
+const User = ({ user, users, isSelf, handleManagerChange, handleToggleAdmin, handleEnableUser, handleDisableUser, handlePasswordReset }) => {
   const {
     id,
     manager_id,
@@ -13,8 +13,6 @@ const User = ({ user, users, handleManagerChange, handleToggleAdmin, handleEnabl
     is_active,
     is_admin
   } = user;
-
-  var status = is_active === 1 ? "Active" : "Disabled";
   
   const options = users.map((user) => {
     return { value: user.id, label: user.employee_name }
@@ -39,12 +37,13 @@ const User = ({ user, users, handleManagerChange, handleToggleAdmin, handleEnabl
       { is_active === 1 && <td style={{textAlign: 'center'}}> <i className="ion-unlocked pointer" style={{fontSize: 18 + 'px'}} onClick={handlePasswordReset.bind(this, user)}></i></td> }
       { is_active === 0 && <td style={{textAlign: 'center'}}> N/A </td> }
       {/* System Administrator */}
-      { is_active === 1 && is_admin === 1 && <td style={{textAlign: 'center'}}> <i className="ion-toggle-filled pointer" style={{fontSize: 26 + 'px'}} onClick={handleToggleAdmin.bind(this, user)}></i></td> }      
-      { is_active === 1 && is_admin === 0 && <td style={{textAlign: 'center'}}> <i className="ion-toggle pointer" style={{fontSize: 26 + 'px'}} onClick={handleToggleAdmin.bind(this, user)}></i></td> }
-      { is_active === 0 && <td style={{textAlign: 'center'}}> N/A </td> }      
+      { !isSelf && is_active === 1 && is_admin === 1 && <td style={{textAlign: 'center'}}> <i className="ion-toggle-filled pointer" style={{fontSize: 26 + 'px'}} onClick={handleToggleAdmin.bind(this, user)}></i></td> }      
+      { !isSelf && is_active === 1 && is_admin === 0 && <td style={{textAlign: 'center'}}> <i className="ion-toggle pointer" style={{fontSize: 26 + 'px'}} onClick={handleToggleAdmin.bind(this, user)}></i></td> }
+      { (isSelf || is_active === 0) && <td style={{textAlign: 'center'}}> N/A </td> }      
       {/* Account Status */}
-      { is_active === 1 && <td style={{textAlign: 'center'}}> <i className="ion-toggle-filled pointer" style={{fontSize: 26 + 'px'}} onClick={handleDisableUser.bind(this, user)}></i></td> }
-      { is_active === 0 && <td style={{textAlign: 'center'}}> <i className="ion-toggle pointer" style={{fontSize: 26 + 'px'}} onClick={handleEnableUser.bind(this, user)}></i></td> }
+      { (!isSelf && is_active === 1) && <td style={{textAlign: 'center'}}> <i className="ion-toggle-filled pointer" style={{fontSize: 26 + 'px'}} onClick={handleDisableUser.bind(this, user)}></i></td> }
+      { (!isSelf && is_active === 0) && <td style={{textAlign: 'center'}}> <i className="ion-toggle pointer" style={{fontSize: 26 + 'px'}} onClick={handleEnableUser.bind(this, user)}></i></td> }
+      { isSelf && <td style={{textAlign: 'center'}}> N/A </td> }
     </tr>
   );
 }

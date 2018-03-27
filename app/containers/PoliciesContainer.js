@@ -71,7 +71,7 @@ class PoliciesContainer extends React.Component {
           var value = policy[1];
           return (<tr key={i}>
             <td>{key}</td>
-            <td>$<RIEInput propName="new_policy_value" change={this.handleEditLimit.bind(this, key)} value={value} validate={this.isLimitInputAcceptable}/>  <i className="ion-edit"></i> </td>
+            <td>$<RIENumber propName="new_policy_value" change={this.handleEditLimit.bind(this, key)} value={value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')} validate={this.isLimitInputAcceptable}/>  <i className="ion-edit"></i> </td>
             </tr>)
         })}
         </tbody>
