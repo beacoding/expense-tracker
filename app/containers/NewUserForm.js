@@ -34,8 +34,8 @@ class NewUserForm extends React.Component {
   }
   
   renderManagerSelectField(field) {
-    const { meta: {visited, error }} = field;
-    const className = `form-group ${visited && error ? "has-danger" : ""}`;
+    const { meta: {touched, error }} = field;
+    const className = `form-group ${touched && error ? "has-danger" : ""}`;
     const options = this.props.employees.map((employee) => {
       return {value: employee.id, label: employee.employee_name}
     })
@@ -55,7 +55,7 @@ class NewUserForm extends React.Component {
           onBlur={() => {}}
           />
           <div className="text-help">
-            {visited ? error : ""}
+            {touched ? error : ""}
           </div>
       </div>
    );
