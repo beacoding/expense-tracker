@@ -181,7 +181,7 @@ module.exports = {
                           employee m
                         WHERE
                           e.manager_id = m.id AND
-                          manager.id = ?`;
+                          m.id = ?`;
       connection.query(queryString, [manager_id], (err, rows) => {
         if (err) {
           reject(err);
@@ -195,11 +195,11 @@ module.exports = {
   findAllWithParams: function(params) {
     return new Promise((resolve, reject) => {
       var whereArray = []
-      for (key in params) {
+      for (var key in params) {
         if (params[key].length > 0) {
           switch(key) {
             case "employee_id":
-              whereArray.push("id = '" + params[key] + "'")
+              whereArray.push("e.id = '" + params[key] + "'")
               break;
             case "employee_name":
               whereArray.push("(e.first_name LIKE '" + params[key] + "%' OR e.last_name LIKE '" + params[key] + "%')");
