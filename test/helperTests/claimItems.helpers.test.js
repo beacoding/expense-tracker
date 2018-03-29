@@ -13,8 +13,4 @@ describe('Testing ClaimItems helpers', function(){
         assert.equal(distance, 100, "distance should eqaul 100");
     })
 
-    it('should encode file to 64 bit', function(){
-        // TODO
-    })
-
 })
