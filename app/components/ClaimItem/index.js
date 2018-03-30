@@ -25,7 +25,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
   });
 
   let consts = {zoomStyle: 'opacity: 0.1;background-color: black;'}
-  let receipt = (claim_item.image_url) === "null" ? "No Receipt" :
+  let receipt = (claim_item.image_url === null || claim_item.image_url === "null") ? "No Receipt" :
     <ImageZoom
       image={{
         src: claim_item.image_url,
@@ -34,7 +34,6 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
         style: { width: '50px'}
       }}
       zoomImage={{
-        alt: claim_item.description + 's Receipt',
         src: claim_item.image_url,
         alt: claim_item.description + ' Receipt',
       }}

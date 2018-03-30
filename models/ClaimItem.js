@@ -59,6 +59,9 @@ module.exports = {
   
   addOne: function(item) {
     return new Promise((resolve, reject) => {
+      if (item.image_url === "null") {
+        item.image_url = null;
+      }
       const queryString = `INSERT INTO claim_item
                             (claim_id,
                               description,

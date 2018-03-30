@@ -45,7 +45,7 @@ const Claim = ({ employee, claim, handleAction, handleDelete }) => {
             <td>{approver_first_name + " " + approver_last_name}</td>
             <td>{manager_first_name + " " + manager_last_name}</td>
             <td>{cost_centre_id}</td>
-            <td>{"$" + total_amount}</td>
+            <td>{"$" + total_amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</td>
           </tr>
         </tbody>
       </table>

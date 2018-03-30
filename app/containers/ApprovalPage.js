@@ -83,7 +83,7 @@ class ApprovalPage extends React.Component {
   }
 
   render() {
-    const { employee, claimsMap, policies, error, isFetching, reloadData } = this.props;
+    const { employee, claimsMap, claimItemsMap, policies, error, isFetching, reloadData } = this.props;
 
     if (isFetching) {
       return this.renderFetching();
@@ -118,16 +118,13 @@ class ApprovalPage extends React.Component {
 function mapDispatchToProps(dispatch) {
   return {
     reloadData: () => {
-      dispatch(claimsActions.clearAll());
       dispatch(claimsActions.requestPendingApprovals());
     },
     mountApprovalList: () => {
-      dispatch(claimsActions.clearAll());
       dispatch(claimsActions.requestPendingApprovals());
       dispatch(approvalLimitsActions.requestByEmployee());
     },
     mountProcessedList: () => {
-      dispatch(claimsActions.clearAll());
       dispatch(claimsActions.requestProcessedApprovals());
       dispatch(approvalLimitsActions.requestByEmployee());
     }
@@ -135,14 +132,16 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const { authentication, claims, policies } = state;
+  const { authentication, claims, claimItems, policies } = state;
   const { employee } = authentication;
   const { approvedClaims, claimsMap, error, isFetching } = claims;
+  const { claimItemsMap } = claimItems;
 
   return {
     employee,
     approvedClaims,
     claimsMap,
+    claimItemsMap,
     policies,
     error,
     isFetching
