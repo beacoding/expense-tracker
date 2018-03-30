@@ -41,11 +41,11 @@ module.exports = {
     });
   },
 
-  addOne: function(id) {
-    return new Promise((resolve, reject) => {
-      //TODO queryString to add a policy
-    }); 
-  },
+  // addOne: function(id) {
+  //   return new Promise((resolve, reject) => {
+  //     //TODO queryString to add a policy
+  //   });
+  // },
 
   updateOne: function(name, value) {
     return new Promise((resolve, reject) => {
@@ -64,9 +64,9 @@ module.exports = {
     }); 
   },
 
-  deleteOne: function(id) {
-    return new Promise((resolve, reject) => {
-      //TODO queryString to delete a policy
-    }); 
-  }
+  // deleteOne: function(id) {
+  //   return new Promise((resolve, reject) => {
+  //     //TODO queryString to delete a policy
+  //   });
+  // }
 }
