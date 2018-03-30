@@ -94,7 +94,7 @@ class UserManagementContainer extends React.Component {
           if (res.type == "TOGGLE_ADMIN_SUCCESS") {
             modal.clear();
             toastr.removeByType("error")
-            toastr.success("Privileges Toggled", `System Administrator privileges for ` + user.employee_name + ` have been toggled.`)
+            toastr.success("Privileges Toggled", `System Administrator privileges for ` + user.employee_name + ` have been toggled.`, toastrHelpers.getSuccessOptions())
           } else {
             modal.clear();
             toastr.removeByType("error")
@@ -117,9 +117,9 @@ class UserManagementContainer extends React.Component {
       if (res.type === "ASSIGN_MANAGER_SUCCESS") {
         toastr.removeByType("error");
         if (selection.label == "N/A") {
-          toastr.success('Manager Removed', employee.manager_name + ' has been removed as ' + employee.employee_name + "'s manager.");          
+          toastr.success('Manager Removed', employee.manager_name + ' has been removed as ' + employee.employee_name + "'s manager.", toastrHelpers.getSuccessOptions())       
         } else {
-          toastr.success('Manager Updated', selection.label + ' has been successfully set as ' + employee.employee_name + "'s manager.");
+          toastr.success('Manager Updated', selection.label + ' has been successfully set as ' + employee.employee_name + "'s manager.", toastrHelpers.getSuccessOptions())
         }
         modal.clear();
       } else if (res.error != null) {
@@ -152,7 +152,7 @@ class UserManagementContainer extends React.Component {
     this.props.dispatch(employeesActions.addEmployee(newUser)).then((res) => {  
       if (res.type === "ADD_EMPLOYEE_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Employee Added', data.first_name + ' ' + data.last_name  + ' has been successfully added');
+        toastr.success('Employee Added', data.first_name + ' ' + data.last_name  + ' has been successfully added', toastrHelpers.getSuccessOptions())
         modal.clear();
       } else if (res.error != null) {
         toastr.removeByType("error");
@@ -184,7 +184,7 @@ class UserManagementContainer extends React.Component {
     this.props.dispatch(employeesActions.enableEmployee(user.id)).then(() => {
       modal.clear();
       toastr.removeByType("error")
-      toastr.success("User Enabled", user.employee_name + "'s account has been enabled.")
+      toastr.success("User Enabled", user.employee_name + "'s account has been enabled.", toastrHelpers.getSuccessOptions())
     });
   }
 
@@ -237,7 +237,7 @@ class UserManagementContainer extends React.Component {
       if (res.type == "RESET_PASSWORD_SUCCESS") {
         modal.clear();
         toastr.removeByType("error");
-        toastr.success('Password Successfully Reset', 'Password for ' + user.employee_name + ' has been changed.')
+        toastr.success('Password Successfully Reset', 'Password for ' + user.employee_name + ' has been changed.', toastrHelpers.getSuccessOptions())
        } else {
         toastr.removeByType("error");
         toastr.error("Error Resetting Password", "Please try again.", toastrHelpers.getErrorOptions())

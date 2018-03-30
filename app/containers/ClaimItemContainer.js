@@ -28,7 +28,7 @@ class ClaimItemContainer extends React.Component {
     this.props.dispatch(claimItemsActions.deleteClaimItem(claim_id, claim_item.claim_item_id)).then((res) => {
       if (res.type === "DELETE_CLAIM_ITEM_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Claim Item Deleted', 'Claim item has been successfully deleted.');
+        toastr.success('Claim Item Deleted', 'Claim item has been successfully deleted.', toastrHelpers.getSuccessOptions())
       } else {
         toastr.removeByType("error");
         toastr.error('Error Deleting Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
@@ -69,7 +69,7 @@ class ClaimItemContainer extends React.Component {
     this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item.claim_item_id)).then((res) => {
       if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Claim Item Updated', 'Claim item has been successfully modified.');
+        toastr.success('Claim Item Updated', 'Claim item has been successfully modified.', toastrHelpers.getSuccessOptions())
       } else {
         toastr.removeByType("error");
         toastr.error('Error Updating Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
@@ -84,7 +84,7 @@ class ClaimItemContainer extends React.Component {
     this.props.dispatch(claimItemsActions.editClaimItem(claimItem, claim_id, claim_item.claim_item_id)).then((res) => {
       if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Claim Item Updated', 'Claim item has been successfully modified.');
+        toastr.success('Claim Item Updated', 'Claim item has been successfully modified.', toastrHelpers.getSuccessOptions())
       } else {
         toastr.removeByType("error");
         toastr.error('Error Updating Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
@@ -118,7 +118,7 @@ class ClaimItemContainer extends React.Component {
     this.props.dispatch(claimItemsActions.editClaimItem(item, claim_id, claim_item.claim_item_id)).then((res) => {
       if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Claim Item Updated', 'Claim item has been successfully modified.');
+        toastr.success('Claim Item Updated', 'Claim item has been successfully modified.', toastrHelpers.getSuccessOptions())
       } else {
         toastr.removeByType("error");
         toastr.error('Error Updating Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())
@@ -141,7 +141,7 @@ class ClaimItemContainer extends React.Component {
           this.props.dispatch(claimItemsActions.editReceipt(item, claim_id, claim_item.claim_item_id)).then((res) => {
             if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
               toastr.removeByType("error");
-              toastr.success('Claim Item Updated', 'Claim item has been successfully modified.');
+              toastr.success('Claim Item Updated', 'Claim item has been successfully modified.', toastrHelpers.getSuccessOptions())
               resolve();
             } else {
               toastr.removeByType("error");

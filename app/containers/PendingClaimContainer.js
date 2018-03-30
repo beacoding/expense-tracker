@@ -34,7 +34,7 @@ class PendingClaimContainer extends React.Component {
       if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
         modal.clear();
         toastr.removeByType("error");
-        toastr.success('Claim Approved', this.props.claim.claimant_first_name + ' ' + this.props.claim.claimant_last_name + ' will be notified.')
+        toastr.success('Claim Approved', this.props.claim.claimant_first_name + ' ' + this.props.claim.claimant_last_name + ' will be notified.', toastrHelpers.getSuccessOptions())
       } else {
         toastr.removeByType("error");
         toastr.error('Error Approving Claim', 'Please try again.', toastrHelpers.getErrorOptions())
@@ -65,7 +65,7 @@ class PendingClaimContainer extends React.Component {
       if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
         modal.clear();
         toastr.removeByType("error");
-        toastr.confirm('Claim Forwarded', this.props.claim.claimant_first_name + ' ' + this.props.claim.claimant_last_name + ' and the selected manager will be notified.')
+        toastr.success('Claim Forwarded', this.props.claim.claimant_first_name + ' ' + this.props.claim.claimant_last_name + ' and the selected manager will be notified.', toastrHelpers.getSuccessOptions())
       } else {
         toastr.removeByType("error");
         toastr.error('Error Forwarding Claim', 'Please try again.', toastrHelpers.getErrorOptions())

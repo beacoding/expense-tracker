@@ -18,7 +18,7 @@ class PoliciesContainer extends React.Component {
     this.props.dispatch(policiesActions.updateValue(name, new_value)).then((res) => {
       if (res.type === "UPDATE_POLICIES_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Policy Updated', 'Policy has been successfully updated.');
+        toastr.success('Policy Updated', 'Policy has been successfully updated.', toastrHelpers.getSuccessOptions())
       } else {
         toastr.removeByType("error");
         toastr.error('Error Updating Policy', 'Please try again.', toastrHelpers.getErrorOptions())

@@ -48,7 +48,7 @@ class ApprovalLimitsContainer extends React.Component {
     this.props.dispatch(approvalLimitsActions.addApprovalLimit(approvalLimit)).then((res) => {
       if (res.type === "ADD_APPROVAL_LIMIT_SUCCESS") {
         toastr.removeByType("error")
-        toastr.success('Approval Authority Added', 'Added a new approval limit for ' + employee_name + '.')
+        toastr.success('Approval Authority Added', 'Added a new approval limit for ' + employee_name + '.', toastrHelpers.getSuccessOptions())
         modal.clear();
       } else {
         toastr.removeByType("error");

@@ -23,7 +23,7 @@ class ApprovalLimitsList extends React.Component {
     this.props.dispatch(approvalLimitsActions.updateApprovalLimit(employee_id, cost_centre_id, data["new_approval_limit"])).then((res) => {
       if (res.type === "UPDATE_APPROVAL_LIMIT_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Approval Authority Updated', 'Approval authority has been successfully updated.');
+        toastr.success('Approval Authority Updated', 'Approval authority has been successfully updated.', toastrHelpers.getSuccessOptions())
       } else {
         toastr.removeByType("error");
         toastr.error('Error Updating Approval Authority', 'Please try again.', toastrHelpers.getErrorOptions())
@@ -36,7 +36,7 @@ class ApprovalLimitsList extends React.Component {
     this.props.dispatch(approvalLimitsActions.revokeApprovalLimit(employee_id, cost_centre_id)).then((res) => {
       if (res.type === "REVOKE_APPROVAL_LIMIT_SUCCESS") {
         toastr.removeByType("error");
-        toastr.success('Approval Authority Revoked', 'Approval authority has been successfully revoked.');
+        toastr.success('Approval Authority Revoked', 'Approval authority has been successfully revoked.', toastrHelpers.getSuccessOptions())
       } else {
         toastr.removeByType("error");
         toastr.error('Error Revoking Approval Authority', 'Please try again.', toastrHelpers.getErrorOptions())

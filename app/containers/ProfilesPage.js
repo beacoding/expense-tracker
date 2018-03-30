@@ -39,7 +39,7 @@ class Profile extends React.Component {
       if (res.type == "UPDATE_PASSWORD_SUCCESS") {
         modal.clear();
         toastr.removeByType("error")
-        toastr.success('Password Changed', 'Your password has been changed.')
+        toastr.success('Password Changed', 'Your password has been changed.', toastrHelpers.getSuccessOptions())
        } else {
          toastr.removeByType("error")
          toastr.error("Error Changing Password", "Please double check your current password.", toastrHelpers.getErrorOptions())
