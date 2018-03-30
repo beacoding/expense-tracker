@@ -52,7 +52,7 @@ class ApprovalLimitsContainer extends React.Component {
         modal.clear();
       } else {
         toastr.removeByType("error");
-        toastr.error('Duplicate Entry', employee_name +  ' has already been assigned an approval limit for cost centre ' + cost_centre_id + '.', toastrHelpers.getErrorOptions())
+        toastr.error('Duplicate Entry', employee_name +  ' already has approval authority for cost centre ' + cost_centre_id + '.', toastrHelpers.getErrorOptions())
       }
     });;
   }

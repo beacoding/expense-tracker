@@ -16,7 +16,7 @@ class ResetPasswordForm extends React.Component {
           <div className = {className}>
             <label>{field.label}</label>
             {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-            <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} max={field.max} maxLength={field.maxLength} />
+            <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} autoComplete="off" max={field.max} maxLength={field.maxLength} />
             <div className="text-help">
               {touched ? error : ""}
             </div>

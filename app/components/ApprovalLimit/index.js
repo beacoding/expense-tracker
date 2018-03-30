@@ -14,7 +14,7 @@ const ApprovalLimit = ({ employee, limit_entry, handleEditLimit, handleDeleteLim
 
   let dollar_sign = '';
 
-  if (approval_limit !== null) {
+  if (approval_limit && !isNaN(approval_limit)) {
     approval_limit = approval_limit.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
     dollar_sign = "$";
   } else {

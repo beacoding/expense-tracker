@@ -6,7 +6,7 @@ import { claimItemsHelpers } from '../../helpers';
 import './style.css';
 import FileBase64 from 'react-file-base64';
 
-const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, isNumberAcceptable, validateMealExpense, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
+const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, isDescriptionValid, isNumberAcceptable, validateMealExpense, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
   const {
     claim_item_id,
     description,
@@ -25,36 +25,34 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
   });
 
   let consts = {zoomStyle: 'opacity: 0.1;background-color: black;'}
-  //
   let receipt = (claim_item.image_url) === "null" ? "No Receipt" :
-
-  <ImageZoom
-    image={{
-      src: claim_item.image_url,
-      alt: claim_item.description + ' Receipt',
-      className: 'img',
-      style: { width: '50px'}
-    }}
-    zoomImage={{
-      alt: claim_item.description + 's Receipt',
-      src: claim_item.image_url,
-      alt: claim_item.description + ' Receipt',
-    }}
-    defaultStyles={{
-      overlay: {
-        backgroundColor: 'rgba(0,0,0,0.7)'
-      }
-    }}
-    {...consts}
-  />;
+    <ImageZoom
+      image={{
+        src: claim_item.image_url,
+        alt: claim_item.description + ' Receipt',
+        className: 'img',
+        style: { width: '50px'}
+      }}
+      zoomImage={{
+        alt: claim_item.description + 's Receipt',
+        src: claim_item.image_url,
+        alt: claim_item.description + ' Receipt',
+      }}
+      defaultStyles={{
+        overlay: {
+          backgroundColor: 'rgba(0,0,0,0.7)'
+        }
+      }}
+      {...consts}
+    />;
 
   let defaultValue = valueMap[expense_category.toUpperCase()];
   if (expense_category === "MILEAGE" && claim_status === "P") {
     let distance = claimItemsHelpers.amountToDistance(amount, policies["Per Mileage Reimbursement"]);
     return (
       <tr>
-        <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item)} propName='description' /> <i className="ion-edit"></i> </td>
-        <td><div id={"distance-amount-" + claim_item_id}>${amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</div> <br></br> <RIENumber value={distance.toFixed(2) || "Enter Distance Here"} validate={isNumberAcceptable.bind(this)} change={handleEditMileage.bind(this, "mileage", claim_item)} propName='mileage' /> KM <i className="ion-edit"></i></td>
+        <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item)} validate={isDescriptionValid} propName='description' /> <i className="ion-edit"></i> </td>
+        <td><div id={"distance-amount-" + claim_item_id}>${amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</div> <br></br> <RIEInput value={distance.toFixed(2) || "Enter Distance Here"} validate={isNumberAcceptable} change={handleEditMileage.bind(this, "mileage", claim_item)} propName='mileage' /> KM <i className="ion-edit"></i></td>
         <td>
           <select className="claim-item-expense-type-select" value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item)}>
             <option value="" disabled> Select an expense category. </option>
@@ -75,8 +73,8 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
   } else if (claim_status === 'P') {
     return (
       <tr>
-        <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item)} propName='description' /> <i className="ion-edit"></i> </td>
-        <td>$<RIENumber value={amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') || "Enter Amount Here"} validate={isNumberAcceptable.bind(this), validateMealExpense.bind(this, policies["Maximum Per Meal Expense"])} change={handleEditItem.bind(this, "amount", claim_item)} propName='amount' />  <i className="ion-edit"></i></td>
+        <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item)} validate={isDescriptionValid} propName='description' /> <i className="ion-edit"></i> </td>
+        <td>$<RIEInput value={amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') || "Enter Amount Here"} validate={validateMealExpense.bind(this, policies["Maximum Per Meal Expense"])} change={handleEditItem.bind(this, "amount", claim_item)} propName='amount' />  <i className="ion-edit"></i></td>
         <td>
           <select className="claim-item-expense-type-select" value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item)}>
             <option value="" disabled> Select an expense category. </option>
