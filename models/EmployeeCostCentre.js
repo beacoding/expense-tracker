@@ -113,7 +113,7 @@ module.exports = {
   findAllWithParams: function(params) {
     return new Promise((resolve, reject) => {
       var whereArray = []
-      for (key in params) {
+      for (var key in params) {
         if (params[key].length > 0) {
            switch(key) {
             case "employee_name":
