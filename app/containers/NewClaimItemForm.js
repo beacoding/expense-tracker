@@ -23,7 +23,7 @@ class NewClaimItemForm extends React.Component {
       <div className = {className}>
         <label>{field.label}</label>
         {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-        <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} min={field.min} step={field.step} />
+        <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} autoComplete="off" min={field.min} step={field.step} />
         <div className="text-help">
           {touched ? error : ""}
         </div>
@@ -94,7 +94,7 @@ class NewClaimItemForm extends React.Component {
     return (
       <div className={className}>
         <div>
-          <label>{field.label} <input type="checkbox" style={{width: 12 + 'px', marginLeft: 5 + 'px'}} {...field.input} /></label>
+          <label>{field.label} <input type="checkbox" style={{marginLeft: 5 + 'px'}} {...field.input} /></label>
         </div>
         <i className="ion-android-alert"> Only check this box if you do not have a receipt.</i>
         <div className="text-help">

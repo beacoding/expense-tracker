@@ -1085,8 +1085,8 @@ input[type="file"] {
 }
 
 input {
-  width: calc(100% - 30px);
-  min-height: 30px;
+  /* width: calc(100% - 30px);
+  min-height: 30px; */
   padding-left: 5px;
   padding-right: 5px;
   letter-spacing: .5px;

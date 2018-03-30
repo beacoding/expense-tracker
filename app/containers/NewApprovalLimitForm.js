@@ -22,10 +22,8 @@ class NewApprovalLimitForm extends React.Component {
       <div className = {className}>
         <label>{field.label}</label>
         {/* the ... gets us everything associated with field.input such as onChange, onFocus, etc.*/}
-        <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} max={field.max} maxLength={field.maxLength} />
-        <div className="text-help">
-          {touched ? error : ""}
-        </div>
+        <input className="form-control" placeholder={field.placeholder} type={field.type} {...field.input} autoComplete="off" max={field.max} maxLength={field.maxLength} />
+        <i className="ion-android-alert"> Leave blank to indicate 'No Limit'.</i>
       </div>
     );
   }
@@ -55,6 +53,9 @@ class NewApprovalLimitForm extends React.Component {
           {...field.input}
           onBlur={() => {}}
         />
+        <div className="text-help">
+          {touched ? error : ""}
+        </div>
       </div>
    );
   }
@@ -84,6 +85,9 @@ class NewApprovalLimitForm extends React.Component {
           {...field.input}
           onBlur={() => {}}
         />
+        <div className="text-help">
+          {touched ? error : ""}
+        </div>
       </div>
    );
   }
@@ -120,6 +124,24 @@ class NewApprovalLimitForm extends React.Component {
   }
 }
 
+function validate(values) {
+  // create empty errors object to return
+  const errors = {};
+
+  // validate the inputs from 'values'
+  if (!values.employee) {
+    errors.employee = "Please select an employee to grant approval authority to.";
+  }
+  if (!values.cost_centre_id) {
+    errors.cost_centre_id = "Please select the cost centre for which approval authority is to be granted.";
+  }
+
+  // if errors is empty, the form is fine to submit
+  // if errors has any properties, redux form assumes form is invalid
+  return errors;
+}
+
 export default reduxForm({
+  validate,
   form: 'NewApprovalLimitForm' // a unique identifier for this form
 })(NewApprovalLimitForm);

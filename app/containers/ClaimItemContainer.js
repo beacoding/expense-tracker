@@ -19,6 +19,7 @@ class ClaimItemContainer extends React.Component {
     this.handleEditReceipt = this.handleEditReceipt.bind(this);
     this.handleChangeDistance = this.handleChangeDistance.bind(this);
     this.handleEditMileage = this.handleEditMileage.bind(this);
+    this.isDescriptionValid = this.isDescriptionValid.bind(this);
     this.isNumberAcceptable = this.isNumberAcceptable.bind(this);
   }
 
@@ -46,11 +47,15 @@ class ClaimItemContainer extends React.Component {
 
   isNumberAcceptable(value) {
     var floatRegex = /^[0-9]*\.?[0-9]+/;
-    return floatRegex.test(value);
+    return (floatRegex.test(value) && parseFloat(value) > 0);
   }
 
   validateMealExpense(max_amount, amount) {
-    if (parseFloat(max_amount) < parseFloat(amount)) {
+    if (parseFloat(amount) <= 0) {
+      toastr.removeByType("error");
+      toastr.error('Policy Violation', 'Expense must be a positive amount.', toastrHelpers.getErrorOptions())
+      return false;
+    } else if (parseFloat(max_amount) < parseFloat(amount)) {
       toastr.removeByType("error");
       toastr.error('Policy Violation', 'A single meal expense must be no greater than $' + parseFloat(max_amount) + '.', toastrHelpers.getErrorOptions())
       return false;
@@ -156,7 +161,8 @@ class ClaimItemContainer extends React.Component {
                   policies={this.props.policies}
                   handleEditReceipt={this.handleEditReceipt}
                   handleChangeExpenseCategory={this.handleChangeExpenseCategory}
-                  isNumberAcceptable={this.isNumberAcceptable}
+                  isDescriptionValid={this.isDescriptionValid}
+                  isNumberAcceptable={this.isNumberAcceptable}                  
                   validateMealExpense={this.validateMealExpense}
                   employee={employee}
                   claim_item={claim_item}
