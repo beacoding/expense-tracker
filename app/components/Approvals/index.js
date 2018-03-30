@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PendingClaimContainer from '../../containers/PendingClaimContainer';
+import { claimsHelpers } from '../../helpers';
 
 const Approvals = ({ props, renderEmptyList, renderError }) => {
-  const {claimsMap, policies, error, isFetching, employee } = props;
+  const {claimsMap, claimItemsMap, policies, error, isFetching, employee } = props;
 
   if (error !== undefined) {
     return renderError(error);
@@ -17,6 +18,7 @@ const Approvals = ({ props, renderEmptyList, renderError }) => {
     <div className="claim-list">
       {Object.entries(claimsMap).map((claim_tuple) => {
         var claim = claim_tuple[1]
+        claimsHelpers.calculateTotal(claim, claimItemsMap[claim.id])
           return <PendingClaimContainer
                     claim={claim}
                     employee={employee}

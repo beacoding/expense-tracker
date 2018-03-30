@@ -23,7 +23,7 @@ function generateT24(claimsMap) {
       lookupEntry.account_number = claim.account_number;
       lookupEntry.date = claim.date_created;
       lookupEntry.description = claim.description;
-      lookupEntry.amount = claim.total_amount;
+      lookupEntry.amount = "$" + claim.total_amount.toFixed(2);
       lookupArr.push(lookupEntry);
     }
   }
@@ -31,7 +31,7 @@ function generateT24(claimsMap) {
     // in case there are no entries
     lookupArr.push({})
   }
-  const json2csvParser = new Json2csvParser({ header: false, delimiter: '|'  });
+  const json2csvParser = new Json2csvParser({ header: false });
   const csv = json2csvParser.parse(lookupArr);
   const filename = 'T24_' + new Date().toISOString().substr(0, 10) + '.csv';
   var blob = new Blob([csv], {type: "csv/csv;charset=utf-8"});
@@ -57,7 +57,7 @@ function generatePayroll(claimsMap) {
       } else {
         var totalReimbursement = parseFloat(entryMap[lookupEntry.employee_id]["expense_reimbursement"]);
         totalReimbursement += parseFloat(lookupEntry.expense_reimbursement);
-        entryMap[lookupEntry.employee_id]["expense_reimbursement"] = totalReimbursement;
+        entryMap[lookupEntry.employee_id]["expense_reimbursement"] = "$" + totalReimbursement.toFixed(2);
       }
     }
   }
@@ -69,7 +69,7 @@ function generatePayroll(claimsMap) {
     // in case there are no entries
     entryArr.push({})
   }
-  const json2csvParser = new Json2csvParser({ header: false, delimiter: '|'  });
+  const json2csvParser = new Json2csvParser({ header: false });
   const csv = json2csvParser.parse(entryArr);
   const filename = 'payroll_' + new Date().toISOString().substr(0, 10) + '.csv';
   var blob = new Blob([csv], {type: "csv/csv;charset=utf-8"});
@@ -85,7 +85,7 @@ function generateAllEntries(claimsMap) {
         var payrollEntry = [];
         payrollEntry.push(claim.claimant_first_name + " " + claim.claimant_last_name);
         payrollEntry.push(claim.claimant_id);
-        payrollEntry.push(claim.total_amount);
+        payrollEntry.push("$" + claim.total_amount.toFixed(2));
         lookupArr.push(payrollEntry);
       } else {
           var t24Entry = [];
@@ -93,7 +93,7 @@ function generateAllEntries(claimsMap) {
           t24Entry.push("CAD");
           t24Entry.push(claim.date_created);
           t24Entry.push(claim.description);
-          t24Entry.push(claim.total_amount);
+          t24Entry.push("$" + claim.total_amount.toFixed(2));
           t24Entry.push("51");
           lookupArr.push(t24Entry);
       }

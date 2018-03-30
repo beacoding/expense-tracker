@@ -36,7 +36,7 @@ const PendingClaim = ({ employee, claim, handleAction, hasApprovalAuthority, has
         <tbody>
           <tr>
             <td>{claimant_first_name + " " + claimant_last_name}</td>
-            <td>{"$" + total_amount}</td>
+            <td>{"$" + total_amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</td>
           </tr>
         </tbody>
       </table>

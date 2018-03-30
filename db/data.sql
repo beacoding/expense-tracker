@@ -765,19 +765,23 @@ VALUES
 -- INSERT SAMPLE CLAIMS
 INSERT INTO claim (claimant_id, approver_id, company_id, cost_centre_id, description, account_number, notes, status, date_created, date_modified)
 VALUES
-	(3,2,1,500,'Jan 31 Lunch Meeting','35289548934435',NULL,'A','2018-02-01','2018-02-01'),
-  (3,2,1,538,'Feb 2 Company Dinner','35289548934435',NULL,'S','2018-02-02','2018-02-02'),
-  (3,2,1,505,'Feb 8 Team Building','35289548934435',NULL,'S','2018-02-08','2018-02-08'),
-  (4,2,1,500,"JJ Redick's Fun Day",'35289548934435',NULL,'S','2018-02-22','2018-02-22'),
-  (6,2,1,500,"DeAndre Jordan's Not So Fun Day",'35289548934435',NULL,'D','2018-02-27','2018-02-27');
+	(3,2,1,538,'Jan 31 Lunch Meeting',NULL,'I have the receipt. -K.I.','A','2018-02-01','2018-02-01'),
+  (3,2,1,538,'Feb 2 Company Dinner',NULL,'Approved, but lower the alcohol budget for next year. -K.I.','A','2018-02-02','2018-02-02'),
+  (5,2,1,538,'Feb 6 Company Lunch','35289548934435',NULL,'S','2018-02-06','2018-02-06'),
+  (3,2,1,505,'Feb 8 Team Building',NULL,NULL,'S','2018-02-08','2018-02-08'),
+  (4,2,1,538,"JJ Redick's Fun Day",'73952637894543','Better be more descriptive next time. -K.I.','A','2018-02-22','2018-02-22'),
+  (6,2,1,500,"DeAndre Jordan's Fun Day",'57687789677890','Nice try. -K.I.','D','2018-02-27','2018-02-27'),
+  (5,2,1,500,"Mar 29 Poke Day",'35289548934435',NULL,'S','2018-03-29','2018-03-29');
 
 -- INSERT SAMPLE CLAIM ITEMS
 INSERT INTO claim_item (claim_id, description, amount, comment, expense_type, image_url)
 VALUES
   (1,'Minami - Yaletown',244.20,"Lunch with Client RE: Project A",10,NULL),
 	(2,'The Keg - Still Creek',39025.00,"Company New Year's Dinner",9,NULL),
-	(3,'The Edge Climbing Centre',1008.00,"Main Activity",6,NULL),
-	(3,'Cactus Club - North Burnaby',1687.50,"Team Dinner",9,NULL),  
-  (4,'Extreme Air Park',200000.50,"Main Activity",9,NULL),
-  (5,'Not So Extreme Air Park',150.50,"Main Activity",9,NULL);  
+	(3,'The Flying Pig - Yaletown',427.00,"Celebrate Milestone",9,NULL),  
+	(4,'The Edge Climbing Centre',1008.00,"Main Activity",6,NULL),
+	(4,'Cactus Club - North Burnaby',1687.50,"Team Dinner",9,NULL),
+  (5,'Extreme Air Park',60.50,"WITH A CLIENT!",5,NULL),
+  (6,'Disneyland',1505.50,"I needed some time off",6,NULL),
+  (7,'Pacific Poke',621.50,"50 orders x 'The Cali'",9,NULL);
 

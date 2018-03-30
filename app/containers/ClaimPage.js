@@ -62,7 +62,7 @@ class ClaimPage extends React.Component {
       this.props.dispatch(claimsActions.updateStatus(claim_id, this.props.employee.manager_id, "S")).then((res) => {
         if (res.type === "UPDATE_CLAIM_STATUS_SUCCESS") {
           toastr.removeByType("error");
-          toastr.success('Claim Submitted', 'Your claim has been submitted to your manager for review.');
+          toastr.success('Claim Submitted', 'Your claim has been submitted to your manager for review.', toastrHelpers.getSuccessOptions())
           this.props.dispatch(emailActions.sendClaimantEmail(this.props.claimsMap[claim_id], "S"));
           this.props.dispatch(emailActions.sendApproverEmail(this.props.claimsMap[claim_id], this.props.employee.manager_id, "S"));
           modal.clear();
@@ -151,7 +151,7 @@ class ClaimPage extends React.Component {
         this.props.dispatch(claimItemsActions.addClaimItem(item)).then((res) => {
           if (res.type === "ADD_CLAIM_ITEM_SUCCESS") {
             toastr.removeByType("error");
-            toastr.success('Claim Item Added', 'Claim item has been successfully added.');
+            toastr.success('Claim Item Added', 'Claim item has been successfully added.', toastrHelpers.getSuccessOptions())
           } else {
             toastr.removeByType("error");
             toastr.error('Error Adding Claim Item', 'Please try again.', toastrHelpers.getErrorOptions())

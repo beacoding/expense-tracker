@@ -19,6 +19,7 @@ const claims = (state = initialState, action) => {
       });
     case claimsConstants.ADD_CLAIM_SUCCESS:
       // append stub of the newly created claim to claimsMap
+      var date = new Date();
       action.claim.claim_id = action.claimId;
       action.claim.claimant_first_name = 'Processing...';
       action.claim.claimant_last_name = '';
@@ -27,7 +28,7 @@ const claims = (state = initialState, action) => {
       action.claim.manager_first_name = 'Processing...';
       action.claim.manager_last_name = '';
       action.claim.company_name = 'Processing...';
-      action.claim.date_created = Date.now();
+      action.claim.date_created = date.toString();
       newClaimsMap = Object.assign({}, state.claimsMap);
       newClaimsMap[action.claimId] = action.claim;
       return Object.assign({}, state, {
