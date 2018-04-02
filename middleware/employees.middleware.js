@@ -55,17 +55,13 @@ const updatePassword = async (req, res, next) => {
   try {
     employee = await Employee.findOneWithPassword(req.body.id);
     if (!bcrypt.compareSync(req.body.old_password, employee[0].password)) {
-      console.log("does not match");
       req.error = "Current password does not match.";
       next();
     } else {
-      console.log("passwords match. updating password")
       password = await Employee.updatePassword(req.body);
-      console.log("woot");
       next();
     }
   } catch (err) {
-    console.log(err);
     req.error = err;
     next();
   }

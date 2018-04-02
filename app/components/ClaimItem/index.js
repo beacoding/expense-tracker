@@ -47,11 +47,11 @@ const ClaimItem = ({ mileage_so_far_per_month, employee, claim_item, claim_statu
 
   let defaultValue = valueMap[expense_category.toUpperCase()];
   if (expense_category === "MILEAGE" && claim_status === "P") {
-    let distance = claimItemsHelpers.amountToDistance(amount, policies["Per Mileage Reimbursement"], policies["Per Mileage Reimbursement Tier 2 Cost"], policies["Per Mileage Reimbursement Tier 1 Max"], mileage_so_far_per_month);
+    let distance = claimItemsHelpers.amountToDistance(amount, policies["Per Mileage Reimbursement - Tier 1 Rate"], policies["Per Mileage Reimbursement - Tier 2 Rate"], policies["Per Mileage Reimbursement Tier 1 Threshold"], mileage_so_far_per_month);
     return (
       <tr>
         <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item)} validate={isDescriptionValid} propName='description' /> <i className="ion-edit"></i> </td>
-        <td><div id={"distance-amount-" + claim_item_id}>${amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</div> <br></br> <RIEInput value={distance.toFixed(2) || "Enter Distance Here"} validate={isNumberAcceptable} change={handleEditMileage.bind(this, "mileage", claim_item)} propName='mileage' /> KM <i className="ion-edit"></i></td>
+        <td><div id={"distance-amount-" + claim_item_id}>${amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</div> <br></br> <RIEInput value={distance.toFixed(2) || "Enter Distance Here"} validate={isNumberAcceptable} change={handleEditMileage.bind(this, "mileage", claim_item)} propName='mileage' /> km <i className="ion-edit"></i></td>
         <td>
           <select className="claim-item-expense-type-select" value={defaultValue} onChange={handleChangeExpenseCategory.bind(this, claim_item)}>
             <option value="" disabled> Select an expense category. </option>

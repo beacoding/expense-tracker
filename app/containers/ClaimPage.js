@@ -163,7 +163,7 @@ class ClaimPage extends React.Component {
         });
       }.bind(this));
     });
-    promise.catch( error =>  console.log(error) )
+    promise.catch( error => console.log(error) )
   }
 
   showNewClaimItemModal() {

@@ -80,8 +80,7 @@ class ClaimItemContainer extends React.Component {
   handleEditMileage(key, claim_item, item) {
     let claim_id = parseInt(window.location.pathname.split("/")[2]);
     let claimItem = {};
-    console.log("qklerjklwejrwe");
-    claimItem.amount = claimItemsHelpers.distanceToAmount(item.mileage, this.props.policies["Per Mileage Reimbursement"], this.props.policies["Per Mileage Reimbursement Tier 2 Cost"], this.props.policies["Per Mileage Reimbursement Tier 1 Max"], this.props.mileage_so_far_per_month);
+    claimItem.amount = claimItemsHelpers.distanceToAmount(item.mileage, this.props.policies["Per Mileage Reimbursement - Tier 1 Rate"], this.props.policies["Per Mileage Reimbursement - Tier 2 Rate"], this.props.policies["Per Mileage Reimbursement Tier 1 Threshold"], this.props.mileage_so_far_per_month);
     this.props.dispatch(claimItemsActions.editClaimItem(claimItem, claim_id, claim_item.claim_item_id)).then((res) => {
       if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
         toastr.removeByType("error");
@@ -109,8 +108,7 @@ class ClaimItemContainer extends React.Component {
   }
 
   handleChangeDistance(e)  {
-    console.log("qwerlkwekjr")
-   $("#distance-amount-" + this.props.claim_item.claim_item_id).val(claimItemsHelpers.distanceToAmount(e.target.value, this.props.policies["Per Mileage Reimbursement"], this.props.policies["Per Mileage Reimbursement Tier 2 Cost"], this.props.policies["Per Mileage Reimbursement Tier 1 Max"], this.props.mileage_so_far_per_month));
+   $("#distance-amount-" + this.props.claim_item.claim_item_id).val(claimItemsHelpers.distanceToAmount(e.target.value, this.props.policies["Per Mileage Reimbursement - Tier 1 Rate"], this.props.policies["Per Mileage Reimbursement - Tier 2 Rate"], this.props.policies["Per Mileage Reimbursement Tier 1 Threshold"], this.props.mileage_so_far_per_month));
   }
 
   handleChangeExpenseCategory(claim_item, e) {
@@ -153,7 +151,7 @@ class ClaimItemContainer extends React.Component {
         }.bind(this))
       }
     });
-    promise.catch( error =>  console.log(error) )
+    promise.catch( error => console.log(error) )
   }
 
   render() {

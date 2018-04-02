@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev-react": "webpack -d --watch",
     "build": "webpack --config ./webpack.config.prod.js",
-    "create-db": "mysql -u root -p < db/init.sql &&  mysql -u root -p cc_expense_claims_system < db/data.sql && node encrypt.js",
+    "create-db": "mysql -u root -p < db/init.sql &&  mysql -u root -p cc_expense_claims_system < db/data.sql && node db/encrypt.js",
     "test": "mocha --compilers js:babel-core/register --require babel-polyfill ./test/*"
   },
   "dependencies": {

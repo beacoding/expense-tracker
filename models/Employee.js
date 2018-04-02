@@ -4,7 +4,6 @@ var bcrypt = require('bcrypt-nodejs');
 module.exports = {
   findOne: function(id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to find one employee
       var queryString = `SELECT
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
                           CONCAT(manager.first_name, ' ', manager.last_name) as manager_name,
@@ -30,7 +29,6 @@ module.exports = {
 
   findOneWithPassword: function(id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to find one employee
       var queryString = `SELECT
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
                           CONCAT(manager.first_name, ' ', manager.last_name) as manager_name,
@@ -57,7 +55,6 @@ module.exports = {
 
   transferEmployeesToManagerWithManagerID: function(employee_id, manager_id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to find one employee
       var queryString = `UPDATE employee
                           SET
                             manager_id = ?
@@ -75,7 +72,6 @@ module.exports = {
 
   disableOne: function(id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to find one employee
       var queryString = `UPDATE employee
                           SET
                             is_active = 0
@@ -93,7 +89,6 @@ module.exports = {
 
   enableOne: function(id) {
     return new Promise((resolve, reject) => {
-      //TODO queryString to find one employee
       var queryString = `UPDATE employee
                           SET
                             is_active = 1
@@ -269,12 +264,6 @@ module.exports = {
           resolve(rows);
         }
       });
-    }); 
-  },
-
-  deleteOne: function(id) {
-    return new Promise((resolve, reject) => {
-      //TODO queryString to delete one employee
     }); 
   }
 }
