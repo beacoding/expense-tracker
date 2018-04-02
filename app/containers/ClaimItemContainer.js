@@ -80,7 +80,8 @@ class ClaimItemContainer extends React.Component {
   handleEditMileage(key, claim_item, item) {
     let claim_id = parseInt(window.location.pathname.split("/")[2]);
     let claimItem = {};
-    claimItem.amount = claimItemsHelpers.distanceToAmount(item.mileage, this.props.policies["Per Mileage Reimbursement"]);
+    console.log("qklerjklwejrwe");
+    claimItem.amount = claimItemsHelpers.distanceToAmount(item.mileage, this.props.policies["Per Mileage Reimbursement"], this.props.policies["Per Mileage Reimbursement Tier 2 Cost"], this.props.policies["Per Mileage Reimbursement Tier 1 Max"], this.props.mileage_so_far_per_month);
     this.props.dispatch(claimItemsActions.editClaimItem(claimItem, claim_id, claim_item.claim_item_id)).then((res) => {
       if (res.type === "EDIT_CLAIM_ITEM_SUCCESS") {
         toastr.removeByType("error");
@@ -108,7 +109,8 @@ class ClaimItemContainer extends React.Component {
   }
 
   handleChangeDistance(e)  {
-   $("#distance-amount-" + this.props.claim_item.claim_item_id).val(claimItemsHelpers.distanceToAmount(e.target.value, this.props.policies["Per Mileage Reimbursement"]));
+    console.log("qwerlkwekjr")
+   $("#distance-amount-" + this.props.claim_item.claim_item_id).val(claimItemsHelpers.distanceToAmount(e.target.value, this.props.policies["Per Mileage Reimbursement"], this.props.policies["Per Mileage Reimbursement Tier 2 Cost"], this.props.policies["Per Mileage Reimbursement Tier 1 Max"], this.props.mileage_so_far_per_month));
   }
 
   handleChangeExpenseCategory(claim_item, e) {
@@ -155,9 +157,11 @@ class ClaimItemContainer extends React.Component {
   }
 
   render() {
-    const { claim_item, claim_status, employee } = this.props;
+    const { claim_item, claim_status, employee, mileage_so_far_per_month } = this.props;
     return (
-      <ClaimItem handleEditMileage={this.handleEditMileage}
+      <ClaimItem 
+      mileage_so_far_per_month={mileage_so_far_per_month}
+      handleEditMileage={this.handleEditMileage}
                   policies={this.props.policies}
                   handleEditReceipt={this.handleEditReceipt}
                   handleChangeExpenseCategory={this.handleChangeExpenseCategory}

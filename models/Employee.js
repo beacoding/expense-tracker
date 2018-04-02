@@ -1,38 +1,22 @@
 var connection = require('../config/connect');
+var bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
-  findOne: function(key) {
+  findOne: function(id) {
     return new Promise((resolve, reject) => {
-      var id = key;
-      var email = key;
+      //TODO queryString to find one employee
       var queryString = `SELECT
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
-                          CONCAT(m.first_name, ' ', m.last_name) as manager_name,
-                          e.id,
-                          m.id as manager_id,
+                          CONCAT(manager.first_name, ' ', manager.last_name) as manager_name,
                           e.is_active,
+                          e.id,
+                          manager.id as manager_id,
                           e.email,
                           e.first_name,
                           e.last_name
                         FROM
                           employee e
-                        LEFT JOIN employee m ON m.id = e.manager_id
-                        WHERE e.id = ? OR e.email = ?`;
-      connection.query(queryString, [id, email], (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
-  },
-
-  findOneWithPassword: function(id) {
-    return new Promise((resolve, reject) => {
-      var queryString = `SELECT *
-                        FROM
-                          employee e
+                        LEFT JOIN employee manager ON manager.id = e.manager_id
                         WHERE e.id = ?`;
       connection.query(queryString, [id], (err, rows) => {
         if (err) {
@@ -44,14 +28,24 @@ module.exports = {
     });
   },
 
-  assignManagerById: function(employee_id, manager_id) {
+  findOneWithPassword: function(id) {
     return new Promise((resolve, reject) => {
-      var queryString = `UPDATE employee
-                          SET
-                            manager_id = ?
-                          WHERE 
-                            id = ?`;
-      connection.query(queryString, [manager_id, employee_id], (err, rows) => {
+      //TODO queryString to find one employee
+      var queryString = `SELECT
+                          CONCAT(e.first_name, ' ', e.last_name) as employee_name,
+                          CONCAT(manager.first_name, ' ', manager.last_name) as manager_name,
+                          e.is_active,
+                          e.id,
+                          manager.id as manager_id,
+                          e.email,
+                          e.first_name,
+                          e.last_name,
+                          e.password
+                        FROM
+                          employee e
+                        LEFT JOIN employee manager ON manager.id = e.manager_id
+                        WHERE e.id = ?`;
+      connection.query(queryString, [id], (err, rows) => {
         if (err) {
           reject(err);
         } else {
@@ -61,31 +55,15 @@ module.exports = {
     });
   },
 
-  toggleAdmin: function(employee_id) {
+  transferEmployeesToManagerWithManagerID: function(employee_id, manager_id) {
     return new Promise((resolve, reject) => {
-      var queryString = `UPDATE employee
-                          SET
-                            is_admin = !is_admin
-                          WHERE 
-                            id = ?`;
-      connection.query(queryString, [employee_id], (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
-  },
-
-  transferBetweenManagersById: function(old_manager_id, new_manager_id) {
-    return new Promise((resolve, reject) => {
+      //TODO queryString to find one employee
       var queryString = `UPDATE employee
                           SET
                             manager_id = ?
                           WHERE 
                             manager_id = ?`;
-      connection.query(queryString, [new_manager_id, old_manager_id], (err, rows) => {
+      connection.query(queryString, [manager_id, employee_id], (err, rows) => {
         if (err) {
           reject(err);
         } else {
@@ -97,6 +75,7 @@ module.exports = {
 
   disableOne: function(id) {
     return new Promise((resolve, reject) => {
+      //TODO queryString to find one employee
       var queryString = `UPDATE employee
                           SET
                             is_active = 0
@@ -114,6 +93,7 @@ module.exports = {
 
   enableOne: function(id) {
     return new Promise((resolve, reject) => {
+      //TODO queryString to find one employee
       var queryString = `UPDATE employee
                           SET
                             is_active = 1
@@ -147,19 +127,19 @@ module.exports = {
     });
   },
 
-  // returns all users along with their manager's name, if they have a manager
+  // returns all users along with their manager's name
   findAllWithManagers: function(id) {
     return new Promise((resolve, reject) => {
       var queryString = `SELECT
-                          CONCAT(m.first_name, ' ', m.last_name) as manager_name,
+                          CONCAT(manager.first_name, ' ', manager.last_name) as manager_name,
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
-                          e.id as id,
-                          m.id as manager_id,
                           e.is_active,
-                          e.is_admin
+                          e.id
                         FROM
-                          employee e
-                        LEFT JOIN employee m ON m.id = e.manager_id`;
+                          employee e,
+                          employee manager
+                        WHERE
+                          e.manager_id = manager.id`;
       connection.query(queryString, [], (err, rows) => {
         if (err) {
           reject(err);
@@ -178,10 +158,10 @@ module.exports = {
                           e.id
                         FROM
                           employee e,
-                          employee m
+                          employee manager
                         WHERE
-                          e.manager_id = m.id AND
-                          m.id = ?`;
+                          e.manager_id = manager.id AND
+                          manager.id = ?`;
       connection.query(queryString, [manager_id], (err, rows) => {
         if (err) {
           reject(err);
@@ -195,20 +175,21 @@ module.exports = {
   findAllWithParams: function(params) {
     return new Promise((resolve, reject) => {
       var whereArray = []
-      for (var key in params) {
+      for (key in params) {
         if (params[key].length > 0) {
           switch(key) {
             case "employee_id":
-              whereArray.push("e.id = '" + params[key] + "'")
+              whereArray.push("employee_id = '" + params[key] + "'")
               break;
             case "employee_name":
-              whereArray.push("(e.first_name LIKE '" + params[key] + "%' OR e.last_name LIKE '" + params[key] + "%')");
+              whereArray.push("(employee_name LIKE '%" + params[key] + "%')");
               break;
             case "manager_id":
-              whereArray.push("m.id = '" + params[key] + "'")
+              whereArray.push("manager.id = '" + params[key] + "'")
               break;
             case "manager_name":
-              whereArray.push("(m.first_name LIKE '" + params[key] + "%' OR m.last_name LIKE '" + params[key] + "%')");
+              whereArray.push("(employee_name LIKE '%" + params[key] + "%')");
+              whereArray.push("(manager.first_name LIKE '%" + params[key] + "%' OR manager.last_name LIKE '" + params[key] + "%')");
               break;
             default:
               break;
@@ -216,17 +197,18 @@ module.exports = {
         }
       }
 
-      var whereString = whereArray.length > 0 ? " WHERE " + whereArray.join(" AND ") : "";
+      var whereString = whereArray.length > 0 ? " AND " + whereArray.join(" AND ") : "";
       var queryString = `SELECT
                           CONCAT(e.first_name, ' ', e.last_name) as employee_name,
-                          CONCAT(m.first_name, ' ', m.last_name) as manager_name,
-                          e.id as id,
-                          m.id as manager_id,
                           e.is_active,
-                          e.is_admin
+                          e.id
                         FROM
-                          employee e
-                        LEFT JOIN employee m ON m.id = e.manager_id` + whereString + ";"
+                          employee e,
+                          employee m
+                        WHERE
+                          e.manager_id = m.id` + whereString + ";"
+
+      console.log(queryString);
 
       connection.query(queryString, [], (err, rows) => {
         if (err) {
@@ -251,13 +233,14 @@ module.exports = {
                             is_admin)
                            VALUES
                             (?, ?, ?, ?, ?, ?, ?)`;
+      var hashed = bcrypt.hashSync(employee.password);
       connection.query(queryString, 
       [
         employee.id,
         employee.first_name,
         employee.last_name,
         employee.email,
-        employee.password,
+        hashed,
         employee.manager_id,
         employee.is_admin,
       ]
@@ -278,13 +261,20 @@ module.exports = {
                             password = ?
                           WHERE 
                             id = ?`;
-      connection.query(queryString, [employee.password, employee.id], (err, rows) => {
+      var hashed = bcrypt.hashSync(employee.password)
+      connection.query(queryString, [hashed, employee.id], (err, rows) => {
         if (err) {
           reject(err);
         } else {
           resolve(rows);
         }
       });
+    }); 
+  },
+
+  deleteOne: function(id) {
+    return new Promise((resolve, reject) => {
+      //TODO queryString to delete one employee
     }); 
   }
 }

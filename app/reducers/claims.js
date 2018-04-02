@@ -5,7 +5,8 @@ const initialState = {
   claimsMap: {},
   error: undefined,
   currentClaim: {},
-  approvedClaims: {}
+  approvedClaims: {},
+  mileageCostSoFarPerMonth: 0
 }
 
 const claims = (state = initialState, action) => {
@@ -157,6 +158,22 @@ const claims = (state = initialState, action) => {
         error: undefined
       });
     case claimsConstants.FAILURE_APPROVED_APPROVALS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      });
+    // FETCH MILEAGE PER MONTH
+    case claimsConstants.REQUEST_MILEAGE_SO_FAR_PER_MONTH:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case claimsConstants.RECEIVE_MILEAGE_SO_FAR_PER_MONTH:
+      return Object.assign({}, state, {
+        isFetching: false,
+        mileageCostSoFarPerMonth: action.cost,
+        error: undefined
+      });
+    case claimsConstants.FAILURE_MILEAGE_SO_FAR_PER_MONTH:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error

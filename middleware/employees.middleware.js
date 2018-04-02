@@ -1,5 +1,6 @@
 var Employee = require('../models/Employee');
 var Claim = require('../models/Claim');
+var bcrypt = require('bcrypt-nodejs')
 
 const findAll = async (req, res, next) => {
   let employees;
@@ -53,14 +54,18 @@ const updatePassword = async (req, res, next) => {
   let password;
   try {
     employee = await Employee.findOneWithPassword(req.body.id);
-    if (req.body.old_password != employee[0].password) {
+    if (!bcrypt.compareSync(req.body.old_password, employee[0].password)) {
+      console.log("does not match");
       req.error = "Current password does not match.";
       next();
     } else {
+      console.log("passwords match. updating password")
       password = await Employee.updatePassword(req.body);
+      console.log("woot");
       next();
     }
   } catch (err) {
+    console.log(err);
     req.error = err;
     next();
   }

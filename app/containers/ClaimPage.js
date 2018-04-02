@@ -35,6 +35,7 @@ class ClaimPage extends React.Component {
       this.props.dispatch(claimsActions.requestOne(claim_id));
       this.props.dispatch(policiesActions.requestExpenseTypes());
       this.props.dispatch(policiesActions.requestAll())
+      this.props.dispatch(claimsActions.requestMileageSoFarPerMonth());
     }
   }
 
@@ -176,6 +177,7 @@ class ClaimPage extends React.Component {
       onSubmitFunction: this.createClaimItem,
       expense_types: this.props.expense_types,
       policies: this.props.max_policy_limits,
+      mileage_so_far_per_month: this.props.mileageCostSoFarPerMonth,
       currentValues: this.props.form.NewClaimItemForm ? this.props.form.NewClaimItemForm.values : {}
     });
   }
@@ -197,7 +199,7 @@ class ClaimPage extends React.Component {
   }
 
   render() {
-    const { employee, claimItems, isFetching, claimsMap, expense_types, error } = this.props;
+    const { employee, claimItems, isFetching, claimsMap, expense_types, error, mileageCostSoFarPerMonth } = this.props;
     
     let claim_id = undefined;
     let claimantView = false;
@@ -285,7 +287,7 @@ class ClaimPage extends React.Component {
             {
               Object.entries(claimItemsObj).map((claimItem) => {
                 const claim_item_entry = claimItem[1];
-                return <ClaimItemContainer key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} expense_types={expense_types} employee={employee} claim_item={claim_item_entry} createClaimItem={this.createClaimItem} policies={this.props.max_policy_limits} />
+                return <ClaimItemContainer mileage_so_far_per_month={mileageCostSoFarPerMonth} key={claim_item_entry.claim_item_id} claim_id={claim_id} claim_status={claim.status} expense_types={expense_types} employee={employee} claim_item={claim_item_entry} createClaimItem={this.createClaimItem} policies={this.props.max_policy_limits} />
               })
             }
             </tbody>
@@ -312,7 +314,7 @@ function mapStateToProps(state) {
   const { authentication, claimItems, claims, form, policies } = state;
   const { error, isFetching } = claimItems;
   const { employee } = authentication;
-  const { claimsMap } = claims;
+  const { claimsMap, mileageCostSoFarPerMonth } = claims;
   const { expense_types } = policies;
   const max_policy_limits = policies.policies;
   return {
@@ -323,7 +325,8 @@ function mapStateToProps(state) {
     expense_types,
     error,
     form,
-    max_policy_limits
+    max_policy_limits,
+    mileageCostSoFarPerMonth
   };
 }
 

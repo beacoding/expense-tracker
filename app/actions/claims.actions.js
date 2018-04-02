@@ -10,6 +10,7 @@ export const claimsActions = {
   requestWith,
   requestPendingApprovals,
   requestProcessedApprovals,
+  requestMileageSoFarPerMonth,
   clearAll
 };
 
@@ -160,6 +161,24 @@ function requestProcessedApprovals() {
   function request() { return { type: claimsConstants.REQUEST_APPROVED_APPROVALS }}
   function success(claims) { return { type: claimsConstants.RECEIVE_APPROVED_APPROVALS, claims }}
   function failure(error) { return { type: claimsConstants.FAILURE_APPROVED_APPROVALS, error }}
+}
+
+function requestMileageSoFarPerMonth() {
+  return dispatch => {
+    dispatch(request());
+    return claimsAPI.requestMileageSoFarPerMonth().then(
+      res => {
+        return dispatch(success(res.cost))
+      },
+      error => {
+        return dispatch(failure(error))
+      }
+    );
+  };
+  
+  function request() { return { type: claimsConstants.REQUEST_MILEAGE_SO_FAR_PER_MONTH }}
+  function success(cost) { return { type: claimsConstants.RECEIVE_MILEAGE_SO_FAR_PER_MONTH, cost }}
+  function failure(error) { return { type: claimsConstants.FAILURE_MILEAGE_SO_FAR_PER_MONTH, error }}
 }
 
 function clearAll() {

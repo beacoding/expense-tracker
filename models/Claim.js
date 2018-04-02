@@ -388,6 +388,19 @@ module.exports = {
     }); 
   },
 
+  findMileageSoFarPerMonth: function(employee) {
+    return new Promise((resolve, reject) => {
+      var queryString = `select SUM(amount) as amount from claim_item, claim where claim_item.claim_id = claim.id and expense_type=12 and year(NOW()) = year(claim.date_created) and month(NOW()) = month(claim.date_created) and claim.claimant_id=?;`
+      connection.query(queryString, [employee.id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows[0]);
+        }
+      });
+    })
+  },
+
   deleteOne: function(claim_id) {
     return new Promise((resolve, reject) => {
       const queryString = `DELETE FROM claim WHERE id = ?`;

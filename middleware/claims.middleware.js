@@ -97,6 +97,18 @@ const deleteOne = async (req, res, next) => {
   }
 }
 
+const findMileageSoFarPerMonth = async (req, res, next) => {
+  let cost;
+  try {
+    cost_entry = await Claim.findMileageSoFarPerMonth(req.user);
+    req.cost = cost_entry.amount
+    next();
+  } catch (err) {
+    req.error = err;
+    next();
+  }
+}
+
 module.exports = {
   findAllWithEmployee: findAllWithEmployee,
   findPendingApprovalsByManager: findPendingApprovalsByManager,
@@ -105,5 +117,6 @@ module.exports = {
   addOne: addOne,
   updateStatus: updateStatus,
   findOneWithClaimID: findOneWithClaimID,
-  deleteOne: deleteOne
+  deleteOne: deleteOne,
+  findMileageSoFarPerMonth: findMileageSoFarPerMonth
 }

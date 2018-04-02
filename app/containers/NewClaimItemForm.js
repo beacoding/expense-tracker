@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { claimItemsHelpers, toastrHelpers } from '../helpers';
 
 class NewClaimItemForm extends React.Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class NewClaimItemForm extends React.Component {
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
     const { expense_type, mileage, policies } = this.props;
     let distance = isNaN(mileage) ? 0 : parseInt(mileage);
-    let amount = (distance * policies["Per Mileage Reimbursement"]).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') || 0.00;
+    let amount = claimItemsHelpers.distanceToAmount(distance, this.props.policies["Per Mileage Reimbursement"], this.props.policies["Per Mileage Reimbursement Tier 2 Cost"], this.props.policies["Per Mileage Reimbursement Tier 1 Max"], this.props.mileage_so_far_per_month).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') || 0.00
 
     return (
       <div className = {className}>

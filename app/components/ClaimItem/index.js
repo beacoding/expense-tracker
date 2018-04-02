@@ -6,7 +6,7 @@ import { claimItemsHelpers } from '../../helpers';
 import './style.css';
 import FileBase64 from 'react-file-base64';
 
-const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handleEditItem, isDescriptionValid, isNumberAcceptable, validateMealExpense, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
+const ClaimItem = ({ mileage_so_far_per_month, employee, claim_item, claim_status, handleDeleteItem, handleEditItem, isDescriptionValid, isNumberAcceptable, validateMealExpense, expense_types, handleChangeExpenseCategory, handleEditReceipt, policies, handleChangeDistance, handleEditMileage }) => {
   const {
     claim_item_id,
     description,
@@ -47,7 +47,7 @@ const ClaimItem = ({ employee, claim_item, claim_status, handleDeleteItem, handl
 
   let defaultValue = valueMap[expense_category.toUpperCase()];
   if (expense_category === "MILEAGE" && claim_status === "P") {
-    let distance = claimItemsHelpers.amountToDistance(amount, policies["Per Mileage Reimbursement"]);
+    let distance = claimItemsHelpers.amountToDistance(amount, policies["Per Mileage Reimbursement"], policies["Per Mileage Reimbursement Tier 2 Cost"], policies["Per Mileage Reimbursement Tier 1 Max"], mileage_so_far_per_month);
     return (
       <tr>
         <td><RIEInput value={description || "Enter Description Here"} change={handleEditItem.bind(this, "description", claim_item)} validate={isDescriptionValid} propName='description' /> <i className="ion-edit"></i> </td>

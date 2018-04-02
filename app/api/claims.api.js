@@ -7,7 +7,8 @@ export const claimsAPI = {
   requestOne,
   requestPendingApprovals,
   requestProcessedApprovals,
-  requestWith
+  requestWith,
+  requestMileageSoFarPerMonth
 };
 
 function addClaim(claim) {
@@ -55,3 +56,9 @@ function requestPendingApprovals() {
    return fetch('/claims/processed_approvals', apiHelpers.getOptions())
     .then(apiHelpers.handleResponse);
   }
+
+  function requestMileageSoFarPerMonth() {
+    return fetch('/claims/mileage_so_far_per_month', apiHelpers.getOptions())
+    .then(apiHelpers.handleResponse)
+  }
+  
