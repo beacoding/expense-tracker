@@ -760,9 +760,9 @@ INSERT INTO policy (id, name, value)
 VALUES 
 	(1,'Maximum Per Diem Amount',50000.00),
 	(2,'Maximum Per Meal Expense',5000.00),
-	(3,'Per Mileage Reimbursement',0.48),
-  (4,'Per Mileage Reimbursement Tier 2 Cost',0.60),
-  (5,'Per Mileage Reimbursement Tier 1 Max', 100);
+	(3,'Per Mileage Reimbursement - Tier 1 Rate',0.48),
+  (4,'Per Mileage Reimbursement - Tier 2 Rate',0.60),
+  (5,'Per Mileage Reimbursement Tier 1 Threshold',100);
 
 -- INSERT SAMPLE CLAIMS
 INSERT INTO claim (claimant_id, approver_id, company_id, cost_centre_id, description, account_number, notes, status, date_created, date_modified)
